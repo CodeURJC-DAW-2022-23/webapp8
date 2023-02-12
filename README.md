@@ -37,7 +37,7 @@ To organize the team, we are using [Trello](https://trello.com/b/WpuV8KtM/la-put
 * Hashtags
 * User
 * Notifications
-* Message
+* Trends
 
 ![ER Diagram](./files-to-README/E-R_Diagram.svg)
 
@@ -49,11 +49,11 @@ To organize the team, we are using [Trello](https://trello.com/b/WpuV8KtM/la-put
 
 #### :orange_book: User Permissions
 
-| User           | Tweets                                                            | People                                  | Hashtags                                        | Messages                           | Notifications | Trends |
-| :------------: | :---------------------------------------------------------------: | :-------------------------------------: | :---------------------------------------------: | :--------------------------------: | :-----------: | :----: |
-| **Anonymous**  | Read                                                              | Read(See their profile)                 | Read (can search them and read the impressions) | Nothing                            | Nothing       | Read   |
-| **Admin**      | Read, write (their own), detele (every tweet), modify (their own) | Read, delete, write (their own profile) | Read, write, delete                             | Read, Write and Delete             | Read          | Read   |
-| **Registered** | Read, write (their own), delete (their Own), modify (their own)   | Read, write (their own profile)         | Read, write                                     | Read, Write and delete (their own) | Read          | Read   |
+| User           | Tweets                                                            | People                                  | Hashtags                                        | Notifications | Trends |
+| :------------: | :---------------------------------------------------------------: | :-------------------------------------: | :---------------------------------------------: | :-----------: | :----: |
+| **Anonymous**  | Read                                                              | Read(See their profile)                 | Read (can search them and read the impressions) | Nothing       | Read   |
+| **Admin**      | Read, write (their own), detele (every tweet), modify (their own) | Read, delete, write (their own profile) | Read, write, delete                             | Read          | Read   |
+| **Registered** | Read, write (their own), delete (their Own), modify (their own)   | Read, write (their own profile)         | Read, write                                     | Read          | Read   |
 
 | Permissions  | Affects to                                                                                                            |
 | ------------ | --------------------------------------------------------------------------------------------------------------------- |
@@ -73,19 +73,19 @@ To organize the team, we are using [Trello](https://trello.com/b/WpuV8KtM/la-put
             text-align: center;">
 <small>
 
-![useCase1](./files-to-README/useCase1.svg)
+![useCase1](./files-to-README/useCase1.png)
 *Figure 1 - Sign Up and Log In*
 
-![useCase2](./files-to-README/useCase2.svg)
+![useCase2](./files-to-README/useCase2.png)
 *Figure 2 - Admin permissions*
 
-![useCase3](./files-to-README/useCase3.svg)
+![useCase3](./files-to-README/useCase3.png)
 *Figure 3 - General permissions*
 
-![useCase4](./files-to-README/useCase4.svg)
+![useCase4](./files-to-README/useCase4.png)
 *Figure 4 - Registered permissions*
 
-![useCase5](./files-to-README/useCase5.svg)
+![useCase5](./files-to-README/useCase5.png)
 *Figure 5 - User Actions*
 
 </small>
@@ -114,8 +114,6 @@ To organize the team, we are using [Trello](https://trello.com/b/WpuV8KtM/la-put
 | Choose notifications he wants to receive                    |                    | :heavy_check_mark: | :heavy_check_mark: |
 | Use Thread Reader                                           |                    | :heavy_check_mark: | :heavy_check_mark: |
 | Visualize own statistics                                    |                    | :heavy_check_mark: | :heavy_check_mark: |
-| Receive a message of another user                           |                    | :heavy_check_mark: | :heavy_check_mark: |
-| Send a message to another user                              |                    | :heavy_check_mark: | :heavy_check_mark: |
 | Share a tweet (to another user, out-application)            |                    | :heavy_check_mark: | :heavy_check_mark: |
 | Edit profile                                                |                    | :heavy_check_mark: | :heavy_check_mark: |
 | Visualize profile                                           | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: |
