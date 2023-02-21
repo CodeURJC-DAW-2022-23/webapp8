@@ -1,14 +1,9 @@
 package Model;
 
-import java.util.List;
-import java.util.UUID;
-
 /**
- * Save tweets of the current user
+ * This class manages tweets published by current user's followed users
  */
-
-public class Bookmark {
-    private List<UUID> idList;
+public class Home {
 
     private RegisteredUser userRelated;
 

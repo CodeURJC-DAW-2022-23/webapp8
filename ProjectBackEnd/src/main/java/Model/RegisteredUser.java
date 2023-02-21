@@ -12,9 +12,9 @@ import java.util.UUID;
 public class RegisteredUser {
     private final UUID id;
     private String username;
-    private ArrayList<RegisteredUser> followers;
-    private ArrayList<RegisteredUser> followed;
-    private ArrayList<Tweet> personalTweets;
+    private ArrayList<UUID> followers;
+    private ArrayList<UUID> followed;
+    private ArrayList<Tweet> tweetsTShow;
     private String bio;
     private File profilePicture;
     private final LocalDate joinDate;
