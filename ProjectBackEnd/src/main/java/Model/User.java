@@ -1,4 +1,4 @@
-package com.TwitterClone.ProjectBackEnd.Model;
+package Model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.engine.jdbc.BlobProxy;
@@ -12,7 +12,6 @@ import javax.persistence.Lob;
 import java.io.IOException;
 import java.sql.Blob;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Entity

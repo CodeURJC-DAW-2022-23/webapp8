@@ -1,7 +1,7 @@
-package com.TwitterClone.ProjectBackEnd.Controller;
+package Controller;
 
-import com.TwitterClone.ProjectBackEnd.Model.Tweet;
-import com.TwitterClone.ProjectBackEnd.Services.TweetService;
+import Model.Tweet;
+import Services.TweetService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

@@ -19,8 +19,8 @@ public class SignUpService {
      * @param form
      * @return A new user from the information provided.
      */
-    public User createNewUser(ArrayList<HashMap<String, String>> form){
-        return (User) new RegisteredUser();
+    public RegisteredUser createNewUser(ArrayList<HashMap<String, String>> form){
+        return new RegisteredUser();
     }
 
     /**

@@ -1,9 +1,9 @@
-package com.TwitterClone.ProjectBackEnd.Services;
+package Services;
 
-import com.TwitterClone.ProjectBackEnd.Model.Tweet;
-import com.TwitterClone.ProjectBackEnd.Model.User;
-import com.TwitterClone.ProjectBackEnd.Repository.TweetRepository;
-import com.TwitterClone.ProjectBackEnd.Repository.UserRepository;
+import Model.Tweet;
+import Model.User;
+import Repository.TweetRepository;
+import Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

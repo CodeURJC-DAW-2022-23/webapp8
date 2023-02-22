@@ -1,21 +1,28 @@
 package Security;
 
-import java.util.ArrayList;
-import java.util.HashMap;
+import org.springframework.context.annotation.Bean;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 /**
  * This class is in charge of controlling the security part of the login procedure by using Spring security modules
  */
 
-public class LogInConfiguration {
+public class userDataSecurity {
 
     /**
-     * This method reads the given form and check each field to be sure that the given information is correct
-     * @param form
+     * This method receives the data from the logIn form and return true if the username and password are correct.
+     * @param username
+     * @param password
      * @return
      */
-    public ArrayList<HashMap<String, String>> processLogInForm(ArrayList<HashMap<String, String>> form){
-        return new ArrayList<HashMap<String, String>>(); // Return the form after processing it
+    public boolean checkLogInData(String username, String password){
+        return (checkPassword(password) && checkUsername(username)); // Return the form after processing it
+    }
+
+    @Bean
+    public PasswordEncoder encoder() {
+        return new BCryptPasswordEncoder();
     }
 
     /**
@@ -24,6 +31,7 @@ public class LogInConfiguration {
      * @return
      */
     private boolean checkPassword (String password){
+
         return true; //If the password is correct
     }
 
@@ -33,6 +41,7 @@ public class LogInConfiguration {
      * @return
      */
     private boolean checkUsername (String username){
+
         return true; //If the username is correct
     }
 

@@ -1,6 +1,6 @@
-package com.TwitterClone.ProjectBackEnd.Repository;
+package Repository;
 
-import com.TwitterClone.ProjectBackEnd.Model.User;
+import Model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

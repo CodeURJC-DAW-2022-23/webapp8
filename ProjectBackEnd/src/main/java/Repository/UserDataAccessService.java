@@ -18,8 +18,8 @@ public class UserDataAccessService {
         return true; //True if it has been correctly remove from DB
     }
 
-    public User retrieveUser(UUID userId){
-        return (User) new RegisteredUser();
+    public RegisteredUser retrieveUser(UUID userId){
+        return  new RegisteredUser();
     }
 
 }

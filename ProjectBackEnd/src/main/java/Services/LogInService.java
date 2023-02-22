@@ -1,7 +1,6 @@
 package Services;
 
 import Model.RegisteredUser;
-import Model.User;
 import Repository.UserDataAccessService;
 
 /**
@@ -15,8 +14,8 @@ public class LogInService {
      * This method retrieve the actual user from the DB
      * @return
      */
-    public User obtainActualUser(){
-        return (User) new RegisteredUser();
+    public RegisteredUser obtainActualUser(){
+        return  new RegisteredUser();
     }
 
 

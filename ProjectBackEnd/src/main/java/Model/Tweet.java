@@ -1,4 +1,4 @@
-package com.TwitterClone.ProjectBackEnd.Model;
+package Model;
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;

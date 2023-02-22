@@ -1,12 +1,11 @@
-package com.TwitterClone.ProjectBackEnd.Controller;
+package Controller;
 
-import com.TwitterClone.ProjectBackEnd.Model.User;
-import com.TwitterClone.ProjectBackEnd.Services.ProfileService;
+import Model.User;
+import Services.ProfileService;
 import org.hibernate.engine.jdbc.BlobProxy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.w3c.dom.Text;
 
 import java.io.IOException;
 import java.sql.Blob;
