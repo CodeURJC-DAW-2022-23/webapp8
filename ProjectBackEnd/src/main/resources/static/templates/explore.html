@@ -44,30 +44,22 @@
         </header>
 
         <!-- TRENDS -->
+        {{#trends}}
         <a class="flex flex-col gap-1 px-5 py-3 border-b cursor-pointer border-gray-9 dark:border-black-5 hover:bg-gray-7 dark:hover:bg-black-6"
-            href="#">
-            <h4 class="text-sm font-medium dark:font-semibold text-gray-5">Trending in North America</h4>
-            <h3 class="font-bold dark:text-gray-3">#RLCS</h3>
-            <h5 class="text-sm font-medium dark:font-semibold text-gray-5">20.5K Tweets</h5>
-        </a>
+            href="/explore/{{hashtag.name}}">
+            {{#countryTrend}}
+                <h4 class="text-sm font-medium dark:font-semibold text-gray-5">Trending in {{countryTrend}}</h4>
+            {{/countryTrend}}
+            {{^countryTrend}}
+                <h4 class="text-sm font-medium dark:font-semibold text-gray-5">Trending</h4>
+            {{/countryTrend}}
 
-        <a class="flex flex-col gap-1 px-5 py-3 border-b cursor-pointer border-gray-9 dark:border-black-5 hover:bg-gray-7 dark:hover:bg-black-6" href="#">
-            <h4 class="text-sm font-medium dark:font-semibold text-gray-5">Trending</h4>
-            <h3 class="font-bold dark:text-gray-3">#FERXXO</h3>
-            <h5 class="text-sm font-medium dark:font-semibold text-gray-5">521K Tweets</h5>
+            <h3 class="font-bold dark:text-gray-3">#{{hashtag.name}}</h3>
+            {{#numTweets}}
+            <h5 class="text-sm font-medium dark:font-semibold text-gray-5">{{numTweets}}K Tweets</h5>
+            {{/numTweets}}
         </a>
-
-        <a class="flex flex-col gap-1 px-5 py-3 border-b cursor-pointer border-gray-9 dark:border-black-5 hover:bg-gray-7 dark:hover:bg-black-6" href="#">
-            <h4 class="text-sm font-medium dark:font-semibold text-gray-5">Trending</h4>
-            <h3 class="font-bold dark:text-gray-3">#NickiNicole</h3>
-            <h5 class="text-sm font-medium dark:font-semibold text-gray-5">620.14K Tweets</h5>
-        </a>
-
-        <a class="flex flex-col gap-1 px-5 py-3 border-b cursor-pointer border-gray-9 dark:border-black-5 hover:bg-gray-7 dark:hover:bg-black-6" href="#">
-            <h4 class="text-sm font-medium dark:font-semibold text-gray-5">Trending in Spain</h4>
-            <h3 class="font-bold dark:text-gray-3">#TailwindCSS</h3>
-            <h5 class="text-sm font-medium dark:font-semibold text-gray-5">2,678 Tweets</h5>
-        </a>
+        {{/trends}}
 
         <!-- BOTTOM BAR - MOBILE -->
         <nav class="fixed bottom-0 flex flex-col w-full gap-3 items llg:hidden">
