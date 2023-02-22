@@ -1,61 +1,31 @@
-package Controller;
+package com.TwitterClone.ProjectBackEnd.Controller;
 
-import Model.Tweet;
-import Services.TweetService;
+import com.TwitterClone.ProjectBackEnd.Model.Tweet;
+import com.TwitterClone.ProjectBackEnd.Services.TweetService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 
-/**
- * This class is on charge of controlling all the events realted to the tweets. It takes the request from the view part
- * and send then to the model part (TweetsService) to gather the required data
- */
+import java.util.List;
+import java.util.UUID;
+
+@RequestMapping("tweets/")
+@RestController
 public class TweetController {
+    @Autowired
     private TweetService tweetService;
 
-    /**
-     * This method manage the publishing petition from the view
-     * @param tweet
-     */
-    public void publish (Tweet tweet){
-
+    @GetMapping
+    public List<Tweet> getAllTweets() {
+        return tweetService.findAll();
     }
 
-    /**
-     * This method manage the action of pressing the like button.
-     * @param tweet
-     */
-    public void pressLike (Tweet tweet){
-
+    @GetMapping(path = "{id}")
+    public Tweet getOneTweet(@PathVariable("id") UUID id) {
+        return tweetService.findById(id).orElse(null);
     }
 
-    /**
-     * This method manage the action of pressing the retweet button
-     * @param tweet
-     */
-    public void pressRetweet (Tweet tweet){
-
+    @PostMapping
+    public void postTweet(@RequestBody String text){
+        tweetService.createTweet(text);
     }
-
-    /**
-     * This method manage the action of pressing the bookmark button
-     * @param tweet
-     */
-    public void pressBookmark (Tweet tweet){
-
-    }
-
-    /**
-     * This method manage the action of adding a new comment to a tweet
-     * @param tweet
-     */
-    public void addNewComment (Tweet tweet){
-
-    }
-
-    /**
-     * This method manage the action of deleting a comment from a tweet
-     * @param tweet
-     */
-    public void deleteComment (Tweet tweet){
-        // Maybe this should be a responsibility for the tweet itself?
-    }
-
 }
