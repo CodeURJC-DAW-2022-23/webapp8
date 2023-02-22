@@ -18,33 +18,23 @@
         <h2 class="px-5 pb-3 text-2xl font-bold dark:text-gray-3 text-black-0">
             What's happening
         </h2>
-
+        {{#trends}}
         <a class="flex flex-col gap-1 px-5 py-3 cursor-pointer hover:bg-gray-3 dark:hover:bg-black-3" href="#">
-            <h4 class="text-sm font-medium dark:font-semibold text-gray-5">Trending in North America</h4>
-            <h3 class="font-bold dark:text-gray-3">#RLCS</h3>
-            <h5 class="text-sm font-medium dark:font-semibold text-gray-5">20.5K Tweets</h5>
-        </a>
-
-        <a class="flex flex-col gap-1 px-5 py-3 cursor-pointer hover:bg-gray-3 dark:hover:bg-black-3" href="#">
+            {{#countryTrend}}
+            <h4 class="text-sm font-medium dark:font-semibold text-gray-5">Trending {{countryTrend}}</h4>
+            {{/countryTrend}}
+            {{^countryTrend}}
             <h4 class="text-sm font-medium dark:font-semibold text-gray-5">Trending</h4>
-            <h3 class="font-bold dark:text-gray-3">#FERXXO</h3>
-            <h5 class="text-sm font-medium dark:font-semibold text-gray-5">521K Tweets</h5>
+            {{/countryTrend}}
+            <h3 class="font-bold dark:text-gray-3">#{{hashtag.name}}</h3>
+            {{#numTweets}}
+            <h5 class="text-sm font-medium dark:font-semibold text-gray-5">{{numTweets}}K Tweets</h5>
+            {{/numTweets}}
         </a>
-
-        <a class="flex flex-col gap-1 px-5 py-3 cursor-pointer hover:bg-gray-3 dark:hover:bg-black-3" href="#">
-            <h4 class="text-sm font-medium dark:font-semibold text-gray-5">Trending</h4>
-            <h3 class="font-bold dark:text-gray-3">#NickiNicole</h3>
-            <h5 class="text-sm font-medium dark:font-semibold text-gray-5">620.14K Tweets</h5>
-        </a>
-
-        <a class="flex flex-col gap-1 px-5 py-3 cursor-pointer hover:bg-gray-3 dark:hover:bg-black-3" href="#">
-            <h4 class="text-sm font-medium dark:font-semibold text-gray-5">Trending in Spain</h4>
-            <h3 class="font-bold dark:text-gray-3">#TailwindCSS</h3>
-            <h5 class="text-sm font-medium dark:font-semibold text-gray-5">2,678 Tweets</h5>
-        </a>
+        {{/trends}}
 
         <!-- SHOW MORE -->
-        <a class="p-4 group" href="#">
+        <a class="p-4 group" href="/explore">
             <div
                 class="px-5 py-2 text-sm font-semibold transition rounded-3xl group-hover:scale-110 w-fit text-white-0 bg-primary">
                 Show more
