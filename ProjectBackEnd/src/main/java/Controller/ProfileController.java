@@ -1,6 +1,6 @@
 package Controller;
 
-import Model.RegisteredUser;
+import UserManagement.User;
 import Services.ProfileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,12 +18,12 @@ public class ProfileController {
     private ProfileService profileService;
 
     @GetMapping
-    public List<RegisteredUser> getAllUsers() {
+    public List<User> getAllUsers() {
         return profileService.findAll();
     }
 
     @GetMapping(path = "{id}")
-    public RegisteredUser getOneUser(@PathVariable("id") UUID id) {
+    public User getOneUser(@PathVariable("id") UUID id) {
         return profileService.findById(id).orElse(null);
     }
 

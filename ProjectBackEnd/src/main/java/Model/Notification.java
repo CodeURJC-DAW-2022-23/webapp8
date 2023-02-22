@@ -1,5 +1,7 @@
 package Model;
 
+import UserManagement.User;
+
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -9,8 +11,8 @@ import java.util.UUID;
 public class Notification {
     private final UUID id;
     private Tweet tweetTrigger;
-    private RegisteredUser userToNotify;
-    private RegisteredUser userWhoNotifies;
+    private User userToNotify;
+    private User userWhoNotifies;
     private LocalDateTime date;
     private notificationType type;
 

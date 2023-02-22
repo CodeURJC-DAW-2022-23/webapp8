@@ -2,7 +2,7 @@ package Services;
 
 
 import DTO.RegisteredRequest;
-import Model.RegisteredUser;
+import UserManagement.User;
 import Repository.UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -22,10 +22,10 @@ public class SignUpService {
 
     @Transactional
     public void signup(RegisteredRequest registeredRequest){
-        RegisteredUser user = new RegisteredUser();
-        user.setEmail(registeredRequest.getEmail());
+        User user = new User();
+        user.setMail(registeredRequest.getEmail());
         user.setUsername(registeredRequest.getUsername());
-        user.setPaswword(passwordEncoder.encode(registeredRequest.getPassword()));
+        user.setPassword(passwordEncoder.encode(registeredRequest.getPassword()));
 
         userRepository.save(user);
 

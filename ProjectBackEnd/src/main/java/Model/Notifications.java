@@ -1,5 +1,7 @@
 package Model;
 
+import UserManagement.User;
+
 import java.util.List;
 
 /**
@@ -7,7 +9,7 @@ import java.util.List;
  */
 public class Notifications {
 
-    private RegisteredUser userRelated;
+    private User userRelated;
 
     private List<Notification> notificationList;
 

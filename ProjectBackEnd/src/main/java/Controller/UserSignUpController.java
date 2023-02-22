@@ -2,10 +2,9 @@ package Controller;
 
 import DTO.RegisteredRequest;
 import Services.SignUpService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -17,11 +16,13 @@ import java.util.HashMap;
  * This class is on charge of managing all the petitions from the view to the model in the signUp process.
  */
 @RestController
-@RequestMapping("/signup")
+@RequestMapping(path = "api/v1/registration")
+@AllArgsConstructor
 public class UserSignUpController {
 
-    @Autowired
-    private SignUpService service;
+    private final RegisteredRequest registeredRequest;
+    private final SignUpService service;
+
 
     /**
      * We create a new form which name is the same as the id on the HTML file
@@ -29,7 +30,7 @@ public class UserSignUpController {
      * @return
      */
 
-    @PostMapping("/signup")
+
     public ResponseEntity<String> signup (@RequestBody RegisteredRequest registeredRequest){
         service.signup(registeredRequest);
         return new ResponseEntity<>("ResgistrationSuccessful", HttpStatus.OK);

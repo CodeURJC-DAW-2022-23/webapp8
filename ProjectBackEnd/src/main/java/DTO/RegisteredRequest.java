@@ -1,15 +1,16 @@
 package DTO;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Data
 @AllArgsConstructor
-@NoArgsConstructor
+@Getter
+@Setter
+@EqualsAndHashCode
 
+@ToString
 public class RegisteredRequest {
-    private String email;
+    private final String email;
     private String username;
     private String password;
 

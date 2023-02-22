@@ -1,5 +1,6 @@
 package Model;
 
+import UserManagement.User;
 import lombok.Getter;
 import lombok.Setter;
 
