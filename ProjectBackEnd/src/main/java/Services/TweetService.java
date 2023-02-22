@@ -1,76 +1,34 @@
-package Services;
+package com.TwitterClone.ProjectBackEnd.Services;
 
-import Model.Bookmark;
-import Model.Tweet;
-import Model.User;
-import Repository.TweetDataAccessService;
+import com.TwitterClone.ProjectBackEnd.Model.Tweet;
+import com.TwitterClone.ProjectBackEnd.Repository.TweetRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 /**
  * This class is on charge of implementing all the necessary logic for the Tweets.
  */
+@Service
 public class TweetService {
 
-    private Tweet tweet;
-    private TweetDataAccessService tweetDao;
+    @Autowired
+    private TweetRepository repository;
 
-    /**
-     * This method publish a new tweet on the followers feed and save it to the db.
-     * @return
-     */
-    public Tweet publishNewTweet(){
-        return new Tweet();
+    public List<Tweet> findAll(){
+        return repository.findAll();
     }
 
-    /**
-     * This method takes the id of a tweet and safely delete it from the DB
-     * @param tweetId
-     */
-    public void deleteTweet(UUID tweetId){
-
+    public void createTweet(String text){
+        Tweet tweet = new Tweet(text, null);
+        repository.save(tweet);
     }
 
-    /**
-     * This method add a like to the likes list if it was not there before or delete if it was already on the likes list
-     * of the tweet from which the petition came
-     * @param giver
-     */
-    public void like(User giver){
-
-    }
-
-    /**
-     * This method add a retweet to the likes list if it was not there before or delete if it was already on the retweet
-     * list of the tweet from which the petition came
-     * @param giver
-     */
-    public void retweet(User giver){
-
-    }
-
-    /**
-     * This method create and adds a new comment to the tweet from which the petition came
-     * @param author
-     */
-    public void addComment(User author){
-
-    }
-
-    /**
-     * This method add a tweet to the booksmarks of a user
-     * @return
-     */
-    public Bookmark addBookmark(){
-        return new Bookmark();
-    }
-
-    /**
-     * This method deletes a tweet from the bookmarks of a user
-     * @param bookmark
-     */
-    public void deleteBookmark(Bookmark bookmark){
-
+    public Optional<Tweet> findById(UUID id){
+        return repository.findById(id);
     }
 
 }
