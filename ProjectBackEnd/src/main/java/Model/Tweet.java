@@ -1,10 +1,16 @@
 package Model;
+
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.*;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.UUID;
+
+@Getter
+@Setter
 
 @Entity
 public class Tweet {
@@ -55,20 +61,5 @@ public class Tweet {
         this.citation = citation;
     }
 
-    public UUID getId() {
-        return id;
-    }
-    public String getText() {
-        return text;
-    }
-    public LocalDateTime getPublishDate() {
-        return publishDate;
-    }
-    public Tweet getCitation() {
-        return citation;
-    }
-    public User getUser() {
-        return user;
-    }
 
 }

@@ -1,7 +1,5 @@
 package Services;
 
-import Model.Tweet;
-import Model.User;
 import Repository.TweetRepository;
 import Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,8 +8,6 @@ import org.springframework.stereotype.Service;
 import javax.annotation.PostConstruct;
 import java.io.IOException;
 import java.net.URISyntaxException;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 @Service
 public class DBInitializer {
@@ -22,6 +18,7 @@ public class DBInitializer {
 
     @PostConstruct
     public void init() throws IOException, URISyntaxException {
+/*
 
         //Sample Users
         String [] files = {"example_data/elrubius_profilepic.jpg","example_data/elrubius_profilebanner.jpg"};
@@ -58,6 +55,7 @@ public class DBInitializer {
         tweetRepository.save(tweet8);
         tweetRepository.save(tweet9);
         tweetRepository.save(tweet10);
+*/
 
     }
 }

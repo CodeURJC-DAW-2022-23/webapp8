@@ -6,6 +6,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.Optional;
 import java.util.UUID;
 
-public interface TweetRepository extends JpaRepository<Tweet, Long> {
+public interface TweetRepository extends JpaRepository<Tweet, UUID> {
     Optional<Tweet> findById(UUID id);
 }

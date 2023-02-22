@@ -1,33 +1,33 @@
 package Services;
 
-import Model.RegisteredUser;
-import Model.User;
-import Repository.UserDataAccessService;
 
-import java.util.ArrayList;
-import java.util.HashMap;
+import DTO.RegisteredRequest;
+import Model.RegisteredUser;
+import Repository.UserRepository;
+import lombok.AllArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
+
+import javax.transaction.Transactional;
 
 /**
  * This class is on charge of implementing all the model part of the signUp process and contains all its logic.
  */
+@Service
+@AllArgsConstructor
 public class SignUpService {
 
-    private UserDataAccessService userDao;
+    private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
-    /**
-     * This method process a given form
-     * @param form
-     * @return A new user from the information provided.
-     */
-    public RegisteredUser createNewUser(ArrayList<HashMap<String, String>> form){
-        return new RegisteredUser();
-    }
+    @Transactional
+    public void signup(RegisteredRequest registeredRequest){
+        RegisteredUser user = new RegisteredUser();
+        user.setEmail(registeredRequest.getEmail());
+        user.setUsername(registeredRequest.getUsername());
+        user.setPaswword(passwordEncoder.encode(registeredRequest.getPassword()));
 
-    /**
-     * This method add a new user to our DB
-     * @param newUser
-     */
-    private void saveNewUser(User newUser){
+        userRepository.save(user);
 
     }
 

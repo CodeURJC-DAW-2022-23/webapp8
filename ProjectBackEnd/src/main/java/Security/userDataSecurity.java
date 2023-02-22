@@ -1,14 +1,16 @@
 package Security;
 
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityConfiguration;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 /**
  * This class is in charge of controlling the security part of the login procedure by using Spring security modules
  */
-
-public class userDataSecurity {
+@EnableWebSecurity
+public class userDataSecurity extends WebSecurityConfiguration {
 
     /**
      * This method receives the data from the logIn form and return true if the username and password are correct.

@@ -1,14 +1,13 @@
 package Controller;
 
-import Model.User;
+import Model.RegisteredUser;
 import Services.ProfileService;
-import org.hibernate.engine.jdbc.BlobProxy;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import java.io.IOException;
-import java.sql.Blob;
 import java.util.List;
 import java.util.UUID;
 
@@ -19,18 +18,18 @@ public class ProfileController {
     private ProfileService profileService;
 
     @GetMapping
-    public List<User> getAllUsers() {
+    public List<RegisteredUser> getAllUsers() {
         return profileService.findAll();
     }
 
     @GetMapping(path = "{id}")
-    public User getOneUser(@PathVariable("id") UUID id) {
+    public RegisteredUser getOneUser(@PathVariable("id") UUID id) {
         return profileService.findById(id).orElse(null);
     }
 
-    @PostMapping
+    /*@PostMapping
     public void postUser(String username, String nickname, String biography, String mail, String password, MultipartFile banner, MultipartFile profilePic) throws IOException {
         Blob[] files = {BlobProxy.generateProxy( profilePic.getInputStream(),profilePic.getSize()), BlobProxy.generateProxy( banner.getInputStream(),banner.getSize())};
         profileService.createProfile(username, nickname, biography, mail, password, files);
-    }
+    }*/
 }
