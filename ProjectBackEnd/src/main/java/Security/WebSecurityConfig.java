@@ -10,12 +10,11 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfiguration;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
 @AllArgsConstructor
 @EnableWebSecurity
-public class WeSecurityConfig extends WebSecurityConfiguration {
+public class WebSecurityConfig extends WebSecurityConfiguration {
 
 
     /**
@@ -32,14 +31,14 @@ public class WeSecurityConfig extends WebSecurityConfiguration {
         //CRSF tokens consigure:
         http
                 .csrf().disable()
-                        .authorizeRequests()
-                                .antMatchers("/api/v*/registration/**")
-                                .permitAll()
-                        .anyRequest()
-                        .authenticated().and()
-                        .formLogin();
+                .authorizeRequests()
+                .antMatchers("/api/v*/registration/**")
+                .permitAll()
+                .anyRequest()
+                .authenticated().and()
+                .formLogin();
 
-        // Public pages
+     /*   // Public pages
         http.authorizeRequests().antMatchers("/").permitAll();
         http.authorizeRequests().antMatchers("/error").permitAll();
         http.authorizeRequests().antMatchers("/login").permitAll();
@@ -66,17 +65,12 @@ public class WeSecurityConfig extends WebSecurityConfiguration {
 
         // Logout
         http.logout().logoutUrl("/logout");
-        http.logout().logoutSuccessUrl("/");
+        http.logout().logoutSuccessUrl("/");*/
     }
 
     protected void configure(AuthenticationManagerBuilder auth){
         auth.authenticationProvider(daoAuthenticationProvider());
     }
-    @Bean
-    public PasswordEncoder encoder() {
-        return new BCryptPasswordEncoder();
-    }
-
     @Bean
 
     public DaoAuthenticationProvider daoAuthenticationProvider(){

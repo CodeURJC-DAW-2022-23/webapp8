@@ -5,6 +5,7 @@ import Services.SignUpService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -14,9 +15,8 @@ import java.util.HashMap;
 
 /**
  * This class is on charge of managing all the petitions from the view to the model in the signUp process.
- */
-@RestController
-@RequestMapping(path = "api/v1/registration")
+ */@RestController
+@RequestMapping(path = "/signup")
 @AllArgsConstructor
 public class UserSignUpController {
 
@@ -29,28 +29,10 @@ public class UserSignUpController {
      *
      * @return
      */
-
-
+    @PostMapping
     public ResponseEntity<String> signup (@RequestBody RegisteredRequest registeredRequest){
         service.signup(registeredRequest);
         return new ResponseEntity<>("ResgistrationSuccessful", HttpStatus.OK);
-    }
-
-    /**
-     * This method is on charge of adding a new user to our DB
-     * @param form
-     */
-    public void saveNewUser(ArrayList<HashMap<String, String>> form){
-
-    }
-
-    /**
-     * This method is on charge of processing the form of a new user
-     * @param form
-     * @return
-     */
-    public boolean processNewUserForm(ArrayList<HashMap<String, String>> form){
-        return true; //Should return the result of checking the information with the secure config module
     }
 
 }
