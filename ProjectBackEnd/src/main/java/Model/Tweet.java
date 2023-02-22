@@ -1,48 +1,74 @@
-package Model;
-
-import java.io.File;
+package com.TwitterClone.ProjectBackEnd.Model;
+import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.ArrayList;
+import java.time.LocalDateTime;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.UUID;
 
-/**
- *
- */
-
+@Entity
 public class Tweet {
-
+    @Id
+    @Column(name = "id", length = 16, unique = true, nullable = false)
     private final UUID id;
-    private User user; //Check if it's better with springSec Framework.
-    private final LocalDate publishDate;
-    private ArrayList<Like> likes;
-    private ArrayList<Retweet> retweets;
-    private ArrayList<Comment> comments;
+    @OneToOne
+    private User user;
+    private final LocalDateTime publishDate;
+    @OneToMany
+    private List<User> likes;
+    @OneToMany
+    private List<User> retweets;
+    @OneToMany
+    private List<Tweet> comments;
+    @OneToOne
+    private Tweet citation;
     private String text;
-    private File[] media;
-    private String hashtag; // Later
+    //@Lob
+    //private Blob[] media;
+    //private Set<String> hashtag; // Later
 
-    /**
-     * At the beginning, a Tweet has no comments, likes or retweets, but it may contain media, text or hashtags selected
-     * by the user when creating it.
-     * The id is randomly selected and the date is the exact date in which it was published.
-     */
-    public Tweet() {
+    public Tweet(){
         this.id = UUID.randomUUID();
-        this.publishDate = java.time.LocalDate.now();
-        this.likes = new ArrayList<Like>();
-        this.retweets =  new ArrayList<Retweet>();
-        this.comments = new ArrayList<Comment>();
-        this.text = addText();
-        this.media= addMedia();
+        this.publishDate = LocalDateTime.now();
+    }
+    public Tweet(String text, User user) {
+        this.id = UUID.randomUUID();
+        this.publishDate = LocalDateTime.now();
+        this.likes = new LinkedList<User>();
+        this.retweets =  new LinkedList<User>();
+        this.comments = new LinkedList<Tweet>();
+        this.text = text;
+        this.user = user;
     }
 
-    /* This two methods may not be needed.*/
-    private File[] addMedia() {
-        return null; //Return the set of media that the user wants to upload
+    /*
+    For example data
+     */
+    public Tweet(String text, User user, LocalDateTime time, Tweet citation) {
+        this.id = UUID.randomUUID();
+        this.publishDate = time;
+        this.likes = new LinkedList<User>();
+        this.retweets =  new LinkedList<User>();
+        this.comments = new LinkedList<Tweet>();
+        this.text = text;
+        this.user = user;
+        this.citation = citation;
     }
 
-    public String addText(){
-        return "";// Return the text written by the user
+    public UUID getId() {
+        return id;
+    }
+    public String getText() {
+        return text;
+    }
+    public LocalDateTime getPublishDate() {
+        return publishDate;
+    }
+    public Tweet getCitation() {
+        return citation;
+    }
+    public User getUser() {
+        return user;
     }
 
 }
