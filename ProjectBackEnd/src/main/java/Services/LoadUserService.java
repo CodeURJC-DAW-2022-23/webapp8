@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 /**
@@ -18,6 +19,7 @@ public class UserService implements UserDetailsService {
     private final static String USER_NOT_FOUND = "User with username %username not found";
     private final UserRepository userRepository;
 
+
     /**
      * It searchs on the repository to see if it can find a user by the username. If not, it throws an
      * exception
@@ -30,4 +32,5 @@ public class UserService implements UserDetailsService {
         return userRepository.findByUsername(username).
                 orElseThrow(()-> new UsernameNotFoundException(String.format(USER_NOT_FOUND)));
     }
+
 }
