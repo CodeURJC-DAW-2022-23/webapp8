@@ -4,14 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8b89f7d2-347b-416c-8b37-7bd2a0a51fcc" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/Security/EmailValidator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.mvn/wrapper/maven-wrapper.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Controller/UserSignUpController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Controller/UserSignUpController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Security/WeSecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Security/WebSecurityConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Services/SignUpService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Services/SignUpService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/com/TwitterClone/ProjectBackEnd/ProjectBackEndApplicationTests.java" beforeDir="false" />
-    </list>
+    <list default="true" id="8b89f7d2-347b-416c-8b37-7bd2a0a51fcc" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -28,7 +21,7 @@
     </option>
   </component>
   <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -45,31 +38,32 @@
     <option name="version" value="2" />
   </component>
   <component name="ProjectId" id="2M5uyDaenANRC4NFMa0QuRdlvx2" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RequestMappingsPanelOrder0": "0",
-    "RequestMappingsPanelOrder1": "1",
-    "RequestMappingsPanelWidth0": "75",
-    "RequestMappingsPanelWidth1": "75",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "C:/Users/ikabl/OneDrive - Universidad Rey Juan Carlos/1.- 3º Grado en Ingeniería del Software/6.- Desarrollo de aplicaciones Web/Práctica/0.5-Clone_Repo_Fixed/webapp8/webapp8/ProjectBackEnd",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "project.structure.last.edited": "Project",
-    "project.structure.proportion": "0.0",
-    "project.structure.side.proportion": "0.0",
-    "spring.configuration.checksum": "8f37f76bce550937b4288df4f5e67ed8",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
+    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
+    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
+    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/ikabl/OneDrive - Universidad Rey Juan Carlos/1.- 3º Grado en Ingeniería del Software/6.- Desarrollo de aplicaciones Web/Práctica/0.5-Clone_Repo_Fixed/webapp8/webapp8/ProjectBackEnd&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
+    &quot;spring.configuration.checksum&quot;: &quot;8f37f76bce550937b4288df4f5e67ed8&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\ikarm\Desktop\webapp8\ProjectBackEnd\src\main\resources\static\templates" />
@@ -97,6 +91,7 @@
       <workItem from="1677091363916" duration="190000" />
       <workItem from="1677100393372" duration="699000" />
       <workItem from="1677101129595" duration="218000" />
+      <workItem from="1677134996593" duration="244000" />
     </task>
     <servers />
   </component>

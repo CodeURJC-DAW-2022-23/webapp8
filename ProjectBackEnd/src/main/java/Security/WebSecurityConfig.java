@@ -1,9 +1,10 @@
 package Security;
 
-import UserManagement.UserService;
+import Services.LoadUserService;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -23,7 +24,7 @@ public class WebSecurityConfig extends WebSecurityConfiguration {
      * @throws Exception
      */
 
-    private final UserService userService;
+    private final LoadUserService loadUserService;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     protected void configure(HttpSecurity http) throws Exception {
@@ -69,14 +70,13 @@ public class WebSecurityConfig extends WebSecurityConfiguration {
     }
 
     protected void configure(AuthenticationManagerBuilder auth){
-        auth.authenticationProvider(daoAuthenticationProvider());
+        auth.authenticationProvider(AuthenticationProvider());
     }
     @Bean
-
-    public DaoAuthenticationProvider daoAuthenticationProvider(){
+    public AuthenticationProvider AuthenticationProvider(){
         DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
         provider.setPasswordEncoder(bCryptPasswordEncoder);
-        provider.setUserDetailsService(userService);
+        provider.setUserDetailsService(loadUserService);
         return provider;
     }
 

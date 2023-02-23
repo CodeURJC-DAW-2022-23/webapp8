@@ -60,6 +60,7 @@ public class User implements UserDetails {
         this.password = password;
         this.mail = email;
         this.id = UUID.randomUUID();
+        this.role = UserRoles.valueOf("Registered");
         this.joinDate = java.time.LocalDate.now();
         this.loggedIn = false;
     }

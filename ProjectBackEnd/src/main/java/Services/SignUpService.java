@@ -5,10 +5,8 @@ import DTO.RegisteredRequest;
 import Security.EmailValidator;
 import UserManagement.User;
 import Repository.UserRepository;
-import UserManagement.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -20,27 +18,30 @@ import javax.transaction.Transactional;
 @AllArgsConstructor
 public class SignUpService {
 
-    private final UserRepository userRepository;
-    private final PasswordEncoder passwordEncoder;
     private final EmailValidator emailValidator;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
-    private final UserService userService;
+    private final UserRepository userRepository;
 
+    /**
+     * It takes the parameters of the request, test if they are valid and them registered a new user
+     * @param request
+     * @return
+     */
     @Transactional
-    public String signup(RegisteredRequest registeredRequest){
-        User user = new User();
-        boolean userExist = userRepository.findByUsername(user.getUsername()).isPresent();
-        if (userExist){
+    public String signup(RegisteredRequest request){
+       User user =  new User(request.getUsername(), request.getPassword(), request.getEmail());
+        if (!emailValidator.test(request.getEmail())){
+            throw new IllegalStateException("Invalid Mail Format");
+        }
+        if (userRepository.findByUsername(user.getUsername()).isPresent()){
             throw new IllegalStateException("Username already taken");
         }
-        user.setMail(registeredRequest.getEmail());
+
         String encodedPassword = bCryptPasswordEncoder.encode(user.getPassword());
         user.setPassword(encodedPassword);
-
+        user.setEnabled(true);
         userRepository.save(user);
-        return "It Works!!!!!!"; //Just for testing
+
+        return  "It worked!";
     }
-
-
-
 }
