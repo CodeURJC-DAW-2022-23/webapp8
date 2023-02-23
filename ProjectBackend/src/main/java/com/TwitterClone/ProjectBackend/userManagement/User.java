@@ -28,7 +28,7 @@ import java.util.UUID;
 @EqualsAndHashCode
 @Entity
 @Table(name = "users")
-public class User implements UserDetails {
+public class User {
 
     @Id
     @SequenceGenerator(
@@ -97,34 +97,5 @@ public class User implements UserDetails {
      * It sets the authority level according to the user role
      * @return
      */
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        SimpleGrantedAuthority authority = new SimpleGrantedAuthority(role.name());
-        return Collections.singletonList(authority);
-    }
 
-    @Override
-    public String getPassword() {
-        return password;
-    }
-
-    @Override
-    public boolean isAccountNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isAccountNonLocked() {
-        return !locked;
-    }
-
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isEnabled() {
-        return enabled;
-    }
 }

@@ -7,7 +7,7 @@ import com.TwitterClone.ProjectBackend.userManagement.User;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -23,7 +23,7 @@ public class SignUpService {
     @Autowired
     private EmailValidator emailValidator;
     @Autowired
-    private BCryptPasswordEncoder bCryptPasswordEncoder;
+    private PasswordEncoder passwordEncoder;
     @Autowired
     private UserRepository userRepository;
 
@@ -42,7 +42,7 @@ public class SignUpService {
             throw new IllegalStateException("Username already taken");
         }
 
-        String encodedPassword = bCryptPasswordEncoder.encode(user.getPassword());
+        String encodedPassword = passwordEncoder.encode(user.getPassword());
         user.setPassword(encodedPassword);
         user.setEnabled(true);
         userRepository.save(user);

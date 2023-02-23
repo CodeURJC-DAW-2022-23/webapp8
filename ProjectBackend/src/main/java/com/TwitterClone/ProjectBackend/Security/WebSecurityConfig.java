@@ -1,20 +1,19 @@
 package com.TwitterClone.ProjectBackend.Security;
 
-import com.TwitterClone.ProjectBackend.Service.LoadUserService;
+import com.TwitterClone.ProjectBackend.userManagement.RepositoryUserDetailsService;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.authentication.AuthenticationProvider;
-import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfiguration;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.SecurityFilterChain;
+
+import java.security.SecureRandom;
 
 @Configuration
 @AllArgsConstructor
@@ -27,8 +26,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
      * @throws Exception
      */
 
-    private final LoadUserService loadUserService;
-    private final BCryptPasswordEncoder bCryptPasswordEncoder;
+    @Autowired
+    RepositoryUserDetailsService userDetailsService;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -57,17 +56,21 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.logout().logoutUrl("/logout");
         http.logout().logoutSuccessUrl("/");
         http.csrf().disable();
+        // Allow H2 console
+        http.authorizeRequests().antMatchers("/h2-console/**").permitAll();
+        http.headers().frameOptions().sameOrigin();
 
+    }
+
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder(10, new SecureRandom());
     }
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 
-        PasswordEncoder encoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
-
-        String encodedPassword = encoder.encode("pass");
-
-        auth.inMemoryAuthentication().withUser("user").password(encodedPassword).roles("USER");
+        auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
     }
 
 /*    @Override
