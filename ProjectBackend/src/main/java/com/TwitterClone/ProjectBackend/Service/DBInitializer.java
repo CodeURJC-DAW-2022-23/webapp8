@@ -13,14 +13,16 @@ import java.net.URISyntaxException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
+
 @Service
+
 public class DBInitializer {
     @Autowired
     private TweetRepository tweetRepository;
     @Autowired
     private UserRepository userRepository;
 
-
+    @PostConstruct
     public void init() throws IOException, URISyntaxException {
 
         //Sample Users

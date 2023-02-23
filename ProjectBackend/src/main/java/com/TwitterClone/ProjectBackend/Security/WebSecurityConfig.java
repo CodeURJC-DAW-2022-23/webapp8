@@ -12,6 +12,8 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfiguration;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.factory.PasswordEncoderFactories;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
@@ -30,13 +32,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+
         http.authorizeRequests().antMatchers("/").permitAll();
         http.authorizeRequests().antMatchers("/login").permitAll();
         http.authorizeRequests().antMatchers("/signup").permitAll();
         http.authorizeRequests().antMatchers("/error").permitAll();
         http.authorizeRequests().antMatchers("/logout").permitAll();
 
-        http.authorizeRequests().antMatchers("/home").hasAnyRole("USER");
 
         // Login form
         http.formLogin().loginPage("/login");
@@ -58,9 +60,17 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     }
 
-
-
     @Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+
+        PasswordEncoder encoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
+
+        String encodedPassword = encoder.encode("pass");
+
+        auth.inMemoryAuthentication().withUser("user").password(encodedPassword).roles("USER");
+    }
+
+/*    @Override
     protected void configure(AuthenticationManagerBuilder auth){
         auth.authenticationProvider(AuthenticationProvider());
     }
@@ -70,5 +80,5 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         provider.setPasswordEncoder(bCryptPasswordEncoder);
         provider.setUserDetailsService(loadUserService);
         return provider;
-    }
+    }*/
 }
