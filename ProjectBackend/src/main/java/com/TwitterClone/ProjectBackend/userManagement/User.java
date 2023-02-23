@@ -9,12 +9,14 @@ import lombok.Setter;/*
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;*/
+import org.hibernate.validator.constraints.UniqueElements;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.io.IOException;
 import java.sql.Blob;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.*;
 
 /**
@@ -28,21 +30,27 @@ import java.util.*;
 
 
 public class User /*implements UserDetails*/ {
-    private final @Id @GeneratedValue Long id;
+    private final @Id Long id;
+    @Column(unique=true)
+    private String username;
+    @Column(unique=true)
+    private  String mail;
     private  String nickname;
     private  String biography;
-    private  String mail;
     private  String password;
+    @Lob
     private  Blob profilePicture;
+    @Lob
     private  Blob profileBanner;
-    private String username;
     @Enumerated(EnumType.STRING)
     private UserRoles role;
     private boolean loggedIn;
-    private ArrayList<Long> followers;
-    private ArrayList<Long> followed;
-    private ArrayList<Tweet> tweetsTShow;
-
+    @OneToMany
+    private List<User> followers;
+    @OneToMany
+    private List<User> followed;
+    @OneToMany
+    private List<Tweet> tweetsWritten;
     private final LocalDate joinDate;
     private Boolean locked;
     private Boolean enabled;
@@ -60,6 +68,9 @@ public class User /*implements UserDetails*/ {
         this.id = new Random().nextLong();
         this.role = UserRoles.valueOf("USER");
         this.joinDate = java.time.LocalDate.now();
+        this.followers = new LinkedList<>();
+        this.followed = new LinkedList<>();
+        this.tweetsWritten = new LinkedList<>();
         this.loggedIn = false;
     }
 
@@ -80,6 +91,9 @@ public class User /*implements UserDetails*/ {
         this.role = UserRoles.valueOf("USER");
         this.mail = mail;
         this.password = password;
+        this.followers = new LinkedList<>();
+        this.followed = new LinkedList<>();
+        this.tweetsWritten = new LinkedList<>();
         this.setImages(files);
     }
 
