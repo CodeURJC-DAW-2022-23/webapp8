@@ -25,8 +25,7 @@ public class UserSignupController {
 
     @GetMapping("/signup")
     public ModelAndView home() {
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("signup");
+        ModelAndView modelAndView = new ModelAndView("redirect:/");
         return modelAndView;
     }
 
