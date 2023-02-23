@@ -45,6 +45,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.formLogin().defaultSuccessUrl("/home");
         http.formLogin().failureUrl("/error");
 
+        // Private pages
+        http.authorizeRequests().antMatchers("/home").hasAnyRole("USER");
+        http.authorizeRequests().antMatchers("/notifications").hasAnyRole("USER");
+        http.authorizeRequests().antMatchers("/bookmarks").hasAnyRole("USER");
+        http.authorizeRequests().antMatchers("/write-tweet").hasAnyRole("USER");
+
         // Logout
         http.logout().logoutUrl("/logout");
         http.logout().logoutSuccessUrl("/");
