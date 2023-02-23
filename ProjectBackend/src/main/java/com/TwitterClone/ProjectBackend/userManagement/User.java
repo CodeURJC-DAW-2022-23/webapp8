@@ -30,8 +30,15 @@ import java.util.UUID;
 @Table(name = "users")
 public class User implements UserDetails {
 
-    private final @Id
-    @GeneratedValue UUID id;
+    @Id
+    @SequenceGenerator(
+            name = "test_user",
+            sequenceName = "test_use",
+            allocationSize = 1
+    )
+    @GeneratedValue(strategy = GenerationType.SEQUENCE,
+    generator = "test_user")
+    private Long id;
     private  String nickname;
     private  String biography;
     private  String mail;
@@ -42,8 +49,8 @@ public class User implements UserDetails {
     @Enumerated(EnumType.STRING)
     private UserRoles role;
     private boolean loggedIn;
-    private ArrayList<UUID> followers;
-    private ArrayList<UUID> followed;
+    private ArrayList<Long> followers;
+    private ArrayList<Long> followed;
     private ArrayList<Tweet> tweetsTShow;
 
     private final LocalDate joinDate;
@@ -60,14 +67,12 @@ public class User implements UserDetails {
         this.username = username;
         this.password = password;
         this.mail = email;
-        this.id = UUID.randomUUID();
-        this.role = UserRoles.valueOf("Registered");
+        this.role = UserRoles.valueOf("USER");
         this.joinDate = java.time.LocalDate.now();
         this.loggedIn = false;
     }
 
     public User() {
-        this.id = UUID.randomUUID();
         this.joinDate = java.time.LocalDate.now();
     }
 
@@ -75,12 +80,11 @@ public class User implements UserDetails {
    This constructor is for sample data
     */
     public User(String username, String nickname, String biography, String mail, String password, String [] files, LocalDate time, String role) throws IOException {
-        this.id = UUID.randomUUID();
         this.username = username;
         this.nickname = nickname;
         this.biography = biography;
         this.joinDate = time;
-        this.role = UserRoles.valueOf("Registered");
+        this.role = UserRoles.valueOf("USER");
         this.mail = mail;
         this.password = password;
         this.setImages(files);
@@ -101,7 +105,7 @@ public class User implements UserDetails {
 
     @Override
     public String getPassword() {
-        return getPassword();
+        return password;
     }
 
     @Override

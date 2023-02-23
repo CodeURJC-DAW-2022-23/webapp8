@@ -11,7 +11,7 @@ public class EmailValidator implements Predicate<String> {
             + "[^-][A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$";
     @Override
     public boolean test(String s) {
-        return Pattern.compile(regexPattern).matcher(s) .matches();
+        return s.matches(regexPattern);
     }
 
 }

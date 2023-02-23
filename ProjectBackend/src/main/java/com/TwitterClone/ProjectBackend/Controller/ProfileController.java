@@ -23,7 +23,7 @@ public class ProfileController {
     }
 
     @GetMapping(path = "{id}")
-    public User getOneUser(@PathVariable("id") UUID id) {
+    public User getOneUser(@PathVariable("id") Long id) {
         return profileService.findById(id).orElse(null);
     }
 

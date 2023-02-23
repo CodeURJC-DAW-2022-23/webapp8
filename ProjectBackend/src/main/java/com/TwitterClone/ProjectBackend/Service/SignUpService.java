@@ -6,6 +6,7 @@ import com.TwitterClone.ProjectBackend.Security.EmailValidator;
 import com.TwitterClone.ProjectBackend.userManagement.User;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -19,8 +20,11 @@ import javax.transaction.Transactional;
 @NoArgsConstructor
 public class SignUpService {
 
+    @Autowired
     private EmailValidator emailValidator;
+    @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
+    @Autowired
     private UserRepository userRepository;
 
     /**
