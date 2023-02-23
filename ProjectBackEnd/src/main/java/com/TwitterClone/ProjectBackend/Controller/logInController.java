@@ -1,3 +1,4 @@
+/*
 package com.TwitterClone.ProjectBackend.Controller;
 
 import org.springframework.stereotype.Controller;
@@ -12,3 +13,4 @@ public class logInController {
         return "/login";
     }
 }
+*/

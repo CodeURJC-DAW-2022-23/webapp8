@@ -1,3 +1,4 @@
+/*
 package com.TwitterClone.ProjectBackend.Security;
 
 import com.TwitterClone.ProjectBackend.userManagement.RepositoryUserDetailsService;
@@ -5,12 +6,13 @@ import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.security.SecureRandom;
@@ -20,14 +22,27 @@ import java.security.SecureRandom;
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-    /**
+    */
+/**
      * In this method we disable the CSRF protection for know so our app can accept any request from any user.
      * @param http
      * @throws Exception
-     */
+     *//*
+
 
     @Autowired
-    RepositoryUserDetailsService userDetailsService;
+    private RepositoryUserDetailsService userDetailsService;
+
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder(10, new SecureRandom());
+    }
+
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+
+        auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
+    }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -62,26 +77,20 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     }
 
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder(10, new SecureRandom());
-    }
 
-    @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 
-        auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
-    }
-
-/*    @Override
+   */
+/* @Override
     protected void configure(AuthenticationManagerBuilder auth){
         auth.authenticationProvider(AuthenticationProvider());
     }
     @Bean
     public AuthenticationProvider AuthenticationProvider(){
         DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
-        provider.setPasswordEncoder(bCryptPasswordEncoder);
-        provider.setUserDetailsService(loadUserService);
+        provider.setPasswordEncoder(passwordEncoder());
+        provider.setUserDetailsService(userDetailsService);
         return provider;
-    }*/
+    }*//*
+
 }
+*/

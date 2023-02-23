@@ -1,4 +1,4 @@
-package com.TwitterClone.ProjectBackend.Service;
+/*package com.TwitterClone.ProjectBackend.Service;
 
 import com.TwitterClone.ProjectBackend.DTO.RegisteredRequest;
 import com.TwitterClone.ProjectBackend.Repository.UserRepository;
@@ -12,9 +12,9 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 
-/**
+*//**
  * This class is on charge of implementing all the model part of the signUp process and contains all its logic.
- */
+ *//*
 @Service
 @AllArgsConstructor
 @NoArgsConstructor
@@ -27,11 +27,11 @@ public class SignUpService {
     @Autowired
     private UserRepository userRepository;
 
-    /**
+    *//**
      * It takes the parameters of the request, test if they are valid and them registered a new user
      * @param request
      * @return
-     */
+     *//*
     @Transactional
     public String signup(RegisteredRequest request){
         User user =  new User(request.getUsername(), request.getPassword(), request.getEmail());
@@ -44,9 +44,9 @@ public class SignUpService {
 
         String encodedPassword = passwordEncoder.encode(user.getPassword());
         user.setPassword(encodedPassword);
-        user.setEnabled(true);
+        //user.setEnabled(true);
         userRepository.save(user);
 
         return  "It worked!";
     }
-}
+}*/

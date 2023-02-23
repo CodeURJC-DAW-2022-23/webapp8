@@ -1,15 +1,22 @@
 package com.TwitterClone.ProjectBackend.Controller;
 
 import com.TwitterClone.ProjectBackend.Model.*;
+import com.TwitterClone.ProjectBackend.Repository.UserRepository;
+import com.TwitterClone.ProjectBackend.userManagement.User;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import javax.servlet.http.HttpServletRequest;
 
 import java.util.List;
 
 /**
  * This class is on charge of controlling the navigation through the website.
  */
+
 @Controller
 public class NavigationController {
 
@@ -18,6 +25,10 @@ public class NavigationController {
     Home home;
     Profile profile;
     NotificationsPage notification;
+    @Autowired
+    private UserRepository userRepository;
+
+
 
     /**
      * Change from the current page to the home page

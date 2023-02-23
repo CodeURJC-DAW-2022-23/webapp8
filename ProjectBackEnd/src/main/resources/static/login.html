@@ -60,9 +60,9 @@
                     Log in to Twitter
                 </h1>
 
-                <form class="flex flex-col justify-center gap-5" action="/login" method = "post">
+                <form class="flex flex-col justify-center gap-5">
                     <div class="relative">
-                        <input type="text" id="username"
+                        <input type="text" id="username" name = "username"
                             class="px-4 pb-2.5 pt-4 w-full text-gray-5 bg-transparent rounded-xl border-[1.9px] border-gray-15 dark:text-white-0 dark:border-gray-5 focus:outline-none focus:ring-0 focus:border-primary peer"
                             placeholder=" ">
                         <label for="username"
@@ -71,7 +71,7 @@
                     </div>
 
                     <div class="relative">
-                        <input type="password" id="password"
+                        <input type="password" id="password" name = "username"
                             class="px-4 pb-2.5 pt-4 w-full text-gray-5 bg-transparent rounded-xl border-[1.9px] border-gray-15 dark:text-white-0 dark:border-gray-5 focus:outline-none focus:ring-0 focus:border-primary peer"
                             placeholder=" ">
                         <label for="password"
@@ -80,7 +80,7 @@
 
                     <a class="w-full px-5 py-3 font-bold text-center transition rounded-full cursor-pointer dark:bg-white-0 dark:text-black-0 text-white-0 bg-black-0 hover:scale-110"
                         href="/home"
-                    type="submit"> <!-- (temporal)-->
+                       > <!-- (temporal)-->
                         Next
                     </a>
 
