@@ -1,0 +1,506 @@
+Index: ProjectBackEnd/src/main/java/Controller/TweetController.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package Controller;\r\n\r\nimport Model.Tweet;\r\nimport Services.TweetService;\r\nimport org.springframework.beans.factory.annotation.Autowired;\r\nimport org.springframework.web.bind.annotation.*;\r\n\r\nimport java.util.List;\r\nimport java.util.UUID;\r\n\r\n@RequestMapping(\"tweets/\")\r\n@RestController\r\npublic class TweetController {\r\n    @Autowired\r\n    private TweetService tweetService;\r\n\r\n    @GetMapping\r\n    public List<Tweet> getAllTweets() {\r\n        return tweetService.findAll();\r\n    }\r\n\r\n    @GetMapping(path = \"{id}\")\r\n    public Tweet getOneTweet(@PathVariable(\"id\") UUID id) {\r\n        return tweetService.findById(id).orElse(null);\r\n    }\r\n\r\n    @PostMapping\r\n    public void postTweet(@RequestBody String text){\r\n        tweetService.createTweet(text);\r\n    }\r\n}
+===================================================================
+diff --git a/ProjectBackEnd/src/main/java/Controller/TweetController.java b/ProjectBackEnd/src/main/java/Controller/TweetController.java
+--- a/ProjectBackEnd/src/main/java/Controller/TweetController.java	
++++ b/ProjectBackEnd/src/main/java/Controller/TweetController.java	
+@@ -2,9 +2,15 @@
+ 
+ import Model.Tweet;
+ import Services.TweetService;
++import UserManagement.User;
++import org.hibernate.engine.jdbc.BlobProxy;
+ import org.springframework.beans.factory.annotation.Autowired;
++import org.springframework.lang.Nullable;
+ import org.springframework.web.bind.annotation.*;
++import org.springframework.web.multipart.MultipartFile;
+ 
++import java.io.IOException;
++import java.sql.Blob;
+ import java.util.List;
+ import java.util.UUID;
+ 
+@@ -25,7 +31,58 @@
+     }
+ 
+     @PostMapping
+-    public void postTweet(@RequestBody String text){
+-        tweetService.createTweet(text);
++    public void postTweet(@RequestBody String text, MultipartFile image1, MultipartFile image2, MultipartFile image3, MultipartFile image4, Tweet citation) throws IOException {
++        Blob [] files = new Blob[4];
++        if (image1 != null){
++            files[0] = BlobProxy.generateProxy(image1.getInputStream(),image1.getSize());
++        }
++        if (image2 != null){
++            files[1] = BlobProxy.generateProxy(image2.getInputStream(),image2.getSize());
++        }
++        if (image3 != null){
++            files[2] = BlobProxy.generateProxy(image3.getInputStream(),image3.getSize());
++        }
++        if (image4 != null){
++            files[3] = BlobProxy.generateProxy(image4.getInputStream(),image4.getSize());
++        }
++        User user = new User();//Needs to be redo
++        tweetService.createTweet(text, files, citation, user);
++    }
++
++    @PostMapping
++    public void toggleLike(@RequestBody Tweet tweet){
++        User user = new User();//Needs to be redone
++        tweetService.toggleLike(user, tweet);
++    }
++
++    @PostMapping
++    public void toggleRetweet(@RequestBody Tweet tweet){
++        User user = new User();//Needs to be redone
++        tweetService.toggleRetweet(user, tweet);
++    }
++
++    @PostMapping
++    public void deleteTweet(@RequestBody Tweet tweet){
++        tweetService.deleteTweet(tweet);
++    }
++
++    @PostMapping
++    public void postComment(@RequestBody String text, MultipartFile image1, MultipartFile image2, MultipartFile image3, MultipartFile image4,@RequestBody Tweet tweetCommented) throws IOException {
++        Blob [] files = new Blob[4];
++        if (image1 != null){
++            files[0] = BlobProxy.generateProxy(image1.getInputStream(),image1.getSize());
++        }
++        if (image2 != null){
++            files[1] = BlobProxy.generateProxy(image2.getInputStream(),image2.getSize());
++        }
++        if (image3 != null){
++            files[2] = BlobProxy.generateProxy(image3.getInputStream(),image3.getSize());
++        }
++        if (image4 != null){
++            files[3] = BlobProxy.generateProxy(image4.getInputStream(),image4.getSize());
++        }
++
++        User user = new User();//Needs to be redo
++        tweetService.addComment(text, files, user, tweetCommented);
+     }
+ }
+\ No newline at end of file
+Index: ProjectBackEnd/src/main/java/Services/TweetService.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package Services;\r\n\r\nimport Model.Tweet;\r\nimport Repository.TweetRepository;\r\nimport org.springframework.beans.factory.annotation.Autowired;\r\nimport org.springframework.stereotype.Service;\r\n\r\nimport java.util.List;\r\nimport java.util.Optional;\r\nimport java.util.UUID;\r\n\r\n/**\r\n * This class is on charge of implementing all the necessary logic for the Tweets.\r\n */\r\n@Service\r\npublic class TweetService {\r\n\r\n    @Autowired\r\n    private TweetRepository repository;\r\n\r\n    public List<Tweet> findAll(){\r\n        return repository.findAll();\r\n    }\r\n\r\n    public void createTweet(String text){\r\n        Tweet tweet = new Tweet(text, null);\r\n        repository.save(tweet);\r\n    }\r\n\r\n    public Optional<Tweet> findById(UUID id){\r\n        return repository.findById(id);\r\n    }\r\n\r\n}
+===================================================================
+diff --git a/ProjectBackEnd/src/main/java/Services/TweetService.java b/ProjectBackEnd/src/main/java/Services/TweetService.java
+--- a/ProjectBackEnd/src/main/java/Services/TweetService.java	
++++ b/ProjectBackEnd/src/main/java/Services/TweetService.java	
+@@ -2,9 +2,11 @@
+ 
+ import Model.Tweet;
+ import Repository.TweetRepository;
++import UserManagement.User;
+ import org.springframework.beans.factory.annotation.Autowired;
+ import org.springframework.stereotype.Service;
+ 
++import java.sql.Blob;
+ import java.util.List;
+ import java.util.Optional;
+ import java.util.UUID;
+@@ -22,13 +24,57 @@
+         return repository.findAll();
+     }
+ 
+-    public void createTweet(String text){
+-        Tweet tweet = new Tweet(text, null);
++    public void createTweet(String text, Blob [] files, Tweet citation, User user){
++        Tweet tweet = new Tweet(text, user, files, citation);
+         repository.save(tweet);
+     }
+ 
++    public void deleteTweet(Tweet tweetToDelete){
++        repository.delete(tweetToDelete);
++    }
++
+     public Optional<Tweet> findById(UUID id){
+         return repository.findById(id);
+     }
+ 
++    /*
++    This function will add or remove the like
++     */
++    public void toggleLike(User giver, Tweet tweet){
++        Tweet t = this.findById(tweet.getId()).orElse(null);
++        if (t != null){
++            if (t.getLikes().contains(giver)){
++                t.removeLike(giver);
++            }
++            else{
++                t.addLike(giver);
++            }
++        }
++    }
++
++    /*
++    This function will add or remove the retweet
++     */
++    public void toggleRetweet(User giver, Tweet tweet){
++        Tweet t = this.findById(tweet.getId()).orElse(null);
++        if (t != null){
++            if (t.getRetweets().contains(giver)){
++                t.removeRetweet(giver);
++            }
++            else{
++                t.addRetweet(giver);
++            }
++        }
++    }
++
++    /*
++    This function will add a Commment
++     */
++    public void addComment(String text, Blob[] files, User user, Tweet tweet){
++        Tweet t = this.findById(tweet.getId()).orElse(null);
++        if (t != null){
++            Tweet comment = new Tweet(text, user, files, null);
++            t.addComment(comment);
++        }
++    }
+ }
+\ No newline at end of file
+Index: ProjectBackEnd/src/main/java/Services/DBInitializer.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package Services;\r\n\r\nimport Model.Tweet;\r\nimport Repository.TweetRepository;\r\nimport Repository.UserRepository;\r\nimport UserManagement.User;\r\nimport org.springframework.beans.factory.annotation.Autowired;\r\nimport org.springframework.stereotype.Service;\r\n\r\nimport javax.annotation.PostConstruct;\r\nimport java.io.IOException;\r\nimport java.net.URISyntaxException;\r\nimport java.time.LocalDate;\r\nimport java.time.LocalDateTime;\r\n\r\n@Service\r\npublic class DBInitializer {\r\n    @Autowired\r\n    private TweetRepository tweetRepository;\r\n    @Autowired\r\n    private UserRepository userRepository;\r\n\r\n    @PostConstruct\r\n    public void init() throws IOException, URISyntaxException {\r\n\r\n        //Sample Users\r\n        String [] files = {\"example_data/elrubius_profilepic.jpg\",\"example_data/elrubius_profilebanner.jpg\"};\r\n        User user1 = new User(\"@Rubiu5\",\"elrubius\",\"Rata Noruega.  Me gustan los gatos obesos.\",\"rubius@gmail.com\",\"rubius\",files, LocalDate.of(2013,10,13),\"Verified\");\r\n        files = new String[]{\"example_data/KOI_KEYLAND_profilepic.jpg\", \"example_data/KOI_KEYLAND_profilebanner.jpg\"};\r\n        User user2 = new User(\"@Keyland71\", \"KOI KEYLAND71\", \"19 y/o\\nRocket League proplayer for @KOI\", \"example2@gmail.com\", \"examplePassword2\",files, LocalDate.of(2018,4,21), \"Registered\");\r\n        files = new String[]{\"example_data/Alanis_profilepic.jpg\", \"example_data/Alanis_profilebanner.jpg\"};\r\n        User user3 = new User(\"@antonioalanxs\", \"Alanís\",  \"\",  \"example3@gmail.com\", \"examplePassword3\",files, LocalDate.of(2019,8,7), \"Privated\");\r\n        files = new String[]{\"example_data/Ibai_profilepic.jpg\", \"example_data/Ibai_profilebanner.jpg\"};\r\n        User user4 = new User(\"@ibai\",\"Ibai\",\"Sigue a nuestros equipos @KOI y @PorcinosFC, http://twitch.tv/ibai\",\"ibai@gmail.com\",\"ibai\",files, LocalDate.of(2014,8,5), \"Verified\");\r\n        userRepository.save(user1);\r\n        userRepository.save(user2);\r\n        userRepository.save(user3);\r\n        userRepository.save(user4);\r\n\r\n        //Sample Tweets\r\n        Tweet tweet1 = new Tweet(\"Fotito con mi fan \\uD83D\\uDCAA\\uD83C\\uDFFD\\uD83D\\uDCAA\\uD83C\\uDFFD\\uD83D\\uDD25\\uD83D\\uDD25\", user2, LocalDateTime.of(2022,06,14,16,03,00), null);\r\n        Tweet tweet2 = new Tweet(\"MarvelsSpiderManMilesMorales\", user2, LocalDateTime.of(2021,8,16,20,00,00), null);\r\n        Tweet tweet3 = new Tweet(\"Hoy he hecho autostop en un pueblo alejado de la mano de dios en Japón y me he montado con el perro mas majo del mundo 犬\", user1, LocalDateTime.of(2023,02,14,20,30,05), null);\r\n        Tweet tweet5 = new Tweet(\"Devastado, afligido, descorazonado, atormentado, apenado, entristecido, desolado, triste, cabizbajo, lloroso, cariacontecido, compungido, destruido, mustio, apesadumbrado, deshecho, demolido.\", user4, LocalDateTime.of(2023,02,14,20,00,00), null);\r\n        Tweet tweet4 = new Tweet(\"Deja de llorar\", user1, LocalDateTime.of(2023,02,19,20,00,00), tweet5);\r\n        Tweet tweet6 = new Tweet(\"Chup chup con la #KingsLeague\", user4, LocalDateTime.of(2023,02,14,21,00,00), null);\r\n        Tweet tweet7 = new Tweet(\"En primaria deberían poner una asignatura de coger aceitunas @Keyland71\", user3, LocalDateTime.of(2023,02,20,14,03,00), null);\r\n        Tweet tweet8 = new Tweet(\"Tienes razón \\uD83E\\uDD75\\uD83E\\uDD75\", user3, LocalDateTime.of(2023,02,20,14,04,00), null);\r\n        Tweet tweet9 = new Tweet(\"no titiritititiiiiii\", user2, LocalDateTime.of(2023,02,20,14,9,00), null);\r\n        Tweet tweet10 = new Tweet(\"Creéis que lo de Shakira iba por Piqué?\", user4, LocalDateTime.of(2023,01,12,1,55,05), null);\r\n        tweetRepository.save(tweet1);\r\n        tweetRepository.save(tweet2);\r\n        tweetRepository.save(tweet3);\r\n        tweetRepository.save(tweet5);\r\n        tweetRepository.save(tweet4);\r\n        tweetRepository.save(tweet6);\r\n        tweetRepository.save(tweet7);\r\n        tweetRepository.save(tweet8);\r\n        tweetRepository.save(tweet9);\r\n        tweetRepository.save(tweet10);\r\n\r\n    }\r\n}\r\n
+===================================================================
+diff --git a/ProjectBackEnd/src/main/java/Services/DBInitializer.java b/ProjectBackEnd/src/main/java/Services/DBInitializer.java
+--- a/ProjectBackEnd/src/main/java/Services/DBInitializer.java	
++++ b/ProjectBackEnd/src/main/java/Services/DBInitializer.java	
+@@ -4,12 +4,16 @@
+ import Repository.TweetRepository;
+ import Repository.UserRepository;
+ import UserManagement.User;
++import org.hibernate.engine.jdbc.BlobProxy;
+ import org.springframework.beans.factory.annotation.Autowired;
++import org.springframework.core.io.ClassPathResource;
++import org.springframework.core.io.Resource;
+ import org.springframework.stereotype.Service;
+ 
+ import javax.annotation.PostConstruct;
+ import java.io.IOException;
+ import java.net.URISyntaxException;
++import java.sql.Blob;
+ import java.time.LocalDate;
+ import java.time.LocalDateTime;
+ 
+@@ -38,16 +42,125 @@
+         userRepository.save(user4);
+ 
+         //Sample Tweets
+-        Tweet tweet1 = new Tweet("Fotito con mi fan \uD83D\uDCAA\uD83C\uDFFD\uD83D\uDCAA\uD83C\uDFFD\uD83D\uDD25\uD83D\uDD25", user2, LocalDateTime.of(2022,06,14,16,03,00), null);
+-        Tweet tweet2 = new Tweet("MarvelsSpiderManMilesMorales", user2, LocalDateTime.of(2021,8,16,20,00,00), null);
+-        Tweet tweet3 = new Tweet("Hoy he hecho autostop en un pueblo alejado de la mano de dios en Japón y me he montado con el perro mas majo del mundo 犬", user1, LocalDateTime.of(2023,02,14,20,30,05), null);
+-        Tweet tweet5 = new Tweet("Devastado, afligido, descorazonado, atormentado, apenado, entristecido, desolado, triste, cabizbajo, lloroso, cariacontecido, compungido, destruido, mustio, apesadumbrado, deshecho, demolido.", user4, LocalDateTime.of(2023,02,14,20,00,00), null);
+-        Tweet tweet4 = new Tweet("Deja de llorar", user1, LocalDateTime.of(2023,02,19,20,00,00), tweet5);
+-        Tweet tweet6 = new Tweet("Chup chup con la #KingsLeague", user4, LocalDateTime.of(2023,02,14,21,00,00), null);
+-        Tweet tweet7 = new Tweet("En primaria deberían poner una asignatura de coger aceitunas @Keyland71", user3, LocalDateTime.of(2023,02,20,14,03,00), null);
+-        Tweet tweet8 = new Tweet("Tienes razón \uD83E\uDD75\uD83E\uDD75", user3, LocalDateTime.of(2023,02,20,14,04,00), null);
+-        Tweet tweet9 = new Tweet("no titiritititiiiiii", user2, LocalDateTime.of(2023,02,20,14,9,00), null);
+-        Tweet tweet10 = new Tweet("Creéis que lo de Shakira iba por Piqué?", user4, LocalDateTime.of(2023,01,12,1,55,05), null);
++        Resource image1 = new ClassPathResource("example_data/tweet1.jpg");
++        Resource image2 = new ClassPathResource("");
++        Resource image3 = new ClassPathResource("");
++        Resource image4 = new ClassPathResource("");
++        Blob [] images = {
++                BlobProxy.generateProxy(image1.getInputStream(),image1.contentLength()),
++                BlobProxy.generateProxy(image2.getInputStream(),image2.contentLength()),
++                BlobProxy.generateProxy(image3.getInputStream(),image3.contentLength()),
++                BlobProxy.generateProxy(image4.getInputStream(),image4.contentLength()),
++        };
++        Tweet tweet1 = new Tweet("Fotito con mi fan \uD83D\uDCAA\uD83C\uDFFD\uD83D\uDCAA\uD83C\uDFFD\uD83D\uDD25\uD83D\uDD25", user2, LocalDateTime.of(2022,06,14,16,03,00), null, images);
++
++        image1 = new ClassPathResource("example_data/tweet2_1.jpg");
++        image2 = new ClassPathResource("example_data/tweet2_2.jpg");
++        image3 = new ClassPathResource("example_data/tweet2_3.jpg");
++        image4 = new ClassPathResource("example_data/tweet2_4.jpg");
++        images = new Blob[]{
++                BlobProxy.generateProxy(image1.getInputStream(), image1.contentLength()),
++                BlobProxy.generateProxy(image2.getInputStream(), image2.contentLength()),
++                BlobProxy.generateProxy(image3.getInputStream(), image3.contentLength()),
++                BlobProxy.generateProxy(image4.getInputStream(), image4.contentLength()),
++        };
++        Tweet tweet2 = new Tweet("MarvelsSpiderManMilesMorales", user2, LocalDateTime.of(2021,8,16,20,00,00), null, images);
++
++        image1 = new ClassPathResource("example_data/tweet3_1.jpg");
++        image2 = new ClassPathResource("example_data/tweet3_2.jpg");
++        image3 = new ClassPathResource("example_data/tweet3_3.jpg");
++        image4 = new ClassPathResource("");
++        images = new Blob[]{
++                BlobProxy.generateProxy(image1.getInputStream(), image1.contentLength()),
++                BlobProxy.generateProxy(image2.getInputStream(), image2.contentLength()),
++                BlobProxy.generateProxy(image3.getInputStream(), image3.contentLength()),
++                BlobProxy.generateProxy(image4.getInputStream(), image4.contentLength()),
++        };
++        Tweet tweet3 = new Tweet("Hoy he hecho autostop en un pueblo alejado de la mano de dios en Japón y me he montado con el perro mas majo del mundo 犬", user1, LocalDateTime.of(2023,02,14,20,30,05), null, images);
++
++        image1 = new ClassPathResource("");
++        image2 = new ClassPathResource("");
++        image3 = new ClassPathResource("");
++        image4 = new ClassPathResource("");
++        images = new Blob[]{
++                BlobProxy.generateProxy(image1.getInputStream(), image1.contentLength()),
++                BlobProxy.generateProxy(image2.getInputStream(), image2.contentLength()),
++                BlobProxy.generateProxy(image3.getInputStream(), image3.contentLength()),
++                BlobProxy.generateProxy(image4.getInputStream(), image4.contentLength()),
++        };
++        Tweet tweet5 = new Tweet("Devastado, afligido, descorazonado, atormentado, apenado, entristecido, desolado, triste, cabizbajo, lloroso, cariacontecido, compungido, destruido, mustio, apesadumbrado, deshecho, demolido.", user4, LocalDateTime.of(2023,02,14,20,00,00), null, images);
++
++        image1 = new ClassPathResource("");
++        image2 = new ClassPathResource("");
++        image3 = new ClassPathResource("");
++        image4 = new ClassPathResource("");
++        images = new Blob[]{
++                BlobProxy.generateProxy(image1.getInputStream(), image1.contentLength()),
++                BlobProxy.generateProxy(image2.getInputStream(), image2.contentLength()),
++                BlobProxy.generateProxy(image3.getInputStream(), image3.contentLength()),
++                BlobProxy.generateProxy(image4.getInputStream(), image4.contentLength()),
++        };
++        Tweet tweet4 = new Tweet("Deja de llorar", user1, LocalDateTime.of(2023,02,19,20,00,00), tweet5, images);
++
++        image1 = new ClassPathResource("");
++        image2 = new ClassPathResource("");
++        image3 = new ClassPathResource("");
++        image4 = new ClassPathResource("");
++        images = new Blob[]{
++                BlobProxy.generateProxy(image1.getInputStream(), image1.contentLength()),
++                BlobProxy.generateProxy(image2.getInputStream(), image2.contentLength()),
++                BlobProxy.generateProxy(image3.getInputStream(), image3.contentLength()),
++                BlobProxy.generateProxy(image4.getInputStream(), image4.contentLength()),
++        };
++        Tweet tweet6 = new Tweet("Chup chup con la #KingsLeague", user4, LocalDateTime.of(2023,02,14,21,00,00), null, images);
++
++        image1 = new ClassPathResource("example_data/tweet7.jpg");
++        image2 = new ClassPathResource("");
++        image3 = new ClassPathResource("");
++        image4 = new ClassPathResource("");
++        images = new Blob[]{
++                BlobProxy.generateProxy(image1.getInputStream(), image1.contentLength()),
++                BlobProxy.generateProxy(image2.getInputStream(), image2.contentLength()),
++                BlobProxy.generateProxy(image3.getInputStream(), image3.contentLength()),
++                BlobProxy.generateProxy(image4.getInputStream(), image4.contentLength()),
++        };
++        Tweet tweet7 = new Tweet("En primaria deberían poner una asignatura de coger aceitunas @Keyland71", user3, LocalDateTime.of(2023,02,20,14,03,00), null, images);
++
++        image1 = new ClassPathResource("");
++        image2 = new ClassPathResource("");
++        image3 = new ClassPathResource("");
++        image4 = new ClassPathResource("");
++        images = new Blob[]{
++                BlobProxy.generateProxy(image1.getInputStream(), image1.contentLength()),
++                BlobProxy.generateProxy(image2.getInputStream(), image2.contentLength()),
++                BlobProxy.generateProxy(image3.getInputStream(), image3.contentLength()),
++                BlobProxy.generateProxy(image4.getInputStream(), image4.contentLength()),
++        };
++        Tweet tweet8 = new Tweet("Tienes razón \uD83E\uDD75\uD83E\uDD75", user3, LocalDateTime.of(2023,02,20,14,04,00), null, images);
++
++        image1 = new ClassPathResource("");
++        image2 = new ClassPathResource("");
++        image3 = new ClassPathResource("");
++        image4 = new ClassPathResource("");
++        images = new Blob[]{
++                BlobProxy.generateProxy(image1.getInputStream(), image1.contentLength()),
++                BlobProxy.generateProxy(image2.getInputStream(), image2.contentLength()),
++                BlobProxy.generateProxy(image3.getInputStream(), image3.contentLength()),
++                BlobProxy.generateProxy(image4.getInputStream(), image4.contentLength()),
++        };
++        Tweet tweet9 = new Tweet("no titiritititiiiiii", user2, LocalDateTime.of(2023,02,20,14,9,00), null, images);
++
++        image1 = new ClassPathResource("");
++        image2 = new ClassPathResource("");
++        image3 = new ClassPathResource("");
++        image4 = new ClassPathResource("");
++        images = new Blob[]{
++                BlobProxy.generateProxy(image1.getInputStream(), image1.contentLength()),
++                BlobProxy.generateProxy(image2.getInputStream(), image2.contentLength()),
++                BlobProxy.generateProxy(image3.getInputStream(), image3.contentLength()),
++                BlobProxy.generateProxy(image4.getInputStream(), image4.contentLength()),
++        };
++        Tweet tweet10 = new Tweet("Creéis que lo de Shakira iba por Piqué?", user4, LocalDateTime.of(2023,01,12,1,55,05), null, images);
+         tweetRepository.save(tweet1);
+         tweetRepository.save(tweet2);
+         tweetRepository.save(tweet3);
+Index: ProjectBackEnd/src/main/java/Model/Tweet.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package Model;\r\n\r\nimport UserManagement.User;\r\nimport lombok.Getter;\r\nimport lombok.Setter;\r\n\r\nimport javax.persistence.*;\r\nimport java.time.LocalDateTime;\r\nimport java.util.LinkedList;\r\nimport java.util.List;\r\nimport java.util.UUID;\r\n\r\n@Getter\r\n@Setter\r\n\r\n@Entity\r\npublic class Tweet {\r\n    @Id\r\n    @Column(name = \"id\", length = 16, unique = true, nullable = false)\r\n    private final UUID id;\r\n    @OneToOne\r\n    private User user;\r\n    private final LocalDateTime publishDate;\r\n    @OneToMany\r\n    private List<User> likes;\r\n    @OneToMany\r\n    private List<User> retweets;\r\n    @OneToMany\r\n    private List<Tweet> comments;\r\n    @OneToOne\r\n    private Tweet citation;\r\n    private String text;\r\n    //@Lob\r\n    //private Blob[] media;\r\n    //private Set<String> hashtag; // Later\r\n\r\n    public Tweet(){\r\n        this.id = UUID.randomUUID();\r\n        this.publishDate = LocalDateTime.now();\r\n    }\r\n    public Tweet(String text, User user) {\r\n        this.id = UUID.randomUUID();\r\n        this.publishDate = LocalDateTime.now();\r\n        this.likes = new LinkedList<User>();\r\n        this.retweets =  new LinkedList<User>();\r\n        this.comments = new LinkedList<Tweet>();\r\n        this.text = text;\r\n        this.user = user;\r\n    }\r\n\r\n    /*\r\n    For example data\r\n     */\r\n    public Tweet(String text, User user, LocalDateTime time, Tweet citation) {\r\n        this.id = UUID.randomUUID();\r\n        this.publishDate = time;\r\n        this.likes = new LinkedList<User>();\r\n        this.retweets =  new LinkedList<User>();\r\n        this.comments = new LinkedList<Tweet>();\r\n        this.text = text;\r\n        this.user = user;\r\n        this.citation = citation;\r\n    }\r\n\r\n\r\n}
+===================================================================
+diff --git a/ProjectBackEnd/src/main/java/Model/Tweet.java b/ProjectBackEnd/src/main/java/Model/Tweet.java
+--- a/ProjectBackEnd/src/main/java/Model/Tweet.java	
++++ b/ProjectBackEnd/src/main/java/Model/Tweet.java	
+@@ -5,14 +5,15 @@
+ import lombok.Setter;
+ 
+ import javax.persistence.*;
++import java.sql.Blob;
+ import java.time.LocalDateTime;
++import java.util.ArrayList;
+ import java.util.LinkedList;
+ import java.util.List;
+ import java.util.UUID;
+ 
+ @Getter
+ @Setter
+-
+ @Entity
+ public class Tweet {
+     @Id
+@@ -30,36 +31,63 @@
+     @OneToOne
+     private Tweet citation;
+     private String text;
+-    //@Lob
+-    //private Blob[] media;
++    @Lob
++    private List<Blob> media;
++
+     //private Set<String> hashtag; // Later
+ 
+     public Tweet(){
+         this.id = UUID.randomUUID();
+         this.publishDate = LocalDateTime.now();
+     }
+-    public Tweet(String text, User user) {
++    public Tweet(String text, User user, Blob [] files, Tweet citation) {
+         this.id = UUID.randomUUID();
+         this.publishDate = LocalDateTime.now();
+-        this.likes = new LinkedList<User>();
+-        this.retweets =  new LinkedList<User>();
+-        this.comments = new LinkedList<Tweet>();
++        this.likes = new LinkedList<>();
++        this.retweets =  new LinkedList<>();
++        this.comments = new LinkedList<>();
+         this.text = text;
+         this.user = user;
++        this.media = new ArrayList<>(List.of(files));
++        this.citation = citation;
+     }
+ 
+     /*
+     For example data
+      */
+-    public Tweet(String text, User user, LocalDateTime time, Tweet citation) {
++    public Tweet(String text, User user, LocalDateTime time, Tweet citation, Blob [] files) {
+         this.id = UUID.randomUUID();
+         this.publishDate = time;
+-        this.likes = new LinkedList<User>();
+-        this.retweets =  new LinkedList<User>();
+-        this.comments = new LinkedList<Tweet>();
++        this.likes = new LinkedList<>();
++        this.retweets =  new LinkedList<>();
++        this.comments = new LinkedList<>();
+         this.text = text;
+         this.user = user;
+         this.citation = citation;
++        this.media = new ArrayList<>(List.of(files));
++    }
++
++    public void addComment(Tweet comment){
++        this.comments.add(comment);
++    }
++
++    public void addLike(User giver){
++        this.likes.add(giver);
++    }
++
++    public void addRetweet(User giver){
++        this.retweets.add(giver);
++    }
++
++    public void removeComment(Tweet comment){
++        this.comments.remove(comment);
++    }
++    public void removeLike(User giver){
++        this.likes.remove(giver);
++    }
++
++    public void removeRetweet(User giver){
++        this.retweets.remove(giver);
+     }
+ 
+ 
+Index: ProjectBackEnd/src/main/java/UserManagement/User.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package UserManagement;\r\n\r\nimport Model.Tweet;\r\nimport com.sun.istack.NotNull;\r\nimport lombok.EqualsAndHashCode;\r\nimport lombok.Getter;\r\nimport lombok.Setter;\r\nimport org.springframework.security.core.GrantedAuthority;\r\nimport org.springframework.security.core.authority.SimpleGrantedAuthority;\r\nimport org.springframework.security.core.userdetails.UserDetails;\r\n\r\nimport javax.persistence.*;\r\nimport javax.validation.constraints.NotBlank;\r\nimport java.io.IOException;\r\nimport java.sql.Blob;\r\nimport java.time.LocalDate;\r\nimport java.util.ArrayList;\r\nimport java.util.Collection;\r\nimport java.util.Collections;\r\nimport java.util.UUID;\r\n\r\n/**\r\n * It is a type of user who has created an account and is registered in the DB.\r\n */\r\n@Getter\r\n@Setter\r\n@EqualsAndHashCode\r\n@Entity\r\n@Table(name = \"users\")\r\n\r\n\r\npublic class User implements UserDetails {\r\n    private final @Id @GeneratedValue UUID id;\r\n    private  String nickname;\r\n    private  String biography;\r\n    private  String mail;\r\n    private  String password;\r\n    private  Blob profilePicture;\r\n    private  Blob profileBanner;\r\n    private String username;\r\n    @Enumerated(EnumType.STRING)\r\n    private UserRoles role;\r\n    private boolean loggedIn;\r\n    private ArrayList<UUID> followers;\r\n    private ArrayList<UUID> followed;\r\n    private ArrayList<Tweet> tweetsTShow;\r\n\r\n    private final LocalDate joinDate;\r\n    private Boolean locked;\r\n    private Boolean enabled;\r\n\r\n    /**\r\n     * Main constructor. The UUID is randomly given and the join date is the date of registration.\r\n     */\r\n\r\n    public User(@NotNull @NotBlank String username,\r\n                @NotNull @NotBlank String password,\r\n                @NotNull @NotBlank String email) {\r\n        this.username = username;\r\n        this.password = password;\r\n        this.mail = email;\r\n        this.id = UUID.randomUUID();\r\n        this.joinDate = java.time.LocalDate.now();\r\n        this.loggedIn = false;\r\n    }\r\n\r\n    public User() {\r\n        this.id = UUID.randomUUID();\r\n        this.joinDate = java.time.LocalDate.now();\r\n    }\r\n\r\n    /*\r\n   This constructor is for sample data\r\n    */\r\n    public User(String username, String nickname, String biography, String mail, String password, String [] files, LocalDate time, String role) throws IOException {\r\n        this.id = UUID.randomUUID();\r\n        this.username = username;\r\n        this.nickname = nickname;\r\n        this.biography = biography;\r\n        this.joinDate = time;\r\n        this.role = UserRoles.valueOf(\"Registered\");\r\n        this.mail = mail;\r\n        this.password = password;\r\n        this.setImages(files);\r\n    }\r\n\r\n    private void setImages(String[] files) {\r\n    }\r\n\r\n    /**\r\n     * It sets the authority level according to the user role\r\n     * @return\r\n     */\r\n    @Override\r\n    public Collection<? extends GrantedAuthority> getAuthorities() {\r\n        SimpleGrantedAuthority authority = new SimpleGrantedAuthority(role.name());\r\n        return Collections.singletonList(authority);\r\n    }\r\n\r\n    @Override\r\n    public String getPassword() {\r\n        return getPassword();\r\n    }\r\n\r\n    @Override\r\n    public boolean isAccountNonExpired() {\r\n        return true;\r\n    }\r\n\r\n    @Override\r\n    public boolean isAccountNonLocked() {\r\n        return !locked;\r\n    }\r\n\r\n    @Override\r\n    public boolean isCredentialsNonExpired() {\r\n        return true;\r\n    }\r\n\r\n    @Override\r\n    public boolean isEnabled() {\r\n        return enabled;\r\n    }\r\n}\r\n
+===================================================================
+diff --git a/ProjectBackEnd/src/main/java/UserManagement/User.java b/ProjectBackEnd/src/main/java/UserManagement/User.java
+--- a/ProjectBackEnd/src/main/java/UserManagement/User.java	
++++ b/ProjectBackEnd/src/main/java/UserManagement/User.java	
+@@ -5,6 +5,9 @@
+ import lombok.EqualsAndHashCode;
+ import lombok.Getter;
+ import lombok.Setter;
++import org.hibernate.engine.jdbc.BlobProxy;
++import org.springframework.core.io.ClassPathResource;
++import org.springframework.core.io.Resource;
+ import org.springframework.security.core.GrantedAuthority;
+ import org.springframework.security.core.authority.SimpleGrantedAuthority;
+ import org.springframework.security.core.userdetails.UserDetails;
+@@ -14,10 +17,7 @@
+ import java.io.IOException;
+ import java.sql.Blob;
+ import java.time.LocalDate;
+-import java.util.ArrayList;
+-import java.util.Collection;
+-import java.util.Collections;
+-import java.util.UUID;
++import java.util.*;
+ 
+ /**
+  * It is a type of user who has created an account and is registered in the DB.
+@@ -35,15 +35,20 @@
+     private  String biography;
+     private  String mail;
+     private  String password;
++    @Lob
+     private  Blob profilePicture;
++    @Lob
+     private  Blob profileBanner;
+     private String username;
+     @Enumerated(EnumType.STRING)
+     private UserRoles role;
+     private boolean loggedIn;
+-    private ArrayList<UUID> followers;
+-    private ArrayList<UUID> followed;
+-    private ArrayList<Tweet> tweetsTShow;
++    @ManyToMany
++    private List<User> followers;
++    @ManyToMany
++    private List<User> followed;
++    @OneToMany
++    private List<Tweet> tweetsToShow;
+ 
+     private final LocalDate joinDate;
+     private Boolean locked;
+@@ -78,13 +83,21 @@
+         this.nickname = nickname;
+         this.biography = biography;
+         this.joinDate = time;
+-        this.role = UserRoles.valueOf("Registered");
++        this.role = UserRoles.valueOf(role);
+         this.mail = mail;
+         this.password = password;
+-        this.setImages(files);
++        if (files.length > 0) {
++            this.setImages(files);
++        }
+     }
+ 
+-    private void setImages(String[] files) {
++    private void setImages(String[] files) throws IOException {
++        Resource image = new ClassPathResource(files[0]);
++        this.profilePicture = BlobProxy.generateProxy(image.getInputStream(), image.contentLength());
++        if (files.length > 1) {
++            image = new ClassPathResource(files[1]);
++            this.profileBanner = BlobProxy.generateProxy(image.getInputStream(), image.contentLength());
++        }
+     }
+ 
+     /**

@@ -12,13 +12,13 @@ public class Explorer {
     public Explorer() {
         this.trends = new ArrayList<>();
         Hashtag hashtag = new Hashtag("RLCS");
-        Trend trend1 = new Trend("North America", hashtag , 20);
+        Trend trend1 = new Trend("North America", hashtag);
         trends.add(trend1);
-        Trend trend2 = new Trend(null, hashtag, 521);
+        Trend trend2 = new Trend(null, hashtag);
         trends.add(trend2);
-        Trend trend3 = new Trend(null, hashtag, 7987);
+        Trend trend3 = new Trend(null, hashtag);
         trends.add(trend3);
-        Trend trend4 = new Trend("Spain", hashtag, 1234);
+        Trend trend4 = new Trend("Spain", hashtag);
         trends.add(trend4);
     }
 

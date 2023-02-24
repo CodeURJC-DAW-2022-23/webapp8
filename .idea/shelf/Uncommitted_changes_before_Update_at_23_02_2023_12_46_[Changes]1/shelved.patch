@@ -1,0 +1,35 @@
+Index: ProjectBackEnd/src/main/java/Model/Retweet.java
+===================================================================
+diff --git a/ProjectBackEnd/src/main/java/Model/Retweet.java b/ProjectBackEnd/src/main/java/Model/Retweet.java
+deleted file mode 100644
+--- a/ProjectBackEnd/src/main/java/Model/Retweet.java	
++++ /dev/null	
+@@ -1,10 +0,0 @@
+-package Model;
+-
+-import UserManagement.User;
+-
+-/**
+- * It is an item left in a tweet which registered who gave it. Needs a tweet to exist and always belong to one
+- */
+-public class Retweet {
+-    private User giver;
+-}
+Index: ProjectBackEnd/src/main/java/Model/Like.java
+===================================================================
+diff --git a/ProjectBackEnd/src/main/java/Model/Like.java b/ProjectBackEnd/src/main/java/Model/Like.java
+deleted file mode 100644
+--- a/ProjectBackEnd/src/main/java/Model/Like.java	
++++ /dev/null	
+@@ -1,11 +0,0 @@
+-package Model;
+-
+-import UserManagement.User;
+-
+-/**
+- * It is an item left in a tweet which registered who gave it. Needs a tweet to exist and always belong to one
+- */
+-
+-public class Like {
+-    private User giver;
+-}

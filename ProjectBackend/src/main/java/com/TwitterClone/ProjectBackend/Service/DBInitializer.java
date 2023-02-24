@@ -6,9 +6,10 @@ import com.TwitterClone.ProjectBackend.Repository.UserRepository;
 import com.TwitterClone.ProjectBackend.userManagement.User;
 import org.hibernate.engine.jdbc.BlobProxy;
 import org.springframework.beans.factory.annotation.Autowired;
-/*import org.springframework.security.crypto.password.PasswordEncoder;*/
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
@@ -18,8 +19,6 @@ import java.sql.Blob;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
-
 
 @Service
 public class DBInitializer {
@@ -27,6 +26,12 @@ public class DBInitializer {
     private TweetRepository tweetRepository;
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
+    @Value("${admin.pass}")
+    String adminPass;
 
     @PostConstruct
     public void init() throws IOException, URISyntaxException {
@@ -41,6 +46,12 @@ public class DBInitializer {
         files = new String[]{"example_data/Ibai_profilepic.jpg", "example_data/Ibai_profilebanner.jpg"};
         User user4 = new User("@ibai","Ibai","Sigue a nuestros equipos @KOI y @PorcinosFC, http://twitch.tv/ibai","ibai@gmail.com","ibai",files, LocalDate.of(2014,8,5), "VERIFIED");
         userRepository.save(user1);
+
+        User testUser = new User("user", passwordEncoder.encode("pass"),"user@mail.com", "USER");
+        userRepository.save(testUser);
+
+        User admin = new User("admin", adminPass, "admin@gmail.com", "ADMIN");
+        userRepository.save(admin);
         userRepository.save(user2);
         userRepository.save(user3);
         userRepository.save(user4);

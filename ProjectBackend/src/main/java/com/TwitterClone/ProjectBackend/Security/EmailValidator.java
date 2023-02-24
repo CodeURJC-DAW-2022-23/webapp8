@@ -1,4 +1,3 @@
-/*
 package com.TwitterClone.ProjectBackend.Security;
 
 import org.springframework.stereotype.Service;
@@ -16,4 +15,3 @@ public class EmailValidator implements Predicate<String> {
     }
 
 }
-*/

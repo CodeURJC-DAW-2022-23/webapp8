@@ -1,0 +1,285 @@
+Index: ProjectBackend/src/main/java/com/TwitterClone/ProjectBackend/Service/DBInitializer.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.TwitterClone.ProjectBackend.Service;\r\n\r\nimport com.TwitterClone.ProjectBackend.Model.Tweet;\r\nimport com.TwitterClone.ProjectBackend.Repository.TweetRepository;\r\nimport com.TwitterClone.ProjectBackend.Repository.UserRepository;\r\nimport com.TwitterClone.ProjectBackend.userManagement.User;\r\nimport org.springframework.beans.factory.annotation.Autowired;\r\nimport org.springframework.stereotype.Service;\r\n\r\nimport javax.annotation.PostConstruct;\r\nimport java.io.IOException;\r\nimport java.net.URISyntaxException;\r\nimport java.time.LocalDate;\r\nimport java.time.LocalDateTime;\r\n\r\n\r\n@Service\r\n\r\npublic class DBInitializer {\r\n    @Autowired\r\n    private TweetRepository tweetRepository;\r\n    @Autowired\r\n    private UserRepository userRepository;\r\n\r\n    @PostConstruct\r\n    public void init() throws IOException, URISyntaxException {\r\n\r\n        //Sample Users\r\n        String [] files = new String[]{\"example_data/KOI_KEYLAND_profilepic.jpg\", \"example_data/KOI_KEYLAND_profilebanner.jpg\"};\r\n        User user2 = new User(\"@Keyland71\", \"KOI KEYLAND71\", \"19 y/o\\nRocket League proplayer for @KOI\", \"example2@gmail.com\", \"examplePassword2\",files, LocalDate.of(2018,4,21), \"Registered\");\r\n        userRepository.save(user2);\r\n\r\n        //Sample Tweets\r\n        Tweet tweet1 = new Tweet(\"Fotito con mi fan \\uD83D\\uDCAA\\uD83C\\uDFFD\\uD83D\\uDCAA\\uD83C\\uDFFD\\uD83D\\uDD25\\uD83D\\uDD25\", user2, LocalDateTime.of(2022,06,14,16,03,00), null);\r\n        Tweet tweet2 = new Tweet(\"MarvelsSpiderManMilesMorales\", user2, LocalDateTime.of(2021,8,16,20,00,00), null);\r\n\r\n        tweetRepository.save(tweet1);\r\n        tweetRepository.save(tweet2);\r\n\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/ProjectBackend/src/main/java/com/TwitterClone/ProjectBackend/Service/DBInitializer.java b/ProjectBackend/src/main/java/com/TwitterClone/ProjectBackend/Service/DBInitializer.java
+--- a/ProjectBackend/src/main/java/com/TwitterClone/ProjectBackend/Service/DBInitializer.java	
++++ b/ProjectBackend/src/main/java/com/TwitterClone/ProjectBackend/Service/DBInitializer.java	
+@@ -4,18 +4,22 @@
+ import com.TwitterClone.ProjectBackend.Repository.TweetRepository;
+ import com.TwitterClone.ProjectBackend.Repository.UserRepository;
+ import com.TwitterClone.ProjectBackend.userManagement.User;
++import com.TwitterClone.ProjectBackend.userManagement.UserRoles;
++import org.hibernate.engine.jdbc.BlobProxy;
+ import org.springframework.beans.factory.annotation.Autowired;
++import org.springframework.core.io.ClassPathResource;
++import org.springframework.core.io.Resource;
+ import org.springframework.stereotype.Service;
+ 
+ import javax.annotation.PostConstruct;
+ import java.io.IOException;
+ import java.net.URISyntaxException;
++import java.sql.Blob;
+ import java.time.LocalDate;
+ import java.time.LocalDateTime;
+-
++import java.util.List;
+ 
+ @Service
+-
+ public class DBInitializer {
+     @Autowired
+     private TweetRepository tweetRepository;
+@@ -29,13 +33,11 @@
+         String [] files = new String[]{"example_data/KOI_KEYLAND_profilepic.jpg", "example_data/KOI_KEYLAND_profilebanner.jpg"};
+         User user2 = new User("@Keyland71", "KOI KEYLAND71", "19 y/o\nRocket League proplayer for @KOI", "example2@gmail.com", "examplePassword2",files, LocalDate.of(2018,4,21), "Registered");
+         userRepository.save(user2);
+-
+         //Sample Tweets
+-        Tweet tweet1 = new Tweet("Fotito con mi fan \uD83D\uDCAA\uD83C\uDFFD\uD83D\uDCAA\uD83C\uDFFD\uD83D\uDD25\uD83D\uDD25", user2, LocalDateTime.of(2022,06,14,16,03,00), null);
+-        Tweet tweet2 = new Tweet("MarvelsSpiderManMilesMorales", user2, LocalDateTime.of(2021,8,16,20,00,00), null);
+-
++        Blob [] images = new Blob[1];
++        Tweet tweet1 = new Tweet("Fotito con mi fan \uD83D\uDCAA\uD83C\uDFFD\uD83D\uDCAA\uD83C\uDFFD\uD83D\uDD25\uD83D\uDD25", user2, LocalDateTime.of(2022,06,14,16,03,00),null, images);
++        Tweet tweet2 = new Tweet("MarvelsSpiderManMilesMorales", user2, LocalDateTime.of(2021,8,16,20,00,00), null, images);
+         tweetRepository.save(tweet1);
+         tweetRepository.save(tweet2);
+-
+     }
+-}
++}
+\ No newline at end of file
+Index: ProjectBackend/src/main/java/com/TwitterClone/ProjectBackend/Model/Tweet.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.TwitterClone.ProjectBackend.Model;\r\n\r\nimport com.TwitterClone.ProjectBackend.userManagement.User;\r\nimport lombok.Getter;\r\nimport lombok.Setter;\r\n\r\nimport javax.persistence.*;\r\nimport java.time.LocalDateTime;\r\nimport java.util.LinkedList;\r\nimport java.util.List;\r\nimport java.util.UUID;\r\n\r\n@Getter\r\n@Setter\r\n\r\n@Entity\r\npublic class Tweet {\r\n    @Id\r\n    @Column(name = \"id\", length = 16, unique = true, nullable = false)\r\n    private final UUID id;\r\n    @OneToOne\r\n    private User user;\r\n    private final LocalDateTime publishDate;\r\n    @OneToMany\r\n    private List<User> likes;\r\n    @OneToMany\r\n    private List<User> retweets;\r\n    @OneToMany\r\n    private List<Tweet> comments;\r\n    @OneToOne\r\n    private Tweet citation;\r\n    private String text;\r\n    //@Lob\r\n    //private Blob[] media;\r\n    //private Set<String> hashtag; // Later\r\n\r\n    public Tweet(){\r\n        this.id = UUID.randomUUID();\r\n        this.publishDate = LocalDateTime.now();\r\n    }\r\n    public Tweet(String text, User user) {\r\n        this.id = UUID.randomUUID();\r\n        this.publishDate = LocalDateTime.now();\r\n        this.likes = new LinkedList<User>();\r\n        this.retweets =  new LinkedList<User>();\r\n        this.comments = new LinkedList<Tweet>();\r\n        this.text = text;\r\n        this.user = user;\r\n    }\r\n\r\n    /*\r\n    For example data\r\n     */\r\n    public Tweet(String text, User user, LocalDateTime time, Tweet citation) {\r\n        this.id = UUID.randomUUID();\r\n        this.publishDate = time;\r\n        this.likes = new LinkedList<User>();\r\n        this.retweets =  new LinkedList<User>();\r\n        this.comments = new LinkedList<Tweet>();\r\n        this.text = text;\r\n        this.user = user;\r\n        this.citation = citation;\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/ProjectBackend/src/main/java/com/TwitterClone/ProjectBackend/Model/Tweet.java b/ProjectBackend/src/main/java/com/TwitterClone/ProjectBackend/Model/Tweet.java
+--- a/ProjectBackend/src/main/java/com/TwitterClone/ProjectBackend/Model/Tweet.java	
++++ b/ProjectBackend/src/main/java/com/TwitterClone/ProjectBackend/Model/Tweet.java	
+@@ -5,14 +5,15 @@
+ import lombok.Setter;
+ 
+ import javax.persistence.*;
++import java.sql.Blob;
+ import java.time.LocalDateTime;
++import java.util.ArrayList;
+ import java.util.LinkedList;
+ import java.util.List;
+ import java.util.UUID;
+ 
+ @Getter
+ @Setter
+-
+ @Entity
+ public class Tweet {
+     @Id
+@@ -31,34 +32,64 @@
+     private Tweet citation;
+     private String text;
+     //@Lob
+-    //private Blob[] media;
++    //@OneToMany
++    //private List<Blob> media;
++
+     //private Set<String> hashtag; // Later
+ 
+     public Tweet(){
+         this.id = UUID.randomUUID();
+         this.publishDate = LocalDateTime.now();
+     }
+-    public Tweet(String text, User user) {
++    public Tweet(String text, User user, Blob [] files, Tweet citation) {
+         this.id = UUID.randomUUID();
+         this.publishDate = LocalDateTime.now();
+-        this.likes = new LinkedList<User>();
+-        this.retweets =  new LinkedList<User>();
+-        this.comments = new LinkedList<Tweet>();
++        this.likes = new LinkedList<>();
++        this.retweets =  new LinkedList<>();
++        this.comments = new LinkedList<>();
+         this.text = text;
+         this.user = user;
++        //this.media = new LinkedList<>(List.of(files));
++        this.citation = citation;
+     }
+ 
+     /*
+     For example data
+      */
+-    public Tweet(String text, User user, LocalDateTime time, Tweet citation) {
++    public Tweet(String text, User user, LocalDateTime time, Tweet citation, Blob [] files) {
+         this.id = UUID.randomUUID();
+         this.publishDate = time;
+-        this.likes = new LinkedList<User>();
+-        this.retweets =  new LinkedList<User>();
+-        this.comments = new LinkedList<Tweet>();
++        this.likes = new LinkedList<>();
++        this.retweets =  new LinkedList<>();
++        this.comments = new LinkedList<>();
+         this.text = text;
+         this.user = user;
+         this.citation = citation;
++        //this.media = new LinkedList<>(List.of(files));
++    }
++
++    public void addComment(Tweet comment){
++        this.comments.add(comment);
+     }
+-}
++
++    public void addLike(User giver){
++        this.likes.add(giver);
++    }
++
++    public void addRetweet(User giver){
++        this.retweets.add(giver);
++    }
++
++    public void removeComment(Tweet comment){
++        this.comments.remove(comment);
++    }
++    public void removeLike(User giver){
++        this.likes.remove(giver);
++    }
++
++    public void removeRetweet(User giver){
++        this.retweets.remove(giver);
++    }
++
++
++}
+\ No newline at end of file
+Index: ProjectBackend/src/main/java/com/TwitterClone/ProjectBackend/Controller/TweetController.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.TwitterClone.ProjectBackend.Controller;\r\n\r\nimport com.TwitterClone.ProjectBackend.Model.Tweet;\r\nimport com.TwitterClone.ProjectBackend.Service.TweetService;\r\nimport org.springframework.beans.factory.annotation.Autowired;\r\nimport org.springframework.web.bind.annotation.*;\r\n\r\nimport java.util.List;\r\nimport java.util.UUID;\r\n\r\n@RequestMapping(\"tweets/\")\r\n@RestController\r\npublic class TweetController {\r\n    @Autowired\r\n    private TweetService tweetService;\r\n\r\n    @GetMapping\r\n    public List<Tweet> getAllTweets() {\r\n        return tweetService.findAll();\r\n    }\r\n\r\n    @GetMapping(path = \"{id}\")\r\n    public Tweet getOneTweet(@PathVariable(\"id\") UUID id) {\r\n        return tweetService.findById(id).orElse(null);\r\n    }\r\n\r\n    @PostMapping\r\n    public void postTweet(@RequestBody String text){\r\n        tweetService.createTweet(text);\r\n    }\r\n\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/ProjectBackend/src/main/java/com/TwitterClone/ProjectBackend/Controller/TweetController.java b/ProjectBackend/src/main/java/com/TwitterClone/ProjectBackend/Controller/TweetController.java
+--- a/ProjectBackend/src/main/java/com/TwitterClone/ProjectBackend/Controller/TweetController.java	
++++ b/ProjectBackend/src/main/java/com/TwitterClone/ProjectBackend/Controller/TweetController.java	
+@@ -2,9 +2,14 @@
+ 
+ import com.TwitterClone.ProjectBackend.Model.Tweet;
+ import com.TwitterClone.ProjectBackend.Service.TweetService;
++import com.TwitterClone.ProjectBackend.userManagement.User;
++import org.hibernate.engine.jdbc.BlobProxy;
+ import org.springframework.beans.factory.annotation.Autowired;
+ import org.springframework.web.bind.annotation.*;
++import org.springframework.web.multipart.MultipartFile;
+ 
++import java.io.IOException;
++import java.sql.Blob;
+ import java.util.List;
+ import java.util.UUID;
+ 
+@@ -24,9 +29,59 @@
+         return tweetService.findById(id).orElse(null);
+     }
+ 
+-    @PostMapping
+-    public void postTweet(@RequestBody String text){
+-        tweetService.createTweet(text);
+-    }
++    @PostMapping("post/")
++    public void postTweet(@RequestBody String text, MultipartFile image1, MultipartFile image2, MultipartFile image3, MultipartFile image4, Tweet citation) throws IOException {
++        Blob [] files = new Blob[4];
++        if (image1 != null){
++            files[0] = BlobProxy.generateProxy(image1.getInputStream(),image1.getSize());
++        }
++        if (image2 != null){
++            files[1] = BlobProxy.generateProxy(image2.getInputStream(),image2.getSize());
++        }
++        if (image3 != null){
++            files[2] = BlobProxy.generateProxy(image3.getInputStream(),image3.getSize());
++        }
++        if (image4 != null){
++            files[3] = BlobProxy.generateProxy(image4.getInputStream(),image4.getSize());
++        }
++        User user = new User();//Needs to be redo
++        tweetService.createTweet(text, files, citation, user);
++    }
++
++    @PostMapping("like/")
++    public void toggleLike(@RequestBody Tweet tweet){
++        User user = new User();//Needs to be redone
++        tweetService.toggleLike(user, tweet);
++    }
++
++    @PostMapping("retweet/")
++    public void toggleRetweet(@RequestBody Tweet tweet){
++        User user = new User();//Needs to be redone
++        tweetService.toggleRetweet(user, tweet);
++    }
++
++    @PostMapping("delete/")
++    public void deleteTweet(@RequestBody Tweet tweet){
++        tweetService.deleteTweet(tweet);
++    }
++
++    @PostMapping("comment/")
++    public void postComment(@RequestBody String text, MultipartFile image1, MultipartFile image2, MultipartFile image3, MultipartFile image4,@RequestBody Tweet tweetCommented) throws IOException {
++        Blob [] files = new Blob[4];
++        if (image1 != null){
++            files[0] = BlobProxy.generateProxy(image1.getInputStream(),image1.getSize());
++        }
++        if (image2 != null){
++            files[1] = BlobProxy.generateProxy(image2.getInputStream(),image2.getSize());
++        }
++        if (image3 != null){
++            files[2] = BlobProxy.generateProxy(image3.getInputStream(),image3.getSize());
++        }
++        if (image4 != null){
++            files[3] = BlobProxy.generateProxy(image4.getInputStream(),image4.getSize());
++        }
+ 
++        User user = new User();//Needs to be redo
++        tweetService.addComment(text, files, user, tweetCommented);
++    }
+ }
+Index: ProjectBackend/src/main/java/com/TwitterClone/ProjectBackend/userManagement/UserRoles.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.TwitterClone.ProjectBackend.userManagement;\r\n\r\npublic enum UserRoles {\r\n    ANONYMOUS,\r\n    USER,\r\n    ADMIN\r\n\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/ProjectBackend/src/main/java/com/TwitterClone/ProjectBackend/userManagement/UserRoles.java b/ProjectBackend/src/main/java/com/TwitterClone/ProjectBackend/userManagement/UserRoles.java
+--- a/ProjectBackend/src/main/java/com/TwitterClone/ProjectBackend/userManagement/UserRoles.java	
++++ b/ProjectBackend/src/main/java/com/TwitterClone/ProjectBackend/userManagement/UserRoles.java	
+@@ -3,6 +3,7 @@
+ public enum UserRoles {
+     ANONYMOUS,
+     USER,
+-    ADMIN
+-
++    ADMIN,
++    VERIFIED,
++    PRIVATE,
+ }
+Index: ProjectBackend/src/main/java/com/TwitterClone/ProjectBackend/Security/WebSecurityConfig.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.TwitterClone.ProjectBackend.Security;\r\n\r\nimport com.TwitterClone.ProjectBackend.Service.LoadUserService;\r\nimport lombok.AllArgsConstructor;\r\nimport org.springframework.context.annotation.Bean;\r\nimport org.springframework.context.annotation.Configuration;\r\nimport org.springframework.security.authentication.AuthenticationProvider;\r\nimport org.springframework.security.authentication.dao.DaoAuthenticationProvider;\r\nimport org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;\r\nimport org.springframework.security.config.annotation.web.builders.HttpSecurity;\r\nimport org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;\r\nimport org.springframework.security.config.annotation.web.configuration.WebSecurityConfiguration;\r\nimport org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;\r\nimport org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;\r\nimport org.springframework.security.crypto.factory.PasswordEncoderFactories;\r\nimport org.springframework.security.crypto.password.PasswordEncoder;\r\nimport org.springframework.security.web.SecurityFilterChain;\r\n\r\n@Configuration\r\n@AllArgsConstructor\r\n@EnableWebSecurity\r\npublic class WebSecurityConfig extends WebSecurityConfigurerAdapter {\r\n\r\n    /**\r\n     * In this method we disable the CSRF protection for know so our app can accept any request from any user.\r\n     * @param http\r\n     * @throws Exception\r\n     */\r\n\r\n    private final LoadUserService loadUserService;\r\n    private final BCryptPasswordEncoder bCryptPasswordEncoder;\r\n\r\n    @Override\r\n    protected void configure(HttpSecurity http) throws Exception {\r\n\r\n        http.authorizeRequests().antMatchers(\"/\").permitAll();\r\n        http.authorizeRequests().antMatchers(\"/login\").permitAll();\r\n        http.authorizeRequests().antMatchers(\"/signup\").permitAll();\r\n        http.authorizeRequests().antMatchers(\"/error\").permitAll();\r\n        http.authorizeRequests().antMatchers(\"/logout\").permitAll();\r\n\r\n\r\n        // Login form\r\n        http.formLogin().loginPage(\"/login\");\r\n        http.formLogin().usernameParameter(\"username\");\r\n        http.formLogin().passwordParameter(\"password\");\r\n        http.formLogin().defaultSuccessUrl(\"/home\");\r\n        http.formLogin().failureUrl(\"/error\");\r\n\r\n        // Private pages\r\n        http.authorizeRequests().antMatchers(\"/home\").hasAnyRole(\"USER\");\r\n        http.authorizeRequests().antMatchers(\"/notifications\").hasAnyRole(\"USER\");\r\n        http.authorizeRequests().antMatchers(\"/bookmarks\").hasAnyRole(\"USER\");\r\n        http.authorizeRequests().antMatchers(\"/write-tweet\").hasAnyRole(\"USER\");\r\n\r\n        // Logout\r\n        http.logout().logoutUrl(\"/logout\");\r\n        http.logout().logoutSuccessUrl(\"/\");\r\n        http.csrf().disable();\r\n\r\n    }\r\n\r\n    @Override\r\n    protected void configure(AuthenticationManagerBuilder auth) throws Exception {\r\n\r\n        PasswordEncoder encoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();\r\n\r\n        String encodedPassword = encoder.encode(\"pass\");\r\n\r\n        auth.inMemoryAuthentication().withUser(\"user\").password(encodedPassword).roles(\"USER\");\r\n    }\r\n\r\n/*    @Override\r\n    protected void configure(AuthenticationManagerBuilder auth){\r\n        auth.authenticationProvider(AuthenticationProvider());\r\n    }\r\n    @Bean\r\n    public AuthenticationProvider AuthenticationProvider(){\r\n        DaoAuthenticationProvider provider = new DaoAuthenticationProvider();\r\n        provider.setPasswordEncoder(bCryptPasswordEncoder);\r\n        provider.setUserDetailsService(loadUserService);\r\n        return provider;\r\n    }*/\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/ProjectBackend/src/main/java/com/TwitterClone/ProjectBackend/Security/WebSecurityConfig.java b/ProjectBackend/src/main/java/com/TwitterClone/ProjectBackend/Security/WebSecurityConfig.java
+--- a/ProjectBackend/src/main/java/com/TwitterClone/ProjectBackend/Security/WebSecurityConfig.java	
++++ b/ProjectBackend/src/main/java/com/TwitterClone/ProjectBackend/Security/WebSecurityConfig.java	
+@@ -38,7 +38,7 @@
+         http.authorizeRequests().antMatchers("/signup").permitAll();
+         http.authorizeRequests().antMatchers("/error").permitAll();
+         http.authorizeRequests().antMatchers("/logout").permitAll();
+-
++        http.headers().frameOptions().disable();
+ 
+         // Login form
+         http.formLogin().loginPage("/login");

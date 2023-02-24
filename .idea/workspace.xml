@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="5639e04f-406b-4994-8add-571c2537dd22" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/ProjectBackend/src/main/java/com/TwitterClone/ProjectBackend/Controller/TweetController.java" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectBackend/src/main/java/com/TwitterClone/ProjectBackend/Controller/TweetController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectBackend/src/main/java/com/TwitterClone/ProjectBackend/Model/Tweet.java" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectBackend/src/main/java/com/TwitterClone/ProjectBackend/Model/Tweet.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectBackend/src/main/java/com/TwitterClone/ProjectBackend/Repository/TweetRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectBackend/src/main/java/com/TwitterClone/ProjectBackend/Repository/TweetRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectBackend/src/main/java/com/TwitterClone/ProjectBackend/Service/DBInitializer.java" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectBackend/src/main/java/com/TwitterClone/ProjectBackend/Service/DBInitializer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectBackend/src/main/java/com/TwitterClone/ProjectBackend/Service/TweetService.java" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectBackend/src/main/java/com/TwitterClone/ProjectBackend/Service/TweetService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectBackend/src/main/java/com/TwitterClone/ProjectBackend/userManagement/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectBackend/src/main/java/com/TwitterClone/ProjectBackend/userManagement/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectBackend/target/classes/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectBackend/target/classes/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectBackend/target/classes/static/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectBackend/target/classes/static/login.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectBackend/target/classes/static/signup.html" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectBackend/target/classes/static/signup.html" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="HTML File" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">
+    <option name="selectedUrlAndAccountId">
+      <UrlAndAccount>
+        <option name="accountId" value="18942f86-ff73-464b-b222-d7d26ed56b88" />
+        <option name="url" value="https://github.com/CodeURJC-DAW-2022-23/webapp8.git" />
+      </UrlAndAccount>
+    </option>
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="useMavenConfig" value="true" />
+      </MavenGeneralSettings>
+    </option>
+  </component>
+  <component name="ProjectId" id="2M6V5JNeiokfmHeDvFhq9yJgRcc" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
+    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
+    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
+    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
+    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/masan/OneDrive/Uni/2/2 Cuatri/DAW (Diseno de Aplicaciones Web)/Practica/webapp8/ProjectBackEnd/src/main/java/com/TwitterClone/ProjectBackend/Service&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;spring.configuration.checksum&quot;: &quot;8f37f76bce550937b4288df4f5e67ed8&quot;,
+    &quot;two.files.diff.last.used.file&quot;: &quot;C:/Users/masan/OneDrive/Uni/2/2 Cuatri/DAW (Diseno de Aplicaciones Web)/Practica/webapp8/ProjectBackEnd/src/main/resources/static/templates/home.html&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  }
+}</component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\masan\OneDrive\Uni\2\2 Cuatri\DAW (Diseno de Aplicaciones Web)\Practica\webapp8\ProjectBackEnd\src\main\java\com\TwitterClone\ProjectBackend\Service" />
+      <recent name="C:\Users\masan\OneDrive\Uni\2\2 Cuatri\DAW (Diseno de Aplicaciones Web)\Practica\webapp8\ProjectBackEnd\src\main\java\com\TwitterClone\ProjectBackend\userManagement" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\masan\OneDrive\Uni\2\2 Cuatri\DAW (Diseno de Aplicaciones Web)\Practica\webapp8\ProjectBackEnd\src\main\java\com\TwitterClone\ProjectBackend\userManagement" />
+      <recent name="C:\Users\masan\OneDrive\Uni\2\2 Cuatri\DAW (Diseno de Aplicaciones Web)\Practica\webapp8\ProjectBackEnd\src\main\java\com\TwitterClone\ProjectBackend\Service" />
+      <recent name="C:\Users\masan\OneDrive\Uni\2\2 Cuatri\DAW (Diseno de Aplicaciones Web)\Practica\webapp8\ProjectBackEnd\src\main\java\com\TwitterClone\ProjectBackend\Model" />
+      <recent name="C:\Users\masan\OneDrive\Uni\2\2 Cuatri\DAW (Diseno de Aplicaciones Web)\Practica\webapp8\ProjectBackEnd\src\main\java\com\TwitterClone\ProjectBackend\Controller" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Spring Boot.ProjectBackendApplication">
+    <configuration name="ProjectBackEndApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <module name="ProjectBackEnd" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.TwitterClone.ProjectBackEnd.ProjectBackEndApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ProjectBackendApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <module name="ProjectBackEnd" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.TwitterClone.ProjectBackend.ProjectBackendApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="5639e04f-406b-4994-8add-571c2537dd22" name="Changes" comment="" />
+      <created>1677087834827</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1677087834827</updated>
+      <workItem from="1677087836016" duration="664000" />
+      <workItem from="1677090815668" duration="107000" />
+      <workItem from="1677090956593" duration="107000" />
+      <workItem from="1677093543016" duration="77000" />
+      <workItem from="1677099703798" duration="10999000" />
+      <workItem from="1677144828150" duration="5560000" />
+      <workItem from="1677150407708" duration="627000" />
+      <workItem from="1677151428858" duration="4061000" />
+      <workItem from="1677168070234" duration="1143000" />
+      <workItem from="1677169302434" duration="109000" />
+      <workItem from="1677169557733" duration="88000" />
+      <workItem from="1677186775354" duration="7428000" />
+      <workItem from="1677199460505" duration="49000" />
+      <workItem from="1677230396992" duration="10253000" />
+      <workItem from="1677256873090" duration="618000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/ProjectBackEnd/src/main/java/com/TwitterClone/ProjectBackend/Service/DBInitializer.java</url>
+          <line>34</line>
+          <option name="timeStamp" value="11" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+</project>

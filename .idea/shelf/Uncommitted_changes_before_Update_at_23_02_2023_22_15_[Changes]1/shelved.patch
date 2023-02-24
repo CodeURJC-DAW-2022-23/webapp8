@@ -1,0 +1,90 @@
+Index: ProjectBackend/src/main/java/com/TwitterClone/ProjectBackend/Service/TweetService.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.TwitterClone.ProjectBackend.Service;\r\n\r\nimport com.TwitterClone.ProjectBackend.Model.Tweet;\r\nimport com.TwitterClone.ProjectBackend.Repository.TweetRepository;\r\nimport org.springframework.beans.factory.annotation.Autowired;\r\nimport org.springframework.stereotype.Service;\r\n\r\nimport java.util.List;\r\nimport java.util.Optional;\r\nimport java.util.UUID;\r\n\r\n/**\r\n * This class is on charge of implementing all the necessary logic for the Tweets.\r\n */\r\n@Service\r\npublic class TweetService {\r\n    @Autowired\r\n    private TweetRepository repository;\r\n\r\n    public List<Tweet> findAll(){\r\n        return repository.findAll();\r\n    }\r\n\r\n    public void createTweet(String text){\r\n        Tweet tweet = new Tweet(text, null);\r\n        repository.save(tweet);\r\n    }\r\n\r\n    public Optional<Tweet> findById(UUID id){\r\n        return repository.findById(id);\r\n    }\r\n\r\n\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/ProjectBackend/src/main/java/com/TwitterClone/ProjectBackend/Service/TweetService.java b/ProjectBackend/src/main/java/com/TwitterClone/ProjectBackend/Service/TweetService.java
+--- a/ProjectBackend/src/main/java/com/TwitterClone/ProjectBackend/Service/TweetService.java	
++++ b/ProjectBackend/src/main/java/com/TwitterClone/ProjectBackend/Service/TweetService.java	
+@@ -2,9 +2,11 @@
+ 
+ import com.TwitterClone.ProjectBackend.Model.Tweet;
+ import com.TwitterClone.ProjectBackend.Repository.TweetRepository;
++import com.TwitterClone.ProjectBackend.userManagement.User;
+ import org.springframework.beans.factory.annotation.Autowired;
+ import org.springframework.stereotype.Service;
+ 
++import java.sql.Blob;
+ import java.util.List;
+ import java.util.Optional;
+ import java.util.UUID;
+@@ -14,6 +16,7 @@
+  */
+ @Service
+ public class TweetService {
++
+     @Autowired
+     private TweetRepository repository;
+ 
+@@ -21,14 +24,57 @@
+         return repository.findAll();
+     }
+ 
+-    public void createTweet(String text){
+-        Tweet tweet = new Tweet(text, null);
++    public void createTweet(String text, Blob [] files, Tweet citation, User user){
++        Tweet tweet = new Tweet(text, user, files, citation);
+         repository.save(tweet);
+     }
+ 
++    public void deleteTweet(Tweet tweetToDelete){
++        repository.delete(tweetToDelete);
++    }
++
+     public Optional<Tweet> findById(UUID id){
+         return repository.findById(id);
+     }
+ 
++    /*
++    This function will add or remove the like
++     */
++    public void toggleLike(User giver, Tweet tweet){
++        Tweet t = this.findById(tweet.getId()).orElse(null);
++        if (t != null){
++            if (t.getLikes().contains(giver)){
++                t.removeLike(giver);
++            }
++            else{
++                t.addLike(giver);
++            }
++        }
++    }
+ 
++    /*
++    This function will add or remove the retweet
++     */
++    public void toggleRetweet(User giver, Tweet tweet){
++        Tweet t = this.findById(tweet.getId()).orElse(null);
++        if (t != null){
++            if (t.getRetweets().contains(giver)){
++                t.removeRetweet(giver);
++            }
++            else{
++                t.addRetweet(giver);
++            }
++        }
++    }
++
++    /*
++    This function will add a Commment
++     */
++    public void addComment(String text, Blob[] files, User user, Tweet tweet){
++        Tweet t = this.findById(tweet.getId()).orElse(null);
++        if (t != null){
++            Tweet comment = new Tweet(text, user, files, null);
++            t.addComment(comment);
++        }
++    }
+ }
