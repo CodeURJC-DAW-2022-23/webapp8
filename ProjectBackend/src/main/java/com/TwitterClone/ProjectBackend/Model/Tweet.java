@@ -7,18 +7,13 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.sql.Blob;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 @Getter
 @Setter
 @Entity
 public class Tweet {
-    @Id
-    @Column(name = "id", length = 16, unique = true, nullable = false)
-    private final UUID id;
+    private final @Id @GeneratedValue Long id;
     @ManyToOne
     private User user;
     private final LocalDateTime publishDate;
@@ -31,25 +26,33 @@ public class Tweet {
     @ManyToOne
     private Tweet citation;
     private String text;
-    //@Lob
-    //@OneToMany
-    //private List<Blob> media;
+    @Lob
+    private Blob media1;
+    @Lob
+    private Blob media2;
+    @Lob
+    private Blob media3;
+    @Lob
+    private Blob media4;
 
     //private Set<String> hashtag; // Later
 
     public Tweet(){
-        this.id = UUID.randomUUID();
+        this.id = new Random().nextLong();
         this.publishDate = LocalDateTime.now();
     }
     public Tweet(String text, User user, Blob [] files, Tweet citation) {
-        this.id = UUID.randomUUID();
+        this.id = new Random().nextLong();
         this.publishDate = LocalDateTime.now();
         this.likes = new LinkedList<>();
         this.retweets =  new LinkedList<>();
         this.comments = new LinkedList<>();
         this.text = text;
         this.user = user;
-        //this.media = new LinkedList<>(List.of(files));
+        this.media1 = files[0];
+        this.media2 = files[1];
+        this.media3 = files[2];
+        this.media4 = files[3];
         this.citation = citation;
     }
 
@@ -57,7 +60,7 @@ public class Tweet {
     For example data
      */
     public Tweet(String text, User user, LocalDateTime time, Tweet citation, Blob [] files) {
-        this.id = UUID.randomUUID();
+        this.id = new Random().nextLong();
         this.publishDate = time;
         this.likes = new LinkedList<>();
         this.retweets =  new LinkedList<>();
@@ -65,7 +68,10 @@ public class Tweet {
         this.text = text;
         this.user = user;
         this.citation = citation;
-        //this.media = new LinkedList<>(List.of(files));
+        this.media1 = files[0];
+        this.media2 = files[1];
+        this.media3 = files[2];
+        this.media4 = files[3];
     }
 
     public void addComment(Tweet comment){
@@ -79,6 +85,7 @@ public class Tweet {
     public void addRetweet(User giver){
         this.retweets.add(giver);
     }
+
     public void removeLike(User giver){
         this.likes.remove(giver);
     }

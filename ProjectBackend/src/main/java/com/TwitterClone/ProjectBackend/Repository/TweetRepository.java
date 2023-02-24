@@ -8,6 +8,6 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Repository
-public interface TweetRepository extends JpaRepository<Tweet, UUID> {
-    Optional<Tweet> findById(UUID id);
+public interface TweetRepository extends JpaRepository<Tweet, Long> {
+    Optional<Tweet> findById(Long id);
 }

@@ -9,6 +9,7 @@ import lombok.Setter;/*
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;*/
+import org.hibernate.annotations.Generated;
 import org.hibernate.validator.constraints.UniqueElements;
 
 import javax.persistence.*;
@@ -30,7 +31,7 @@ import java.util.*;
 
 
 public class User /*implements UserDetails*/ {
-    private final @Id Long id;
+    private final @Id @GeneratedValue Long id;
     @Column(unique=true)
     private String username;
     @Column(unique=true)
@@ -88,7 +89,7 @@ public class User /*implements UserDetails*/ {
         this.nickname = nickname;
         this.biography = biography;
         this.joinDate = time;
-        this.role = UserRoles.valueOf("USER");
+        this.role = UserRoles.valueOf(role);
         this.mail = mail;
         this.password = password;
         this.followers = new LinkedList<>();
@@ -98,6 +99,10 @@ public class User /*implements UserDetails*/ {
     }
 
     private void setImages(String[] files) {
+    }
+
+    public void addTweet(Tweet tweet){
+        this.tweetsWritten.add(tweet);
     }
 
     /**
