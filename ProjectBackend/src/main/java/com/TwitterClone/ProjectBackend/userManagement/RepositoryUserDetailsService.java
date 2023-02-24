@@ -1,4 +1,4 @@
-/*package com.TwitterClone.ProjectBackend.userManagement;
+package com.TwitterClone.ProjectBackend.userManagement;
 
 import com.TwitterClone.ProjectBackend.Repository.UserRepository;
 import lombok.AllArgsConstructor;
@@ -9,15 +9,14 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.GetMapping;
 
 import java.util.ArrayList;
 import java.util.List;
 
-*//**
+/**
  * This service is dedicated to the management of the entity user. Specially whn loading
  * then by usiung the UserDetailsService interface form spring security
- *//*
+ */
 @Service
 @AllArgsConstructor
 
@@ -27,13 +26,13 @@ public class RepositoryUserDetailsService implements UserDetailsService {
     private  UserRepository userRepository;
 
 
-    *//**
+    /**
      * It searchs on the repository to see if it can find a user by the username. If not, it throws an
      * exception
      * @param username
      * @return
      * @throws UsernameNotFoundException
-     *//*
+     */
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
@@ -49,4 +48,4 @@ public class RepositoryUserDetailsService implements UserDetailsService {
     }
 
 
-}*/
+}

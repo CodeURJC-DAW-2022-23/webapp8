@@ -22,7 +22,7 @@ public class ProfileService {
     }
 
     public void createProfile(String username, String password, String mail) {
-        User user = new User(username, password, mail);
+        User user = new User(username, password, mail, "USER");
         repository.save(user);
     }
 

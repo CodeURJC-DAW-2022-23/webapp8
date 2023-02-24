@@ -29,8 +29,10 @@ import java.util.*;
 @Table(name = "users")
 
 
-public class User /*implements UserDetails*/ {
-    private final @Id Long id;
+public class User  {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
     @Column(unique=true)
     private String username;
     @Column(unique=true)
@@ -56,17 +58,19 @@ public class User /*implements UserDetails*/ {
     private Boolean enabled;
 
     /**
-     * Main constructor. The UUID is randomly given and the join date is the date of registration.
+     * Main constructor.
      */
 
     public User(@NotNull @NotBlank String username,
                 @NotNull @NotBlank String password,
-                @NotNull @NotBlank String email) {
+                @NotNull @NotBlank String email,
+                String role) {
         this.username = username;
         this.password = password;
         this.mail = email;
         this.id = new Random().nextLong();
-        this.role = UserRoles.valueOf("USER");
+        if (role.isBlank()) this.role = UserRoles.valueOf("USER");
+        else this.role = UserRoles.valueOf(role);
         this.joinDate = java.time.LocalDate.now();
         this.followers = new LinkedList<>();
         this.followed = new LinkedList<>();
@@ -75,7 +79,6 @@ public class User /*implements UserDetails*/ {
     }
 
     public User() {
-        this.id = new Random().nextLong();
         this.joinDate = java.time.LocalDate.now();
     }
 
@@ -100,38 +103,4 @@ public class User /*implements UserDetails*/ {
     private void setImages(String[] files) {
     }
 
-    /**
-     * It sets the authority level according to the user role
-     * @return
-     */
-   /* @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        SimpleGrantedAuthority authority = new SimpleGrantedAuthority(role.name());
-        return Collections.singletonList(authority);
-    }
-
-    @Override
-    public String getPassword() {
-        return getPassword();
-    }
-
-    @Override
-    public boolean isAccountNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isAccountNonLocked() {
-        return !locked;
-    }
-
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isEnabled() {
-        return enabled;
-    }*/
 }

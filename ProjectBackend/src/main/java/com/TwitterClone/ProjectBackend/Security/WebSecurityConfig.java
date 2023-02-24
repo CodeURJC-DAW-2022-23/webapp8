@@ -1,4 +1,3 @@
-/*
 package com.TwitterClone.ProjectBackend.Security;
 
 import com.TwitterClone.ProjectBackend.userManagement.RepositoryUserDetailsService;
@@ -22,13 +21,11 @@ import java.security.SecureRandom;
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-    */
-/**
+    /**
      * In this method we disable the CSRF protection for know so our app can accept any request from any user.
      * @param http
      * @throws Exception
-     *//*
-
+     */
 
     @Autowired
     private RepositoryUserDetailsService userDetailsService;
@@ -40,7 +37,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-
         auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
     }
 
@@ -62,10 +58,17 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.formLogin().failureUrl("/error");
 
         // Private pages
-        http.authorizeRequests().antMatchers("/home").hasAnyRole("USER");
-        http.authorizeRequests().antMatchers("/notifications").hasAnyRole("USER");
-        http.authorizeRequests().antMatchers("/bookmarks").hasAnyRole("USER");
-        http.authorizeRequests().antMatchers("/write-tweet").hasAnyRole("USER");
+        http.authorizeRequests().antMatchers("/home").hasAnyRole("USER", "ADMIN");
+        http.authorizeRequests().antMatchers("/notifications").hasAnyRole("USER", "ADMIN");
+        http.authorizeRequests().antMatchers("/bookmarks").hasAnyRole("USER", "ADMIN");
+        http.authorizeRequests().antMatchers("/write-tweet").hasAnyRole("USER", "ADMIN");
+
+        //ADMIN Page
+
+
+        //Just for testing Until we have the admin page
+        http.authorizeRequests().antMatchers("/private.html").hasAnyRole("ADMIN");
+
 
         // Logout
         http.logout().logoutUrl("/logout");
@@ -76,21 +79,4 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.headers().frameOptions().sameOrigin();
 
     }
-
-
-
-   */
-/* @Override
-    protected void configure(AuthenticationManagerBuilder auth){
-        auth.authenticationProvider(AuthenticationProvider());
-    }
-    @Bean
-    public AuthenticationProvider AuthenticationProvider(){
-        DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
-        provider.setPasswordEncoder(passwordEncoder());
-        provider.setUserDetailsService(userDetailsService);
-        return provider;
-    }*//*
-
 }
-*/
