@@ -104,7 +104,9 @@ public class User  {
     private void setImages(String[] files) {
     }
 
-        this.tweetsWritten.add(tweet);
+
     public void addTweet(Tweet tweet){
+        this.tweetsWritten.add(tweet);
+
     }
 }
