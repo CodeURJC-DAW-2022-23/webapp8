@@ -25,7 +25,6 @@ public class RepositoryUserDetailsService implements UserDetailsService {
     @Autowired
     private  UserRepository userRepository;
 
-
     /**
      * It searchs on the repository to see if it can find a user by the username. If not, it throws an
      * exception
@@ -42,8 +41,15 @@ public class RepositoryUserDetailsService implements UserDetailsService {
         List<GrantedAuthority> roles = new ArrayList<>();
         roles.add(new SimpleGrantedAuthority("ROLE_" + user.getRole()));
 
+
+
         return new org.springframework.security.core.userdetails.User(user.getUsername(),
-                user.getPassword(), roles);
+                user.getPassword(),
+                user.isEnabled(),
+                true,
+                true,
+                true,
+                roles);
 
     }
 

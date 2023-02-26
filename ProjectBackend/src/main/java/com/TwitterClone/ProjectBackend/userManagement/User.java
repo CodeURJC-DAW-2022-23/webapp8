@@ -5,13 +5,7 @@ import com.TwitterClone.ProjectBackend.userManagement.UserRoles;
 import com.sun.istack.NotNull;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
-import lombok.Setter;/*
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;*/
-import org.hibernate.annotations.Generated;
-import org.hibernate.validator.constraints.UniqueElements;
-
+import lombok.Setter;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.io.IOException;
@@ -47,7 +41,6 @@ public class User  {
     private  Blob profileBanner;
     @Enumerated(EnumType.STRING)
     private UserRoles role;
-    private boolean loggedIn;
     @OneToMany
     private List<User> followers;
     @OneToMany
@@ -55,8 +48,11 @@ public class User  {
     @OneToMany
     private List<Tweet> tweetsWritten;
     private final LocalDate joinDate;
-    private Boolean locked;
-    private Boolean enabled;
+
+    @Column(name = "verification_code", length = 64)
+    private String verificationCode;
+    private boolean loggedIn;
+    private boolean enabled = true;
 
     /**
      * Main constructor.
@@ -66,6 +62,7 @@ public class User  {
                 @NotNull @NotBlank String password,
                 @NotNull @NotBlank String email,
                 String role) {
+        super();
         this.username = username;
         this.password = password;
         this.mail = email;
@@ -104,7 +101,9 @@ public class User  {
     private void setImages(String[] files) {
     }
 
-        this.tweetsWritten.add(tweet);
+
     public void addTweet(Tweet tweet){
+
+        this.tweetsWritten.add(tweet);
     }
 }
