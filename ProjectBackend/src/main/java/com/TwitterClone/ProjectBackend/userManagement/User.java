@@ -103,7 +103,7 @@ public class User  {
 
 
     public void addTweet(Tweet tweet){
-
         this.tweetsWritten.add(tweet);
+
     }
 }
