@@ -1,6 +1,8 @@
 package com.TwitterClone.ProjectBackend.Service;
 
+import com.TwitterClone.ProjectBackend.Model.Trend;
 import com.TwitterClone.ProjectBackend.Model.Tweet;
+import com.TwitterClone.ProjectBackend.Repository.TrendRepository;
 import com.TwitterClone.ProjectBackend.Repository.TweetRepository;
 import com.TwitterClone.ProjectBackend.Repository.UserRepository;
 import com.TwitterClone.ProjectBackend.userManagement.User;
@@ -26,6 +28,9 @@ public class DBInitializer {
     private TweetRepository tweetRepository;
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private TrendRepository trendRepository;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -177,6 +182,34 @@ public class DBInitializer {
         userRepository.save(users.get(1));
         userRepository.save(users.get(2));
         userRepository.save(users.get(3));*/
+
+        // trend
+        Trend trend1 = new Trend("RCLS", 500);
+        Trend trend2 = new Trend("MarvelSpiderManMilesMorales", 700);
+        Trend trend3 = new Trend("KingsLeague", 20);
+        Trend trend4 = new Trend("Tailwind", 100);
+        Trend trend5 = new Trend("Pokemon", 600);
+        Trend trend6 = new Trend("Xokas", 1000);
+        Trend trend7 = new Trend("Matamoros", 50);
+        Trend trend8 = new Trend("Juan", 5);
+        Trend trend9 = new Trend("DAW", 404);
+        Trend trend10 = new Trend("JOPELINES", 123);
+        Trend trend11 = new Trend("NOPUEDOMAS", 666);
+
+        trendRepository.save(trend1);
+        trendRepository.save(trend2);
+        trendRepository.save(trend3);
+        trendRepository.save(trend4);
+        trendRepository.save(trend5);
+        trendRepository.save(trend6);
+        trendRepository.save(trend7);
+        trendRepository.save(trend8);
+        trendRepository.save(trend9);
+        trendRepository.save(trend10);
+        trendRepository.save(trend11);
+
+
+
     }
 }
 

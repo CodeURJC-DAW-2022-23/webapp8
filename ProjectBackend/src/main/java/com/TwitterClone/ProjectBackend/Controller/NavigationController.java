@@ -2,16 +2,15 @@ package com.TwitterClone.ProjectBackend.Controller;
 
 import com.TwitterClone.ProjectBackend.Model.*;
 import com.TwitterClone.ProjectBackend.Repository.UserRepository;
-import com.TwitterClone.ProjectBackend.userManagement.User;
+import com.TwitterClone.ProjectBackend.Service.HashtagService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
 
-import javax.servlet.http.HttpServletRequest;
-
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -21,7 +20,8 @@ import java.util.List;
 @Controller
 public class NavigationController {
 
-    Explorer explorer;
+    @Autowired
+    private HashtagService hashtagService;
     Bookmark bookmark;
     Home home;
     Profile profile;
@@ -115,8 +115,10 @@ public class NavigationController {
      * @param model
      */
     private void addCurrentTrends(Model model) {
-        this.explorer = new Explorer();
-        List<Trend> trends = this.explorer.getTrends();
+
+        Page<Trend> pageTrends = this.hashtagService.getCurrentTrends();
+
+        List<Trend> trends = pageTrends.stream().toList();
 
         model.addAttribute("trends", trends);
     }
