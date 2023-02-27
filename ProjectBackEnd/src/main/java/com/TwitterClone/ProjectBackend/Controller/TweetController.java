@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-@RequestMapping("tweets/")
+@RequestMapping("/tweets")
 @Controller
 public class TweetController {
     @Autowired
@@ -44,28 +44,22 @@ public class TweetController {
         List<Tweet> t = tweetService.find10RecentForUser(id);
         return new ArrayList<>();
     }
-    @PostMapping("post/")
-    public void postTweet(@RequestParam("text") String text,@RequestParam("files") MultipartFile [] images) throws IOException {
+    @PostMapping("/new-tweet")
+    public String postTweet(@RequestParam("tweet-info") String text,
+                          @RequestParam("tweet-files") MultipartFile [] images) throws IOException {
         Blob [] files = new Blob[4];
 
-        if (images.length > 0){
-            files[0] = BlobProxy.generateProxy(images[0].getInputStream(),images[0].getSize());
-        }
-
-        if (images.length > 1){
-            files[1] = BlobProxy.generateProxy(images[1].getInputStream(),images[1].getSize());
-        }
-
-        if (images.length > 2){
-            files[2] = BlobProxy.generateProxy(images[2].getInputStream(),images[2].getSize());
-        }
-
-        if (images.length > 3){
-            files[3] = BlobProxy.generateProxy(images[3].getInputStream(),images[3].getSize());
+        for (int index = 0; index < images.length; index++) {
+            files[index] = BlobProxy
+                    .generateProxy(images[index]
+                            .getInputStream(), images[index]
+                            .getSize());
         }
 
         Long userId = 1L;
         tweetService.createTweet(text, files,null, userId);
+
+        return "home";
     }
 
     @PostMapping("like/")

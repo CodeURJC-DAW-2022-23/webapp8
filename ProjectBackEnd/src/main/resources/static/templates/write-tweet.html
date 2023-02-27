@@ -66,30 +66,31 @@
                 </h2>
             </article>
 
-            <div class="flex flex-col gap-3">
-                <textarea
-                    class="p-5 text-lg bg-transparent border-[2.8px] resize-none rounded-xl border-primary dark:text-white-0"
-                    placeholder="Write your tweet here" maxlength="240" rows="6"></textarea>
-
-                <label>
-                    <span class="sr-only">Choose file to upload</span>
-                    <input type="file"
-                        class="w-full text-sm font-semibold text-black-0 file:text-sm file:font-bold file:text-white-0 file:mr-4 file:py-2 file:px-4 file:rounded-full file:bg-primary file:border-transparent dark:text-gray-2" />
-                </label>
-
-            </div>
-
-            <div class="flex flex-col gap-4">
-                <a class="w-full px-5 py-3 text-xl font-bold text-center transition rounded-full cursor-pointer text-white-0 bg-primary hover:scale-110"
-                    href="/home">
-                    Tweet
-                </a>
-
-                <a class="px-5 py-3 text-lg font-bold text-center transition bg-transparent border-2 cursor-pointer border-black-0 rounded-3xl dark:border-gray-4 dark:text-white-0 text-black-0 hover:scale-110"
-                    href="/home">
-                    Cancel
-                </a>
-            </div>
+            <form action="/tweets/new-tweet" method="post" enctype="multipart/form-data">
+                <div class="flex flex-col gap-3">
+                    <textarea
+                        class="p-5 text-lg bg-transparent border-[2.8px] resize-none rounded-xl border-primary dark:text-white-0"
+                        placeholder="Write your tweet here" maxlength="240" rows="6"
+                        name="tweet-info"></textarea>
+    
+                    <label>
+                        <span class="sr-only">Choose file to upload</span>
+                        <input type="file" name="tweet-files"
+                            class="w-full text-sm font-semibold text-black-0 file:text-sm file:font-bold file:text-white-0 file:mr-4 file:py-2 file:px-4 file:rounded-full file:bg-primary file:border-transparent dark:text-gray-2" />
+                    </label>
+    
+                </div>
+    
+                <div class="flex flex-col gap-4">
+                    <input type="submit" value="Tweet"
+                    class="w-full px-5 py-3 text-xl font-bold text-center transition rounded-full cursor-pointer text-white-0 bg-primary hover:scale-110">
+    
+                    <a class="px-5 py-3 text-lg font-bold text-center transition bg-transparent border-2 cursor-pointer border-black-0 rounded-3xl dark:border-gray-4 dark:text-white-0 text-black-0 hover:scale-110"
+                        href="/home">
+                        Cancel
+                    </a>
+                </div>
+            </form>
         </div>
     </main>
 
