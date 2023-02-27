@@ -17,12 +17,12 @@ public class Tweet {
     @ManyToOne
     private User user;
     private final LocalDateTime publishDate;
-    @OneToMany
-    private List<User> likes;
-    @OneToMany
-    private List<User> retweets;
-    @OneToMany
-    private List<Tweet> comments;
+    @ManyToMany (fetch = FetchType.EAGER)
+    private List<User> likes = new ArrayList<>();
+    @ManyToMany (fetch = FetchType.EAGER)
+    private List<User> retweets = new ArrayList<>();
+    @OneToMany (fetch = FetchType.EAGER)
+    private List<Tweet> comments = new ArrayList<>();
     @ManyToOne
     private Tweet citation;
     private String text;

@@ -5,8 +5,12 @@ import com.TwitterClone.ProjectBackend.Repository.TweetRepository;
 import com.TwitterClone.ProjectBackend.Repository.UserRepository;
 import com.TwitterClone.ProjectBackend.userManagement.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.awt.print.Pageable;
 import java.sql.Blob;
 import java.util.List;
 import java.util.Optional;
@@ -27,14 +31,21 @@ public class TweetService {
         return repository.findAll();
     }
 
+    public List<Tweet> find10(){
+        User user = userRepository.findById(1L).orElse(null);
+        return repository.findByUser(user.getId());
+    }
+
+    //It needs to be pageable but it does not work
+    public List<Tweet> find10RecentForUser (Long id){
+        return repository.findByUserFollows(id, 10);
+    }
+
     public void createTweet(String text, Blob [] files, Tweet citation, Long userId){
         User user = userRepository.findById(userId).orElse(null);
         if (user != null){
             Tweet tweet = new Tweet(text, user, files, citation);
             repository.save(tweet);
-            List<Tweet> tweets = repository.findAll();
-            user.addTweet(tweets.get(tweets.size()-1));
-            userRepository.save(user);
         }
     }
 

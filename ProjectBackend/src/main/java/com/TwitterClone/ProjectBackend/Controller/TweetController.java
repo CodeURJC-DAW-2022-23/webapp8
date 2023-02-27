@@ -5,11 +5,13 @@ import com.TwitterClone.ProjectBackend.Service.TweetService;
 import com.TwitterClone.ProjectBackend.userManagement.User;
 import org.hibernate.engine.jdbc.BlobProxy;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.sql.Blob;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -30,6 +32,15 @@ public class TweetController {
         return tweetService.findById(id).orElse(null);
     }
 
+    @GetMapping("{id}/tweet/")
+    public List<Tweet> get10Tweet(@PathVariable("id") Long id) {
+        List<Tweet> t = tweetService.find10();
+        return new ArrayList<>();}
+
+    @GetMapping("{id}/casa")
+    public List<Tweet> getRecent(@PathVariable("id") Long id) {
+        List<Tweet> t = tweetService.find10RecentForUser(id);
+        return new ArrayList<>();}
     @PostMapping("post/")
     public void postTweet(@RequestParam("text") String text,@RequestParam("files") MultipartFile [] images) throws IOException {
         Blob [] files = new Blob[4];
