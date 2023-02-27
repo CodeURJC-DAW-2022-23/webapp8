@@ -4,6 +4,4 @@ public enum UserRoles {
     ANONYMOUS,
     USER,
     ADMIN,
-    VERIFIED,
-    PRIVATE,
 }
