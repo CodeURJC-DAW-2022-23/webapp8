@@ -1,18 +1,22 @@
 package com.TwitterClone.ProjectBackend.Model;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
+
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Entity
 public class Trend {
-    private String countryTrend;
-    private Hashtag hashtag;
+
+    @Id
+    private String hashtag;
+    @NonNull
     private int numTweets;
 
-    public Trend(String countryTrend, Hashtag hashtag) {
-        this.countryTrend = countryTrend;
-        this.hashtag = hashtag;
-        this.numTweets = hashtag.getTweetList().size();
-    }
 }
