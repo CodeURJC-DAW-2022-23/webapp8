@@ -1,11 +1,9 @@
-{{#trends}}
 <a class="flex flex-col gap-1 px-5 py-3 border-b cursor-pointer border-gray-9 dark:border-black-5 hover:bg-gray-7 dark:hover:bg-black-6"
-    href="/explore/{{hashtag}}">
+   href="/explore/{{hashtag}}">
     <h4 class="text-sm font-medium dark:font-semibold text-gray-5">{{-index}}º Trending</h4>
 
     <h3 class="font-bold dark:text-gray-3">#{{hashtag}}</h3>
     {{#numTweets}}
-    <h5 class="text-sm font-medium dark:font-semibold text-gray-5">{{numTweets}}K Tweets</h5>
+    <h5 class="text-sm font-medium dark:font-semibold text-gray-5">{{numTweets}} Tweets</h5>
     {{/numTweets}}
 </a>
-{{/trends}}

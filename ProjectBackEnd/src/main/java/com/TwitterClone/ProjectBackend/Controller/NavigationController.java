@@ -20,6 +20,9 @@ public class NavigationController {
 
     @Autowired
     private HashtagService hashtagService;
+    Home home;
+    Profile profile;
+    NotificationsPage notification;
     @Autowired
     private UserRepository userRepository;
 
@@ -45,6 +48,9 @@ public class NavigationController {
     public String toExplore(Model model) {
 
         this.addCurrentTrends(model);
+
+        List<Trend> trends = this.hashtagService.getCurrentTrends(0,30);
+        model.addAttribute("explore_trends", trends);
 
         return "explore";
     }
@@ -108,9 +114,7 @@ public class NavigationController {
      */
     private void addCurrentTrends(Model model) {
 
-        Page<Trend> pageTrends = this.hashtagService.getCurrentTrends();
-
-        List<Trend> trends = pageTrends.stream().toList();
+        List<Trend> trends = this.hashtagService.getCurrentTrends(0,5);
 
         model.addAttribute("trends", trends);
     }

@@ -1,31 +1,27 @@
 package com.TwitterClone.ProjectBackend.Model;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+import org.hibernate.validator.constraints.UniqueElements;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
-import java.util.UUID;
+import java.util.Set;
 
-/**
- * Stores all tweets that contain this hashtag
- */
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Entity
 public class Hashtag {
 
     @Id
-    private String name;
+    private String hashtag;
+    @ManyToMany
+    private Set<Tweet> tweets = new HashSet<>();
 
-    @OneToMany
-    private List<Tweet> tweetList;
-
-    public Hashtag(String name) {
-        this.name = name;
-        this.tweetList = new ArrayList<>();
+    public void addTweet(Tweet tweet) {
+        this.tweets.add(tweet);
     }
 }
