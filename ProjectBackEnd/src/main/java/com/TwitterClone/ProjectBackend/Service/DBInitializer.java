@@ -1,10 +1,13 @@
 package com.TwitterClone.ProjectBackend.Service;
 
+import com.TwitterClone.ProjectBackend.Model.Hashtag;
+import com.TwitterClone.ProjectBackend.Model.Notification;
 import com.TwitterClone.ProjectBackend.Model.Notification;
 import com.TwitterClone.ProjectBackend.Model.Trend;
 import com.TwitterClone.ProjectBackend.Model.Tweet;
+import com.TwitterClone.ProjectBackend.Repository.HashtagRepository;
 import com.TwitterClone.ProjectBackend.Repository.NotificationRepository;
-import com.TwitterClone.ProjectBackend.Repository.TrendRepository;
+import com.TwitterClone.ProjectBackend.Repository.NotificationRepository;
 import com.TwitterClone.ProjectBackend.Repository.TweetRepository;
 import com.TwitterClone.ProjectBackend.Repository.UserRepository;
 import com.TwitterClone.ProjectBackend.userManagement.User;
@@ -23,7 +26,10 @@ import java.net.URISyntaxException;
 import java.sql.Blob;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class DBInitializer {
@@ -33,7 +39,7 @@ public class DBInitializer {
     private UserRepository userRepository;
 
     @Autowired
-    private TrendRepository trendRepository;
+    private HashtagRepository trendRepository;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -49,13 +55,13 @@ public class DBInitializer {
 
         //Sample Users
         String [] files = {"example_data/elrubius_profilepic.jpg","example_data/elrubius_profilebanner.jpg"};
-        User user1 = new User("@Rubiu5","elrubius","Rata Noruega.  Me gustan los gatos obesos.","rubius@gmail.com",passwordEncoder.encode("rubius"),files, LocalDate.of(2013,10,13),"VERIFIED");
+        User user1 = new User("Rubiu5","elrubius","Rata Noruega.  Me gustan los gatos obesos.","rubius@gmail.com",passwordEncoder.encode("rubius"),files, LocalDate.of(2013,10,13),"VERIFIED");
         files = new String[]{"example_data/KOI_KEYLAND_profilepic.jpg", "example_data/KOI_KEYLAND_profilebanner.jpg"};
-        User user2 = new User("@Keyland71", "KOI KEYLAND71", "19 y/o\nRocket League proplayer for @KOI", "example2@gmail.com", passwordEncoder.encode("examplePassword2"),files, LocalDate.of(2018,4,21), "PUBLIC");
+        User user2 = new User("Keyland71", "KOI KEYLAND71", "19 y/o\nRocket League proplayer for @KOI", "example2@gmail.com", passwordEncoder.encode("examplePassword2"),files, LocalDate.of(2018,4,21), "PUBLIC");
         files = new String[]{"example_data/Alanis_profilepic.jpg", "example_data/Alanis_profilebanner.jpg"};
-        User user3 = new User("@antonioalanxs", "Alanís",  "",  "example3@gmail.com", passwordEncoder.encode("examplePassword3"),files, LocalDate.of(2019,8,7), "PRIVATE");
+        User user3 = new User("antonioalanxs", "Alanís",  "",  "example3@gmail.com", passwordEncoder.encode("examplePassword3"),files, LocalDate.of(2019,8,7), "PRIVATE");
         files = new String[]{"example_data/Ibai_profilepic.jpg", "example_data/Ibai_profilebanner.jpg"};
-        User user4 = new User("@ibai","Ibai","Sigue a nuestros equipos @KOI y @PorcinosFC, http://twitch.tv/ibai","ibai@gmail.com",passwordEncoder.encode("ibai"),files, LocalDate.of(2014,8,5), "VERIFIED");
+        User user4 = new User("ibai","Ibai","Sigue a nuestros equipos @KOI y @PorcinosFC, http://twitch.tv/ibai","ibai@gmail.com",passwordEncoder.encode("ibai"),files, LocalDate.of(2014,8,5), "VERIFIED");
         userRepository.save(user1);
         userRepository.save(user2);
         userRepository.save(user3);
@@ -153,7 +159,7 @@ public class DBInitializer {
                 BlobProxy.generateProxy(image3.getInputStream(),image3.contentLength()),
                 BlobProxy.generateProxy(image4.getInputStream(),image4.contentLength())
         };
-        Tweet tweet2 = new Tweet("MarvelsSpiderManMilesMorales", users.get(1), LocalDateTime.of(2021,8,16,20,00,00), null, images);
+        Tweet tweet2 = new Tweet("#MarvelsSpiderManMilesMorales", users.get(1), LocalDateTime.of(2021,8,16,20,00,00), null, images);
 
         images = new Blob[] {
                 null,
@@ -190,18 +196,47 @@ public class DBInitializer {
         tweets.get(tweets.size()-2).addComment(tweets.get(tweets.size()-3));
         tweetRepository.save(tweets.get(tweets.size()-2));
 
-        Trend trend1 = new Trend("RCLS", 500);
-        Trend trend2 = new Trend("MarvelSpiderManMilesMorales", 700);
-        Trend trend3 = new Trend("KingsLeague", 20);
-        Trend trend4 = new Trend("Tailwind", 100);
-        Trend trend5 = new Trend("Pokemon", 600);
-        Trend trend7 = new Trend("Matamoros", 50);
-        Trend trend6 = new Trend("Xokas", 1000);
-        // trend
-        Trend trend8 = new Trend("Juan", 5);
-        Trend trend9 = new Trend("DAW", 404);
-        Trend trend10 = new Trend("JOPELINES", 123);
-        Trend trend11 = new Trend("NOPUEDOMAS", 666);
+        //@admin
+        Tweet tweet11 = new Tweet("#KingsLeague #Tailwind #RCLS #Pokemon #Grupo8 #DAW #JOPELINES #MicaEl6DelEquipo #Twitter #H2-console", users.get(5), LocalDateTime.of(2003,12,31,21,00,00), null, images);
+        tweetRepository.save(tweet11);
+        //Hashtags
+        tweets = tweetRepository.findAll();
+        users = userRepository.findAll();
+
+        Set<Tweet> tweetsSet = new HashSet<>();
+        tweetsSet.add(tweets.get(0));
+        tweetsSet.add(tweets.get(10));
+        Hashtag trend3 = new Hashtag("KingsLeague", tweetsSet);
+        tweetsSet = new HashSet<>();
+        tweetsSet.add(tweets.get(10));
+        Hashtag trend1 = new Hashtag("RCLS", tweetsSet);
+        tweetsSet = new HashSet<>();
+        tweetsSet.add(tweets.get(6));
+        Hashtag trend2 = new Hashtag("MarvelSpiderManMilesMorales", tweetsSet);
+        tweetsSet = new HashSet<>();
+        tweetsSet.add(tweets.get(10));
+        Hashtag trend4 = new Hashtag("Tailwind", tweetsSet);
+        tweetsSet = new HashSet<>();
+        tweetsSet.add(tweets.get(10));
+        Hashtag trend5 = new Hashtag("Pokemon", tweetsSet);
+        tweetsSet = new HashSet<>();
+        tweetsSet.add(tweets.get(10));
+        Hashtag trend7 = new Hashtag("Grupo8", tweetsSet);
+        tweetsSet = new HashSet<>();
+        tweetsSet.add(tweets.get(10));
+        Hashtag trend6 = new Hashtag("DAW", tweetsSet);
+        tweetsSet = new HashSet<>();
+        tweetsSet.add(tweets.get(10));
+        Hashtag trend8 = new Hashtag("JOPELINES", tweetsSet);
+        tweetsSet = new HashSet<>();
+        tweetsSet.add(tweets.get(10));
+        Hashtag trend9 = new Hashtag("MicaEl6DelEquipo", tweetsSet);
+        tweetsSet = new HashSet<>();
+        tweetsSet.add(tweets.get(10));
+        Hashtag trend10 = new Hashtag("Twitter", tweetsSet);
+        tweetsSet = new HashSet<>();
+        tweetsSet.add(tweets.get(10));
+        Hashtag trend11 = new Hashtag("H2-console", tweetsSet);
         trendRepository.save(trend1);
         trendRepository.save(trend2);
         trendRepository.save(trend3);
@@ -209,15 +244,12 @@ public class DBInitializer {
         trendRepository.save(trend5);
         trendRepository.save(trend6);
         trendRepository.save(trend7);
-
         trendRepository.save(trend8);
         trendRepository.save(trend9);
         trendRepository.save(trend10);
         trendRepository.save(trend11);
-        //Sample notifications
-        tweets = tweetRepository.findAll();
-        users = userRepository.findAll();
 
+        //Sample notifications
         Tweet tweet = tweets.get(5);
         User user = users.get(2);
         Notification notification = new Notification(tweet,user,tweet.getUser(),LocalDateTime.of(2022,06,14,17,0,0),"LIKE");

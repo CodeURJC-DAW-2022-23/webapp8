@@ -1,6 +1,7 @@
 package com.TwitterClone.ProjectBackend.Controller;
 
 import com.TwitterClone.ProjectBackend.Model.Tweet;
+import com.TwitterClone.ProjectBackend.Service.HashtagService;
 import com.TwitterClone.ProjectBackend.Service.TweetService;
 import com.TwitterClone.ProjectBackend.userManagement.User;
 import org.hibernate.engine.jdbc.BlobProxy;
@@ -17,13 +18,16 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-@RequestMapping("tweets/")
+@RequestMapping("tweets")
 @Controller
 public class TweetController {
     @Autowired
     private TweetService tweetService;
 
-    @GetMapping
+    @Autowired
+    private HashtagService hashtagService;
+
+    @GetMapping("/")
     public List<Tweet> getAllTweets() {
         return tweetService.findAll();
     }
@@ -33,18 +37,18 @@ public class TweetController {
         return tweetService.findById(id).orElse(null);
     }
 
-    @GetMapping("{id}/tweet/")
+    @GetMapping("/{id}/tweet/")
     public List<Tweet> get10Tweet(@PathVariable("id") Long id) {
         List<Tweet> t = tweetService.find10();
         return new ArrayList<>();
     }
 
-    @GetMapping("{id}/casa")
+    @GetMapping("/{id}/casa")
     public List<Tweet> getRecent(@PathVariable("id") Long id) {
         List<Tweet> t = tweetService.find10RecentForUser(id);
         return new ArrayList<>();
     }
-    @PostMapping("post/")
+    @PostMapping("/post")
     public void postTweet(@RequestParam("text") String text,@RequestParam("files") MultipartFile [] images) throws IOException {
         Blob [] files = new Blob[4];
 
@@ -66,26 +70,53 @@ public class TweetController {
 
         Long userId = 1L;
         tweetService.createTweet(text, files,null, userId);
+        saveHashtag(text);
     }
 
-    @PostMapping("like/")
+    private void saveHashtag(String text){
+        List<Tweet> tweets = tweetService.find10();
+        boolean hashtagFound = false;
+        String hashtag = "";
+        for(int i = 0; i < text.length(); i++){
+            if (text.charAt(i) =='#'){
+                if (hashtagFound){
+                    hashtagService.add(hashtag, tweets.get(0));
+                    hashtag = "";
+                }
+                hashtagFound = true;
+            } else if (hashtagFound){
+                if (text.charAt(i) == ' ' || text.charAt(i) == '#'){
+                    hashtagFound = false;
+                    hashtagService.add(hashtag, tweets.get(0));
+                    hashtag = "";
+                } else {
+                    hashtag += String.valueOf(text.charAt(i));
+                    if (i == text.length()-1){
+                        hashtagService.add(hashtag, tweets.get(0));
+                    }
+                }
+            }
+        }
+    }
+
+    @PostMapping("/like")
     public void toggleLike(@RequestBody Tweet tweet){
         User user = new User();//Needs to be redone
         tweetService.toggleLike(user, tweet);
     }
 
-    @PostMapping("retweet/")
+    @PostMapping("/retweet")
     public void toggleRetweet(@RequestBody Tweet tweet){
         User user = new User();//Needs to be redone
         tweetService.toggleRetweet(user, tweet);
     }
 
-    @PostMapping("delete/")
+    @PostMapping("/delete")
     public void deleteTweet(@RequestBody Tweet tweet){
         tweetService.deleteTweet(tweet);
     }
 
-    @PostMapping("comment/")
+    @PostMapping("/comment")
     public void postComment(@RequestBody String text, MultipartFile image1, MultipartFile image2, MultipartFile image3, MultipartFile image4,@RequestBody Tweet tweetCommented) throws IOException {
         Blob [] files = new Blob[4];
 
