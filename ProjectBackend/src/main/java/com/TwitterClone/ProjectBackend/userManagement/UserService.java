@@ -3,7 +3,6 @@ package com.TwitterClone.ProjectBackend.userManagement;
 import com.TwitterClone.ProjectBackend.DTO.RegisteredRequest;
 import com.TwitterClone.ProjectBackend.Repository.UserRepository;
 import com.TwitterClone.ProjectBackend.Security.EmailValidator;
-import com.TwitterClone.ProjectBackend.userManagement.User;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import net.bytebuddy.utility.RandomString;
@@ -60,14 +59,14 @@ public class UserService {
 
         userRepository.save(user);
 
-        sendVerificationEmail(user, user.getMail());
+        sendVerificationEmail(user, user.getEmail());
 
         return "It works";
     }
 
     private void sendVerificationEmail(User user, String userMail)
             throws MessagingException, UnsupportedEncodingException {
-        String toAddress = user.getMail();
+        String toAddress = userMail;
         String fromAddress = "twitterclone027@gmail.com";
         String senderName = "Twitter clone";
         String subject = "Please verify your registration";
@@ -108,6 +107,26 @@ public class UserService {
             return true;
         }
 
+    }
+
+    public void updateResetPasswordToken(String token, String email) {
+        User user = userRepository.findByEmail(email).orElseThrow();
+        if (user != null) {
+            user.setResetPasswordToken(token);
+            userRepository.save(user);
+        }
+    }
+
+    public User getByResetPasswordToken(String token) {
+        return userRepository.findByResetPasswordToken(token).orElseThrow();
+    }
+    public void updatePassword(User user, String newPassword) {
+
+        String encodedPassword = passwordEncoder.encode(newPassword);
+        user.setPassword(encodedPassword);
+
+        user.setResetPasswordToken(null);
+        userRepository.save(user);
     }
 
 
