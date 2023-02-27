@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -15,7 +16,7 @@ import java.io.UnsupportedEncodingException;
 /**
  * This class is on charge of managing all the petitions from the view to the model in the signUp process.
  */
-@RestController
+@Controller
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserSignupController {
@@ -34,24 +35,24 @@ public class UserSignupController {
      * @return
      */
     @PostMapping("/signup")
-    public ModelAndView signup (@RequestParam String username,
-                                @RequestParam String password,
-                                @RequestParam String email) throws MessagingException, UnsupportedEncodingException {
+    public String signup (@RequestParam String username,
+                          @RequestParam String password,
+                          @RequestParam String email)
+                            throws MessagingException, UnsupportedEncodingException {
         RegisteredRequest registeredRequest = new RegisteredRequest(email, username, password);
         service.signup(registeredRequest);
-        ModelAndView modelAndView = new ModelAndView("redirect:/confirmation.html");
-        return modelAndView;
+
+        return "confirmation";
     }
 
     @GetMapping("/verify")
-    public ModelAndView verifyUser(@Param("code") String code) {
+    public String verifyUser(@Param("code") String code) {
+
         if (service.verify(code)) {
-            ModelAndView modelAndView = new ModelAndView("redirect:/verify.html");
-            return modelAndView;
-        } else {
-            ModelAndView modelAndView = new ModelAndView("redirect:/error");
-            return modelAndView;
+            return "verify";
         }
+
+        return "error";
     }
 
 }

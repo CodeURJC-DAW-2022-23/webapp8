@@ -5,12 +5,10 @@ import com.TwitterClone.ProjectBackend.Repository.UserRepository;
 import com.TwitterClone.ProjectBackend.Service.HashtagService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
-import java.io.IOException;
 import java.util.List;
 
 /**
@@ -22,14 +20,8 @@ public class NavigationController {
 
     @Autowired
     private HashtagService hashtagService;
-    Bookmark bookmark;
-    Home home;
-    Profile profile;
-    NotificationsPage notification;
     @Autowired
     private UserRepository userRepository;
-
-
 
     /**
      * Change from the current page to the home page

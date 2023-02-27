@@ -44,7 +44,6 @@ public class User  {
     private  Blob profileBanner;
     @Enumerated(EnumType.STRING)
     private UserRoles role;
-    private boolean loggedIn;
     @ManyToMany (fetch = FetchType.EAGER)
     private List<User> followers = new ArrayList<>();
     @ManyToMany (fetch = FetchType.EAGER)
@@ -52,8 +51,7 @@ public class User  {
     @ManyToMany (fetch = FetchType.EAGER)
     private List<Tweet> bookmarks = new ArrayList<>();
     private final LocalDate joinDate;
-    private Boolean locked;
-    private Boolean enabled;
+    private String type;
 
     @Column(name = "verification_code", length = 64)
     private String verificationCode;
@@ -97,7 +95,7 @@ public class User  {
         this.biography = biography;
         this.joinDate = time;
         this.role = UserRoles.valueOf("USER");
-        this.mail = mail;
+        this.email = mail;
         this.password = password;
         this.type = type;
         this.setImages(files);

@@ -1,7 +1,9 @@
 package com.TwitterClone.ProjectBackend.Service;
 
+import com.TwitterClone.ProjectBackend.Model.Notification;
 import com.TwitterClone.ProjectBackend.Model.Trend;
 import com.TwitterClone.ProjectBackend.Model.Tweet;
+import com.TwitterClone.ProjectBackend.Repository.NotificationRepository;
 import com.TwitterClone.ProjectBackend.Repository.TrendRepository;
 import com.TwitterClone.ProjectBackend.Repository.TweetRepository;
 import com.TwitterClone.ProjectBackend.Repository.UserRepository;

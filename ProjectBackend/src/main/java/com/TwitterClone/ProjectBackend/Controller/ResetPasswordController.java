@@ -31,18 +31,15 @@ public class ResetPasswordController {
     private UserService userService;
 
     @PostMapping("/forgot-password")
-    public ModelAndView processForgotPassword(HttpServletRequest request, Model model) throws MessagingException, UnsupportedEncodingException {
+    public String processForgotPassword(HttpServletRequest request, Model model) throws MessagingException, UnsupportedEncodingException {
         String email = request.getParameter("email");
         String token = RandomString.make(30);
 
+        userService.updateResetPasswordToken(token, email);
+        String resetPasswordLink = "https://localhost:8443/reset-password?token=" + token;
+        sendEmail(email, resetPasswordLink);
 
-            userService.updateResetPasswordToken(token, email);
-            String resetPasswordLink =  "https://localhost:8443/reset-password?token=" + token;
-            sendEmail(email, resetPasswordLink);
-            ModelAndView modelAndView = new ModelAndView("redirect:/forgot-password-confirmation.html");
-            return modelAndView;
-
-
+        return "forgot-password-confirmation";
     }
 
     public void sendEmail(String recipientEmail, String link)
@@ -76,23 +73,17 @@ public class ResetPasswordController {
         return "reset-password-page";
     }
 
-
-
-    @PostMapping("/reset-password/{token}")
-    public ModelAndView processResetPassword(HttpServletRequest request, Model model) {
-        String token = request.getParameter("token");
-        String password = request.getParameter("password");
+    @PostMapping("/reset-password")
+    public String processResetPassword(@RequestParam("_crfs") String token,
+                                       @RequestParam String password) {
 
         User user = userService.getByResetPasswordToken(token);
 
-        if (user == null) {
-            ModelAndView modelAndView = new ModelAndView("redirect:/error");
-            return modelAndView;
-        } else {
+        if (user != null) {
             userService.updatePassword(user, password);
-            ModelAndView modelAndView = new ModelAndView("redirect:/password-reset-confirmation.html");
-            return modelAndView;
+            return "password-reset-confirmation";
         }
 
+        return "error";
     }
 }
