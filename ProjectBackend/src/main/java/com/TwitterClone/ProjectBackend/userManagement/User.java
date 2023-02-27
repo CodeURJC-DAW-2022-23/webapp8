@@ -1,7 +1,6 @@
 package com.TwitterClone.ProjectBackend.userManagement;
 
 import com.TwitterClone.ProjectBackend.Model.Tweet;
-import com.TwitterClone.ProjectBackend.userManagement.UserRoles;
 import com.sun.istack.NotNull;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -11,7 +10,6 @@ import javax.validation.constraints.NotBlank;
 import java.io.IOException;
 import java.sql.Blob;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.*;
 
 /**
@@ -31,7 +29,7 @@ public class User  {
     @Column(unique=true)
     private String username;
     @Column(unique=true)
-    private  String mail;
+    private  String email;
     private  String nickname;
     private  String biography;
     private  String password;
@@ -51,6 +49,9 @@ public class User  {
 
     @Column(name = "verification_code", length = 64)
     private String verificationCode;
+
+    @Column(name = "reset_password_token")
+    private String resetPasswordToken;
     private boolean loggedIn;
     private boolean enabled = true;
 
@@ -65,7 +66,7 @@ public class User  {
         super();
         this.username = username;
         this.password = password;
-        this.mail = email;
+        this.email = email;
         this.id = new Random().nextLong();
         if (role.isBlank()) this.role = UserRoles.valueOf("USER");
         else this.role = UserRoles.valueOf(role);
@@ -83,14 +84,14 @@ public class User  {
     /*
    This constructor is for sample data
     */
-    public User(String username, String nickname, String biography, String mail, String password, String [] files, LocalDate time, String role) throws IOException {
+    public User(String username, String nickname, String biography, String email, String password, String [] files, LocalDate time, String role) throws IOException {
         this.id = new Random().nextLong();
         this.username = username;
         this.nickname = nickname;
         this.biography = biography;
         this.joinDate = time;
         this.role = UserRoles.valueOf(role);
-        this.mail = mail;
+        this.email = email;
         this.password = password;
         this.followers = new LinkedList<>();
         this.followed = new LinkedList<>();
