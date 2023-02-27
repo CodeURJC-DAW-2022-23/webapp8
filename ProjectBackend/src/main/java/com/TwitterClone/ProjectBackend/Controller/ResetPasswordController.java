@@ -71,10 +71,9 @@ public class ResetPasswordController {
     }
 
     @GetMapping("/reset-password")
-    public ModelAndView showResetPasswordForm( @RequestParam String token) {
-        ModelAndView modelAndView = new ModelAndView("reset-password-page");
-        modelAndView.addObject(token);
-        return modelAndView;
+    public String showResetPasswordForm(Model model, @RequestParam String token) {
+        model.addAttribute("token", token);
+        return "reset-password-page";
     }
 
 
