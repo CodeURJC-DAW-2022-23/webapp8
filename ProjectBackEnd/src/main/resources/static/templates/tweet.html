@@ -34,6 +34,23 @@
           {{text}}
         </p>
 
+        <!-- TWEET IMAGES-->
+        <figure>
+          <img src="/{{id}}/tweet-image1" alt="image1" >
+        </figure>
+
+        <figure>
+          <img src="/{{id}}/tweet-image2" alt="image2" >
+        </figure>
+
+        <figure>
+          <img src="/{{id}}/tweet-image3" alt="image3" >
+        </figure>
+
+        <figure>
+          <img src="/{{id}}/tweet-image4" alt="image4" >
+        </figure>
+
         <!-- REACTIONS -->
         <div class="flex gap-4 pb-3">
           <!-- COMMENT -->
@@ -47,8 +64,8 @@
               </g>
             </svg>
 
-            <div class="transition text-gray-4 group-hover:text-primary">
-              123
+            <div class="transition text-gray-4 group-hover:text-primary" id="comments-{{id}}" onload="chargeNumComments('{{comments}}', '{{id}}');">
+              
             </div>
           </a>
 
@@ -63,9 +80,9 @@
               </g>
             </svg>
 
-            <span class="text-green-0">
-                                    123
-                                </span>
+            <span class="text-green-0" id="retweet-{{id}}" onload='chargeNumRetweets("{{retweets}}", "{{id}}");'>
+                                    
+            </span>
           </button>
 
           <!-- LIKE -->
@@ -79,9 +96,9 @@
               </g>
             </svg>
 
-            <span class="text-red-0">
-                                    123
-                                </span>
+            <span class="text-red-0" id="likes-{{id}}" onload="chargeNumLikes('{{likes}}', '{{id}}');">
+                                    
+            </span>
           </button>
 
           <!-- BOOKMARKS -->
