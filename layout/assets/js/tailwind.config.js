@@ -2,15 +2,18 @@ tailwind.config = {
   darkMode: "class",
   theme: {
     screens: {
-      "xlsm": "460px" /* extra light small (small is 640px) */,
-      "lmd": "700px" /* light medium (medium is 768px) */,
-      "llg": "875px" /* light large (large is 1024px) */,
-      "l2xl": "1365px" /* light 2 extra large (2 extra large is 1536px) */,
+      xlsm: "460px" /* extra light small (small is 640px) */,
+      lmd: "700px" /* light medium (medium is 768px) */,
+      llg: "875px" /* light large (large is 1024px) */,
+      l2xl: "1365px" /* light 2 extra large (2 extra large is 1536px) */,
     },
     extend: {
+      gridAutoColumns: {
+        "auto-auto-1fr": "auto auto 1fr",
+      },
       colors: {
         /* Primary */
-        "primary": "#1a8cd8",
+        primary: "#1a8cd8",
 
         /* White */
         "white-0": "#ffffff",

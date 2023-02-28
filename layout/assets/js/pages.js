@@ -13,24 +13,22 @@ let prevPageText;
  * Shows on screen a page and hides the page which was being shown before.
  * 
  * @param {String} tabToShow represents the tab selected, which contains its id and the id of the page to be shown.
- * @param {Array[String]} tabsToHide represents the collection of tabs to be hidden and its pages.
+ * @param {String} tabToHide represents the tab to be hidden and its page.
  */
-function showPage(tabToShow, tabsToHide) {
+function showPage(tabToShow, tabToHide) {
   let tabSections = tabToShow.split("-");
   let pageSelected = document.getElementById(tabSections[0]);
   pageSelected.classList.remove("hidden");
   let tabSelected = document.getElementById(tabToShow);
-  tabSelected.classList.remove("dark:text-gray-5", "font-semibold");
+  tabSelected.classList.remove("dark:text-gray-5", "font-semibold", "border-transparent");
   tabSelected.classList.add("font-bold", "dark:text-white-0", "text-black-0", "border-primary");
 
-  tabsToHide.forEach((tab) => {
-    let tabToHideSections = tab.split("-");
-    let pageToHide = document.getElementById(tabToHideSections[0]);
-    pageToHide.classList.add("hidden");
-    let tabToHide = document.getElementById(tab);
-    tabToHide.classList.remove("font-bold", "dark:text-white-0", "text-black-0", "border-primary");
-    tabToHide.classList.add("dark:text-gray-5", "font-semibold");
-  });
+  let tabToHideSections = tabToHide.split("-");
+  let pageToHide = document.getElementById(tabToHideSections[0]);
+  pageToHide.classList.add("hidden");
+  let tabHidden = document.getElementById(tabToHide);
+  tabHidden.classList.remove("font-bold", "dark:text-white-0", "text-black-0", "border-primary");
+  tabHidden.classList.add("dark:text-gray-5", "font-semibold", "border-transparent");
 }
 
 function changePage(pageToChange, nextPage) {

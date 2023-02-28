@@ -3,6 +3,8 @@ package com.TwitterClone.ProjectBackend.Controller;
 import com.TwitterClone.ProjectBackend.Model.*;
 import com.TwitterClone.ProjectBackend.Repository.UserRepository;
 import com.TwitterClone.ProjectBackend.Service.HashtagService;
+import com.TwitterClone.ProjectBackend.Service.ProfileService;
+import com.TwitterClone.ProjectBackend.userManagement.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.security.web.csrf.CsrfToken;
@@ -11,7 +13,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import javax.servlet.http.HttpServletRequest;
+import java.security.Principal;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * This class is on charge of controlling the navigation through the website.
@@ -26,7 +30,7 @@ public class NavigationController {
     Profile profile;
     NotificationsPage notification;
     @Autowired
-    private UserRepository userRepository;
+    private ProfileService profileService;
 
     @GetMapping("/login")
     public String login(Model model, HttpServletRequest request){
@@ -44,7 +48,21 @@ public class NavigationController {
      * @return
      */
     @GetMapping("/home")
-    public String toHome(Model model) {
+    public String toHome(Model model, HttpServletRequest request) {
+
+        Principal principal = request.getUserPrincipal();
+        Optional<User> currentSession = this.profileService.findByUsername(principal.getName());
+        User currentUser = currentSession.get();
+
+        if (currentUser != null) {
+            model.addAttribute("id", currentUser.getId());
+            model.addAttribute("username", currentUser.getUsername());
+            model.addAttribute("nickname", currentUser.getNickname());
+
+            if (currentUser.getType().equals("PRIVATE")) {
+                model.addAttribute("private-acount", currentUser.getType());
+            }
+        }
 
         this.addCurrentTrends(model);
 
