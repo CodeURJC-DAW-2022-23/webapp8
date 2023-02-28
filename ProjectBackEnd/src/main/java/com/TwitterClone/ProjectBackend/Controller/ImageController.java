@@ -36,9 +36,65 @@ public class ImageController {
             return ResponseEntity.ok().header(HttpHeaders.CONTENT_TYPE, "image/jpeg")
                     .contentLength(user.get().getProfilePicture().length()).body(file);
 
-        } else {
-            return ResponseEntity.notFound().build();
         }
+
+        return ResponseEntity.notFound().build();
+    }
+
+    @GetMapping("/{id}/tweet-image1")
+    public ResponseEntity<Object> downloadTweetImage1(@PathVariable long id) throws SQLException {
+        Optional<Tweet> tweet = this.tweetService.findById(id);
+
+        if (tweet.isPresent() && tweet.get().getMedia1() != null) {
+            Resource file = new InputStreamResource(tweet.get().getMedia1().getBinaryStream());
+
+            return ResponseEntity.ok().header(HttpHeaders.CONTENT_TYPE, "image/jpeg")
+                    .contentLength(tweet.get().getMedia1().length()).body(file);
+        }
+
+        return ResponseEntity.notFound().build();
+    }
+
+    @GetMapping("/{id}/tweet-image2")
+    public ResponseEntity<Object> downloadTweetImage2(@PathVariable long id) throws SQLException {
+        Optional<Tweet> tweet = this.tweetService.findById(id);
+
+        if (tweet.isPresent() && tweet.get().getMedia2() != null) {
+            Resource file = new InputStreamResource(tweet.get().getMedia2().getBinaryStream());
+
+            return ResponseEntity.ok().header(HttpHeaders.CONTENT_TYPE, "image/jpeg")
+                    .contentLength(tweet.get().getMedia2().length()).body(file);
+        }
+
+        return ResponseEntity.notFound().build();
+    }
+
+    @GetMapping("/{id}/tweet-image3")
+    public ResponseEntity<Object> downloadTweetImage3(@PathVariable long id) throws SQLException {
+        Optional<Tweet> tweet = this.tweetService.findById(id);
+
+        if (tweet.isPresent() && tweet.get().getMedia3() != null) {
+            Resource file = new InputStreamResource(tweet.get().getMedia3().getBinaryStream());
+
+            return ResponseEntity.ok().header(HttpHeaders.CONTENT_TYPE, "image/jpeg")
+                    .contentLength(tweet.get().getMedia3().length()).body(file);
+        }
+
+        return ResponseEntity.notFound().build();
+    }
+
+    @GetMapping("/{id}/tweet-image4")
+    public ResponseEntity<Object> downloadTweetImage4(@PathVariable long id) throws SQLException {
+        Optional<Tweet> tweet = this.tweetService.findById(id);
+
+        if (tweet.isPresent() && tweet.get().getMedia4() != null) {
+            Resource file = new InputStreamResource(tweet.get().getMedia4().getBinaryStream());
+
+            return ResponseEntity.ok().header(HttpHeaders.CONTENT_TYPE, "image/jpeg")
+                    .contentLength(tweet.get().getMedia4().length()).body(file);
+        }
+
+        return ResponseEntity.notFound().build();
     }
 
 
