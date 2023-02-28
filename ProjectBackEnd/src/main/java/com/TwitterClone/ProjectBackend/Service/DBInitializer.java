@@ -26,10 +26,7 @@ import java.net.URISyntaxException;
 import java.sql.Blob;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Service
 public class DBInitializer {
@@ -51,7 +48,7 @@ public class DBInitializer {
     String adminPass;
 
     @PostConstruct
-    public void init() throws IOException, URISyntaxException {
+    public void init() throws IOException {
 
         //Sample Users
         String [] files = {"example_data/elrubius_profilepic.jpg","example_data/elrubius_profilebanner.jpg"};
@@ -62,31 +59,32 @@ public class DBInitializer {
         User user3 = new User("antonioalanxs", "Alanís",  "",  "example3@gmail.com", passwordEncoder.encode("examplePassword3"),files, LocalDate.of(2019,8,7), "PRIVATE");
         files = new String[]{"example_data/Ibai_profilepic.jpg", "example_data/Ibai_profilebanner.jpg"};
         User user4 = new User("ibai","Ibai","Sigue a nuestros equipos @KOI y @PorcinosFC, http://twitch.tv/ibai","ibai@gmail.com",passwordEncoder.encode("ibai"),files, LocalDate.of(2014,8,5), "VERIFIED");
-        userRepository.save(user1);
-        userRepository.save(user2);
-        userRepository.save(user3);
-        userRepository.save(user4);
-        List<User> u = userRepository.findAll();
-        u.get(3).addFollower(u.get(0));
-        u.get(0).addFollowed(u.get(3));
+        //userRepository.save(user1);
+        //userRepository.save(user2);
+        //userRepository.save(user3);
+        //userRepository.save(user4);
+        //List<User> u = userRepository.findAll();
+        user3.addFollower(user1);
+        /*u.get(0).addFollowed(u.get(3));
         u.get(2).addFollower(u.get(1));
         u.get(1).addFollowed(u.get(2));
         u.get(1).addFollower(u.get(3));
         u.get(3).addFollowed(u.get(1));
         u.get(2).addFollower(u.get(0));
-        u.get(0).addFollowed(u.get(2));
-        userRepository.save(u.get(0));
-        userRepository.save(u.get(1));
-        userRepository.save(u.get(2));
-        userRepository.save(u.get(3));
+        u.get(0).addFollowed(u.get(2));*/
+        userRepository.save(user1);
+        userRepository.save(user2);
+        userRepository.save(user3);
+        userRepository.save(user4);
 
-        User testUser = new User("user", passwordEncoder.encode("pass"),"simliyurdu@gufum.com", "USER");
+        User testUser = new User("user", passwordEncoder.encode("pass"),"user@mail.com", "USER");
+        testUser.setImages(new String[]{"example_data/elrubius_profilepic.jpg", "example_data/elrubius_profilebanner.jpg"});
         userRepository.save(testUser);
 
         User admin = new User("admin", adminPass, "admin@gmail.com", "ADMIN");
         userRepository.save(admin);
 
-        List<User> users = userRepository.findAll();
+        List<User> users = Arrays.asList(user1, user2, user3, user4,testUser, admin);
         //Sample Tweets
         //@ibai
         Blob[] images = new Blob[] {
@@ -201,7 +199,7 @@ public class DBInitializer {
         tweetRepository.save(tweet11);
         //Hashtags
         tweets = tweetRepository.findAll();
-        users = userRepository.findAll();
+        //users = userRepository.findAll();
 
         Set<Tweet> tweetsSet = new HashSet<>();
         tweetsSet.add(tweets.get(0));
@@ -262,12 +260,12 @@ public class DBInitializer {
 
         tweet = tweets.get(7);
         user = users.get(2);
-        notification = new Notification(tweet,tweet.getUser(),user,LocalDateTime.of(2023,02,20,14,9,0),"COMMENT");
+        notification = new Notification(tweet,tweet.getUser(),user,LocalDateTime.of(2023,02,20,14,9,0),"MENTION");
         notificationRepository.save(notification);
 
         tweet = tweets.get(3);
         user = users.get(3);
-        notification = new Notification(tweet,tweet.getUser(),user,LocalDateTime.of(2023,02,20,14,9,0),"CITATION");
+        notification = new Notification(tweet,tweet.getUser(),user,LocalDateTime.of(2023,02,20,14,9,0),"MENTION");
         notificationRepository.save(notification);
 
         User user_notificated = users.get(1);
@@ -291,8 +289,9 @@ public class DBInitializer {
         notificationRepository.save(notification);
 
         //Bookmarks
-        users.get(0).addBookmark(tweets.get(0));
-        userRepository.save(users.get(0));
+        User userAux = userRepository.findById(user1.getId()).get();
+        userAux.getBookmarks().add(tweets.get(0));
+        userRepository.save(userAux);
 
         //Interactions
         tweets.get(5).addLike(users.get(2));

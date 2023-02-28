@@ -1,13 +1,12 @@
 package com.TwitterClone.ProjectBackend.userManagement;
 
 import com.TwitterClone.ProjectBackend.Model.Tweet;
+import com.fasterxml.jackson.annotation.JsonView;
 import com.sun.istack.NotNull;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.annotations.Generated;
 import org.hibernate.engine.jdbc.BlobProxy;
-import org.hibernate.validator.constraints.UniqueElements;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ClassPathResource;
 import javax.persistence.*;
@@ -28,14 +27,19 @@ import java.util.*;
 
 
 public class User  {
+    public interface Basic {}
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @JsonView(Basic.class)
     private Long id;
     @Column(unique=true)
+    @JsonView(Basic.class)
     private String username;
     @Column(unique=true)
     private  String email;
+    @JsonView(Basic.class)
     private  String nickname;
+    @JsonView(Basic.class)
     private  String biography = "";
     private  String password;
     @Lob
@@ -44,11 +48,11 @@ public class User  {
     private  Blob profileBanner;
     @Enumerated(EnumType.STRING)
     private UserRoles role;
-    @ManyToMany (fetch = FetchType.EAGER)
+    @ManyToMany
     private List<User> followers = new ArrayList<>();
-    @ManyToMany (fetch = FetchType.EAGER)
+    @ManyToMany
     private List<User> followed = new ArrayList<>();
-    @ManyToMany (fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.EAGER)
     private List<Tweet> bookmarks = new ArrayList<>();
     private final LocalDate joinDate;
     private String type;
@@ -73,7 +77,7 @@ public class User  {
         this.username = username;
         this.password = password;
         this.email = email;
-        this.id = new Random().nextLong();
+        //this.id = new Random().nextLong();
         if (role.isBlank()) this.role = UserRoles.valueOf("USER");
         else this.role = UserRoles.valueOf(role);
         this.joinDate = java.time.LocalDate.now();
@@ -89,7 +93,7 @@ public class User  {
    This constructor is for sample data
     */
     public User(String username, String nickname, String biography, String mail, String password, String [] files, LocalDate time, String type) throws IOException {
-        this.id = new Random().nextLong();
+        //this.id = new Random().nextLong();
         this.username = username;
         this.nickname = nickname;
         this.biography = biography;
@@ -101,7 +105,7 @@ public class User  {
         this.setImages(files);
     }
 
-    private void setImages(String[] files) throws IOException {
+    public void setImages(String[] files) throws IOException {
         Resource image = new ClassPathResource(files[0]);
         this.profilePicture = BlobProxy.generateProxy(image.getInputStream(), image.contentLength());
         image = new ClassPathResource(files[1]);
