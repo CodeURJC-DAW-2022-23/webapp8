@@ -36,6 +36,7 @@ public class ProfileService {
     }
 
     public Optional<User> findByUsername(String username){
+
         return repository.findByUsername(username);
     }
 

@@ -2,6 +2,7 @@ package com.TwitterClone.ProjectBackend.userManagement;
 
 import com.TwitterClone.ProjectBackend.DTO.RegisteredRequest;
 import com.TwitterClone.ProjectBackend.Model.Tweet;
+import com.TwitterClone.ProjectBackend.Repository.TweetRepository;
 import com.TwitterClone.ProjectBackend.Repository.UserRepository;
 import com.TwitterClone.ProjectBackend.Security.EmailValidator;
 import lombok.AllArgsConstructor;
@@ -35,6 +36,8 @@ public class UserService {
     private UserRepository userRepository;
     @Autowired
     private JavaMailSender mailSender;
+    @Autowired
+    private TweetRepository tweetRepository;
 
 
     /**
@@ -132,8 +135,8 @@ public class UserService {
     }
 
     public List<Tweet>getBookmarks(Long id){
-        List<Tweet> listTweets = userRepository.findBookmarksByUserId(id);
-        return userRepository.findBookmarksByUserId(id);
+        List<Tweet> listTweets = tweetRepository.findBookmarksByUserId(id);
+        return tweetRepository.findBookmarksByUserId(id);
     }
 
 

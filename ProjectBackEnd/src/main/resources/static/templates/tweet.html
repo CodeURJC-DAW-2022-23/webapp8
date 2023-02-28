@@ -1,11 +1,12 @@
+{{#tweets}}
 <!-- SIMPLE TWEET -->
 <div class="border-b cursor-pointer border-gray-9 dark:bg-black-0 dark:border-black-5">
   <!-- TWEET -->
   <div class="flex w-full gap-4 px-5 pt-3 hover:bg-gray-7 dark:hover:bg-black-6">
     <!-- PROFILE IMAGE - TODO: hacer link a perfil y perfil -->
-    <a href="#">
+    <a href="">
       <figure class="mt-2 rounded-full h-11 w-11 hover:bg-black-0">
-        <img src="" alt="Profile photo"
+        <img src="/{{user.id}}/profile-pic" alt="Profile photo"
              class="w-full h-full rounded-full hover:opacity-80" />
       </figure>
     </a>
@@ -17,20 +18,20 @@
         <a class="grid grid-flow-col gap-2 auto-cols-auto-auto-1fr" href="#">
                             <span
                                     class="overflow-hidden font-bold text-ellipsis whitespace-nowrap hover:underline dark:text-white-0">
-                                {{tweet.user.nickname}}</span>
+                                {{user.nickname}}</span>
           <span class="overflow-hidden text-ellipsis whitespace-nowrap text-gray-4 hover:underline">
-                                {{tweet.user.username}}
+                                @{{user.username}}
                             </span>
 
           <!-- TIME SINCE PUBLICATION -->
           <span class="justify-self-end text-gray-4 whitespace-nowrap">
-                                {{tweet.publishDate}}
+                                {{publishDate}}
                             </span>
         </a>
 
         <!-- TWEET TEXT -->
         <p class="overflow-hidden text-sm text-ellipsis text-twitter-dark-gray dark:text-white-0">
-          {{tweet.text}}
+          {{text}}
         </p>
 
         <!-- REACTIONS -->
@@ -47,7 +48,7 @@
             </svg>
 
             <div class="transition text-gray-4 group-hover:text-primary">
-              {{numComments}}
+              123
             </div>
           </a>
 
@@ -63,7 +64,7 @@
             </svg>
 
             <span class="text-green-0">
-                                    {{numRts}}
+                                    123
                                 </span>
           </button>
 
@@ -79,7 +80,7 @@
             </svg>
 
             <span class="text-red-0">
-                                    {{numLikes}}
+                                    123
                                 </span>
           </button>
 
@@ -99,3 +100,4 @@
     </div>
   </div>
 </div>
+{{/tweets}}
