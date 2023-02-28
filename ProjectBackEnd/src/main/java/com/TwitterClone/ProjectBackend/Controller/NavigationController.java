@@ -1,12 +1,11 @@
 package com.TwitterClone.ProjectBackend.Controller;
 
 import com.TwitterClone.ProjectBackend.Model.*;
-import com.TwitterClone.ProjectBackend.Repository.UserRepository;
 import com.TwitterClone.ProjectBackend.Service.HashtagService;
+import com.TwitterClone.ProjectBackend.userManagement.UserService;
 import com.TwitterClone.ProjectBackend.Service.ProfileService;
 import com.TwitterClone.ProjectBackend.userManagement.User;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,6 +28,7 @@ public class NavigationController {
     Profile profile;
     NotificationsPage notification;
     @Autowired
+    private UserService userService;
     private ProfileService profileService;
 
     /**
@@ -96,6 +96,9 @@ public class NavigationController {
     public String toBookmark(Model model) {
 
         this.addCurrentTrends(model);
+
+        List<Tweet> bookmarks = this.userService.getBookmarks(1L);
+        model.addAttribute("bookmarks", bookmarks);
 
         return "bookmarks";
     }
