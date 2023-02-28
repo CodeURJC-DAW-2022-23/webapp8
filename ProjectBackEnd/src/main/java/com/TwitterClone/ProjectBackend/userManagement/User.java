@@ -101,7 +101,7 @@ public class User  {
         this.setImages(files);
     }
 
-    private void setImages(String[] files) throws IOException {
+    public void setImages(String[] files) throws IOException {
         Resource image = new ClassPathResource(files[0]);
         this.profilePicture = BlobProxy.generateProxy(image.getInputStream(), image.contentLength());
         image = new ClassPathResource(files[1]);

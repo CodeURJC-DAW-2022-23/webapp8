@@ -81,6 +81,7 @@ public class DBInitializer {
         userRepository.save(u.get(3));
 
         User testUser = new User("user", passwordEncoder.encode("pass"),"user@mail.com", "USER");
+        testUser.setImages(new String[]{"example_data/elrubius_profilepic.jpg", "example_data/elrubius_profilebanner.jpg"});
         userRepository.save(testUser);
 
         User admin = new User("admin", adminPass, "admin@gmail.com", "ADMIN");
