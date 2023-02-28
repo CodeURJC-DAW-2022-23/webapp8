@@ -24,9 +24,6 @@ public class NavigationController {
 
     @Autowired
     private HashtagService hashtagService;
-    Home home;
-    Profile profile;
-    NotificationsPage notification;
     @Autowired
     private UserService userService;
     private ProfileService profileService;
