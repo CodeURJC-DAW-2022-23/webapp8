@@ -4,6 +4,7 @@ import com.TwitterClone.ProjectBackend.Model.Tweet;
 import com.TwitterClone.ProjectBackend.Repository.TweetRepository;
 import com.TwitterClone.ProjectBackend.Repository.UserRepository;
 import com.TwitterClone.ProjectBackend.userManagement.User;
+import com.fasterxml.jackson.annotation.JsonView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -27,6 +28,7 @@ public class TweetService {
 
     @Autowired UserRepository userRepository;
 
+    @JsonView(Tweet.Basic.class)
     public List<Tweet> findAll(){
         return repository.findAll();
     }
@@ -36,9 +38,8 @@ public class TweetService {
         return repository.findByUser(user.getId());
     }
 
-    //It needs to be pageable but it does not work
     public List<Tweet> find10RecentForUser (Long id){
-        return repository.findByUserFollows(id, 10);
+        return repository.findByUserFollows(id);
     }
 
     public void createTweet(String text, Blob [] files, Tweet citation, Long userId){

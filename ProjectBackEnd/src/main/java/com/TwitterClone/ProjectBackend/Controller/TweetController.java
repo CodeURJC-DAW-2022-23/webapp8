@@ -44,9 +44,9 @@ public class TweetController {
     }
 
     @GetMapping("/{id}/casa")
-    public List<Tweet> getRecent(@PathVariable("id") Long id) {
+    public String getRecent(@PathVariable("id") Long id) {
         List<Tweet> t = tweetService.find10RecentForUser(id);
-        return new ArrayList<>();
+        return "";
     }
     @PostMapping("/new-tweet")
     public String postTweet(@RequestParam("tweet-info") String text,
@@ -95,7 +95,7 @@ public class TweetController {
     }
 
     @PostMapping("/like")
-    public void toggleLike(@RequestBody Tweet tweet){
+    public void toggleLike(@RequestBody Tweet tweet) throws IOException {
         User user = new User();//Needs to be redone
         tweetService.toggleLike(user, tweet);
     }
