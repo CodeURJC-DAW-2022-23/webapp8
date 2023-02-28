@@ -6,11 +6,14 @@ import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
+import org.springframework.security.web.csrf.CsrfToken;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.mail.MessagingException;
+import javax.servlet.http.HttpServletRequest;
 import java.io.UnsupportedEncodingException;
 
 /**
@@ -23,17 +26,15 @@ public class UserSignupController {
     @Autowired
     private UserService service;
 
+
+
     @GetMapping("/signup")
-    public ModelAndView home() {
-        ModelAndView modelAndView = new ModelAndView("redirect:/");
-        return modelAndView;
+    public String signup(Model model, HttpServletRequest request){
+        CsrfToken token = (CsrfToken) request.getAttribute("_csrf");
+        model.addAttribute("token", token.getToken());
+        return "signup";
     }
 
-    /**
-     * We create a new form which name is the same as the id on the HTML file
-     *
-     * @return
-     */
     @PostMapping("/signup")
     public String signup (@RequestParam String username,
                           @RequestParam String password,

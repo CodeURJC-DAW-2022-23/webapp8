@@ -73,7 +73,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         // Logout
         http.logout().logoutUrl("/logout");
         http.logout().logoutSuccessUrl("/");
-        http.csrf().disable();
+        //http.csrf().disable();
         // Allow H2 console
         http.authorizeRequests().antMatchers("/h2-console/**").permitAll();
         http.headers().frameOptions().sameOrigin();

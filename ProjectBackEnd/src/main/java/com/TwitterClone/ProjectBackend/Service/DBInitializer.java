@@ -80,7 +80,7 @@ public class DBInitializer {
         userRepository.save(u.get(2));
         userRepository.save(u.get(3));
 
-        User testUser = new User("user", passwordEncoder.encode("pass"),"user@mail.com", "USER");
+        User testUser = new User("user", passwordEncoder.encode("pass"),"simliyurdu@gufum.com", "USER");
         userRepository.save(testUser);
 
         User admin = new User("admin", adminPass, "admin@gmail.com", "ADMIN");

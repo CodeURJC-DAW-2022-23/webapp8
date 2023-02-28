@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Signup / Twitter</title>
+    <title>Login / Twitter</title>
 
     <link rel="shortcut icon" href="//abs.twimg.com/favicons/twitter.2.ico">
     <!--Icon for notifications https://abs.twimg.com/favicons/twitter-pip.2.ico-->
@@ -15,8 +15,8 @@
     <script src="https://cdn.tailwindcss.com"></script>
 
     <!-- My JS -->
-    <script src="assets/js/tailwind.config.js"></script>
-    <script defer src="assets/js/darkMode.js"></script>
+    <script src="../assets/js/tailwind.config.js"></script>
+    <script defer src="../assets/js/darkMode.js"></script>
 </head>
 
 <body>
@@ -39,10 +39,11 @@
             </svg>
         </button>
 
+
         <!-- HEADER -->
         <header class="flex items-center justify-center">
             <!-- BRAND -->
-            <a class="transition rounded-full cursor-pointer hover:scale-150" href="/">
+            <a class="transition rounded-full cursor-pointer hover:scale-150" href="/static">
                 <svg viewBox="0 0 24 24" aria-label="Twitter" role="img" class="w-11 fill-primary">
                     <g>
                         <path
@@ -54,51 +55,46 @@
         </header>
 
         <!-- FORM -->
-        <article class="flex flex-col gap-4" >
+        <article class="flex flex-col gap-4">
             <h1 class="py-5 text-3xl font-bold text-center dark:text-white-0 text-black-0">
-                Create an account
+                Log in to Twitter
             </h1>
 
-            <form class="flex flex-col justify-center gap-5" id="signup" action="/signup" method = "post">
+            <form class="flex flex-col justify-center gap-5" action="/login" method = "post">
                 <div class="relative">
-                    <input type="text" id="username" name="username"
-                           class="px-4 pb-2.5 pt-4 w-full text-gray-5 bg-transparent rounded-xl border-[1.9px] border-gray-15 dark:text-white-0 dark:border-twitter-gray-lines focus:outline-none focus:ring-0 focus:border-primary peer"
+                    <input type="text" id="username" name = "username"
+                           class="px-4 pb-2.5 pt-4 w-full text-gray-5 bg-transparent rounded-xl border-[1.9px] border-gray-15 dark:text-white-0 dark:border-gray-5 focus:outline-none focus:ring-0 focus:border-primary peer"
                            placeholder=" ">
                     <label for="username"
-                           class="cursor-pointer absolute z-10 px-3 duration-200 transform bg-white-0 text-gray-2 top-2 origin-[0] dark:bg-black-0 peer-focus:px-2 peer-focus:text-primary peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-90 peer-focus:-translate-y-4 left-1">Username</label>
+                           class="cursor-pointer absolute z-10 px-3 duration-200 transform bg-white-0 text-gray-2 top-2 origin-[0] dark:bg-black-0 peer-focus:px-2 peer-focus:text-primary peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-90 peer-focus:-translate-y-4 left-1">Username
+                        or email</label>
                 </div>
 
                 <div class="relative">
-                    <input type="password" id="password" name="password"
-                           class="px-4 pb-2.5 pt-4 w-full text-gray-5 bg-transparent rounded-xl border-[1.9px] border-gray-15 dark:text-white-0 dark:border-twitter-gray-lines focus:outline-none focus:ring-0 focus:border-primary peer"
+                    <input type="password" id="password" name = "password"
+                           class="px-4 pb-2.5 pt-4 w-full text-gray-5 bg-transparent rounded-xl border-[1.9px] border-gray-15 dark:text-white-0 dark:border-gray-5 focus:outline-none focus:ring-0 focus:border-primary peer"
                            placeholder=" ">
                     <label for="password"
                            class="cursor-pointer absolute z-10 px-3 duration-200 transform bg-white-0 text-gray-2 top-2 origin-[0] dark:bg-black-0 peer-focus:px-2 peer-focus:text-primary peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-90 peer-focus:-translate-y-4 left-1">Password</label>
                 </div>
-
-                <div class="relative">
-                    <input type="email" id="email" name="email"
-                           class="px-4 pb-2.5 pt-4 w-full text-gray-5 bg-transparent rounded-xl border-[1.9px] border-gray-15 dark:text-white-0 dark:border-twitter-gray-lines focus:outline-none focus:ring-0 focus:border-primary peer"
-                           placeholder=" ">
-                    <label for="email"
-                           class="cursor-pointer absolute z-10 px-3 duration-200 transform bg-white-0 text-gray-2 top-2 origin-[0] dark:bg-black-0 peer-focus:px-2 peer-focus:text-primary peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-90 peer-focus:-translate-y-4 left-1">Email</label>
-                </div>
-
-
+                <input type="hidden" name="_csrf" value="{{token}}"/>
                 <input class="w-full px-5 py-3 font-bold text-center transition rounded-full cursor-pointer dark:bg-white-0 dark:text-black-0 text-white-0 bg-black-0 hover:scale-110"
-                       type="submit" value="Sign Up">
-                Next
-                </input>
+                       type="submit" value="Next"> <!-- (temporal)-->
+                <a class="px-10 py-2 text-sm font-bold text-center transition bg-transparent border-2 cursor-pointer border-black-0 rounded-3xl dark:border-white-0 dark:text-white-0 text-black-0 hover:scale-110"
+                   href="/forgot-password">
+                    Have you forgotten your password?
+                </a>
             </form>
         </article>
 
         <section class="flex flex-col items-center gap-3 mt-6">
-            <h3 class="text-xl font-medium dark:text-gray-2 text-black-0">You already have an account?</h3>
+            <h3 class="text-xl font-medium dark:text-gray-2 text-gray-12">Don't you have an account?</h3>
             <a class="px-10 py-2 font-bold text-center transition rounded-full cursor-pointer text-white-0 bg-primary hover:scale-110"
-               href="login.html">
-                Login
+               href="/signup">
+                Sign up
             </a>
         </section>
+
     </div>
 </main>
 

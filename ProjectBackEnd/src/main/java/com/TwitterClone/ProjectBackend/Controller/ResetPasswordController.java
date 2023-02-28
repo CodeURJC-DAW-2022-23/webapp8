@@ -7,18 +7,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.security.web.csrf.CsrfToken;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.ModelAndView;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
-import javax.websocket.server.PathParam;
 import java.io.UnsupportedEncodingException;
 
 @Controller
@@ -30,15 +29,26 @@ public class ResetPasswordController {
     @Autowired
     private UserService userService;
 
+
+    @GetMapping("/forgot-password")
+    public String forgotPassword(Model model){
+        return "forgot-password";
+    }
+
     @PostMapping("/forgot-password")
     public String processForgotPassword(HttpServletRequest request, Model model) throws MessagingException, UnsupportedEncodingException {
         String email = request.getParameter("email");
-        String token = RandomString.make(30);
+        String passwordToken = RandomString.make(30);
 
-        userService.updateResetPasswordToken(token, email);
-        String resetPasswordLink = "https://localhost:8443/reset-password?token=" + token;
+        userService.updateResetPasswordToken(passwordToken, email);
+        String resetPasswordLink = "https://localhost:8443/reset-password?passwordToken=" + passwordToken;
         sendEmail(email, resetPasswordLink);
 
+        return "forgot-password-confirmation";
+    }
+
+    @GetMapping("/forgot-password-confirmation")
+    public String forgotPasswordConfirmation(){
         return "forgot-password-confirmation";
     }
 
@@ -68,22 +78,31 @@ public class ResetPasswordController {
     }
 
     @GetMapping("/reset-password")
-    public String showResetPasswordForm(Model model, @RequestParam String token) {
-        model.addAttribute("token", token);
-        return "reset-password-page";
+    public String resetPasswordPage(@Param("passwordToken")  String passwordToken, Model model, HttpServletRequest request){
+        CsrfToken token_csrf = (CsrfToken) request.getAttribute("_csrf");
+        model.addAttribute("passwordToken", passwordToken);
+        model.addAttribute("_csrf", token_csrf.getToken());
+        return "reset-password";
     }
 
     @PostMapping("/reset-password")
-    public String processResetPassword(@RequestParam("_crfs") String token,
+    public String processResetPassword(@RequestParam String passwordToken,
                                        @RequestParam String password) {
 
-        User user = userService.getByResetPasswordToken(token);
+        User user = userService.getByResetPasswordToken(passwordToken);
 
         if (user != null) {
             userService.updatePassword(user, password);
-            return "password-reset-confirmation";
+            return "redirect:/password-reset-confirmation";
         }
 
         return "error";
     }
+
+
+    @GetMapping("/password-reset-confirmation")
+    public String passwordResetConfirmation(){
+        return "password-reset-confirmation";
+    }
+
 }

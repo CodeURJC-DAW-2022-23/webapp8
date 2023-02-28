@@ -5,10 +5,12 @@ import com.TwitterClone.ProjectBackend.Repository.UserRepository;
 import com.TwitterClone.ProjectBackend.Service.HashtagService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.security.web.csrf.CsrfToken;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
@@ -25,6 +27,16 @@ public class NavigationController {
     NotificationsPage notification;
     @Autowired
     private UserRepository userRepository;
+
+    @GetMapping("/login")
+    public String login(Model model, HttpServletRequest request){
+        CsrfToken token = (CsrfToken) request.getAttribute("_csrf");
+        model.addAttribute("token", token.getToken());
+        return "login";
+    }
+
+
+
 
     /**
      * Change from the current page to the home page
