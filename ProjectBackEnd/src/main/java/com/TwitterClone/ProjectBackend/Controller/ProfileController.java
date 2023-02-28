@@ -1,7 +1,9 @@
 package com.TwitterClone.ProjectBackend.Controller;
 
+import com.TwitterClone.ProjectBackend.Model.Tweet;
 import com.TwitterClone.ProjectBackend.Service.ProfileService;
 import com.TwitterClone.ProjectBackend.userManagement.User;
+import com.fasterxml.jackson.annotation.JsonView;
 import org.hibernate.engine.jdbc.BlobProxy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -55,4 +57,10 @@ public class ProfileController {
         profileService.updateBiography(biography, user);
     }
 
+    @JsonView(Tweet.Basic.class)
+    @GetMapping("/bookmarks")
+    public String getBookmarks() {
+        List<Tweet> u = profileService.getBookmarks(1L);
+        return "login";
+    }
 }

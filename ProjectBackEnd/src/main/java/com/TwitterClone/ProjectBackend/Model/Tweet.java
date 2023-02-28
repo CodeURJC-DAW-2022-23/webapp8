@@ -1,6 +1,8 @@
 package com.TwitterClone.ProjectBackend.Model;
 
 import com.TwitterClone.ProjectBackend.userManagement.User;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonView;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -13,9 +15,15 @@ import java.util.*;
 @Setter
 @Entity
 public class Tweet {
-    private final @Id @GeneratedValue Long id;
+    public interface Basic {}
+    @Id
+    @GeneratedValue
+    @JsonView(Basic.class)
+    private final Long id;
     @ManyToOne
+    @JsonView(Basic.class)
     private User user;
+    @JsonView(Basic.class)
     private final LocalDateTime publishDate;
     @ManyToMany (fetch = FetchType.EAGER)
     private List<User> likes = new ArrayList<>();
@@ -23,8 +31,7 @@ public class Tweet {
     private List<User> retweets = new ArrayList<>();
     @OneToMany (fetch = FetchType.EAGER)
     private List<Tweet> comments = new ArrayList<>();
-    @ManyToOne
-    private Tweet citation;
+    @JsonView(Basic.class)
     private String text;
     @Lob
     private Blob media1;
@@ -34,8 +41,6 @@ public class Tweet {
     private Blob media3;
     @Lob
     private Blob media4;
-
-    //private Set<String> hashtag; // Later
 
     public Tweet(){
         this.id = new Random().nextLong();
@@ -53,7 +58,7 @@ public class Tweet {
         this.media2 = files[1];
         this.media3 = files[2];
         this.media4 = files[3];
-        this.citation = citation;
+        //this.citation = citation;
     }
 
     /*
@@ -67,7 +72,7 @@ public class Tweet {
         this.comments = new LinkedList<>();
         this.text = text;
         this.user = user;
-        this.citation = citation;
+        //this.citation = citation;
         this.media1 = files[0];
         this.media2 = files[1];
         this.media3 = files[2];

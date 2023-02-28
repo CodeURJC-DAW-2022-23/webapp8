@@ -51,7 +51,7 @@ public class DBInitializer {
     String adminPass;
 
     @PostConstruct
-    public void init() throws IOException, URISyntaxException {
+    public void init() throws IOException {
 
         //Sample Users
         String [] files = {"example_data/elrubius_profilepic.jpg","example_data/elrubius_profilebanner.jpg"};
@@ -263,12 +263,12 @@ public class DBInitializer {
 
         tweet = tweets.get(7);
         user = users.get(2);
-        notification = new Notification(tweet,tweet.getUser(),user,LocalDateTime.of(2023,02,20,14,9,0),"COMMENT");
+        notification = new Notification(tweet,tweet.getUser(),user,LocalDateTime.of(2023,02,20,14,9,0),"MENTION");
         notificationRepository.save(notification);
 
         tweet = tweets.get(3);
         user = users.get(3);
-        notification = new Notification(tweet,tweet.getUser(),user,LocalDateTime.of(2023,02,20,14,9,0),"CITATION");
+        notification = new Notification(tweet,tweet.getUser(),user,LocalDateTime.of(2023,02,20,14,9,0),"MENTION");
         notificationRepository.save(notification);
 
         User user_notificated = users.get(1);

@@ -36,9 +36,8 @@ public class TweetService {
         return repository.findByUser(user.getId());
     }
 
-    //It needs to be pageable but it does not work
-    public List<Tweet> find10RecentForUser (Long id){
-        return repository.findByUserFollows(id, 10);
+    public Page<Tweet> find10RecentForUser (Long id){
+        return repository.findByUserFollows(id, PageRequest.of(0,10));
     }
 
     public void createTweet(String text, Blob [] files, Tweet citation, Long userId){

@@ -1,7 +1,10 @@
 package com.TwitterClone.ProjectBackend.Service;
 
+import com.TwitterClone.ProjectBackend.Model.Tweet;
+import com.TwitterClone.ProjectBackend.Repository.TweetRepository;
 import com.TwitterClone.ProjectBackend.Repository.UserRepository;
 import com.TwitterClone.ProjectBackend.userManagement.User;
+import com.fasterxml.jackson.annotation.JsonView;
 import org.hibernate.engine.jdbc.BlobProxy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,6 +20,8 @@ import java.util.UUID;
 public class ProfileService {
     @Autowired
     private UserRepository repository;
+    @Autowired
+    private TweetRepository tweetRepository;
     public List<User> findAll(){
         return repository.findAll();
     }
@@ -55,5 +60,8 @@ public class ProfileService {
             u.setBiography(biography);
             repository.save(u);
         }
+    }
+    public List<Tweet> getBookmarks (Long id){
+        return tweetRepository.findBookmarksByUserId(id);
     }
 }

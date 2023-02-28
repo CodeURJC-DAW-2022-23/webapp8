@@ -1,6 +1,9 @@
 package com.TwitterClone.ProjectBackend.userManagement;
 
 import com.TwitterClone.ProjectBackend.Model.Tweet;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonView;
 import com.sun.istack.NotNull;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -28,14 +31,19 @@ import java.util.*;
 
 
 public class User  {
+    public interface BasicUser{}
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @JsonView(BasicUser.class)
     private Long id;
     @Column(unique=true)
+    @JsonView(BasicUser.class)
     private String username;
     @Column(unique=true)
     private  String email;
+    @JsonView(BasicUser.class)
     private  String nickname;
+    @JsonView(BasicUser.class)
     private  String biography = "";
     private  String password;
     @Lob
