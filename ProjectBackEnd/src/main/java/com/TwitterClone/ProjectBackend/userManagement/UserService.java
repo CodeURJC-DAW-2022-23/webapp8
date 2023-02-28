@@ -1,6 +1,7 @@
 package com.TwitterClone.ProjectBackend.userManagement;
 
 import com.TwitterClone.ProjectBackend.DTO.RegisteredRequest;
+import com.TwitterClone.ProjectBackend.Model.Tweet;
 import com.TwitterClone.ProjectBackend.Repository.UserRepository;
 import com.TwitterClone.ProjectBackend.Security.EmailValidator;
 import lombok.AllArgsConstructor;
@@ -16,6 +17,7 @@ import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import javax.transaction.Transactional;
 import java.io.UnsupportedEncodingException;
+import java.util.List;
 
 /**
  * This class is on charge of implementing all the model part of the signUp process and contains all its logic.
@@ -127,6 +129,11 @@ public class UserService {
 
         user.setResetPasswordToken(null);
         userRepository.save(user);
+    }
+
+    public List<Tweet>getBookmarks(Long id){
+        List<Tweet> listTweets = userRepository.findBookmarksByUserId(id);
+        return userRepository.findBookmarksByUserId(id);
     }
 
 
