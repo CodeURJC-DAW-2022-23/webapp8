@@ -15,10 +15,10 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Repository
-@Transactional
+//@Transactional
 public interface UserRepository extends JpaRepository<User, Long> {
 
-    Optional<User> findById(Long id);
+    //Optional<User> findById(Long id);
     Optional<User> findByUsername(String username);
     Optional<User>findByEmail(String email);
     Optional<User> findByResetPasswordToken(String token);

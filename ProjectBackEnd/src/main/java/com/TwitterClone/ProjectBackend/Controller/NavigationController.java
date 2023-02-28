@@ -8,7 +8,6 @@ import com.TwitterClone.ProjectBackend.Service.ProfileService;
 import com.TwitterClone.ProjectBackend.userManagement.User;
 import com.fasterxml.jackson.annotation.JsonView;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -39,7 +38,7 @@ public class NavigationController {
      * @param model
      * @return
      */
-    @JsonView({Tweet.Basic.class, User.BasicUser.class})
+
     @GetMapping("/home")
     public String toHome(Model model, HttpServletRequest request) {
 
@@ -47,7 +46,13 @@ public class NavigationController {
         this.addProfileInfoToLeftBar(model, request);
         this.addCurrentTrends(model);
 
-        
+        Principal principal = request.getUserPrincipal();
+        Optional<User> currentSession = this.profileService.findByUsername(principal.getName());
+        User currentUser = currentSession.get();
+
+        List<Tweet> tweets = this.tweetService.findAll();
+
+        model.addAttribute("tweets", tweets);
 
         return "home";
     }

@@ -19,7 +19,7 @@ public interface TweetRepository extends JpaRepository<Tweet, Long> {
     List<Tweet> findByUser(Long id);
 
     @Query(value = "select * from \"tweet\" t join (select \"followed_id\" from \"users_followed\" where \"user_id\" = ?1) f on t.\"user_id\" = f.\"followed_id\" order by t.\"publish_date\" desc limit ?2", nativeQuery = true)
-    Page<Tweet> findByUserFollows(Long id, Pageable page);
+    List<Tweet> findByUserFollows(Long id);
 
     @Query(value = "SELECT * FROM \"tweet\" t JOIN (SELECT \"bookmarks_id\" FROM \"users_bookmarks\" WHERE \"user_id\" = 1) b ON t.\"id\" = b.\"bookmarks_id\"",nativeQuery = true)
     List<Tweet>findBookmarksByUserId(Long id);
