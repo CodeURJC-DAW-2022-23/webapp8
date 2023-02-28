@@ -57,7 +57,6 @@ public class ProfileController {
         profileService.updateBiography(biography, user);
     }
 
-    @JsonView(Tweet.Basic.class)
     @GetMapping("/bookmarks")
     public String getBookmarks() {
         List<Tweet> u = profileService.getBookmarks(1L);

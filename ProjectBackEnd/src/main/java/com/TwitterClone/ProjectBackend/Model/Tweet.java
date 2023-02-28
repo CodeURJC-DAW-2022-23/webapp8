@@ -15,15 +15,11 @@ import java.util.*;
 @Setter
 @Entity
 public class Tweet {
-    public interface Basic {}
     @Id
-    @GeneratedValue
-    @JsonView(Basic.class)
-    private final Long id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
     @ManyToOne
-    @JsonView(Basic.class)
     private User user;
-    @JsonView(Basic.class)
     private final LocalDateTime publishDate;
     @ManyToMany (fetch = FetchType.EAGER)
     private List<User> likes = new ArrayList<>();
@@ -31,7 +27,6 @@ public class Tweet {
     private List<User> retweets = new ArrayList<>();
     @OneToMany (fetch = FetchType.EAGER)
     private List<Tweet> comments = new ArrayList<>();
-    @JsonView(Basic.class)
     private String text;
     @Lob
     private Blob media1;
@@ -43,11 +38,9 @@ public class Tweet {
     private Blob media4;
 
     public Tweet(){
-        this.id = new Random().nextLong();
         this.publishDate = LocalDateTime.now();
     }
     public Tweet(String text, User user, Blob [] files, Tweet citation) {
-        this.id = new Random().nextLong();
         this.publishDate = LocalDateTime.now();
         this.likes = new LinkedList<>();
         this.retweets =  new LinkedList<>();
@@ -58,25 +51,30 @@ public class Tweet {
         this.media2 = files[1];
         this.media3 = files[2];
         this.media4 = files[3];
-        //this.citation = citation;
     }
 
     /*
     For example data
      */
-    public Tweet(String text, User user, LocalDateTime time, Tweet citation, Blob [] files) {
-        this.id = new Random().nextLong();
+    public Tweet(String text, User user, LocalDateTime time, Blob [] files) {
         this.publishDate = time;
         this.likes = new LinkedList<>();
         this.retweets =  new LinkedList<>();
         this.comments = new LinkedList<>();
         this.text = text;
         this.user = user;
-        //this.citation = citation;
-        this.media1 = files[0];
-        this.media2 = files[1];
-        this.media3 = files[2];
-        this.media4 = files[3];
+        if (files[0] != null) {
+            this.media1 = files[0];
+        }
+        if (files[1] != null) {
+            this.media2 = files[1];
+        }
+        if (files[2] != null) {
+            this.media3 = files[2];
+        }
+        if (files[3] != null) {
+            this.media4 = files[3];
+        }
     }
 
     public void addComment(Tweet comment){

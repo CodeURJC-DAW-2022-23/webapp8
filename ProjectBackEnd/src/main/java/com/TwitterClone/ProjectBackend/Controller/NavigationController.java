@@ -61,7 +61,7 @@ public class NavigationController {
         Optional<User> currentSession = this.profileService.findByUsername(principal.getName());
         User currentUser = currentSession.get();
 
-        List<Tweet> tweets = this.tweetService.findAll();
+        List<Tweet> tweets = this.tweetService.find10RecentForUser(currentUser.getId());
 
         model.addAttribute("tweets", tweets);
 
@@ -110,7 +110,7 @@ public class NavigationController {
         this.addCurrentTrends(model);
         this.addProfileInfoToLeftBar(model, request);
 
-        List<Tweet> bookmarks = this.userService.getBookmarks(1L);
+        List<Tweet> bookmarks = this.profileService.getBookmarks(1L);
         model.addAttribute("bookmarks", bookmarks);
 
         return "bookmarks";

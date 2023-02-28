@@ -24,22 +24,15 @@ import java.util.*;
 @EqualsAndHashCode
 @Entity
 @Table(name = "users")
-
-
 public class User  {
-    public interface Basic {}
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @JsonView(Basic.class)
     private Long id;
     @Column(unique=true)
-    @JsonView(Basic.class)
     private String username;
     @Column(unique=true)
     private  String email;
-    @JsonView(Basic.class)
     private  String nickname;
-    @JsonView(Basic.class)
     private  String biography = "";
     private  String password;
     @Lob
@@ -75,9 +68,9 @@ public class User  {
                 String role) {
         super();
         this.username = username;
+        this.nickname = username;
         this.password = password;
         this.email = email;
-        //this.id = new Random().nextLong();
         if (role.isBlank()) this.role = UserRoles.valueOf("USER");
         else this.role = UserRoles.valueOf(role);
         this.joinDate = java.time.LocalDate.now();
@@ -92,8 +85,7 @@ public class User  {
     /*
    This constructor is for sample data
     */
-    public User(String username, String nickname, String biography, String mail, String password, String [] files, LocalDate time, String type) throws IOException {
-        //this.id = new Random().nextLong();
+    public User(String username, String nickname, String biography, String mail, String password, LocalDate time, String type) {
         this.username = username;
         this.nickname = nickname;
         this.biography = biography;
@@ -102,7 +94,6 @@ public class User  {
         this.email = mail;
         this.password = password;
         this.type = type;
-        this.setImages(files);
     }
 
     public void setImages(String[] files) throws IOException {

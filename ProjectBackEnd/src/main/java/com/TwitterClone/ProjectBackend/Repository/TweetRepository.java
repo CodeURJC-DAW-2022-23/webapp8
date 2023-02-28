@@ -18,7 +18,7 @@ public interface TweetRepository extends JpaRepository<Tweet, Long> {
     @Query("select t from Tweet t where t.user.id = :id order by t.publishDate desc")
     List<Tweet> findByUser(Long id);
 
-    @Query(value = "select * from \"tweet\" t join (select \"followed_id\" from \"users_followed\" where \"user_id\" = ?1) f on t.\"user_id\" = f.\"followed_id\" order by t.\"publish_date\" desc limit ?2", nativeQuery = true)
+    @Query(value = "select * from \"tweet\" t join (select \"followed_id\" from \"users_followed\" where \"user_id\" = ?1) f on t.\"user_id\" = f.\"followed_id\" order by t.\"publish_date\" desc", nativeQuery = true)
     List<Tweet> findByUserFollows(Long id);
 
     @Query(value = "SELECT * FROM \"tweet\" t JOIN (SELECT \"bookmarks_id\" FROM \"users_bookmarks\" WHERE \"user_id\" = 1) b ON t.\"id\" = b.\"bookmarks_id\"",nativeQuery = true)
@@ -27,10 +27,10 @@ public interface TweetRepository extends JpaRepository<Tweet, Long> {
     @Query(value ="select * from  \"tweet_comments\" where \"tweet_id\" = ?1 order by \"publish_date\"", nativeQuery = true)
     Page<Tweet> findCommentsById(Long id, Pageable page);
 
-    @Query(value ="SELECT * FROM \"tweet_retweets\" NATURAL JOIN \"tweet\" where \"retweets_id\" = ?1 order by \"publish_date\" desc limit ?2;", nativeQuery = true)
+    @Query(value ="SELECT * FROM \"tweet_retweets\" NATURAL JOIN \"tweet\" where \"retweets_id\" = ?1 order by \"publish_date\" desc;", nativeQuery = true)
     Page<Tweet> findRetweetsByUser(Long id, Pageable page);
 
-    @Query(value ="SELECT * FROM \"tweet_likes\" NATURAL JOIN \"tweet\" where \"like_id\" = ?1 order by \"publish_date\" desc limit ?2;", nativeQuery = true)
+    @Query(value ="SELECT * FROM \"tweet_likes\" NATURAL JOIN \"tweet\" where \"like_id\" = ?1 order by \"publish_date\" desc;", nativeQuery = true)
     Page<Tweet> findLikesByUser(Long id, Pageable page);
 
     @Query(value="SELECT COUNT(*) FROM \"tweet_likes\" JOIN \"tweet\" ON \"tweet_id\" = \"id\" WHERE \"tweet_id\" = ?1 GROUP BY \"tweet_id\"", nativeQuery = true)

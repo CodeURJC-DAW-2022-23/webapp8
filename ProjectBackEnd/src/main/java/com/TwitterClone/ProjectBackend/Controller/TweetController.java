@@ -2,7 +2,6 @@ package com.TwitterClone.ProjectBackend.Controller;
 
 import com.TwitterClone.ProjectBackend.Model.Tweet;
 import com.TwitterClone.ProjectBackend.Service.HashtagService;
-import com.TwitterClone.ProjectBackend.Service.ProfileService;
 import com.TwitterClone.ProjectBackend.Service.TweetService;
 import com.TwitterClone.ProjectBackend.userManagement.User;
 import org.hibernate.engine.jdbc.BlobProxy;
@@ -12,9 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
-import java.security.Principal;
 import java.sql.Blob;
 import java.util.ArrayList;
 import java.util.List;
@@ -29,9 +26,6 @@ public class TweetController {
 
     @Autowired
     private HashtagService hashtagService;
-
-    @Autowired
-    private ProfileService profileService;
 
     @GetMapping("/")
     public List<Tweet> getAllTweets() {
@@ -56,8 +50,7 @@ public class TweetController {
     }
     @PostMapping("/new-tweet")
     public String postTweet(@RequestParam("tweet-info") String text,
-                            @RequestParam("tweet-files") MultipartFile [] images,
-                            HttpServletRequest request) throws IOException {
+                            @RequestParam("tweet-files") MultipartFile [] images) throws IOException {
         Blob [] files = new Blob[4];
 
         for (int index = 0; index < images.length; index++) {
@@ -67,16 +60,12 @@ public class TweetController {
                             .getSize());
         }
 
-        Principal principal = request.getUserPrincipal();
-        Optional<User> currentSession = this.profileService.findByUsername(principal.getName());
-        User currentUser = currentSession.get();
-
-        Long userId = currentUser.getId();
+        Long userId = 1L;
         tweetService.createTweet(text, files,null, userId);
 
         saveHashtag(text);
 
-        return "redirect:/home";
+        return "home";
     }
 
     private void saveHashtag(String text){

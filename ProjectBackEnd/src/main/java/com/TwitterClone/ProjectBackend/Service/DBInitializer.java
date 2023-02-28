@@ -11,16 +11,20 @@ import com.TwitterClone.ProjectBackend.Repository.NotificationRepository;
 import com.TwitterClone.ProjectBackend.Repository.TweetRepository;
 import com.TwitterClone.ProjectBackend.Repository.UserRepository;
 import com.TwitterClone.ProjectBackend.userManagement.User;
+import org.hibernate.Session;
 import org.hibernate.engine.jdbc.BlobProxy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.PostConstruct;
-import javax.transaction.Transactional;
+import java.beans.Transient;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.sql.Blob;
@@ -51,37 +55,51 @@ public class DBInitializer {
     public void init() throws IOException {
 
         //Sample Users
-        String [] files = {"example_data/elrubius_profilepic.jpg","example_data/elrubius_profilebanner.jpg"};
-        User user1 = new User("Rubiu5","elrubius","Rata Noruega.  Me gustan los gatos obesos.","rubius@gmail.com",passwordEncoder.encode("rubius"),files, LocalDate.of(2013,10,13),"VERIFIED");
+        String[] files = {"example_data/elrubius_profilepic.jpg","example_data/elrubius_profilebanner.jpg"};
+        User user1 = new User("Rubiu5","elrubius","Rata Noruega.  Me gustan los gatos obesos.","rubius@gmail.com",passwordEncoder.encode("rubius"), LocalDate.of(2013,10,13),"VERIFIED");
+        user1.setImages(files);
         files = new String[]{"example_data/KOI_KEYLAND_profilepic.jpg", "example_data/KOI_KEYLAND_profilebanner.jpg"};
-        User user2 = new User("Keyland71", "KOI KEYLAND71", "19 y/o\nRocket League proplayer for @KOI", "example2@gmail.com", passwordEncoder.encode("examplePassword2"),files, LocalDate.of(2018,4,21), "PUBLIC");
+        User user2 = new User("Keyland71", "KOI KEYLAND71", "19 y/o\nRocket League proplayer for @KOI", "example2@gmail.com", passwordEncoder.encode("examplePassword2"), LocalDate.of(2018,4,21), "PUBLIC");
+        user2.setImages(files);
         files = new String[]{"example_data/Alanis_profilepic.jpg", "example_data/Alanis_profilebanner.jpg"};
-        User user3 = new User("antonioalanxs", "Alanís",  "",  "example3@gmail.com", passwordEncoder.encode("examplePassword3"),files, LocalDate.of(2019,8,7), "PRIVATE");
+        User user3 = new User("antonioalanxs", "Alanís",  "",  "example3@gmail.com", passwordEncoder.encode("examplePassword3"),LocalDate.of(2019,8,7), "PRIVATE");
+        user3.setImages(files);
         files = new String[]{"example_data/Ibai_profilepic.jpg", "example_data/Ibai_profilebanner.jpg"};
-        User user4 = new User("ibai","Ibai","Sigue a nuestros equipos @KOI y @PorcinosFC, http://twitch.tv/ibai","ibai@gmail.com",passwordEncoder.encode("ibai"),files, LocalDate.of(2014,8,5), "VERIFIED");
-        //userRepository.save(user1);
-        //userRepository.save(user2);
-        //userRepository.save(user3);
-        //userRepository.save(user4);
-        //List<User> u = userRepository.findAll();
-        user3.addFollower(user1);
-        /*u.get(0).addFollowed(u.get(3));
-        u.get(2).addFollower(u.get(1));
-        u.get(1).addFollowed(u.get(2));
-        u.get(1).addFollower(u.get(3));
-        u.get(3).addFollowed(u.get(1));
-        u.get(2).addFollower(u.get(0));
-        u.get(0).addFollowed(u.get(2));*/
+        User user4 = new User("ibai","Ibai","Sigue a nuestros equipos @KOI y @PorcinosFC, http://twitch.tv/ibai","ibai@gmail.com",passwordEncoder.encode("ibai"), LocalDate.of(2014,8,5), "VERIFIED");
+        user4.setImages(files);
         userRepository.save(user1);
         userRepository.save(user2);
         userRepository.save(user3);
         userRepository.save(user4);
 
-        User testUser = new User("user", passwordEncoder.encode("pass"),"user@mail.com", "USER");
-        testUser.setImages(new String[]{"example_data/elrubius_profilepic.jpg", "example_data/elrubius_profilebanner.jpg"});
-        userRepository.save(testUser);
+        user1 = userRepository.findById(1L).get();
+        user2 = userRepository.findById(2L).get();
+        user3 = userRepository.findById(3L).get();
+        user4 = userRepository.findById(4L).get();
 
-        User admin = new User("admin", adminPass, "admin@gmail.com", "ADMIN");
+        user4.addFollower(user1);
+        user1.addFollowed(user4);
+
+        user3.addFollower(user2);
+        user2.addFollowed(user3);
+
+        user2.addFollower(user4);
+        user4.addFollowed(user2);
+
+        user1.addFollower(user3);
+        user3.addFollowed(user1);
+        userRepository.save(user1);
+        userRepository.save(user2);
+        userRepository.save(user3);
+        userRepository.save(user4);
+        files = new String[]{"example_data/Default_profilepic.jpg", "example_data/Default_profilebanner.jpg"};
+        User testUser = new User("user", passwordEncoder.encode("pass"), "user@mail.com", "USER");
+        testUser.setImages(files);
+        testUser.setNickname("user");
+        userRepository.save(testUser);
+        User admin = new User("admin", adminPass, "admin@mail.com", "ADMIN");
+        admin.setImages(files);
+        admin.setNickname("admin");
         userRepository.save(admin);
 
         List<User> users = Arrays.asList(user1, user2, user3, user4,testUser, admin);
@@ -93,7 +111,7 @@ public class DBInitializer {
                 null,
                 null
         };
-        Tweet tweet5 = new Tweet("Devastado, afligido, descorazonado, atormentado, apenado, entristecido, desolado, triste, cabizbajo, lloroso, cariacontecido, compungido, destruido, mustio, apesadumbrado, deshecho, demolido.", users.get(3), LocalDateTime.of(2023,02,14,20,00,00), null, images);
+        Tweet tweet5 = new Tweet("Devastado, afligido, descorazonado, atormentado, apenado, entristecido, desolado, triste, cabizbajo, lloroso, cariacontecido, compungido, destruido, mustio, apesadumbrado, deshecho, demolido.", users.get(3), LocalDateTime.of(2023,02,14,20,00,00), images);
 
         images = new Blob[] {
                 null,
@@ -101,7 +119,7 @@ public class DBInitializer {
                 null,
                 null
         };
-        Tweet tweet6 = new Tweet("Chup chup con la #KingsLeague", users.get(3), LocalDateTime.of(2023,02,14,21,00,00), null, images);
+        Tweet tweet6 = new Tweet("Chup chup con la #KingsLeague", users.get(3), LocalDateTime.of(2023,02,14,21,00,00), images);
 
         images = new Blob[] {
                 null,
@@ -109,7 +127,7 @@ public class DBInitializer {
                 null,
                 null
         };
-        Tweet tweet10 = new Tweet("Creéis que lo de Shakira iba por Piqué?", users.get(3), LocalDateTime.of(2023,01,12,1,55,05), null, images);
+        Tweet tweet10 = new Tweet("Creéis que lo de Shakira iba por Piqué?", users.get(3), LocalDateTime.of(2023,01,12,1,55,05), images);
         tweetRepository.save(tweet6);
         tweetRepository.save(tweet10);
         tweetRepository.save(tweet5);
@@ -126,7 +144,7 @@ public class DBInitializer {
                 BlobProxy.generateProxy(image3.getInputStream(),image3.contentLength()),
                 null
         };
-        Tweet tweet4 = new Tweet("Deja de llorar", users.get(0), LocalDateTime.of(2023,02,19,20,00,00), tweet5, images);
+        Tweet tweet4 = new Tweet("Deja de llorar", users.get(0), LocalDateTime.of(2023,02,19,20,00,00), images);
 
         images = new Blob[] {
                 null,
@@ -134,7 +152,7 @@ public class DBInitializer {
                 null,
                 null
         };
-        Tweet tweet3 = new Tweet("Hoy he hecho autostop en un pueblo alejado de la mano de dios en Japón y me he montado con el perro mas majo del mundo 犬", users.get(0), LocalDateTime.of(2023,02,14,20,30,05), null, images);
+        Tweet tweet3 = new Tweet("Hoy he hecho autostop en un pueblo alejado de la mano de dios en Japón y me he montado con el perro mas majo del mundo 犬", users.get(0), LocalDateTime.of(2023,02,14,20,30,05), images);
         tweetRepository.save(tweet4);
         tweetRepository.save(tweet3);
         //@Keyland71
@@ -145,7 +163,7 @@ public class DBInitializer {
                 null,
                 null
         };
-        Tweet tweet1 = new Tweet("Fotito con mi fan \uD83D\uDCAA\uD83C\uDFFD\uD83D\uDCAA\uD83C\uDFFD\uD83D\uDD25\uD83D\uDD25", users.get(1), LocalDateTime.of(2022,06,14,16,03,00),null, images);
+        Tweet tweet1 = new Tweet("Fotito con mi fan \uD83D\uDCAA\uD83C\uDFFD\uD83D\uDCAA\uD83C\uDFFD\uD83D\uDD25\uD83D\uDD25", users.get(1), LocalDateTime.of(2022,06,14,16,03,00), images);
 
         image1 = new ClassPathResource("example_data/tweet2_1.jpg");
         image2 = new ClassPathResource("example_data/tweet2_2.jpg");
@@ -157,7 +175,7 @@ public class DBInitializer {
                 BlobProxy.generateProxy(image3.getInputStream(),image3.contentLength()),
                 BlobProxy.generateProxy(image4.getInputStream(),image4.contentLength())
         };
-        Tweet tweet2 = new Tweet("#MarvelsSpiderManMilesMorales", users.get(1), LocalDateTime.of(2021,8,16,20,00,00), null, images);
+        Tweet tweet2 = new Tweet("#MarvelsSpiderManMilesMorales", users.get(1), LocalDateTime.of(2021,8,16,20,00,00), images);
 
         images = new Blob[] {
                 null,
@@ -165,7 +183,7 @@ public class DBInitializer {
                 null,
                 null
         };
-        Tweet tweet9 = new Tweet("no titiritititiiiiii", users.get(1), LocalDateTime.of(2023,02,20,14,9,00), null, images);
+        Tweet tweet9 = new Tweet("no titiritititiiiiii", users.get(1), LocalDateTime.of(2023,02,20,14,9,00), images);
         tweetRepository.save(tweet1);
         tweetRepository.save(tweet2);
         tweetRepository.save(tweet9);
@@ -178,7 +196,18 @@ public class DBInitializer {
                 null,
                 null
         };
-        Tweet tweet7 = new Tweet("En primaria deberían poner una asignatura de coger aceitunas @Keyland71", users.get(2), LocalDateTime.of(2023,02,20,14,03,00), null, images);
+        Tweet tweet7 = new Tweet("En primaria deberían poner una asignatura de coger aceitunas @Keyland71", users.get(2), LocalDateTime.of(2023,02,20,14,03,00), images);
+
+        //@admin
+        images = new Blob[] {
+                null,
+                null,
+                null,
+                null
+        };
+        Tweet tweet11 = new Tweet("#KingsLeague #Tailwind #RCLS #Pokemon #Grupo8 #DAW #JOPELINES #MicaEl6DelEquipo #Twitter #H2-console", users.get(5), LocalDateTime.of(2003,12,31,21,00,00), images);
+        tweetRepository.save(tweet11);
+
         //Comments
         images = new Blob[] {
                 null,
@@ -186,7 +215,7 @@ public class DBInitializer {
                 null,
                 null
         };
-        Tweet tweet8 = new Tweet("Tienes razón \uD83E\uDD75\uD83E\uDD75", users.get(2), LocalDateTime.of(2023,02,20,14,04,00), null, images);
+        Tweet tweet8 = new Tweet("Tienes razón \uD83E\uDD75\uD83E\uDD75", users.get(2), LocalDateTime.of(2023,02,20,14,04,00), images);
         tweetRepository.save(tweet7);
         tweetRepository.save(tweet8);
         tweets = tweetRepository.findAll();
@@ -194,12 +223,8 @@ public class DBInitializer {
         tweets.get(tweets.size()-2).addComment(tweets.get(tweets.size()-3));
         tweetRepository.save(tweets.get(tweets.size()-2));
 
-        //@admin
-        Tweet tweet11 = new Tweet("#KingsLeague #Tailwind #RCLS #Pokemon #Grupo8 #DAW #JOPELINES #MicaEl6DelEquipo #Twitter #H2-console", users.get(5), LocalDateTime.of(2003,12,31,21,00,00), null, images);
-        tweetRepository.save(tweet11);
         //Hashtags
         tweets = tweetRepository.findAll();
-        //users = userRepository.findAll();
 
         Set<Tweet> tweetsSet = new HashSet<>();
         tweetsSet.add(tweets.get(0));
@@ -260,11 +285,6 @@ public class DBInitializer {
 
         tweet = tweets.get(7);
         user = users.get(2);
-        notification = new Notification(tweet,tweet.getUser(),user,LocalDateTime.of(2023,02,20,14,9,0),"MENTION");
-        notificationRepository.save(notification);
-
-        tweet = tweets.get(3);
-        user = users.get(3);
         notification = new Notification(tweet,tweet.getUser(),user,LocalDateTime.of(2023,02,20,14,9,0),"MENTION");
         notificationRepository.save(notification);
 

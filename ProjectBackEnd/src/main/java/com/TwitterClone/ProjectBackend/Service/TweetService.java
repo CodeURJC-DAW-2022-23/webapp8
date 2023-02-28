@@ -28,7 +28,7 @@ public class TweetService {
 
     @Autowired UserRepository userRepository;
 
-    @JsonView(Tweet.Basic.class)
+
     public List<Tweet> findAll(){
         return repository.findAll();
     }

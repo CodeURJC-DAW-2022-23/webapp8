@@ -15,7 +15,7 @@ import java.util.UUID;
 @Repository
 public interface NotificationRepository extends JpaRepository<Notification, Long> {
     Optional<Notification> findById(Long id);
-    List<Notification> queryFirst10ByUserToNotify(Long id);
-    @Query(value="SELECT * FROM \"notification\" WHERE \"type\" = 'MENTION' AND \"user_to_notify_id\" = ?1",nativeQuery = true)
-    List<Notification> findQuotesByUser(Long id);
+    List<Notification> queryFirst10ByUserToNotify(User user);
+    @Query(value="SELECT * FROM \"notification\" WHERE \"type\" = 'QUOTE'",nativeQuery = true)
+    List<Notification> findQuotesByUser(User user);
 }
