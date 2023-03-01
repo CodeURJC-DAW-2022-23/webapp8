@@ -10,17 +10,17 @@
     <!-- USER LOGOS -->
     <div class="flex gap-2">
       <figure class="w-8 duration-200 rounded-full hover:opacity-80 hover:bg-black-1">
-        <img class="object-contain w-full h-full rounded-full" onload="loadSVG('{{id}}', '{{type}}'); loadNotificationText('{{id}}', '{{type}}'); loadUserSVG('{{id}}', '{{userWhoNotifies.type}}')"
+        <img class="object-contain w-full h-full rounded-full" onload="loadSVG('{{id}}', '{{type}}'); loadNotificationAssets('{{id}}', '{{type}}'); loadUserSVGNotif('{{id}}', '{{userWhoNotifies.type}}')"
              src="../assets/img/OhYhwdAi_400x400.jpg" alt="User profile photo">
       </figure>
     </div>
 
     <!-- USERNAMES - it has display flex because we have to mix up anchor and svg tags -->
     <h2 id="{{id}}userH2" class="flex flex-wrap items-center gap-1 text-sm dark:text-gray-3">
-      <a class="flex items-center gap-1 overflow-hidden font-bold hover:underline decoration-1 text-ellipsis whitespace-nowrap"
+      <a id="{{id}}userNameSvg" class="flex items-center gap-1 overflow-hidden font-bold hover:underline decoration-1 text-ellipsis whitespace-nowrap"
          href="#">
         {{userWhoNotifies.nickname}}
-        <!--svg name-->
+          <!--svg name-->
       </a>
       <!--notification text-->
     </h2>

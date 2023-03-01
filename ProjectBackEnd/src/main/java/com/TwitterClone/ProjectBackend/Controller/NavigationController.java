@@ -2,6 +2,7 @@ package com.TwitterClone.ProjectBackend.Controller;
 
 import com.TwitterClone.ProjectBackend.Model.*;
 import com.TwitterClone.ProjectBackend.Service.HashtagService;
+import com.TwitterClone.ProjectBackend.Service.NotificationService;
 import com.TwitterClone.ProjectBackend.Service.TweetService;
 import com.TwitterClone.ProjectBackend.userManagement.UserService;
 import com.TwitterClone.ProjectBackend.Service.ProfileService;
@@ -33,6 +34,8 @@ public class NavigationController {
     private ProfileService profileService;
     @Autowired
     private TweetService tweetService;
+    @Autowired
+    private NotificationService notificationService;
 
     @GetMapping("/login")
     public String login(Model model, HttpServletRequest request){
@@ -40,9 +43,6 @@ public class NavigationController {
         model.addAttribute("token", token.getToken());
         return "login";
     }
-
-
-
 
     /**
      * Change from the current page to the home page
@@ -95,6 +95,9 @@ public class NavigationController {
 
         this.addCurrentTrends(model);
         this.addProfileInfoToLeftBar(model, request);
+
+        List<Notification> notifications = this.notificationService.getNotifications();
+        model.addAttribute("notifications", notifications);
 
         return "notifications";
     }
