@@ -2,7 +2,7 @@
  * Notification types and its SVGs
  */
 
-notifs = {
+notifsSVG = {
     "LIKE": `
     <svg viewBox="0 0 24 24" aria-hidden="true" class="w-8 fill-red-0">
                             <g>
@@ -12,7 +12,7 @@ notifs = {
                             </g>
                         </svg>
     `,
-    "RT": `
+    "RETWEET": `
     <svg viewBox="0 0 24 24" aria-hidden="true" class="w-8 fill-green-0">
                             <g>
                                 <path 
@@ -43,7 +43,7 @@ notifs = {
 
 function loadSVG(notificationId, notificationType){
     let notificationFigure = document.getElementById(notificationId + "svg");
-    let svgToLoad = notifs[notificationType];
+    let svgToLoad = notifsSVG[notificationType];
     notificationFigure.innerHTML = svgToLoad;
 }
 

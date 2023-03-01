@@ -1,8 +1,8 @@
 <div
         class="flex gap-2 px-3 py-4 border-b cursor-pointer sm:px-6 sm:gap-5 dark:hover:bg-black-6 border-gray-9 dark:border-black-5 hover:bg-gray-7">
   <!-- EMOJI IDENTIFIER -->
-  <figure id="{{notification.id}}svg" onload="loadSVG('{{notification.id}}', '{{notification.type}}')" class="flex items-start justify-end pl-4">
-    <!--SVG to load-->
+  <figure id="{{id}}svg" class="flex items-start justify-end pl-4">
+    <!--svg-->
   </figure>
 
   <!-- CONTENT -->
@@ -10,28 +10,24 @@
     <!-- USER LOGOS -->
     <div class="flex gap-2">
       <figure class="w-8 duration-200 rounded-full hover:opacity-80 hover:bg-black-1">
-        <img class="object-contain w-full h-full rounded-full" src=""
-             alt="User profile photo">
+        <img class="object-contain w-full h-full rounded-full" onload="loadSVG('{{id}}', '{{type}}'); loadNotificationText('{{id}}', '{{type}}'); loadUserSVG('{{id}}', '{{userWhoNotifies.type}}')"
+             src="../assets/img/OhYhwdAi_400x400.jpg" alt="User profile photo">
       </figure>
     </div>
 
     <!-- USERNAMES - it has display flex because we have to mix up anchor and svg tags -->
-    <h2 id="{{notification.id}}userH2" onload="loadNotificationText('{{notification.id}}', '{{notification.type}}')" class="flex flex-wrap items-center gap-1 text-sm dark:text-gray-3">
-      <a  class="flex items-center gap-1 overflow-hidden font-bold hover:underline decoration-1 text-ellipsis whitespace-nowrap" href="#">
-        {{notification.userWhoNotifies.nickname}}
-        <div id="{{notification.id}}userNameSvg" onload="loadUserSVG('{{notification.id}}', '{{notification.userWhoNotifies.type}}')" class="w-4">
-          <!--SVG of user to load-->
-        </div>
+    <h2 id="{{id}}userH2" class="flex flex-wrap items-center gap-1 text-sm dark:text-gray-3">
+      <a class="flex items-center gap-1 overflow-hidden font-bold hover:underline decoration-1 text-ellipsis whitespace-nowrap"
+         href="#">
+        {{userWhoNotifies.nickname}}
+        <!--svg name-->
       </a>
-      <!--Text to load-->
+      <!--notification text-->
     </h2>
-
-    {{#notification.tweetTrigger}}
-     <!--TWEET-->
+    <!-- TWEET -->
     <section>
-      <h4 class="text-sm font-normal dark:text-gray-5 dark:font-semibold text-gray-4">{{notification.tweetTrigger.text}}
+      <h4 class="text-sm font-normal dark:text-gray-5 dark:font-semibold text-gray-4">{{tweetTrigger.text}}
       </h4>
     </section>
-    {{/notification.tweetTrigger}}
   </article>
 </div>

@@ -4,7 +4,7 @@
 
 notifs = {
     "LIKE": "liked your Tweet",
-    "RT": "Retweeted your tweet",
+    "RETWEET": "Retweeted your tweet",
     "FOLLOW": "followed you",
     "MENTION": "mentioned you in a Tweet"
 }

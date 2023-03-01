@@ -18,4 +18,15 @@ public interface NotificationRepository extends JpaRepository<Notification, Long
     List<Notification> queryFirst10ByUserToNotify(User user);
     @Query(value="SELECT * FROM \"notification\" WHERE \"type\" = 'QUOTE'",nativeQuery = true)
     List<Notification> findQuotesByUser(User user);
+    List<Notification> queryFirst10ByUserToNotify(Long id);
+
+    //Provisional, just to try if showing notifications works
+    @Query(value="SELECT * FROM \"notification\"", nativeQuery = true)
+    List<Notification> findAll();
+    @Query(value="SELECT * FROM \"notification\" WHERE \"type\" = 'MENTION' AND \"user_to_notify_id\" = ?1", nativeQuery = true)
+    List<Notification> findMentionsByUser(Long id);
+
+    //Provisional, just to try if showing notifications works
+    @Query(value="SELECT * FROM \"notification\" WHERE \"type\" = 'MENTION'", nativeQuery = true)
+    List<Notification> findMentions();
 }
