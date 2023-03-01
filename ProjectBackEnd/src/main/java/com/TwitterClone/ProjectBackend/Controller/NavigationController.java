@@ -79,8 +79,8 @@ public class NavigationController {
         this.addCurrentTrends(model);
         this.addProfileInfoToLeftBar(model, request);
 
-        List<Trend> trends = this.hashtagService.getCurrentTrends(0,30);
-        model.addAttribute("explore_trends", trends);
+        List<Trend> trends = this.hashtagService.getCurrentTrends(0,10);
+        model.addAttribute("trends", trends);
 
         return "explore";
     }

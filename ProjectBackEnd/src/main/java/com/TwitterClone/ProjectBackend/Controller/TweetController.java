@@ -65,7 +65,7 @@ public class TweetController {
 
         saveHashtag(text);
 
-        return "home";
+        return "redirect:/home";
     }
 
     private void saveHashtag(String text){
