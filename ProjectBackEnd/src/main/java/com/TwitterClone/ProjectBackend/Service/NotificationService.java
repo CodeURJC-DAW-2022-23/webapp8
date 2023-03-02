@@ -18,14 +18,8 @@ import java.util.List;
 public class NotificationService {
     @Autowired
     private NotificationRepository notificationRepository;
-
-    //Needs to be changed by a query to select active-user's notifications
-    public List<Notification> getNotifications() {
-        return this.notificationRepository.findAll();
-    }
-
-    //Needs to be changed by a query to select active-user's mentions
-    public List<Notification> getMentions(){
-        return null;
+    public List<Notification> getNotificationsOfUser(Long userId) {
+        List<Notification> list = this.notificationRepository.findNotifications(userId);
+        return list;
     }
 }

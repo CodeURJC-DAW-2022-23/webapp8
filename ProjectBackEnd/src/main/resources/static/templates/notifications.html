@@ -32,33 +32,23 @@
         <!-- NAVBAR -->
         <nav id="navBar"
              class="grid items-center justify-center grid-cols-2 text-center dark:text-gray-5 text-gray-4">
-            <button id="notifications-tab" onclick="showPage('notifications-tab', 'mentions-tab')"
+            <button id="notifications-tab" onclick="changeVisualTab('notifications-tab', 'mentions-tab');
+                                                    hideOrShowNotifications('ALL')"
                     class="py-4 font-bold border-b-4 cursor-pointer border-primary dark:text-white-0 text-black-0 dark:hover:bg-gray-1 hover:bg-gray-3">
                 All
             </button>
 
-            <button id="mentions-tab" onclick="showPage('mentions-tab', 'notifications-tab')"
+            <button id="mentions-tab" onclick="changeVisualTab('mentions-tab', 'notifications-tab');
+                                               hideOrShowNotifications('MENTIONS')"
                     class="py-4 font-semibold border-b-4 border-transparent cursor-pointer border-p-2 dark:hover:bg-gray-1 hover:bg-gray-3 dark:text-gray-5">
                 Mentions
             </button>
         </nav>
     </header>
-
-    <!-- NOTIFICATION PAGES - NOTE: Clicking on any notification regarding a tweet or conversation will open them. -->
-    <div>
-        <!-- ALL -->
-        <div id="notifications">
-            {{#notifications}}
-                {{> notification}}
-            {{/notifications}}
-        </div>
-
-        <!-- MENTIONS -->
-        <div id="mentions" class="hidden">
-            <!--{{#mentions}}
-                {{> notification}}
-            {{/mentions}}-->
-        </div>
+    <div id="notifications">
+        {{#notifications}}
+            {{> notification}}
+        {{/notifications}}
     </div>
 
     {{> mobile-bar}}

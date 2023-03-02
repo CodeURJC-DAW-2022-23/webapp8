@@ -1,5 +1,5 @@
 <div
-        class="flex gap-2 px-3 py-4 border-b cursor-pointer sm:px-6 sm:gap-5 dark:hover:bg-black-6 border-gray-9 dark:border-black-5 hover:bg-gray-7">
+        class="notification {{type}} flex gap-2 px-3 py-4 border-b cursor-pointer sm:px-6 sm:gap-5 dark:hover:bg-black-6 border-gray-9 dark:border-black-5 hover:bg-gray-7">
   <!-- EMOJI IDENTIFIER -->
   <figure id="{{id}}svg" class="flex items-start justify-end pl-4">
     <!--svg-->
@@ -11,7 +11,7 @@
     <div class="flex gap-2">
       <figure class="w-8 duration-200 rounded-full hover:opacity-80 hover:bg-black-1">
         <img class="object-contain w-full h-full rounded-full" onload="loadSVG('{{id}}', '{{type}}'); 
-                                                                       loadNotificationAssets('{{id}}', '{{type}}'); 
+                                                                       loadNotificationText('{{id}}', '{{type}}');
                                                                        loadUserSVGNotif('{{id}}', '{{userWhoNotifies.type}}')"
              src="/{{userWhoNotifies.id}}/profile-pic" alt="User profile photo">
       </figure>
@@ -27,9 +27,11 @@
       <!--notification text-->
     </h2>
     <!-- TWEET -->
-    <section>
-      <h4 class="text-sm font-normal dark:text-gray-5 dark:font-semibold text-gray-4">{{tweetTrigger.text}}
-      </h4>
-    </section>
+    {{#tweetTrigger}}
+      <section>
+        <h4 class="text-sm font-normal dark:text-gray-5 dark:font-semibold text-gray-4">{{tweetTrigger.text}}
+        </h4>
+      </section>
+    {{/tweetTrigger}}
   </article>
 </div>
