@@ -12,7 +12,7 @@
             </h1>
 
             <!-- SEARCH BAR -->
-            <form class="relative">
+            <form class="relative" action="/search" method = "get">
                 <div class="absolute inset-y-0 flex pointer-events-none left-5">
                     <svg aria-hidden="true" class="w-6 text-gray-5" fill="none" stroke="currentColor"
                          viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -21,7 +21,7 @@
                     </svg>
                 </div>
 
-                <input type="text" id="search"
+                <input type="text" id="keyword" name="keyword"
                        class="w-full py-3 text-lg rounded-full pl-14 text-black-0 dark:text-gray-4 dark:bg-black-2 bg-gray-6 dark:placeholder-gray-5 dark:text-white placeholder-text-lg"
                        placeholder="Search on Twitter" required>
             </form>
