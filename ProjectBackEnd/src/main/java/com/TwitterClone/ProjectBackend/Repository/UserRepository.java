@@ -24,9 +24,10 @@ public interface UserRepository extends JpaRepository<User, Long> {
     Optional<User> findByResetPasswordToken(String token);
     @Query("SELECT u FROM User u WHERE u.verificationCode = ?1")
     public User findByVerificationCode(String code);
-    @Query(value="SELECT \"profile_picture\" FROM \"users\" WHERE \"id\" = ?1",nativeQuery = true)
-    Blob findProfileImageByUserId(Long id);
-    @Query(value="SELECT \"profile_banner\" FROM \"users\" WHERE \"id\" = ?1",nativeQuery = true)
-    Blob findProfileBannerByUserId(Long id);
-
+    @Query(value="SELECT COUNT(*) FROM users_followed WHERE user_id = ?1 GROUP BY user_id",nativeQuery = true)
+    long countFollowed (long id);
+    @Query(value="SELECT COUNT(*) FROM users_followers WHERE user_id = ?1 GROUP BY user_id",nativeQuery = true)
+    long countFollowers (long id);
+    @Query(value="SELECT * FROM users WHERE enabled = false",nativeQuery = true)
+    List<User> findBanned (long id);
 }

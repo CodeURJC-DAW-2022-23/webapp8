@@ -133,7 +133,11 @@ public class NavigationController {
         this.addCurrentTrends(model);
         this.addProfileInfoToLeftBar(model, request);
 
-        List<Tweet> bookmarks = this.profileService.getBookmarks(1L);
+        Principal principal = request.getUserPrincipal();
+        Optional<User> currentSession = this.profileService.findByUsername(principal.getName());
+        User currentUser = currentSession.get();
+
+        List<Tweet> bookmarks = this.profileService.getBookmarks(currentUser.getId(), 0, 10);
         model.addAttribute("bookmarks", bookmarks);
 
         return "bookmarks";

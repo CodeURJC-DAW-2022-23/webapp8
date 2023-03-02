@@ -26,6 +26,6 @@ public class NotificationService {
 
     //Needs to be changed by a query to select active-user's mentions
     public List<Notification> getMentions(){
-        return this.notificationRepository.findMentions();
+        return null;
     }
 }

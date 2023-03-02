@@ -14,9 +14,9 @@ import java.util.List;
 
 @Repository
 public interface HashtagRepository extends JpaRepository<Hashtag, String> {
-    @Query(value = "SELECT \"hashtag_hashtag\" hashtag, COUNT(*) numTweets  FROM \"hashtag_tweets\" GROUP BY  \"hashtag_hashtag\" ORDER BY numTweets DESC, hashtag", nativeQuery = true)
-    Page<Tuple> find(Pageable page);
+    @Query(value = "SELECT hashtag_hashtag AS hashtag, COUNT(*) numTweets FROM hashtag_tweets GROUP BY hashtag_hashtag ORDER BY numTweets DESC, hashtag LIMIT ?1,?2", nativeQuery = true)
+    List<Tuple> find(int offset, int size);
 
-    @Query(value = "SELECT * FROM \"hashtag_tweets\" WHERE \"hashtag_hashtag\" = ?1", nativeQuery = true)
+    @Query(value = "SELECT * FROM hashtag_tweets WHERE hashtag_hashtag = ?1", nativeQuery = true)
     List<Tweet> getTweetsOfTrend(String id);
 }

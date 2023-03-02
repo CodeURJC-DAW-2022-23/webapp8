@@ -59,7 +59,7 @@ public class ProfileController {
 
     @GetMapping("/bookmarks")
     public String getBookmarks() {
-        List<Tweet> u = profileService.getBookmarks(1L);
+        List<Tweet> u = profileService.getBookmarks(1L, 0, 10);
         return "login";
     }
 }

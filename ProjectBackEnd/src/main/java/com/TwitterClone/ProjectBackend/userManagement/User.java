@@ -6,6 +6,8 @@ import com.sun.istack.NotNull;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 import org.hibernate.engine.jdbc.BlobProxy;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ClassPathResource;
@@ -45,7 +47,8 @@ public class User  {
     private List<User> followers = new ArrayList<>();
     @ManyToMany
     private List<User> followed = new ArrayList<>();
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany//(fetch = FetchType.EAGER)
+    @LazyCollection(LazyCollectionOption.FALSE)
     private List<Tweet> bookmarks = new ArrayList<>();
     private final LocalDate joinDate;
     private String type;

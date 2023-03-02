@@ -5,6 +5,8 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonView;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
 import java.sql.Blob;
@@ -21,11 +23,14 @@ public class Tweet {
     @ManyToOne
     private User user;
     private final LocalDateTime publishDate;
-    @ManyToMany (fetch = FetchType.EAGER)
+    @ManyToMany
+    @LazyCollection(LazyCollectionOption.FALSE)
     private List<User> likes = new ArrayList<>();
-    @ManyToMany (fetch = FetchType.EAGER)
+    @ManyToMany
+    @LazyCollection(LazyCollectionOption.FALSE)
     private List<User> retweets = new ArrayList<>();
-    @OneToMany (fetch = FetchType.EAGER)
+    @OneToMany
+    @LazyCollection(LazyCollectionOption.FALSE)
     private List<Tweet> comments = new ArrayList<>();
     private String text;
     @Lob

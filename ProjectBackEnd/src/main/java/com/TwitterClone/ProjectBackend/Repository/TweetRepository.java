@@ -15,37 +15,28 @@ import java.util.Optional;
 @Repository
 public interface TweetRepository extends JpaRepository<Tweet, Long> {
     Optional<Tweet> findById(Long id);
-    @Query("select t from Tweet t where t.user.id = :id order by t.publishDate desc")
+    @Query("SELECT t from Tweet t WHERE t.user.id = :id ORDER BY t.publishDate DESC")
     List<Tweet> findByUser(Long id);
 
-    @Query(value = "select * from \"tweet\" t join (select \"followed_id\" from \"users_followed\" where \"user_id\" = ?1) f on t.\"user_id\" = f.\"followed_id\" order by t.\"publish_date\" desc", nativeQuery = true)
+    @Query(value = "SELECT * from tweet t join (SELECT followed_id from users_followed WHERE user_id = ?1) f on t.user_id = f.followed_id ORDER BY t.publish_date DESC", nativeQuery = true)
     List<Tweet> findByUserFollows(Long id);
 
-    @Query(value = "SELECT * FROM \"tweet\" t JOIN (SELECT \"bookmarks_id\" FROM \"users_bookmarks\" WHERE \"user_id\" = 1) b ON t.\"id\" = b.\"bookmarks_id\"",nativeQuery = true)
-    List<Tweet>findBookmarksByUserId(Long id);
+    @Query(value = "SELECT * FROM tweet t JOIN (SELECT bookmarks_id FROM users_bookmarks WHERE user_id = ?1) b ON t.id = b.bookmarks_id LIMIT ?2,?3",nativeQuery = true)
+    List<Tweet>findBookmarksByUserId(Long id, int offset, int size);
 
-    @Query(value ="select * from  \"tweet_comments\" where \"tweet_id\" = ?1 order by \"publish_date\"", nativeQuery = true)
-    Page<Tweet> findCommentsById(Long id, Pageable page);
+    @Query(value ="SELECT * from  tweet_comments WHERE tweet_id = ?1 ORDER BY publish_date LIMIT ?2,?3", nativeQuery = true)
+    List<Tweet> findCommentsById(Long id, int offset, int size);
 
-    @Query(value ="SELECT * FROM \"tweet_retweets\" NATURAL JOIN \"tweet\" where \"retweets_id\" = ?1 order by \"publish_date\" desc;", nativeQuery = true)
-    Page<Tweet> findRetweetsByUser(Long id, Pageable page);
+    @Query(value ="SELECT * FROM tweet_retweets NATURAL JOIN tweet WHERE retweets_id = ?1 ORDER BY publish_date DESC LIMIT ?2,?3", nativeQuery = true)
+    List<Tweet> findRetweetsByUser(Long id, int offset, int size);
 
-    @Query(value ="SELECT * FROM \"tweet_likes\" NATURAL JOIN \"tweet\" where \"like_id\" = ?1 order by \"publish_date\" desc;", nativeQuery = true)
-    Page<Tweet> findLikesByUser(Long id, Pageable page);
+    @Query(value ="SELECT * FROM tweet_likes NATURAL JOIN tweet WHERE like_id = ?1 ORDER BY publish_date DESC LIMIT ?2,?3", nativeQuery = true)
+    List<Tweet> findLikesByUser(Long id, int offset, int size);
 
-    @Query(value="SELECT COUNT(*) FROM \"tweet_likes\" JOIN \"tweet\" ON \"tweet_id\" = \"id\" WHERE \"tweet_id\" = ?1 GROUP BY \"tweet_id\"", nativeQuery = true)
-    int countLikes(Long id);
-    @Query(value="SELECT COUNT(*) FROM \"tweet_retweets\" JOIN \"tweet\" ON \"tweet_id\" = \"id\" WHERE \"tweet_id\" = ?1 GROUP BY \"tweet_id\"", nativeQuery = true)
-    int countRetweets(Long id);
-    @Query(value="SELECT COUNT(*) FROM \"tweet_comments\" JOIN \"tweet\" ON \"tweet_id\" = \"id\" WHERE \"tweet_id\" = ?1 GROUP BY \"tweet_id\"", nativeQuery = true)
-    int countComments(Long id);
-
-    /*@Query(value="SELECT \"media1\" FROM \"tweet\" WHERE \"id\" = ?1",nativeQuery = true)
-    Blob findMedia1ByUserId(Long id);
-    @Query(value="SELECT \"media2\" FROM \"tweet\" WHERE \"id\" = ?1",nativeQuery = true)
-    Blob findMedia2ByUserId(Long id);
-    @Query(value="SELECT \"media3\" FROM \"tweet\" WHERE \"id\" = ?1",nativeQuery = true)
-    Blob findMedia3ByUserId(Long id);
-    @Query(value="SELECT \"media4\" FROM \"tweet\" WHERE \"id\" = ?1",nativeQuery = true)
-    Blob findMedia4ByUserId(Long id);*/
+    @Query(value="SELECT COUNT(*) FROM tweet_likes JOIN tweet ON tweet_id = id WHERE tweet_id = ?1 GROUP BY tweet_id", nativeQuery = true)
+    long countLikes(Long id);
+    @Query(value="SELECT COUNT(*) FROM tweet_retweets JOIN tweet ON tweet_id = id WHERE tweet_id = ?1 GROUP BY tweet_id", nativeQuery = true)
+    long countRetweets(Long id);
+    @Query(value="SELECT COUNT(*) FROM tweet_comments JOIN tweet ON tweet_id = id WHERE tweet_id = ?1 GROUP BY tweet_id", nativeQuery = true)
+    long countComments(Long id);
 }

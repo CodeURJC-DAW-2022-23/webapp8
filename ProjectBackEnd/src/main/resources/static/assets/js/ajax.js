@@ -8,7 +8,7 @@ let counterMoreTrends = 0;
  * @returns {Promise<void>}
  */
 async function loadMoreTrends() {
-    const from = counterMoreTrends + 1;
+    const from = counterMoreTrends + 10;
 
     const response = await fetch(`/explore/trends?from=${from}&size=${NUMBER_ELEMENTS_PER_LOAD}`);
     const newTrends = await response.text();

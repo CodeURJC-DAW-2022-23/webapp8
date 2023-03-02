@@ -23,7 +23,7 @@ public class HashtagService {
     private HashtagRepository trendRepository;
 
     public List<Trend> getCurrentTrends(int init, int size) {
-        Page<Tuple> trends= this.trendRepository.find(PageRequest.of(init,size));
+        List<Tuple> trends= this.trendRepository.find(init, size);
         List<Tuple> trendsList = trends.stream().toList();
         return this.converterToTrend(trendsList);
     }

@@ -7,16 +7,16 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
+/**
+ * Trend is a Model for showing data, but it is not an Entity
+ */
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity
 public class Trend {
 
-    @Id
     private String hashtag;
-    @NonNull
     private int numTweets;
 
 }

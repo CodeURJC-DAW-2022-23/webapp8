@@ -61,7 +61,7 @@ public class ProfileService {
             repository.save(u);
         }
     }
-    public List<Tweet> getBookmarks (Long id){
-        return tweetRepository.findBookmarksByUserId(id);
+    public List<Tweet> getBookmarks (Long id, int init, int size){
+        return tweetRepository.findBookmarksByUserId(id, init, size);
     }
 }
