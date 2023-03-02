@@ -44,6 +44,13 @@ public class NavigationController {
         return "login";
     }
 
+    @GetMapping("/logout")
+    public String logout(Model model, HttpServletRequest request){
+        CsrfToken token = (CsrfToken) request.getAttribute("_csrf");
+        model.addAttribute("token", token.getToken());
+        return "/";
+    }
+
     /**
      * Change from the current page to the home page
      * @param model

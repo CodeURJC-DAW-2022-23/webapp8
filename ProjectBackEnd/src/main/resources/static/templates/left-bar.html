@@ -132,7 +132,8 @@
 
             {{#isLogged}}
             <!-- LOG OUT -->
-            <a class="w-full group" href="/logout">
+            <form action ="/logout" method="post"
+                  class="w-full group">
                 <div
                     class="flex items-center gap-6 px-4 py-3 transition rounded-full w-fit group-hover:scale-110 group-focus-within:scale-110 group-hover:bg-red-3 group-focus-within:bg-red-3">
                     <div class="w-7">
@@ -147,11 +148,11 @@
                             </g>
                         </svg>
                     </div>
-                    <div
-                        class="text-2xl text-black-0 dark:text-white-0 group-focus-within:font-semibold group-focus-within:text-white group-hover:text-white-0">
-                        Log out</div>
+                    <input type="hidden" name="_csrf" value="{{token}}"/>
+                    <input type="submit" value="Log out"
+                           class="text-2xl text-black-0 dark:text-white-0 group-focus-within:font-semibold group-focus-within:text-white group-hover:text-white-0">
                 </div>
-            </a>
+            </form>
         </nav>
         {{/isLogged}}
 
