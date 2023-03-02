@@ -18,6 +18,7 @@
 
         <!-- NAV BAR -->
         <nav class="flex flex-col items-start gap-3">
+            {{#isLogged}}
             <a class="w-full group" href="/home">
                 <div
                     class="flex items-center gap-5 px-4 py-3 transition rounded-full w-fit group-hover:scale-110 group-hover:bg-gray-3 dark:group-hover:bg-gray-13 group-focus-within:bg-gray-3 dark:group-focus-within:bg-gray-13 group-focus-within:scale-110">
@@ -34,6 +35,7 @@
                     <div class="text-2xl text-black-0 dark:text-white-0 group-focus-within:font-semibold">Home</div>
                 </div>
             </a>
+            {{/isLogged}}
 
             <a class="w-full group" href="/explore">
                 <div
@@ -53,6 +55,7 @@
                 </div>
             </a>
 
+            {{#isLogged}}
             <a class="w-full group" href="/notifications">
                 <div
                     class="flex items-center gap-5 px-4 py-3 transition rounded-full w-fit group-hover:scale-110 group-hover:bg-gray-3 dark:group-hover:bg-gray-13 group-focus-within:bg-gray-3 dark:group-focus-within:bg-gray-13 group-focus-within:scale-110">
@@ -71,7 +74,9 @@
                     </div>
                 </div>
             </a>
+            {{/isLogged}}
 
+            {{#isLogged}}
             <a class="w-full group" href="/bookmarks">
                 <div
                     class="flex items-center gap-5 px-4 py-3 transition rounded-full w-fit group-hover:scale-110 group-hover:bg-gray-3 dark:group-hover:bg-gray-13 group-focus-within:bg-gray-3 dark:group-focus-within:bg-gray-13 group-focus-within:scale-110">
@@ -89,7 +94,9 @@
                     </div>
                 </div>
             </a>
+            {{/isLogged}}
 
+            {{#isLogged}}
             <!-- PROFILE -->
             <a class="w-full group" href="/profile/{{id}}">
                 <div
@@ -121,7 +128,9 @@
                     </article>
                 </div>
             </a>
+            {{/isLogged}}
 
+            {{#isLogged}}
             <!-- LOG OUT -->
             <a class="w-full group" href="/logout">
                 <div
@@ -144,10 +153,25 @@
                 </div>
             </a>
         </nav>
+        {{/isLogged}}
 
+        {{#isLogged}}
         <a class="py-4 text-xl font-bold text-center transition rounded-full cursor-pointer text-white-0 hover:scale-110 bg-primary"
             href="/write-tweet">
             Tweet
         </a>
+        {{/isLogged}}
+
+        {{^isLogged}}
+        <a class="w-full px-5 py-3 font-bold text-center transition rounded-full cursor-pointer text-white-0 bg-primary hover:scale-110"
+                        href="/signup">
+                        Sign up
+        </a>
+
+        <a class="w-full px-5 py-3 font-bold text-center transition rounded-full cursor-pointer text-primary bg-white-0 hover:scale-110 border-[1.9px] border-primary"
+                        href="/login">
+                        Log in
+        </a>
+        {{/isLogged}}
     </div>
 </aside>

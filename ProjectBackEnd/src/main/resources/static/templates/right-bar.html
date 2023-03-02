@@ -10,9 +10,11 @@
                 </svg>
             </div>
 
+            {{^isExplorePage}}
             <input type="text" id="search"
                 class="w-full p-4 text-lg rounded-full pl-14 text-black-0 dark:text-gray-4 dark:bg-black-2 bg-gray-6 dark:placeholder-gray-5 dark:text-white placeholder-text-lg"
                 placeholder="Search on Twitter" required>
+            {{/isExplorePage}}
         </form>
 
         <div class="flex flex-col justify-start pt-3 h-fit bg-gray-6 rounded-3xl dark:bg-black-2 bg-gray-14">
@@ -20,6 +22,8 @@
                 What's happening
             </h2>
 
+            {{^isExplorePage}}
+            
             {{> explore_element}}
 
             <!-- SHOW MORE -->
@@ -29,6 +33,19 @@
                     Show more
                 </div>
             </a>
+            {{/isExplorePage}}
+
+            {{^isLogged}}
+            <a class="w-full px-5 py-3 font-bold text-center transition rounded-full cursor-pointer text-white-0 bg-primary hover:scale-110"
+                        href="/signup">
+                        Sign up
+            </a>
+
+            <a class="w-full px-5 py-3 font-bold text-center transition rounded-full cursor-pointer text-primary bg-white-0 hover:scale-110 border-[1.9px] border-primary"
+                            href="/login">
+                            Log in
+            </a>
+            {{/isLogged}}
         </div>
     </div>
 </aside>

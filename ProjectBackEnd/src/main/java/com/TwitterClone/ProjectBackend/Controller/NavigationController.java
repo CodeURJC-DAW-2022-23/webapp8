@@ -53,6 +53,8 @@ public class NavigationController {
     @GetMapping("/home")
     public String toHome(Model model, HttpServletRequest request) {
 
+        String namePage = "Home";
+        model.addAttribute("namePage", namePage);
 
         this.addProfileInfoToLeftBar(model, request);
         this.addCurrentTrends(model);
@@ -65,6 +67,7 @@ public class NavigationController {
 
         model.addAttribute("tweets", tweets);
 
+
         return "home";
     }
 
@@ -75,6 +78,10 @@ public class NavigationController {
      */
     @GetMapping("/explore")
     public String toExplore(Model model, HttpServletRequest request) {
+
+        String namePage = "Explore";
+        model.addAttribute("namePage", namePage);
+        model.addAttribute("isExplorePage", true);
 
         this.addCurrentTrends(model);
         this.addProfileInfoToLeftBar(model, request);
@@ -93,6 +100,9 @@ public class NavigationController {
     @GetMapping("/notifications")
     public String toNotifications(Model model, HttpServletRequest request) {
 
+        String namePage = "Notifications";
+        model.addAttribute("namePage", namePage);
+
         this.addCurrentTrends(model);
         this.addProfileInfoToLeftBar(model, request);
 
@@ -109,6 +119,9 @@ public class NavigationController {
      */
     @GetMapping("/bookmarks")
     public String toBookmark(Model model, HttpServletRequest request) {
+
+        String namePage = "Bookmarks";
+        model.addAttribute("namePage", namePage);
 
         this.addCurrentTrends(model);
         this.addProfileInfoToLeftBar(model, request);
@@ -164,17 +177,26 @@ public class NavigationController {
      */
     private void addProfileInfoToLeftBar(Model model, HttpServletRequest request) {
         Principal principal = request.getUserPrincipal();
+
+        if(principal == null) {
+            model.addAttribute("isLogged", false);
+            return;
+        }
+
         Optional<User> currentSession = this.profileService.findByUsername(principal.getName());
         User currentUser = currentSession.get();
 
-        if (currentUser != null) {
-            model.addAttribute("id", currentUser.getId());
-            model.addAttribute("username", currentUser.getUsername());
-            model.addAttribute("nickname", currentUser.getNickname());
+        if (currentUser == null) {
+            return;
+        }
 
-            if (currentUser.getType().equals("PRIVATE")) {
-                model.addAttribute("private-acount", currentUser.getType());
-            }
+        model.addAttribute("isLogged", true);
+        model.addAttribute("id", currentUser.getId());
+        model.addAttribute("username", currentUser.getUsername());
+        model.addAttribute("nickname", currentUser.getNickname());
+
+        if (currentUser.getType().equals("PRIVATE")) {
+            model.addAttribute("private-acount", currentUser.getType());
         }
     }
 }

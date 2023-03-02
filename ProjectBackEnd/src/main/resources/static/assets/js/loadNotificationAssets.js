@@ -91,9 +91,11 @@ users = {
 }
 
 function loadUserSVGNotif(notificationId, notificationUserType){
-    if (notificationUserType != "PUBLIC") {
-        let userNameDiv = document.getElementById(notificationId + "userNameSvg");
-        let svgToLoad = users[notificationUserType];
-        userNameDiv.innerHTML += svgToLoad;
+    if (notificationUserType === "PUBLIC"){
+        return;
     }
+
+    let userNameDiv = document.getElementById(notificationId + "userNameSvg");
+    let svgToLoad = users[notificationUserType];
+    userNameDiv.innerHTML += svgToLoad;
 }

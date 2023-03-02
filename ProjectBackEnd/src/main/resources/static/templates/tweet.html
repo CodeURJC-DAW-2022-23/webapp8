@@ -7,7 +7,10 @@
     <a href="">
       <figure class="mt-2 rounded-full h-11 w-11 hover:bg-black-0">
         <img src="/{{user.id}}/profile-pic" alt="Profile photo"
-             class="w-full h-full rounded-full hover:opacity-80" />
+             class="w-full h-full rounded-full hover:opacity-80" 
+             onload="chargeNumLikes('{{likes}}', '{{id}}');
+                     chargeNumRetweets('{{retweets}}', '{{id}}');
+                     chargeNumComments('{{comments}}', '{{id}}');">
       </figure>
     </a>
 
@@ -35,21 +38,29 @@
         </p>
 
         <!-- TWEET IMAGES-->
+        {{#media1}}
         <figure>
           <img src="/{{id}}/tweet-image1" alt="image1" >
         </figure>
+        {{/media1}}
 
+        {{#media2}}
         <figure>
           <img src="/{{id}}/tweet-image2" alt="image2" >
         </figure>
+        {{/media2}}
 
+        {{#media3}}
         <figure>
           <img src="/{{id}}/tweet-image3" alt="image3" >
         </figure>
+        {{/media3}}
 
+        {{#media4}}
         <figure>
           <img src="/{{id}}/tweet-image4" alt="image4" >
         </figure>
+        {{/media4}}
 
         <!-- REACTIONS -->
         <div class="flex gap-4 pb-3">
@@ -64,7 +75,7 @@
               </g>
             </svg>
 
-            <div class="transition text-gray-4 group-hover:text-primary" id="comments-{{id}}" onload="chargeNumComments('{{comments}}', '{{id}}');">
+            <div class="transition text-gray-4 group-hover:text-primary" id="comments-{{id}}">
               
             </div>
           </a>
@@ -80,7 +91,7 @@
               </g>
             </svg>
 
-            <span class="text-green-0" id="retweet-{{id}}" onload='chargeNumRetweets("{{retweets}}", "{{id}}");'>
+            <span class="text-green-0" id="retweet-{{id}}">
                                     
             </span>
           </button>
@@ -96,7 +107,7 @@
               </g>
             </svg>
 
-            <span class="text-red-0" id="likes-{{id}}" onload="chargeNumLikes('{{likes}}', '{{id}}');">
+            <span class="text-red-0" id="likes-{{id}}">
                                     
             </span>
           </button>

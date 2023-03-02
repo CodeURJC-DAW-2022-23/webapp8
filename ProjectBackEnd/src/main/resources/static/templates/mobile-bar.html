@@ -1,6 +1,7 @@
 <!-- BOTTOM BAR - MOBILE -->
 <nav class="fixed bottom-0 flex flex-col w-full gap-3 items llg:hidden">
     <!-- TWEET BUTTON -->
+    {{#isLogged}}
     <a class="flex items-center justify-center p-4 ml-auto mr-3 transition rounded-full w-fit llg:hidden bg-primary hover:scale-110"
        href="/write-tweet">
         <figure>
@@ -14,11 +15,13 @@
             </svg>
         </figure>
     </a>
+    {{/isLogged}}
 
     <!-- BAR -->
     <div
             class="grid grid-cols-5 px-1 py-4 border-t justify-items-center border-gray-9 dark:border-black-5 dark:bg-black-0 bg-white-0">
-        <a class="px-5" href="/home">
+        {{#isLogged}}
+            <a class="px-5" href="/home">
             <figure>
                 <svg class="w-8 dark:fill-white-0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
                      aria-hidden="true">
@@ -30,6 +33,7 @@
                 </svg>
             </figure>
         </a>
+        {{/isLogged}}
 
         <a class="px-5" href="/explore">
             <figure>
@@ -44,6 +48,7 @@
             </figure>
         </a>
 
+        {{#isLogged}}
         <a class="px-5" href="/notifications">
             <figure>
                 <svg class="w-8 dark:fill-white-0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
@@ -56,7 +61,9 @@
                 </svg>
             </figure>
         </a>
+        {{/isLogged}}
 
+        {{#isLogged}}
         <a class="px-5" href="/bookmarks">
             <figure>
                 <svg class="w-8 dark:fill-white-0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
@@ -69,12 +76,28 @@
                 </svg>
             </figure>
         </a>
+        {{/isLogged}}
 
+        {{#isLogged}}
         <a class="px-5" href="/profile">
             <figure class="w-8">
                 <img class="object-cover w-full h-full rounded-full"
                      src="/{{id}}/profile-pic" alt="Profile photo" />
             </figure>
         </a>
+        {{/isLogged}}
+
+        {{^isLogged}}
+        <a class="w-full px-5 py-3 font-bold text-center transition rounded-full cursor-pointer text-white-0 bg-primary hover:scale-110"
+                        href="/signup">
+                        Sign up
+        </a>
+
+        <a class="w-full px-5 py-3 font-bold text-center transition rounded-full cursor-pointer text-primary bg-white-0 hover:scale-110 border-[1.9px] border-primary"
+                        href="/login">
+                        Log in
+        </a>
+        {{/isLogged}}
+
     </div>
 </nav>
