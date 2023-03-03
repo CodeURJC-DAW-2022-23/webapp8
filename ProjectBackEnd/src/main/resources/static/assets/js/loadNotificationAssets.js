@@ -9,7 +9,7 @@ notifsText = {
     "MENTION": "mentioned you in a Tweet"
 }
 
-function loadNotificationAssets(notificationId, notificationType){
+function loadNotificationText(notificationId, notificationType){
     let notificationH2 = document.getElementById(notificationId + "userH2");
     let textToLoad = notifsText[notificationType];
     notificationH2.innerHTML += textToLoad;
@@ -98,4 +98,26 @@ function loadUserSVGNotif(notificationId, notificationUserType){
     let userNameDiv = document.getElementById(notificationId + "userNameSvg");
     let svgToLoad = users[notificationUserType];
     userNameDiv.innerHTML += svgToLoad;
+}
+
+function changeVisualTab(tabToShow, tabToHide){
+    let tabSelected = document.getElementById(tabToShow);
+    tabSelected.classList.remove("dark:text-gray-5", "font-semibold", "border-transparent");
+    tabSelected.classList.add("font-bold", "dark:text-white-0", "text-black-0", "border-primary");
+    let tabNotSelected = document.getElementById(tabToHide);
+    tabNotSelected.classList.remove("font-bold", "dark:text-white-0", "text-black-0", "border-primary");
+    tabNotSelected.classList.add("dark:text-gray-5", "font-semibold", "border-transparent");
+}
+
+function hideOrShowNotifications(typeOfTab){
+    let notifications = document.getElementsByClassName("notification");
+    for (let notification of notifications) {
+        let isMention = notification.classList.contains("MENTION");
+        if (!isMention && typeOfTab == "ALL") {
+            notification.classList.remove("hidden");
+        }
+        if (!isMention && typeOfTab == "MENTIONS") {
+            notification.classList.add("hidden");
+        }
+    }
 }

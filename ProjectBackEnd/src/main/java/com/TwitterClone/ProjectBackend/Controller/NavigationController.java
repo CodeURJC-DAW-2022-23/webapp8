@@ -66,9 +66,7 @@ public class NavigationController {
         this.addProfileInfoToLeftBar(model, request);
         this.addCurrentTrends(model);
 
-        Principal principal = request.getUserPrincipal();
-        Optional<User> currentSession = this.profileService.findByUsername(principal.getName());
-        User currentUser = currentSession.get();
+        User currentUser = getCurrentUser(request);
 
         List<Tweet> tweets = this.tweetService.find10RecentForUser(currentUser.getId());
 
@@ -77,6 +75,7 @@ public class NavigationController {
 
         return "home";
     }
+
 
     /**
      * Change from the current page to the explore page
@@ -112,8 +111,9 @@ public class NavigationController {
 
         this.addCurrentTrends(model);
         this.addProfileInfoToLeftBar(model, request);
+        User currentUser = getCurrentUser(request);
 
-        List<Notification> notifications = this.notificationService.getNotifications();
+        List<Notification> notifications = this.notificationService.getNotificationsOfUser(currentUser.getId());
         model.addAttribute("notifications", notifications);
 
         return "notifications";
@@ -210,4 +210,17 @@ public class NavigationController {
             model.addAttribute("private-acount", currentUser.getType());
         }
     }
+
+    /**
+     *
+     * @param request
+     * @return
+     */
+    private User getCurrentUser(HttpServletRequest request) {
+        Principal principal = request.getUserPrincipal();
+        Optional<User> currentSession = this.profileService.findByUsername(principal.getName());
+        User currentUser = currentSession.get();
+        return currentUser;
+    }
+
 }
