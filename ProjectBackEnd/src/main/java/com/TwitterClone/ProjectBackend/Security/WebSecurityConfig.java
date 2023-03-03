@@ -67,7 +67,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 
         //Just for testing Until we have the admin page
-        http.authorizeRequests().antMatchers("/private.html").hasAnyRole("ADMIN");
+        http.authorizeRequests().antMatchers("/admin-dashboard").hasAnyRole("ADMIN");
 
 
         // Logout
