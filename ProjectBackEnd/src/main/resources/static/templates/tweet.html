@@ -7,7 +7,8 @@
     <a href="">
       <figure class="mt-2 rounded-full h-11 w-11 hover:bg-black-0">
         <img src="/{{tweet.user.id}}/profile-pic" alt="Profile photo"
-             class="w-full h-full rounded-full hover:opacity-80">
+             class="w-full h-full rounded-full hover:opacity-80"
+        onload="loadUserSVG('{{tweet.id}}', '{{tweet.user.type}}')">
       </figure>
     </a>
 
@@ -15,18 +16,30 @@
     <div class="flex flex-col flex-1 gap-2">
       <div class="flex flex-col gap-1">
         <!-- PROFILE -->
-        <a class="grid grid-flow-col gap-2 auto-cols-auto-auto-1fr" href="#">
-                            <span
-                                    class="overflow-hidden font-bold text-ellipsis whitespace-nowrap hover:underline dark:text-white-0">
-                                {{tweet.user.nickname}}</span>
+        <a class="grid items-center grid-flow-col gap-2 auto-cols-auto-auto-1fr" href="#">
+          <div id="{{tweet.id}}userNameSvg" class="dark:text-white-0 flex items-center gap-1 overflow-hidden font-bold hover:underline decoration-1 text-ellipsis whitespace-nowrap">
+              {{tweet.user.nickname}}
+              <!--user svg-->
+          </div>
           <span class="overflow-hidden text-ellipsis whitespace-nowrap text-gray-4 hover:underline">
-                                @{{tweet.user.username}}
-                            </span>
-
+            @{{tweet.user.username}}
+          </span>
           <!-- TIME SINCE PUBLICATION -->
-          <span class="justify-self-end text-gray-4 whitespace-nowrap">
-                                {{tweet.publishDate}}
-                            </span>
+          <span class="text-gray-4 whitespace-nowrap">
+            {{tweet.publishDate}}
+          </span>
+
+          <!-- TRASH CAN (ONLY FOR ADMIN) -->
+          <button class="justify-self-end">
+            <svg class="w-8 p-[0.375rem] transition rounded-full fill-gray-4 hover:fill-red-3 hover:bg-red-2"
+                 xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true">
+              <g>
+                <path
+                        d="M16 6V4.5C16 3.12 14.88 2 13.5 2h-3C9.11 2 8 3.12 8 4.5V6H3v2h1.06l.81 11.21C4.98 20.78 6.28 22 7.86 22h8.27c1.58 0 2.88-1.22 3-2.79L19.93 8H21V6h-5zm-6-1.5c0-.28.22-.5.5-.5h3c.27 0 .5.22.5.5V6h-4V4.5zm7.13 14.57c-.04.52-.47.93-1 .93H7.86c-.53 0-.96-.41-1-.93L6.07 8h11.85l-.79 11.07zM9 17v-6h2v6H9zm4 0v-6h2v6h-2z">
+                </path>
+              </g>
+            </svg>
+          </button>
         </a>
 
         <!-- TWEET TEXT -->
@@ -35,31 +48,24 @@
         </p>
 
         <!-- TWEET IMAGES-->
-        <div class="grid grid-cols-2 grid-rows-2 gap-1 max-h-[500px] max-w-[500px] overflow-hidden mt-3 border bg-gray-4 dark:bg-twitter-dark-gray border-gray-4 rounded-xl">
-          {{#tweet.media1}}
-          <figure>
-            <img src="/{{tweet.id}}/tweet-image1" alt="image1" >
-          </figure>
-          {{/tweet.media1}}
-
-          {{#tweet.media2}}
-          <figure>
-            <img src="/{{tweet.id}}/tweet-image2" alt="image2" >
-          </figure>
-          {{/tweet.media2}}
-
-          {{#tweet.media3}}
-          <figure>
-            <img src="/{{tweet.id}}/tweet-image3" alt="image3" >
-          </figure>
-          {{/tweet.media3}}
-
+        {{#tweet.media1}}
           {{#tweet.media4}}
-          <figure>
-            <img src="/{{tweet.id}}/tweet-image4" alt="image4" >
-          </figure>
+            {{> 4-image-frame}}
           {{/tweet.media4}}
-        </div>
+          {{^tweet.media4}}
+            {{#tweet.media3}}
+              {{> 3-image-frame}}
+            {{/tweet.media3}}
+            {{^tweet.media3}}
+              {{#tweet.media2}}
+                {{> 2-image-frame}}
+              {{/tweet.media2}}
+              {{^tweet.media2}}
+                {{> 1-image-frame}}
+              {{/tweet.media2}}
+            {{/tweet.media3}}
+          {{/tweet.media4}}
+        {{/tweet.media1}}
         <!-- REACTIONS -->
         <div class="flex gap-4 pb-3">
           <!-- COMMENT -->
