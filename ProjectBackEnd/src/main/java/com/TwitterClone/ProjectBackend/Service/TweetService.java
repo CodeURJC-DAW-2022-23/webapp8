@@ -41,10 +41,10 @@ public class TweetService {
         return tweetRepository.findByUserFollows(id);
     }
 
-    public void createTweet(String text, Blob [] files, Tweet citation, Long userId){
+    public void createTweet(String text, Blob [] files, Long userId){
         User user = userRepository.findById(userId).orElse(null);
         if (user != null){
-            Tweet tweet = new Tweet(text, user, files, citation);
+            Tweet tweet = new Tweet(text, user, files);
             tweetRepository.save(tweet);
         }
     }
@@ -93,7 +93,7 @@ public class TweetService {
     public void addComment(String text, Blob[] files, User user, Tweet tweet){
         Tweet t = this.findById(tweet.getId()).orElse(null);
         if (t != null){
-            Tweet comment = new Tweet(text, user, files, null);
+            Tweet comment = new Tweet(text, user, files);
             t.addComment(comment);
         }
     }

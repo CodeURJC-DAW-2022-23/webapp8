@@ -71,15 +71,17 @@
                     <textarea
                         class="p-5 text-lg bg-transparent border-[2.8px] resize-none rounded-xl border-primary dark:text-white-0"
                         placeholder="Write your tweet here" maxlength="240" rows="6"
-                        name="tweet-info"></textarea>
+                        name="tweet_info"></textarea>
     
                     <label>
                         <span class="sr-only">Choose file to upload</span>
-                        <input type="file" name="tweet-files" multiple="multiple"
+                        <input type="file" name="tweet_files" multiple="multiple"
                             class="w-full text-sm font-semibold text-black-0 file:text-sm file:font-bold file:text-white-0 file:mr-4 file:py-2 file:px-4 file:rounded-full file:bg-primary file:border-transparent dark:text-gray-2" />
                     </label>
     
                 </div>
+
+                <input type="hidden" name="_csrf" value="{{token}}"/>
     
                 <div class="flex flex-col gap-4">
                     <input type="submit" value="Tweet"

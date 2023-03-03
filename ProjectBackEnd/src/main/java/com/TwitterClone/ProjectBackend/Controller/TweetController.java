@@ -1,22 +1,23 @@
 package com.TwitterClone.ProjectBackend.Controller;
 
-import com.TwitterClone.ProjectBackend.Model.Trend;
 import com.TwitterClone.ProjectBackend.Model.Tweet;
 import com.TwitterClone.ProjectBackend.Service.HashtagService;
+import com.TwitterClone.ProjectBackend.Service.ProfileService;
 import com.TwitterClone.ProjectBackend.Service.TweetService;
 import com.TwitterClone.ProjectBackend.userManagement.User;
 import org.hibernate.engine.jdbc.BlobProxy;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
+import java.security.Principal;
 import java.sql.Blob;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 public class TweetController {
@@ -25,6 +26,9 @@ public class TweetController {
 
     @Autowired
     private HashtagService hashtagService;
+
+    @Autowired
+    private ProfileService profileService;
 
     @GetMapping(path = "{id}")
     public Tweet getOneTweet(@PathVariable("id") Long id) {
@@ -101,27 +105,31 @@ public class TweetController {
 
     /**
      * Add a new tweet from the trigger user to the database
-     * @param text
-     * @param images
+     * @param tweet_info
+     * @param tweet_files
      * @return
      * @throws IOException
      */
     @PostMapping("/tweets/new-tweet")
-    public String postTweet(@RequestParam("tweet-info") String text,
-                            @RequestParam("tweet-files") MultipartFile [] images) throws IOException {
+    public String postTweet(@RequestParam String tweet_info,
+                            @RequestParam MultipartFile [] tweet_files,
+                            HttpServletRequest request) throws IOException {
         Blob [] files = new Blob[4];
 
-        for (int index = 0; index < images.length; index++) {
+        for (int index = 0; index < tweet_files.length; index++) {
             files[index] = BlobProxy
-                    .generateProxy(images[index]
-                            .getInputStream(), images[index]
+                    .generateProxy(tweet_files[index]
+                            .getInputStream(), tweet_files[index]
                             .getSize());
         }
 
-        Long userId = 1L;
-        tweetService.createTweet(text, files,null, userId);
+        Principal principal = request.getUserPrincipal();
+        Optional<User> currentSession = this.profileService.findByUsername(principal.getName());
+        User currentUser = currentSession.get();
+        Long userId = currentUser.getId();
+        tweetService.createTweet(tweet_info, files, userId);
 
-        saveHashtag(text);
+        saveHashtag(tweet_info);
 
         return "redirect:/home";
     }

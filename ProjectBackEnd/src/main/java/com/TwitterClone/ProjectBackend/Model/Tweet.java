@@ -45,7 +45,7 @@ public class Tweet {
     public Tweet(){
         this.publishDate = LocalDateTime.now();
     }
-    public Tweet(String text, User user, Blob [] files, Tweet citation) {
+    public Tweet(String text, User user, Blob [] files) {
         this.publishDate = LocalDateTime.now();
         this.likes = new LinkedList<>();
         this.retweets =  new LinkedList<>();
