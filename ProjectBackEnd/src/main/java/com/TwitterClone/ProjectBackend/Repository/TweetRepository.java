@@ -21,8 +21,8 @@ public interface TweetRepository extends JpaRepository<Tweet, Long> {
     @Query(value = "SELECT * from tweet t join (SELECT followed_id from users_followed WHERE user_id = ?1) f on t.user_id = f.followed_id ORDER BY t.publish_date DESC", nativeQuery = true)
     List<Tweet> findByUserFollows(Long id);
 
-    @Query(value = "SELECT * FROM tweet t JOIN (SELECT bookmarks_id FROM users_bookmarks WHERE user_id = ?1) b ON t.id = b.bookmarks_id LIMIT ?2,?3",nativeQuery = true)
-    List<Tweet>findBookmarksByUserId(Long id, int offset, int size);
+    @Query(value = "SELECT * FROM tweet t JOIN (SELECT bookmarks_id FROM users_bookmarks WHERE user_id = ?1) b ON t.id = b.bookmarks_id",nativeQuery = true)
+    List<Tweet>findBookmarksByUserId(Long id);
 
     @Query(value ="SELECT * from  tweet_comments WHERE tweet_id = ?1 ORDER BY publish_date LIMIT ?2,?3", nativeQuery = true)
     List<Tweet> findCommentsById(Long id, int offset, int size);

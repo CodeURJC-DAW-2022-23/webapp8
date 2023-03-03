@@ -56,10 +56,4 @@ public class ProfileController {
         User user = new User();
         profileService.updateBiography(biography, user);
     }
-
-    @GetMapping("/bookmarks")
-    public String getBookmarks() {
-        List<Tweet> u = profileService.getBookmarks(1L, 0, 10);
-        return "login";
-    }
 }
