@@ -1,5 +1,6 @@
 package com.TwitterClone.ProjectBackend.Controller;
 
+import com.TwitterClone.ProjectBackend.Model.MustacheObjects.InformationManager;
 import com.TwitterClone.ProjectBackend.Model.Tweet;
 import com.TwitterClone.ProjectBackend.Service.HashtagService;
 import com.TwitterClone.ProjectBackend.Service.ProfileService;
@@ -29,6 +30,8 @@ public class TweetController {
 
     @Autowired
     private ProfileService profileService;
+    @Autowired
+    private InformationManager informationManager;
 
     @GetMapping(path = "{id}")
     public Tweet getOneTweet(@PathVariable("id") Long id) {
@@ -123,9 +126,7 @@ public class TweetController {
                             .getSize());
         }
 
-        Principal principal = request.getUserPrincipal();
-        Optional<User> currentSession = this.profileService.findByUsername(principal.getName());
-        User currentUser = currentSession.get();
+        User currentUser = this.informationManager.getCurrentUser(request);
         Long userId = currentUser.getId();
         tweetService.createTweet(tweet_info, files, userId);
 
