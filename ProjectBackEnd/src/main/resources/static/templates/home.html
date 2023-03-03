@@ -29,21 +29,23 @@
         </header>
 
         <!-- SHOW TWEETS BUTTON -->
-        <button
+        <button onclick="loadMoreTweetsForHome();"
             class="hidden w-full py-4 text-lg font-semibold border-b llg:block border-gray-9 dark:bg-black-0 hover:bg-gray-7 dark:border-black-5 dark:hover:bg-black-6 text-primary">
             Load More
         </button>
 
         <!-- SHOW TWEETS BUTTON - MOBILE -->
         <div class="sticky flex justify-center">
-            <button
+            <button onclick="loadMoreTweetsForHome();"
                 class="fixed px-5 py-3 text-sm font-semibold transition cursor-pointer top-[5.4rem] llg:hidden hover:scale-110 rounded-3xl text-white-0 bg-primary">
                 Load More
             </button>
         </div>
 
-        <!-- TWEETS -->
-        {{> tweet}}
+        <div id="tweet-container">
+            {{> tweet}}
+        </div>
+        
 
         {{> mobile-bar}}
     </main>

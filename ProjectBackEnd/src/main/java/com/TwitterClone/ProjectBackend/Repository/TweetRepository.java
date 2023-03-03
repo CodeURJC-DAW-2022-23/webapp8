@@ -34,9 +34,18 @@ public interface TweetRepository extends JpaRepository<Tweet, Long> {
     List<Tweet> findLikesByUser(Long id, int offset, int size);
 
     @Query(value="SELECT COUNT(*) FROM tweet_likes JOIN tweet ON tweet_id = id WHERE tweet_id = ?1 GROUP BY tweet_id", nativeQuery = true)
-    long countLikes(Long id);
+    Long countLikes(Long id);
     @Query(value="SELECT COUNT(*) FROM tweet_retweets JOIN tweet ON tweet_id = id WHERE tweet_id = ?1 GROUP BY tweet_id", nativeQuery = true)
-    long countRetweets(Long id);
+    Long countRetweets(Long id);
     @Query(value="SELECT COUNT(*) FROM tweet_comments JOIN tweet ON tweet_id = id WHERE tweet_id = ?1 GROUP BY tweet_id", nativeQuery = true)
-    long countComments(Long id);
+    Long countComments(Long id);
+
+    /*@Query(value="SELECT \"media1\" FROM \"tweet\" WHERE \"id\" = ?1",nativeQuery = true)
+    Blob findMedia1ByUserId(Long id);
+    @Query(value="SELECT \"media2\" FROM \"tweet\" WHERE \"id\" = ?1",nativeQuery = true)
+    Blob findMedia2ByUserId(Long id);
+    @Query(value="SELECT \"media3\" FROM \"tweet\" WHERE \"id\" = ?1",nativeQuery = true)
+    Blob findMedia3ByUserId(Long id);
+    @Query(value="SELECT \"media4\" FROM \"tweet\" WHERE \"id\" = ?1",nativeQuery = true)
+    Blob findMedia4ByUserId(Long id);*/
 }

@@ -6,11 +6,8 @@
     <!-- PROFILE IMAGE - TODO: hacer link a perfil y perfil -->
     <a href="">
       <figure class="mt-2 rounded-full h-11 w-11 hover:bg-black-0">
-        <img src="/{{user.id}}/profile-pic" alt="Profile photo"
-             class="w-full h-full rounded-full hover:opacity-80" 
-             onload="chargeNumLikes('{{likes}}', '{{id}}');
-                     chargeNumRetweets('{{retweets}}', '{{id}}');
-                     chargeNumComments('{{comments}}', '{{id}}');">
+        <img src="/{{tweet.user.id}}/profile-pic" alt="Profile photo"
+             class="w-full h-full rounded-full hover:opacity-80">
       </figure>
     </a>
 
@@ -21,47 +18,48 @@
         <a class="grid grid-flow-col gap-2 auto-cols-auto-auto-1fr" href="#">
                             <span
                                     class="overflow-hidden font-bold text-ellipsis whitespace-nowrap hover:underline dark:text-white-0">
-                                {{user.nickname}}</span>
+                                {{tweet.user.nickname}}</span>
           <span class="overflow-hidden text-ellipsis whitespace-nowrap text-gray-4 hover:underline">
-                                @{{user.username}}
+                                @{{tweet.user.username}}
                             </span>
 
           <!-- TIME SINCE PUBLICATION -->
           <span class="justify-self-end text-gray-4 whitespace-nowrap">
-                                {{publishDate}}
+                                {{tweet.publishDate}}
                             </span>
         </a>
 
         <!-- TWEET TEXT -->
         <p class="overflow-hidden text-sm text-ellipsis text-twitter-dark-gray dark:text-white-0">
-          {{text}}
+          {{tweet.text}}
         </p>
 
         <!-- TWEET IMAGES-->
-        {{#media1}}
-        <figure>
-          <img src="/{{id}}/tweet-image1" alt="image1" >
-        </figure>
-        {{/media1}}
+        <div class="grid grid-cols-2 grid-rows-2 gap-1 max-h-[500px] max-w-[500px] overflow-hidden mt-3 border bg-gray-4 dark:bg-twitter-dark-gray border-gray-4 rounded-xl">
+          {{#tweet.media1}}
+          <figure>
+            <img src="/{{tweet.id}}/tweet-image1" alt="image1" >
+          </figure>
+          {{/tweet.media1}}
 
-        {{#media2}}
-        <figure>
-          <img src="/{{id}}/tweet-image2" alt="image2" >
-        </figure>
-        {{/media2}}
+          {{#tweet.media2}}
+          <figure>
+            <img src="/{{tweet.id}}/tweet-image2" alt="image2" >
+          </figure>
+          {{/tweet.media2}}
 
-        {{#media3}}
-        <figure>
-          <img src="/{{id}}/tweet-image3" alt="image3" >
-        </figure>
-        {{/media3}}
+          {{#tweet.media3}}
+          <figure>
+            <img src="/{{tweet.id}}/tweet-image3" alt="image3" >
+          </figure>
+          {{/tweet.media3}}
 
-        {{#media4}}
-        <figure>
-          <img src="/{{id}}/tweet-image4" alt="image4" >
-        </figure>
-        {{/media4}}
-
+          {{#tweet.media4}}
+          <figure>
+            <img src="/{{tweet.id}}/tweet-image4" alt="image4" >
+          </figure>
+          {{/tweet.media4}}
+        </div>
         <!-- REACTIONS -->
         <div class="flex gap-4 pb-3">
           <!-- COMMENT -->
@@ -76,7 +74,7 @@
             </svg>
 
             <div class="transition text-gray-4 group-hover:text-primary" id="comments-{{id}}">
-              
+              {{numComments}}
             </div>
           </a>
 
@@ -92,7 +90,7 @@
             </svg>
 
             <span class="text-green-0" id="retweet-{{id}}">
-                                    
+                {{numRetweets}}                      
             </span>
           </button>
 
@@ -108,7 +106,7 @@
             </svg>
 
             <span class="text-red-0" id="likes-{{id}}">
-                                    
+                {{numLikes}}                          
             </span>
           </button>
 

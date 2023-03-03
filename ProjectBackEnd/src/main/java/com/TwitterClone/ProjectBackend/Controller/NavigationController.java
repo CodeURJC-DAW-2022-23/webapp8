@@ -1,6 +1,7 @@
 package com.TwitterClone.ProjectBackend.Controller;
 
 import com.TwitterClone.ProjectBackend.Model.*;
+import com.TwitterClone.ProjectBackend.Model.MustacheObjects.TweetInformation;
 import com.TwitterClone.ProjectBackend.Service.HashtagService;
 import com.TwitterClone.ProjectBackend.Service.NotificationService;
 import com.TwitterClone.ProjectBackend.Service.TweetService;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 import javax.servlet.http.HttpServletRequest;
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -59,19 +61,14 @@ public class NavigationController {
 
     @GetMapping("/home")
     public String toHome(Model model, HttpServletRequest request) {
-
-        String namePage = "Home";
-        model.addAttribute("namePage", namePage);
-
+        this.addNameToThePage(model,"Home");
         this.addProfileInfoToLeftBar(model, request);
         this.addCurrentTrends(model);
 
-        User currentUser = getCurrentUser(request);
-
-        List<Tweet> tweets = this.tweetService.find10RecentForUser(currentUser.getId());
-
+        User currentUser = this.getCurrentUser(request);
+        List<Tweet> tweetList = this.tweetService.find10RecentForUser(currentUser.getId());
+        List<TweetInformation> tweets = this.calculateDataOfTweet(model, tweetList);
         model.addAttribute("tweets", tweets);
-
 
         return "home";
     }
@@ -85,8 +82,7 @@ public class NavigationController {
     @GetMapping("/explore")
     public String toExplore(Model model, HttpServletRequest request) {
 
-        String namePage = "Explore";
-        model.addAttribute("namePage", namePage);
+        this.addNameToThePage(model, "Explore");
         model.addAttribute("isExplorePage", true);
 
         this.addCurrentTrends(model);
@@ -106,8 +102,7 @@ public class NavigationController {
     @GetMapping("/notifications")
     public String toNotifications(Model model, HttpServletRequest request) {
 
-        String namePage = "Notifications";
-        model.addAttribute("namePage", namePage);
+        this.addNameToThePage(model, "Notifications");
 
         this.addCurrentTrends(model);
         this.addProfileInfoToLeftBar(model, request);
@@ -127,8 +122,7 @@ public class NavigationController {
     @GetMapping("/bookmarks")
     public String toBookmark(Model model, HttpServletRequest request) {
 
-        String namePage = "Bookmarks";
-        model.addAttribute("namePage", namePage);
+        this.addNameToThePage(model, "Bookmarks");
 
         this.addCurrentTrends(model);
         this.addProfileInfoToLeftBar(model, request);
@@ -171,6 +165,46 @@ public class NavigationController {
     }
 
     /**
+     * Add name to the current page
+     * @param model
+     * @param namePage
+     */
+    private void addNameToThePage(Model model, String namePage) {
+        model.addAttribute("namePage", namePage);
+    }
+
+    /**
+     * Prepare the list with the Tweets to show at mustache
+     * @param model
+     * @param tweets
+     */
+    private List<TweetInformation> calculateDataOfTweet(Model model, List<Tweet> tweets) {
+        List<TweetInformation> tweetsInfo = new ArrayList<>();
+
+        for(Tweet tweet : tweets) {
+            TweetInformation currentTweetInformation = new TweetInformation();
+            currentTweetInformation.setTweet(tweet);
+            currentTweetInformation.setNumLikes(this.tweetService.getLikesOfTweet(tweet.getId()));
+            currentTweetInformation.setNumComments(this.tweetService.getCommentsOfTweet(tweet.getId()));
+            currentTweetInformation.setNumRetweets(this.tweetService.getRetweetsOfTweet(tweet.getId()));
+            tweetsInfo.add(currentTweetInformation);
+        }
+
+        return tweetsInfo;
+    }
+
+    /**
+     * Obtain the current User in the session
+     * @param request
+     * @return
+     */
+    private User getCurrentUser(HttpServletRequest request) {
+        Principal principal = request.getUserPrincipal();
+        Optional<User> currentSession = this.profileService.findByUsername(principal.getName());
+        return currentSession.get();
+    }
+
+    /**
      * Add to the template the current trends
      * @param model
      */
@@ -210,17 +244,4 @@ public class NavigationController {
             model.addAttribute("private-acount", currentUser.getType());
         }
     }
-
-    /**
-     *
-     * @param request
-     * @return
-     */
-    private User getCurrentUser(HttpServletRequest request) {
-        Principal principal = request.getUserPrincipal();
-        Optional<User> currentSession = this.profileService.findByUsername(principal.getName());
-        User currentUser = currentSession.get();
-        return currentUser;
-    }
-
 }

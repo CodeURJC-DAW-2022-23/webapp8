@@ -1,13 +1,15 @@
 package com.TwitterClone.ProjectBackend.Controller;
 
+import com.TwitterClone.ProjectBackend.Model.Trend;
 import com.TwitterClone.ProjectBackend.Model.Tweet;
 import com.TwitterClone.ProjectBackend.Service.HashtagService;
 import com.TwitterClone.ProjectBackend.Service.TweetService;
 import com.TwitterClone.ProjectBackend.userManagement.User;
 import org.hibernate.engine.jdbc.BlobProxy;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -15,10 +17,7 @@ import java.io.IOException;
 import java.sql.Blob;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
 
-@RequestMapping("/tweets")
 @Controller
 public class TweetController {
     @Autowired
@@ -27,17 +26,12 @@ public class TweetController {
     @Autowired
     private HashtagService hashtagService;
 
-    @GetMapping("/")
-    public List<Tweet> getAllTweets() {
-        return tweetService.findAll();
-    }
-
     @GetMapping(path = "{id}")
     public Tweet getOneTweet(@PathVariable("id") Long id) {
         return tweetService.findById(id).orElse(null);
     }
 
-    @GetMapping("/{id}/tweet/")
+    @GetMapping("/{id}/tweet")
     public List<Tweet> get10Tweet(@PathVariable("id") Long id) {
         List<Tweet> t = tweetService.find10();
         return new ArrayList<>();
@@ -48,7 +42,71 @@ public class TweetController {
         List<Tweet> t = tweetService.find10RecentForUser(id);
         return "";
     }
-    @PostMapping("/new-tweet")
+
+    /**
+     * Ask the database for more tweets for the home page
+     * @param model
+     * @param from
+     * @param size
+     * @return
+     */
+    /*
+    @GetMapping("/home/tweets")
+    public String loadMoreTweetsForHome(Model model,
+                                        @Param("from") int from,
+                                        @Param("size") int size) {
+        List<Trend> newTweets = this.tweetService.getSomeTweetsForUser(from, size);
+        model.addAttribute("tweets", newTweets);
+
+        return "tweet";
+    }
+    */
+    /**
+     * Ask the database for more tweets for the bookmarks page
+     * @param model
+     * @param from
+     * @param size
+     * @return
+     */
+    /*
+    @GetMapping("/bookmarks/tweets")
+    public String loadMoreTweetsForBookmarks(Model model,
+                                             @Param("from") int from,
+                                             @Param("size") int size) {
+        List<Trend> newTweets = this.tweetService.getSomeBookmarkTweets(from, size);
+        model.addAttribute("tweets", newTweets);
+
+        return "tweet";
+    }
+    */
+
+    /**
+     * Ask the database for more tweets from the user
+     * @param model
+     * @param from
+     * @param size
+     * @return
+     */
+    /*
+    @GetMapping("/profile/tweets")
+    public String loadMoreTweetsForProfile(Model model,
+                                           @Param("from") int from,
+                                           @Param("size") int size) {
+        List<Trend> newTweets = this.tweetService.getSomeUserTweets(from, size);
+        model.addAttribute("tweets", newTweets);
+
+        return "tweet";
+    }
+     */
+
+    /**
+     * Add a new tweet from the trigger user to the database
+     * @param text
+     * @param images
+     * @return
+     * @throws IOException
+     */
+    @PostMapping("/tweets/new-tweet")
     public String postTweet(@RequestParam("tweet-info") String text,
                             @RequestParam("tweet-files") MultipartFile [] images) throws IOException {
         Blob [] files = new Blob[4];
