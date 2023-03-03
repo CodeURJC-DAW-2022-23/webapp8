@@ -11,10 +11,12 @@ import com.TwitterClone.ProjectBackend.Service.ProfileService;
 import com.TwitterClone.ProjectBackend.userManagement.User;
 import com.fasterxml.jackson.annotation.JsonView;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.security.web.csrf.CsrfToken;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import javax.servlet.http.HttpServletRequest;
 import java.security.Principal;
@@ -165,12 +167,32 @@ public class NavigationController {
      * @return
      */
     @GetMapping("/write-tweet")
-    public String toWriteTweet() {
+    public String toWriteTweet(Model model) {
+        model.addAttribute("type", "new");
+        model.addAttribute("user-reply", null);
         return "write-tweet";
     }
 
     /**
-     * Cahnge from the current page to the error page
+     * Change the current page to the reply a tweet
+     * @param model
+     * @param id
+     * @return
+     */
+    @GetMapping("/write-tweet/comment/{id}")
+    public String toReplyTweet(Model model,
+                               @PathVariable("id") Long id)  {
+        Optional<Tweet> tweet = this.tweetService.findById(id);
+        Tweet tweetToReply = tweet.get();
+        model.addAttribute("tweet", tweetToReply);
+        model.addAttribute("type", "reply");
+        model.addAttribute("user_reply", tweetToReply.getUser());
+
+        return "write-tweet";
+    }
+
+    /**
+     * Change from the current page to the error page
      * @return
      */
     @GetMapping("/error")

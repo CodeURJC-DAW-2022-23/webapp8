@@ -41,12 +41,16 @@ public class TweetService {
         return tweetRepository.findByUserFollows(id);
     }
 
-    public void createTweet(String text, Blob [] files, Long userId){
+    public Tweet createTweet(String text, Blob [] files, Long userId){
         User user = userRepository.findById(userId).orElse(null);
-        if (user != null){
-            Tweet tweet = new Tweet(text, user, files);
-            tweetRepository.save(tweet);
+
+        if (user == null){
+            return null;
         }
+
+        Tweet tweet = new Tweet(text, user, files);
+        tweetRepository.save(tweet);
+        return tweet;
     }
 
     public void deleteTweet(Tweet tweetToDelete){
@@ -60,31 +64,34 @@ public class TweetService {
     /*
     This function will add or remove the like
      */
-    public void toggleLike(User giver, Tweet tweet){
-        Tweet t = this.findById(tweet.getId()).orElse(null);
-        if (t != null){
-            if (t.getLikes().contains(giver)){
-                t.removeLike(giver);
-            }
-            else{
-                t.addLike(giver);
-            }
+    public boolean toggleLike(User giver, Tweet t){
+
+        if (t.getLikes().contains(giver)){
+            t.removeLike(giver);
+            this.tweetRepository.save(t);
+            return false;
         }
+
+        t.addLike(giver);
+        this.tweetRepository.save(t);
+
+        return true;
     }
 
     /*
     This function will add or remove the retweet
      */
-    public void toggleRetweet(User giver, Tweet tweet){
-        Tweet t = this.findById(tweet.getId()).orElse(null);
-        if (t != null){
-            if (t.getRetweets().contains(giver)){
-                t.removeRetweet(giver);
-            }
-            else{
-                t.addRetweet(giver);
-            }
+    public boolean toggleRetweet(User giver, Tweet t){
+        if (t.getRetweets().contains(giver)){
+            t.removeRetweet(giver);
+            this.tweetRepository.save(t);
+            return false;
         }
+
+        t.addRetweet(giver);
+        this.tweetRepository.save(t);
+
+        return true;
     }
 
     /*
@@ -203,5 +210,10 @@ public class TweetService {
         }
 
         return number;
+    }
+
+    public boolean toggleBookmark(User currentUser, Tweet t) {
+
+        return true;
     }
 }

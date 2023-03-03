@@ -17,7 +17,7 @@
       <div class="flex flex-col gap-1">
         <!-- PROFILE -->
         <a class="grid items-center grid-flow-col gap-2 auto-cols-auto-auto-1fr" href="#">
-          <div id="{{tweet.id}}userNameSvg" class="dark:text-white-0 flex items-center gap-1 overflow-hidden font-bold hover:underline decoration-1 text-ellipsis whitespace-nowrap">
+          <div id="{{tweet.id}}userNameSvg" class="flex items-center gap-1 overflow-hidden font-bold dark:text-white-0 hover:underline decoration-1 text-ellipsis whitespace-nowrap">
               {{tweet.user.nickname}}
               <!--user svg-->
           </div>
@@ -79,14 +79,14 @@
               </g>
             </svg>
 
-            <div class="transition text-gray-4 group-hover:text-primary" id="comments-{{id}}">
+            <div class="transition text-gray-4 group-hover:text-primary" id="comments-{{tweet.id}}">
               {{numComments}}
             </div>
           </a>
 
           <!-- RETWEET -->
-          <button class="flex items-center gap-1">
-            <svg viewBox="0 0 24 24" aria-hidden="true"
+          <button type="button" class="flex items-center gap-1" onclick="giveRetweet('{{tweet.id}}');">
+            <svg viewBox="0 0 24 24" aria-hidden="true" id="retweet-svg-{{tweet.id}}"
                  class="w-8 p-[0.375rem] rounded-full fill-green-0">
               <g>
                 <path
@@ -95,14 +95,14 @@
               </g>
             </svg>
 
-            <span class="text-green-0" id="retweet-{{id}}">
+            <span class="text-green-0" id="retweet-{{tweet.id}}">
                 {{numRetweets}}                      
             </span>
           </button>
 
           <!-- LIKE -->
-          <button class="flex items-center gap-1">
-            <svg viewBox="0 0 24 24" aria-hidden="true"
+          <button class="flex items-center gap-1" onclick='giveLike("{{tweet.id}}");'>
+            <svg viewBox="0 0 24 24" aria-hidden="true" id="like-svg-{{tweet.id}}"
                  class="w-8 p-[0.375rem] rounded-full fill-red-0">
               <g>
                 <path
@@ -111,14 +111,14 @@
               </g>
             </svg>
 
-            <span class="text-red-0" id="likes-{{id}}">
+            <span class="text-red-0" id="like-{{tweet.id}}">
                 {{numLikes}}                          
             </span>
           </button>
 
           <!-- BOOKMARKS -->
-          <button class="flex items-center gap-1">
-            <svg viewBox="0 0 24 24" aria-hidden="true"
+          <button class="flex items-center gap-1" onclick="giveBookmark('{{tweet.id}}');">
+            <svg viewBox="0 0 24 24" aria-hidden="true" id="bookmark-svg-{{tweet.id}}"
                  class="w-8 p-[0.375rem] rounded-full fill-primary">
               <g>
                 <path
