@@ -1,0 +1,158 @@
+{{> left-bar}}
+
+    <!-- CONTENT - FRAME -->
+    <main
+        class="relative w-screen min-h-screen llg:max-w-[700px] border-l border-r border-transparent llg:border-gray-9 llg:dark:border-black-5">
+        <!-- HEADER -->
+        <header class="sticky top-0 left-0 z-10 border-b backdrop-blur-md border-gray-9 dark:border-black-5">
+            <div class="flex items-center justify-between py-2 pl-6 pr-3">
+                <div class="flex gap-4">
+                    <!-- GO BACK -->
+                    <a class="cursor-pointer group" href="/home">
+                        <svg class="transition rounded-full w-7 dark:fill-white-0 fill-gray-4 group-hover:fill-primary group-hover:bg-blue-1 group-dark:hover:bg-blue-0"
+                            xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true">
+                            <g>
+                                <path
+                                    d="M7.414 13l5.043 5.04-1.414 1.42L3.586 12l7.457-7.46 1.414 1.42L7.414 11H21v2H7.414z">
+                                </path>
+                            </g>
+                        </svg>
+                    </a>
+
+                    <section class="flex items-center gap-2 cursor-pointer">
+                        <h2 class="text-xl font-semibold dark:text-white-0">{{namePage}}</h2>
+
+                        <div class="w-6">
+                            <svg class="dark:fill-white-0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                                aria-label="Cuenta protegida" role="img" data-testid="icon-lock">
+                                <g>
+                                    <path
+                                        d="M17.5 7H17v-.25c0-2.76-2.24-5-5-5s-5 2.24-5 5V7h-.5C5.12 7 4 8.12 4 9.5v9C4 19.88 5.12 21 6.5 21h11c1.39 0 2.5-1.12 2.5-2.5v-9C20 8.12 18.89 7 17.5 7zM13 14.73V17h-2v-2.27c-.59-.34-1-.99-1-1.73 0-1.1.9-2 2-2 1.11 0 2 .9 2 2 0 .74-.4 1.39-1 1.73zM15 7H9v-.25c0-1.66 1.35-3 3-3 1.66 0 3 1.34 3 3V7z">
+                                    </path>
+                                </g>
+                            </svg>
+                        </div>
+                    </section>
+                </div>
+
+                <!-- THEME SWITCHER -->
+                <button id="theme-toggle"
+                    class="p-3 bg-transparent border-2 border-transparent w-fit hover:border-primary focus-within:border-primary rounded-2xl">
+                    <svg id="theme-toggle-dark-icon" class="hidden w-7 fill-white-0" viewBox="0 0 20 20"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+                    </svg>
+                    <svg id="theme-toggle-light-icon" class="hidden w-7 fill-orange-0" viewBox="0 0 20 20"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z"
+                            fill-rule="evenodd" clip-rule="evenodd"></path>
+                    </svg>
+                </button>
+            </div>
+        </header>
+
+        <!-- PROFILE -->
+        <div>
+            <!-- BANNER -->
+            <figure class="h-max-[150px]">
+                <img class="object-fill w-full h-full" src="/{{user.id}}/banner-pic" alt="Banner photo">
+            </figure>
+
+            <div class="relative flex flex-col gap-3 px-5 pb-6 border-b bottom-9 border-gray-9 dark:border-black-5">
+                <!-- PHOTO -->
+                <figure
+                    class="transition border-[6px] rounded-full cursor-pointer hover:scale-110 w-28 lmd:w-36 dark:border-black-0 border-white-0">
+                    <img class="object-fill w-full h-full rounded-full" src="/{{user.id}}/profile-pic"
+                        alt="Profile photo">
+                </figure>
+
+                <!-- USERNAME AND @ -->
+                <article class="flex flex-col items-start justify-between">
+                    <section class="flex items-center gap-2">
+                        <h2 class="text-2xl font-semibold dark:text-white-0">{{user.nickname}}</h2>
+
+                        <div class="w-6">
+                            <svg class="dark:fill-white-0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                                aria-label="Cuenta protegida" role="img" data-testid="icon-lock">
+                                <g>
+                                    <path
+                                        d="M17.5 7H17v-.25c0-2.76-2.24-5-5-5s-5 2.24-5 5V7h-.5C5.12 7 4 8.12 4 9.5v9C4 19.88 5.12 21 6.5 21h11c1.39 0 2.5-1.12 2.5-2.5v-9C20 8.12 18.89 7 17.5 7zM13 14.73V17h-2v-2.27c-.59-.34-1-.99-1-1.73 0-1.1.9-2 2-2 1.11 0 2 .9 2 2 0 .74-.4 1.39-1 1.73zM15 7H9v-.25c0-1.66 1.35-3 3-3 1.66 0 3 1.34 3 3V7z">
+                                    </path>
+                                </g>
+                            </svg>
+                        </div>
+                    </section>
+
+                    <h3 class="font-semibold text-md dark:font-normal text-gray-2">
+                        @{{user.username}}</h3>
+                </article>
+
+                <!-- BIOGRAPHY -->
+                <p class="overflow-hidden text-md text-ellipsis text-twitter-dark-gray dark:text-white-0">
+                    {{user.biography}}
+                </p>
+
+                <!-- JOIN DATE -->
+                <div class="flex items-center gap-2">
+                    <svg class="w-6 fill-gray-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                        aria-hidden="true">
+                        <g>
+                            <path
+                                d="M7 4V3h2v1h6V3h2v1h1.5C19.89 4 21 5.12 21 6.5v12c0 1.38-1.11 2.5-2.5 2.5h-13C4.12 21 3 19.88 3 18.5v-12C3 5.12 4.12 4 5.5 4H7zm0 2H5.5c-.27 0-.5.22-.5.5v12c0 .28.23.5.5.5h13c.28 0 .5-.22.5-.5v-12c0-.28-.22-.5-.5-.5H17v1h-2V6H9v1H7V6zm0 6h2v-2H7v2zm0 4h2v-2H7v2zm4-4h2v-2h-2v2zm0 4h2v-2h-2v2zm4-4h2v-2h-2v2z">
+                            </path>
+                        </g>
+                    </svg>
+
+                    <div class="font-semibold text-md dark:font-normal text-gray-2">
+                        Joined {{user.joinDate}}
+                    </div>
+                </div>
+
+                <!-- FOLLOWING AND FOLLOWERS -->
+                <a class="flex gap-3" href="/follow">
+                    <div class="flex items-center gap-1">
+                        <span class="font-semibold text-md dark:text-white-0 hover:underline">81</span>
+                        <span
+                            class="font-semibold text-md dark:font-normal text-gray-2 hover:underline">Following</span>
+                    </div>
+                    <div class="flex items-center gap-1">
+                        <span class="font-semibold text-md dark:text-white-0 hover:underline">76</span>
+                        <span
+                            class="font-semibold text-md dark:font-normal text-gray-2 hover:underline">Followers</span>
+                    </div>
+                </a>
+
+                <!-- EDIT PROFILE AND "GO TO DASHBOARD" BUTTONS -->
+                <div class="absolute right-8 top-[62px] flex flex-col gap-5 items-center">
+                    <a class="px-4 w-fit py-2 text-sm font-bold text-center transition bg-transparent border-2 cursor-pointer border-black-0 rounded-3xl dark:border-white-0 dark:text-white-0 text-black-0 hover:scale-110"
+                        href="/edit-profile">
+                        Edit profile
+                    </a>
+
+                    <a class="px-4 py-2 font-semibold text-center transition rounded-full cursor-pointer text-white-0 bg-primary hover:scale-110"
+                        href="/admin-dashboard">
+                        Go to dashboard
+                    </a>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- TWEETS -->
+        <div class="relative bottom-9">
+            <!-- FRAME -->
+            <div class="border-b cursor-pointer border-gray-9 dark:bg-black-0 dark:border-black-5">
+                <!-- TWEET -->
+                <!-- TODO - We need a previous DB query...  -->
+            </div>
+        </div>
+
+        <!-- SPACE -->
+        <div class="p-10 bg-transparent">
+        </div>
+
+        {{> mobile-bar}}
+    </main>
+
+{{> right-bar}}

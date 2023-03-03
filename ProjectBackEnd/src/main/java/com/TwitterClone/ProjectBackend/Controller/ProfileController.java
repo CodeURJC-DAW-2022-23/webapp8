@@ -23,13 +23,11 @@ public class ProfileController {
 
     @GetMapping
     public List<User> getAllUsers() {
-
         return profileService.findAll();
     }
 
     @GetMapping(path = "{id}")
     public User getOneUser(@PathVariable("id") Long id) {
-
         return profileService.findById(id).orElse(null);
     }
 
@@ -43,17 +41,5 @@ public class ProfileController {
         profileService.createProfile(username, password, mail);
     }
 
-    @PutMapping("{id}/modify/banner")//I don't know the tag that modify an attrbiute should use
-    public void modifyProfileBanner(@RequestBody MultipartFile banner, @PathVariable Long id) throws IOException {
-        profileService.updateBanner(banner, id);
-    }
-    @PutMapping("/{id}/modify/profilePicture")//I don't know the tag that modify an attrbiute should use
-    public void modifyProfilePicture(@RequestBody MultipartFile profilePicture, @PathVariable Long id) throws IOException {
-        profileService.updateProfilePicture(profilePicture, id);
-    }
-    @PutMapping("/{id}/modify/biography")//I don't know the tag that modify an attrbiute should use
-    public void modifyBiography(@RequestParam String biography) throws IOException {
-        User user = new User();
-        profileService.updateBiography(biography, user);
-    }
+
 }

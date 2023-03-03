@@ -41,6 +41,22 @@ public class ImageController {
         return ResponseEntity.notFound().build();
     }
 
+    @GetMapping("/{id}/banner-pic")
+    public ResponseEntity<Object> downloadBannerPic(@PathVariable long id) throws SQLException {
+        Optional<User> user = profileService.findById(id);
+
+        if (user.isPresent() && user.get().getProfileBanner() != null) {
+
+            Resource file = new InputStreamResource(user.get().getProfileBanner().getBinaryStream());
+
+            return ResponseEntity.ok().header(HttpHeaders.CONTENT_TYPE, "image/jpeg")
+                    .contentLength(user.get().getProfileBanner().length()).body(file);
+
+        }
+
+        return ResponseEntity.notFound().build();
+    }
+
     @GetMapping("/{id}/tweet-image1")
     public ResponseEntity<Object> downloadTweetImage1(@PathVariable long id) throws SQLException {
         Optional<Tweet> tweet = this.tweetService.findById(id);

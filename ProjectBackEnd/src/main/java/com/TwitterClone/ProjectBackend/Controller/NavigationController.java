@@ -144,7 +144,19 @@ public class NavigationController {
      * @return
      */
     @GetMapping("/profile")
-    public String toProfile() {
+    public String toProfile(Model model, HttpServletRequest request) {
+        User currentUser = this.informationManager.getCurrentUser(request);
+
+        // Profile page shows username as page name...
+        String nickname = currentUser.getNickname();
+        this.informationManager.addNameToThePage(model, nickname);
+
+        // Charge left and right bar information...
+        this.informationManager.addCurrentTrends(model);
+        this.informationManager.addProfileInfoToLeftBar(model, request);
+
+        model.addAttribute("user", currentUser); // (pass all the user information)
+
         return "profile";
     }
 
