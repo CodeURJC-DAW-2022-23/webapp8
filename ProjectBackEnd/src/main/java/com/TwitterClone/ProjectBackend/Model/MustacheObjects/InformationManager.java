@@ -52,6 +52,7 @@ public class InformationManager {
         model.addAttribute("id", currentUser.getId());
         model.addAttribute("username", currentUser.getUsername());
         model.addAttribute("nickname", currentUser.getNickname());
+        model.addAttribute("type", currentUser.getType());
 
         if (currentUser.getType().equals("PRIVATE")) {
             model.addAttribute("private-acount", currentUser.getType());
