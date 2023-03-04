@@ -92,7 +92,7 @@
           </button>
 
           <!-- LIKE -->
-          <button class="flex items-center gap-1" onclick='giveLike("{{tweet.id}}");'>
+          <button class="flex items-center gap-1" onclick='giveLike("{{tweet.id}}", "{{tweet.user.id}}");'>
             <svg viewBox="0 0 24 24" aria-hidden="true" id="like-svg-{{tweet.id}}"
                  class="w-8 p-[0.375rem] transition rounded-full fill-gray-4 group-hover:fill-green-2 group-hover:bg-green-2 group-dark:hover:bg-green-0">
               <g>

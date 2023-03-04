@@ -3,7 +3,7 @@
  * @param {String} tweet_id 
  * @returns {Promise<void>}
  */
-async function giveLike(tweet_id) {
+async function giveLike(tweet_id, tweet_owner_id, ) {
     const like_container = document.querySelector('#like-' + tweet_id);
     const like_svg = document.querySelector('#like-svg-' + tweet_id);
     let text = like_container.textContent;
@@ -11,11 +11,14 @@ async function giveLike(tweet_id) {
 
     const response = await fetch(`/tweet/like/${tweet_id}`);
     const state = response.redirected;
+    let notificationType = "LIKE";
 
     if (!state) {
-        value++;       
+        value++;
+        await fetch(`/newNotification?idTweet=${tweet_id}&idOwner=${tweet_owner_id}&notificationType=${notificationType}`);
     } else {
         value--;
+        await fetch(`/deleteNotification?idTweet=${tweet_id}&notificationType=${notificationType}`);
     }
 
     like_container.classList.toggle('text-red-0');
