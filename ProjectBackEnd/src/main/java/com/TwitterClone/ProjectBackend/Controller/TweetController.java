@@ -81,7 +81,6 @@ public class TweetController {
      * @param size
      * @return
      */
-    /*
     @GetMapping("/bookmarks/tweets")
     public String loadMoreTweetsForBookmarks(Model model,
                                              HttpServletRequest request,
@@ -96,7 +95,7 @@ public class TweetController {
 
         return "tweet";
     }
-    */
+
 
 
     /**
