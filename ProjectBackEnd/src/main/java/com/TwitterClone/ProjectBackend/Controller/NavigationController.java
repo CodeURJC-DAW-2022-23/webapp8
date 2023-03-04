@@ -6,6 +6,7 @@ import com.TwitterClone.ProjectBackend.Model.MustacheObjects.TweetInformation;
 import com.TwitterClone.ProjectBackend.Service.HashtagService;
 import com.TwitterClone.ProjectBackend.Service.NotificationService;
 import com.TwitterClone.ProjectBackend.Service.TweetService;
+import com.TwitterClone.ProjectBackend.userManagement.UserRoles;
 import com.TwitterClone.ProjectBackend.userManagement.UserService;
 import com.TwitterClone.ProjectBackend.Service.ProfileService;
 import com.TwitterClone.ProjectBackend.userManagement.User;
@@ -132,6 +133,8 @@ public class NavigationController {
         this.informationManager.addProfileInfoToLeftBar(model, request);
 
         User currentUser = this.informationManager.getCurrentUser(request);
+        UserRoles typeUser = currentUser.getRole();
+        model.addAttribute("isAdmin", typeUser.equals(UserRoles.ADMIN));
 
         List<Tweet> bookmarkTweetList = this.profileService.getBookmarks(currentUser.getId());
         List<TweetInformation> bookmarks= this.informationManager.calculateDataOfTweet(model, bookmarkTweetList);
