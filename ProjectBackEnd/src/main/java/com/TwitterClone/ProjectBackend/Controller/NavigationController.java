@@ -6,19 +6,18 @@ import com.TwitterClone.ProjectBackend.Model.MustacheObjects.TweetInformation;
 import com.TwitterClone.ProjectBackend.Service.HashtagService;
 import com.TwitterClone.ProjectBackend.Service.NotificationService;
 import com.TwitterClone.ProjectBackend.Service.TweetService;
+import com.TwitterClone.ProjectBackend.userManagement.UserRoles;
 import com.TwitterClone.ProjectBackend.userManagement.UserService;
 import com.TwitterClone.ProjectBackend.Service.ProfileService;
 import com.TwitterClone.ProjectBackend.userManagement.User;
-import com.fasterxml.jackson.annotation.JsonView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.web.csrf.CsrfToken;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import javax.servlet.http.HttpServletRequest;
-import java.security.Principal;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -61,7 +60,6 @@ public class NavigationController {
      * @param model
      * @return
      */
-
     @GetMapping("/home")
     public String toHome(Model model, HttpServletRequest request) {
         this.informationManager.addNameToThePage(model,"Home");
@@ -111,7 +109,7 @@ public class NavigationController {
         this.informationManager.addProfileInfoToLeftBar(model, request);
         User currentUser = this.informationManager.getCurrentUser(request);
 
-        List<Notification> notifications = this.notificationService.getNotificationsOfUser(currentUser.getId());
+        List<Notification> notifications = this.notificationService.get10NotificationsOfUser(currentUser.getId(), 0, 10);
         model.addAttribute("notifications", notifications);
 
         return "notifications";
@@ -131,6 +129,8 @@ public class NavigationController {
         this.informationManager.addProfileInfoToLeftBar(model, request);
 
         User currentUser = this.informationManager.getCurrentUser(request);
+        UserRoles typeUser = currentUser.getRole();
+        model.addAttribute("isAdmin", typeUser.equals(UserRoles.ADMIN));
 
         List<Tweet> bookmarkTweetList = this.profileService.getBookmarks(currentUser.getId());
         List<TweetInformation> bookmarks= this.informationManager.calculateDataOfTweet(model, bookmarkTweetList);
@@ -176,12 +176,30 @@ public class NavigationController {
      * @return
      */
     @GetMapping("/write-tweet")
-    public String toWriteTweet() {
+    public String toWriteTweet(Model model) {
+        model.addAttribute("type", "new");
         return "write-tweet";
     }
 
     /**
-     * Cahnge from the current page to the error page
+     * Change the current page to the reply a tweet
+     * @param model
+     * @param id
+     * @return
+     */
+    @GetMapping("/write-tweet/comment/{id}")
+    public String toReplyTweet(Model model,
+                               @PathVariable("id") Long id)  {
+        Optional<Tweet> tweet = this.tweetService.findById(id);
+        Tweet tweetToReply = tweet.get();
+        model.addAttribute("tweet", tweetToReply);
+        model.addAttribute("type", "reply");
+
+        return "write-tweet";
+    }
+
+    /**
+     * Change from the current page to the error page
      * @return
      */
     @GetMapping("/error")

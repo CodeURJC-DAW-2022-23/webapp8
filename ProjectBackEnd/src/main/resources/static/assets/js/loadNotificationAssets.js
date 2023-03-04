@@ -72,16 +72,3 @@ function changeVisualTab(tabToShow, tabToHide){
     tabNotSelected.classList.remove("font-bold", "dark:text-white-0", "text-black-0", "border-primary");
     tabNotSelected.classList.add("dark:text-gray-5", "font-semibold", "border-transparent");
 }
-
-function hideOrShowNotifications(typeOfTab){
-    let notifications = document.getElementsByClassName("notification");
-    for (let notification of notifications) {
-        let isMention = notification.classList.contains("MENTION");
-        if (!isMention && typeOfTab == "ALL") {
-            notification.classList.remove("hidden");
-        }
-        if (!isMention && typeOfTab == "MENTIONS") {
-            notification.classList.add("hidden");
-        }
-    }
-}

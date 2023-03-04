@@ -15,8 +15,8 @@
     <script src="https://cdn.tailwindcss.com"></script>
     
     <!-- My JS -->
-    <script src="../assets/js/tailwind.config.js"></script>
-    <script defer src="../assets/js/darkMode.js"></script>
+    <script src="/assets/js/tailwind.config.js"></script>
+    <script defer src="/assets/js/darkMode.js"></script>
 </head>
 
 <body>
@@ -42,7 +42,7 @@
             <!-- HEADER -->
             <header class="flex items-center justify-center">
                 <!-- BRAND -->
-                <a class="transition rounded-full cursor-pointer hover:scale-150" href="/">
+                <a class="transition rounded-full cursor-pointer hover:scale-150" href="/home">
                     <svg viewBox="0 0 24 24" aria-label="Twitter" role="img" class="w-11 fill-primary">
                         <g>
                             <path
@@ -53,8 +53,9 @@
                 </a>
             </header>
 
-            {{> tweet}}
+            {{> tweet-reply}}
 
+            {{^tweet}}
             <!-- MESSAGE -->
             <article class="flex flex-col gap-3">
                 <h1 class="text-3xl font-bold dark:text-white-0 text-black-0">
@@ -67,8 +68,9 @@
                     Be respectful, please.
                 </h2>
             </article>
+            {{/tweet}}
 
-            <form action="/tweets/new-tweet" method="post" enctype="multipart/form-data">
+            <form action="/tweets/{{type}}-tweet" method="post" enctype="multipart/form-data">
                 <div class="flex flex-col gap-3">
                     <textarea
                         class="p-5 text-lg bg-transparent border-[2.8px] resize-none rounded-xl border-primary dark:text-white-0"
@@ -82,6 +84,10 @@
                     </label>
     
                 </div>
+                
+                {{#tweet}}
+                <input type="hidden" name="user_reply" value="{{tweet.user.id}}">
+                {{/tweet}}
 
                 <input type="hidden" name="_csrf" value="{{token}}"/>
     

@@ -8,6 +8,7 @@ import com.TwitterClone.ProjectBackend.Service.TweetService;
 import com.TwitterClone.ProjectBackend.userManagement.User;
 import org.hibernate.engine.jdbc.BlobProxy;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -117,6 +118,34 @@ public class TweetController {
     public String postTweet(@RequestParam String tweet_info,
                             @RequestParam MultipartFile [] tweet_files,
                             HttpServletRequest request) throws IOException {
+        Blob [] files = this.manageImages(tweet_files);
+        User currentUser = this.informationManager.getCurrentUser(request);
+        Long userId = currentUser.getId();
+        this.tweetService.createTweet(tweet_info, files, userId);
+        saveHashtag(tweet_info);
+
+        return "redirect:/home";
+    }
+
+    @PostMapping("/tweets/reply-tweet")
+    public String postTweet(@RequestParam String tweet_info,
+                            @RequestParam MultipartFile [] tweet_files,
+                            @RequestParam("user_reply") Long id,
+                            HttpServletRequest request) throws IOException {
+        Blob [] files = this.manageImages(tweet_files);
+        User currentUser = this.informationManager.getCurrentUser(request);
+        Long userId = currentUser.getId();
+        Tweet newTweet = this.tweetService.createTweet(tweet_info, files, userId);
+        saveHashtag(tweet_info);
+
+        Optional<User> user_owner = this.profileService.findById(id);
+        User user_reply = user_owner.get();
+        tweetService.addComment(tweet_info, files, user_reply, newTweet);
+
+        return "redirect:/home";
+    }
+
+    private Blob[] manageImages(MultipartFile [] tweet_files) throws IOException {
         Blob [] files = new Blob[4];
 
         for (int index = 0; index < tweet_files.length; index++) {
@@ -126,13 +155,7 @@ public class TweetController {
                             .getSize());
         }
 
-        User currentUser = this.informationManager.getCurrentUser(request);
-        Long userId = currentUser.getId();
-        tweetService.createTweet(tweet_info, files, userId);
-
-        saveHashtag(tweet_info);
-
-        return "redirect:/home";
+        return files;
     }
 
     private void saveHashtag(String text){
@@ -161,44 +184,66 @@ public class TweetController {
         }
     }
 
-    @PostMapping("/like")
-    public void toggleLike(@RequestBody Tweet tweet) throws IOException {
-        User user = new User();//Needs to be redone
-        tweetService.toggleLike(user, tweet);
-    }
+    /**
+     * When the like buttons is pressed, it will check if the user is giving or removing the likes
+     * @param request
+     * @return
+     * @throws IOException
+     */
+    @GetMapping("/tweet/like/{id}")
+    public String toggleLike(@PathVariable("id") Long id,
+                              HttpServletRequest request) throws IOException {
+        Tweet tweet = this.tweetService.findById(id).get();
+        User currentUser = this.informationManager.getCurrentUser(request);
+        boolean hasGiveLike = tweetService.toggleLike(currentUser, tweet);
 
-    @PostMapping("/retweet")
-    public void toggleRetweet(@RequestBody Tweet tweet){
-        User user = new User();//Needs to be redone
-        tweetService.toggleRetweet(user, tweet);
-    }
-
-    @PostMapping("/delete")
-    public void deleteTweet(@RequestBody Tweet tweet){
-        tweetService.deleteTweet(tweet);
-    }
-
-    @PostMapping("/comment")
-    public void postComment(@RequestBody String text, MultipartFile image1, MultipartFile image2, MultipartFile image3, MultipartFile image4,@RequestBody Tweet tweetCommented) throws IOException {
-        Blob [] files = new Blob[4];
-
-        if (image1 != null){
-            files[0] = BlobProxy.generateProxy(image1.getInputStream(),image1.getSize());
+        if (hasGiveLike) {
+            return "error";
         }
 
-        if (image2 != null){
-            files[1] = BlobProxy.generateProxy(image2.getInputStream(),image2.getSize());
-        }
-
-        if (image3 != null){
-            files[2] = BlobProxy.generateProxy(image3.getInputStream(),image3.getSize());
-        }
-
-        if (image4 != null){
-            files[3] = BlobProxy.generateProxy(image4.getInputStream(),image4.getSize());
-        }
-
-        User user = new User();//Needs to be redo
-        tweetService.addComment(text, files, user, tweetCommented);
+        return "redirect:/";
     }
+
+    /**
+     * When the retqeet buttons is pressed, it will check if the user is giving or removing the retweet
+     * @param request
+     * @return
+     * @throws IOException
+     */
+    @GetMapping("/tweet/retweet/{id}")
+    public String toggleRetweet(@PathVariable("id") Long id,
+                              HttpServletRequest request) throws IOException{
+        Tweet tweet = this.tweetService.findById(id).get();
+        User currentUser = this.informationManager.getCurrentUser(request);
+        boolean hasGiveRetweet = this.tweetService.toggleRetweet(currentUser, tweet);
+
+        if (hasGiveRetweet) {
+            return "error";
+        }
+
+        return "redirect:/";
+    }
+
+    /**
+     * When the bookmark buttons is pressed, it will check if the user is adding or removing the bookmark
+     * @param request
+     * @return
+     * @throws IOException
+     */
+    @GetMapping("/tweet/bookmark/{id}")
+    public String toggleBookmark(@PathVariable("id") Long id,
+                                HttpServletRequest request) throws IOException{
+        Tweet tweet = this.tweetService.findById(id).get();
+        User currentUser = this.informationManager.getCurrentUser(request);
+        this.tweetService.toggleBookmark(currentUser, tweet);
+
+        return "error";
+    }
+
+    @GetMapping("/tweet/delete/{id}")
+    public void deleteTweet(@PathVariable("id") Long id) {
+        Tweet tweet = this.tweetService.findById(id).get();
+        this.tweetService.deleteTweet(tweet);
+    }
+
 }

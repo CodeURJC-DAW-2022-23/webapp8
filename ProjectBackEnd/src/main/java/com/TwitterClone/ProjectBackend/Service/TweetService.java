@@ -41,12 +41,16 @@ public class TweetService {
         return tweetRepository.findByUserFollows(id);
     }
 
-    public void createTweet(String text, Blob [] files, Long userId){
+    public Tweet createTweet(String text, Blob [] files, Long userId){
         User user = userRepository.findById(userId).orElse(null);
-        if (user != null){
-            Tweet tweet = new Tweet(text, user, files);
-            tweetRepository.save(tweet);
+
+        if (user == null){
+            return null;
         }
+
+        Tweet tweet = new Tweet(text, user, files);
+        tweetRepository.save(tweet);
+        return tweet;
     }
 
     public void deleteTweet(Tweet tweetToDelete){
@@ -57,48 +61,71 @@ public class TweetService {
         return tweetRepository.findById(id);
     }
 
-    /*
-    This function will add or remove the like
+    /**
+     * Check the tweet to add or remove a like
+     * @param giver
+     * @param t
+     * @return
      */
-    public void toggleLike(User giver, Tweet tweet){
-        Tweet t = this.findById(tweet.getId()).orElse(null);
-        if (t != null){
-            if (t.getLikes().contains(giver)){
-                t.removeLike(giver);
-            }
-            else{
-                t.addLike(giver);
-            }
+    public boolean toggleLike(User giver, Tweet t){
+        if (t.getLikes().contains(giver)){
+            t.removeLike(giver);
+            this.tweetRepository.save(t);
+            return false;
         }
+
+        t.addLike(giver);
+        this.tweetRepository.save(t);
+
+        return true;
     }
 
-    /*
-    This function will add or remove the retweet
+    /**
+     * Check the tweet to add or remove a retweet
+     * @param giver
+     * @param t
+     * @return
      */
-    public void toggleRetweet(User giver, Tweet tweet){
-        Tweet t = this.findById(tweet.getId()).orElse(null);
-        if (t != null){
-            if (t.getRetweets().contains(giver)){
-                t.removeRetweet(giver);
-            }
-            else{
-                t.addRetweet(giver);
-            }
+    public boolean toggleRetweet(User giver, Tweet t){
+        if (t.getRetweets().contains(giver)){
+            t.removeRetweet(giver);
+            this.tweetRepository.save(t);
+            return false;
         }
+
+        t.addRetweet(giver);
+        this.tweetRepository.save(t);
+
+        return true;
     }
 
-    /*
-    This function will add a Commment
+    /**
+     * Check the tweet to add or remove a bookmark
+     * @param currentUser
+     * @param t
+     */
+    public void toggleBookmark(User currentUser, Tweet t) {
+
+
+    }
+
+    /**
+     * Add a comment to a tweet
+     * @param text
+     * @param files
+     * @param user
+     * @param tweet
      */
     public void addComment(String text, Blob[] files, User user, Tweet tweet){
         Tweet t = this.findById(tweet.getId()).orElse(null);
-        if (t != null){
-            Tweet comment = new Tweet(text, user, files);
-            t.addComment(comment);
+
+        if (t == null){
+            return;
         }
+
+        Tweet comment = new Tweet(text, user, files);
+        t.addComment(comment);
     }
-
-
 
     /**
      * Ask the database for more tweets for the user
