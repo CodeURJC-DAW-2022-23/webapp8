@@ -65,13 +65,13 @@ public class ProfileService {
         return tweetRepository.findBookmarksByUserId(id,offset,size);
     }
 
-    public List<User> getVerified(){
+    /*public List<User> getVerified(){
         return repository.findVerified();
-    }
+    }*/
 
-    public List<User> getBanned(){
+    /*public List<User> getBanned(){
         return repository.findBanned();
-    }
+    }*/
 
 
 }
