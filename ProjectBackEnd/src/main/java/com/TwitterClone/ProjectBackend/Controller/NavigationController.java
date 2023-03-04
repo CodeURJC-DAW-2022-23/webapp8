@@ -63,7 +63,6 @@ public class NavigationController {
      * @param model
      * @return
      */
-
     @GetMapping("/home")
     public String toHome(Model model, HttpServletRequest request) {
         this.informationManager.addNameToThePage(model,"Home");
@@ -169,7 +168,6 @@ public class NavigationController {
     @GetMapping("/write-tweet")
     public String toWriteTweet(Model model) {
         model.addAttribute("type", "new");
-        model.addAttribute("user-reply", null);
         return "write-tweet";
     }
 
@@ -186,7 +184,6 @@ public class NavigationController {
         Tweet tweetToReply = tweet.get();
         model.addAttribute("tweet", tweetToReply);
         model.addAttribute("type", "reply");
-        model.addAttribute("user_reply", tweetToReply.getUser());
 
         return "write-tweet";
     }

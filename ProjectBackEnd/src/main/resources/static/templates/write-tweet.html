@@ -85,9 +85,9 @@
     
                 </div>
                 
-                {{#user-reply}}
-                <input type="hidden" name="user_reply" value="{{user_reply}}">
-                {{/user-reply}}
+                {{#tweet}}
+                <input type="hidden" name="user_reply" value="{{tweet.user.id}}">
+                {{/tweet}}
 
                 <input type="hidden" name="_csrf" value="{{token}}"/>
     

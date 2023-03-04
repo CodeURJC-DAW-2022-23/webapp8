@@ -130,13 +130,16 @@ public class TweetController {
     @PostMapping("/tweets/reply-tweet")
     public String postTweet(@RequestParam String tweet_info,
                             @RequestParam MultipartFile [] tweet_files,
-                            @RequestParam("user_reply") User user_reply,
+                            @RequestParam("user_reply") Long id,
                             HttpServletRequest request) throws IOException {
         Blob [] files = this.manageImages(tweet_files);
         User currentUser = this.informationManager.getCurrentUser(request);
         Long userId = currentUser.getId();
         Tweet newTweet = this.tweetService.createTweet(tweet_info, files, userId);
         saveHashtag(tweet_info);
+
+        Optional<User> user_owner = this.profileService.findById(id);
+        User user_reply = user_owner.get();
         tweetService.addComment(tweet_info, files, user_reply, newTweet);
 
         return "redirect:/home";
