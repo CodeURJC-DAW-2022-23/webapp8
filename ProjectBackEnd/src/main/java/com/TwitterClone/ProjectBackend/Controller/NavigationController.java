@@ -82,7 +82,7 @@ public class NavigationController {
         User currentUser = this.informationManager.getCurrentUser(request);
         List<Tweet> tweetList = this.tweetService.find10RecentForUser(currentUser.getId(), 0, 10);
 
-        List<TweetInformation> tweets = this.informationManager.calculateDataOfTweet(model, tweetList);
+        List<TweetInformation> tweets = this.informationManager.calculateDataOfTweet(tweetList);
         model.addAttribute("tweets", tweets);
 
         return "home";
