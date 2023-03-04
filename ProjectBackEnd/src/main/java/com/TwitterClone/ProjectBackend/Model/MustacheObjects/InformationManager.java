@@ -70,10 +70,9 @@ public class InformationManager {
 
     /**
      * Prepare the list with the Tweets to show at mustache
-     * @param model
      * @param tweets
      */
-    public List<TweetInformation> calculateDataOfTweet(Model model, List<Tweet> tweets) {
+    public List<TweetInformation> calculateDataOfTweet(List<Tweet> tweets) {
         List<TweetInformation> tweetsInfo = new ArrayList<>();
 
         for(Tweet tweet : tweets) {

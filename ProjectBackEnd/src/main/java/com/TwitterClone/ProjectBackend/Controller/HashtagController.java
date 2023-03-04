@@ -1,6 +1,10 @@
 package com.TwitterClone.ProjectBackend.Controller;
 
+import com.TwitterClone.ProjectBackend.Model.Hashtag;
+import com.TwitterClone.ProjectBackend.Model.MustacheObjects.InformationManager;
+import com.TwitterClone.ProjectBackend.Model.MustacheObjects.TweetInformation;
 import com.TwitterClone.ProjectBackend.Model.Trend;
+import com.TwitterClone.ProjectBackend.Model.Tweet;
 import com.TwitterClone.ProjectBackend.Service.HashtagService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
@@ -17,6 +21,9 @@ public class HashtagController {
     @Autowired
     private HashtagService hashtagService;
 
+    @Autowired
+    private InformationManager informationManager;
+
     @GetMapping("/explore/trends")
     public String loadMoreTrends(Model model,
                                  @Param("from") int from,
@@ -25,6 +32,16 @@ public class HashtagController {
         model.addAttribute("trends", newTrends);
 
         return "explore_element";
+    }
+
+    @GetMapping("/explore/{hashtag}")
+    public String loadHashtag(Model model,
+                              @PathVariable String hashtag) {
+        List<Tweet> tweetsAssociated = this.hashtagService.getTweetsAssociatedTo(hashtag);
+        List<TweetInformation> tweets = this.informationManager.calculateDataOfTweet(tweetsAssociated);
+        model.addAttribute("tweets", tweets);
+
+        return "tweet";
     }
 
 }
