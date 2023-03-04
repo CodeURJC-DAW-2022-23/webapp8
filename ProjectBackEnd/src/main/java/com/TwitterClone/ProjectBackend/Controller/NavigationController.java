@@ -182,6 +182,13 @@ public class NavigationController {
 
         model.addAttribute("user", currentUser);
 
+        //Hide Go To Dashboard button
+        if (currentUser.getRole() == UserRoles.ADMIN){
+            model.addAttribute("isAdmin",true);
+        }else{
+            model.addAttribute("isAdmin",false);
+        }
+
         return "profile";
     }
 
@@ -275,5 +282,37 @@ public class NavigationController {
         model.addAttribute("toVerify",users);
         this.informationManager.addStatistics(model);
         return "admin-dashboard";
+    }
+    @GetMapping("/unban/{id}")
+    public String unban(@PathVariable Long id){
+        User user = this.profileService.findById(id).get();
+        user.setType("PUBLIC");
+        user.setEnabled(true);
+        this.profileService.updateType(user);
+        return "redirect:/dashboard";
+    }
+    @GetMapping("/verify/{id}")
+    public String verify(@PathVariable Long id){
+        User user = this.profileService.findById(id).get();
+        user.setType("VERIFIED");
+        this.profileService.updateType(user);
+        return "redirect:/dashboard";
+    }
+
+    @GetMapping("/unverify/{id}")
+    public String unverify(@PathVariable Long id){
+        User user = this.profileService.findById(id).get();
+        user.setType("PUBLIC");
+        this.profileService.updateType(user);
+        return "redirect:/dashboard";
+    }
+
+    @GetMapping("/ban/{id}")
+    public String ban(@PathVariable Long id){
+        User user = this.profileService.findById(id).get();
+        user.setType("BANNED");
+        user.setEnabled(false);
+        this.profileService.updateType(user);
+        return "redirect:/dashboard";
     }
 }

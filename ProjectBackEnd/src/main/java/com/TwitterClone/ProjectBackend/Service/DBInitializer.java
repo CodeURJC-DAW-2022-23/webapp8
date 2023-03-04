@@ -58,6 +58,7 @@ public class DBInitializer {
         String[] files = {"example_data/elrubius_profilepic.jpg","example_data/elrubius_profilebanner.jpg"};
         User user1 = new User("Rubiu5","elrubius","Rata Noruega.  Me gustan los gatos obesos.","rubius@gmail.com",passwordEncoder.encode("rubius"), LocalDate.of(2013,10,13),"BANNED");
         user1.setImages(files);
+        user1.setEnabled(false);
         files = new String[]{"example_data/KOI_KEYLAND_profilepic.jpg", "example_data/KOI_KEYLAND_profilebanner.jpg"};
         User user2 = new User("Keyland71", "KOI KEYLAND71", "19 y/o\nRocket League proplayer for @KOI", "example2@gmail.com", passwordEncoder.encode("examplePassword2"), LocalDate.of(2018,4,21), "PUBLIC");
         user2.setImages(files);

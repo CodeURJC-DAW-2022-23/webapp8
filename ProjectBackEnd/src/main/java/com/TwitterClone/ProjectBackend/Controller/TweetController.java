@@ -157,12 +157,13 @@ public class TweetController {
 
     private Blob[] manageImages(MultipartFile [] tweet_files) throws IOException {
         Blob [] files = new Blob[4];
-
-        for (int index = 0; index < tweet_files.length; index++) {
-            files[index] = BlobProxy
-                    .generateProxy(tweet_files[index]
-                            .getInputStream(), tweet_files[index]
-                            .getSize());
+        if(tweet_files[0].getContentType().equals("")){
+            for (int index = 0; (index < tweet_files.length) && (index < 4); index++) {
+                files[index] = BlobProxy
+                        .generateProxy(tweet_files[index]
+                                .getInputStream(), tweet_files[index]
+                                .getSize());
+            }
         }
 
         return files;

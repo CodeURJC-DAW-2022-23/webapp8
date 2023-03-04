@@ -89,4 +89,8 @@ public class ProfileService {
     public List<Tuple> getStatics(){
        return this.repository.countByLast5JoinDate();
     }
+
+    public void updateType(User user) {
+        this.repository.save(user);
+    }
 }

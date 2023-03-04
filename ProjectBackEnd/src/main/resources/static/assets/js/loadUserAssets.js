@@ -92,13 +92,19 @@ dashBoardText.set("BANNED","Unban");
 dashBoardText.set("PUBLIC","Verify");
 dashBoardText.set("PRIVATE","Verify");
 
-function changeText(type,index){
+function changeText(type,index,id){
     document.getElementById(type+index).innerHTML=dashBoardText.get(type);
     if (type==="BANNED"||type==="VERIFIED"){
         document.getElementById(type+index).classList.add("bg-red-3")
         document.getElementById(type+index).classList.remove("bg-primary")
+        if (type==="BANNED"){
+            document.getElementById(type+index).onclick=function (){window.location.href="/unban/"+id}
+        }else{
+            document.getElementById(type+index).onclick=function (){window.location.href="/unverify/"+id}
+        }
     }else{
         document.getElementById(type+index).classList.remove("bg-red-3")
         document.getElementById(type+index).classList.add("bg-primary")
+        document.getElementById(type+index).onclick=function (){window.location.href="/verify/"+id}
     }
 }
