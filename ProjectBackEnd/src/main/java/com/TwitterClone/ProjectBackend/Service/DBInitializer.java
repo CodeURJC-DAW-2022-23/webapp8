@@ -316,7 +316,6 @@ public class DBInitializer {
         tweetRepository.save(tweets.get(tweets.size()-2));
 
         //Hashtags
-        tweets = tweetRepository.findAll();
 
         Set<Tweet> tweetsSet = new HashSet<>();
         tweetsSet.add(tweet11);

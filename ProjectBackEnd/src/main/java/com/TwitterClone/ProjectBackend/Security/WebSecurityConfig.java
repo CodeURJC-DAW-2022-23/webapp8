@@ -64,10 +64,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests().antMatchers("/write-tweet").hasAnyRole("USER", "ADMIN");
 
         //ADMIN Page
-
-
-        //Just for testing Until we have the admin page
-        http.authorizeRequests().antMatchers("/admin-dashboard").hasAnyRole("ADMIN");
+        http.authorizeRequests().antMatchers("/dashboard").hasAnyRole("ADMIN");
 
 
         // Logout

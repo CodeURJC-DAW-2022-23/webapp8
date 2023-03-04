@@ -24,11 +24,28 @@ users = {
 }
 
 function loadUserSVG(divId, userType){
-    if (userType === "PUBLIC"){
+    if (userType === "PUBLIC" || userType === "BANNED"){
         return;
     }
 
     let userNameDiv = document.getElementById(divId + "userNameSvg");
     let svgToLoad = users[userType];
     userNameDiv.innerHTML += svgToLoad;
+}
+
+let dashBoardText = new Map();
+dashBoardText.set("VERIFIED","Unverify");
+dashBoardText.set("BANNED","Unban");
+dashBoardText.set("PUBLIC","Verify");
+dashBoardText.set("PRIVATE","Verify");
+
+function changeText(type,index){
+    document.getElementById(type+index).innerHTML=dashBoardText.get(type);
+    if (type==="BANNED"||type==="VERIFIED"){
+        document.getElementById(type+index).classList.add("bg-red-3")
+        document.getElementById(type+index).classList.remove("bg-primary")
+    }else{
+        document.getElementById(type+index).classList.remove("bg-red-3")
+        document.getElementById(type+index).classList.add("bg-primary")
+    }
 }

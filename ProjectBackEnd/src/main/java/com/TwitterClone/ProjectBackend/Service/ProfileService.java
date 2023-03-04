@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.persistence.Tuple;
 import java.io.IOException;
 import java.sql.Blob;
 import java.util.List;
@@ -65,13 +66,19 @@ public class ProfileService {
         return tweetRepository.findBookmarksByUserId(id,offset,size);
     }
 
-    public List<User> getVerified(){
-        return repository.findVerified();
+    public List<User> getVerified(int init, int size){
+        return repository.findVerified(init, size);
     }
 
-    public List<User> getBanned(){
-        return repository.findBanned();
+    public List<User> getBanned(int init, int size){
+        return repository.findBanned(init,size);
     }
 
+    public List<User> getToVerified(int init, int size) {
+        return this.repository.findNotVerifiedNotBanned(init,size);
+    }
 
+    public List<Tuple> getStatics(){
+       return this.repository.countByLast5JoinDate();
+    }
 }

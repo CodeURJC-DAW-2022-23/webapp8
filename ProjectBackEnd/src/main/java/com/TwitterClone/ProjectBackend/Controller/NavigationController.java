@@ -17,6 +17,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import javax.persistence.Tuple;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Optional;
@@ -68,6 +69,7 @@ public class NavigationController {
 
         User currentUser = this.informationManager.getCurrentUser(request);
         List<Tweet> tweetList = this.tweetService.find10RecentForUser(currentUser.getId(), 0, 10);
+
         List<TweetInformation> tweets = this.informationManager.calculateDataOfTweet(model, tweetList);
         model.addAttribute("tweets", tweets);
 
@@ -209,4 +211,18 @@ public class NavigationController {
         return "error";
     }
 
+    @GetMapping("/dashboard")
+    public String toDashboard(Model model, HttpServletRequest request){
+        this.informationManager.addNameToThePage(model,"Dashboard");
+        this.informationManager.addProfileInfoToLeftBar(model,request);
+        this.informationManager.addCurrentTrends(model);
+        List<User> users = this.profileService.getVerified(0,10);
+        model.addAttribute("verified", users);
+        users = this.profileService.getBanned(0,10);
+        model.addAttribute("banned", users);
+        users = this.profileService.getToVerified(0,10);
+        model.addAttribute("toVerify",users);
+        this.informationManager.addStatistics(model);
+        return "admin-dashboard";
+    }
 }
