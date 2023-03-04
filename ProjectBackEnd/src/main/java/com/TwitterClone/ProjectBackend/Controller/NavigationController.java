@@ -172,6 +172,33 @@ public class NavigationController {
     }
 
     /**
+     * Change from the current page to the user related people page
+     * @return
+     */
+    @GetMapping("/follow")
+    public String toRelatedPeople(Model model, HttpServletRequest request) {
+        User currentUser = this.informationManager.getCurrentUser(request);
+
+        String nickname = currentUser.getNickname();
+        String namePage = "People related to " + nickname;
+        this.informationManager.addNameToThePage(model, namePage);
+
+        this.informationManager.addProfileInfoToLeftBar(model, request);
+        this.informationManager.addCurrentTrends(model);
+
+        Long currentUserId = currentUser.getId();
+        List<User> followers = profileService.getFollowers(currentUserId);
+        List<User> followed = profileService.getFollowed(currentUserId);
+        model.addAttribute("followers", followers);
+        model.addAttribute("followed", followers);
+
+
+        model.addAttribute("user", currentUser);
+
+        return "follow";
+    }
+
+    /**
      * Change from the current page to the write tweet page
      * @return
      */

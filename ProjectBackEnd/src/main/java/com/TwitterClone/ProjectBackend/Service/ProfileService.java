@@ -64,4 +64,12 @@ public class ProfileService {
     public List<Tweet> getBookmarks (Long id){
         return tweetRepository.findBookmarksByUserId(id);
     }
+
+    public List<User> getFollowers(Long id) {
+        return repository.findFollowers(id);
+    }
+
+    public List<User> getFollowed(Long id) {
+        return repository.findFollowed(id);
+    }
 }
