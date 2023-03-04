@@ -27,8 +27,13 @@ public class NotificationService {
     @Autowired
     private TweetRepository tweetRepository;
 
-    public List<Notification> getNotificationsOfUser(Long userId) {
-        List<Notification> list = this.notificationRepository.findNotifications(userId);
+    public List<Notification> get10NotificationsOfUser(Long userId, int init, int size) {
+        List<Notification> list = this.notificationRepository.findNotifications(userId, init, size);
+        return list;
+    }
+
+    public List<Notification> get10MentionsOfUser(Long userId, int init, int size) {
+        List<Notification> list = this.notificationRepository.findMentions(userId, init, size);
         return list;
     }
 

@@ -10,9 +10,7 @@ import com.TwitterClone.ProjectBackend.userManagement.UserRoles;
 import com.TwitterClone.ProjectBackend.userManagement.UserService;
 import com.TwitterClone.ProjectBackend.Service.ProfileService;
 import com.TwitterClone.ProjectBackend.userManagement.User;
-import com.fasterxml.jackson.annotation.JsonView;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.query.Param;
 import org.springframework.security.web.csrf.CsrfToken;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,8 +18,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import javax.servlet.http.HttpServletRequest;
-import java.security.Principal;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -113,7 +109,7 @@ public class NavigationController {
         this.informationManager.addProfileInfoToLeftBar(model, request);
         User currentUser = this.informationManager.getCurrentUser(request);
 
-        List<Notification> notifications = this.notificationService.getNotificationsOfUser(currentUser.getId());
+        List<Notification> notifications = this.notificationService.get10NotificationsOfUser(currentUser.getId(), 0, 10);
         model.addAttribute("notifications", notifications);
 
         return "notifications";
