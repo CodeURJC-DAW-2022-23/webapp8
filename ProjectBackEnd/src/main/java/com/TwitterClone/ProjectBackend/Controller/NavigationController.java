@@ -199,6 +199,20 @@ public class NavigationController {
     }
 
     /**
+     * Change from the current page to the edit profile page
+     * @return
+     */
+    @GetMapping("/edit-profile")
+    public String toEditProfile(Model model, HttpServletRequest request) {
+        User currentUser = this.informationManager.getCurrentUser(request);
+
+        this.informationManager.addNameToThePage(model, "Edit profile");
+        model.addAttribute("user", currentUser);
+
+        return "edit-profile";
+    }
+
+    /**
      * Change from the current page to the write tweet page
      * @return
      */
