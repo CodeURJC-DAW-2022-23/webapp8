@@ -228,12 +228,12 @@
             <!-- NAVBAR -->
             <nav id="navBar"
                 class="grid items-center justify-center grid-cols-2 text-center dark:text-gray-5 text-gray-4">
-                <button id="notifications-tab" onclick="showPage('notifications-tab', 'mentions-tab')"
+                <button id="following-tab" onclick="showPage('following-tab', ['followers-tab'])"
                     class="py-4 font-bold border-b-4 cursor-pointer border-primary dark:text-white-0 text-black-0 dark:hover:bg-gray-1 hover:bg-gray-3">
                     Following
                 </button>
 
-                <button id="mentions-tab" onclick="showPage('mentions-tab', 'notifications-tab')"
+                <button id="followers-tab" onclick="showPage('followers-tab', ['following-tab'])"
                     class="py-4 font-semibold border-b-4 border-transparent cursor-pointer border-p-2 dark:hover:bg-gray-1 hover:bg-gray-3 dark:text-gray-5">
                     Followers
                 </button>
@@ -243,7 +243,7 @@
         <!-- PEOPLE RELATED -->
         <div>
             <!-- FOLLOWING -->
-            <div id="notifications">
+            <div id="following">
                 <!-- FRAME -->
                 <div class="border-b cursor-pointer border-gray-9 dark:bg-black-0 dark:border-black-5">
                     <!-- PERSON -->
@@ -326,7 +326,7 @@
             </div>
 
             <!-- FOLLOWERS -->
-            <div id="mentions" class="hidden">
+            <div id="followers" class="hidden">
                 <div class="border-b cursor-pointer border-gray-9 dark:bg-black-0 dark:border-black-5">
                     <!-- PERSON -->
                     <div
