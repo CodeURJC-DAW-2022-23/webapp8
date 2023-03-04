@@ -1,6 +1,6 @@
 {{#tweets}}
 <!-- SIMPLE TWEET -->
-<div class="border-b cursor-pointer border-gray-9 dark:bg-black-0 dark:border-black-5">
+<div class="border-b cursor-pointer border-gray-9 dark:bg-black-0 dark:border-black-5" id="tweet-{{tweet.id}}">
   <!-- TWEET -->
   <div class="flex w-full gap-4 px-5 pt-3 hover:bg-gray-7 dark:hover:bg-black-6">
     <!-- PROFILE IMAGE - TODO: hacer link a perfil y perfil -->
@@ -29,17 +29,7 @@
             {{tweet.publishDate}}
           </span>
 
-          <!-- TRASH CAN (ONLY FOR ADMIN) -->
-          <button class="justify-self-end">
-            <svg class="w-8 p-[0.375rem] transition rounded-full fill-gray-4 hover:fill-red-3 hover:bg-red-2"
-                 xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true">
-              <g>
-                <path
-                        d="M16 6V4.5C16 3.12 14.88 2 13.5 2h-3C9.11 2 8 3.12 8 4.5V6H3v2h1.06l.81 11.21C4.98 20.78 6.28 22 7.86 22h8.27c1.58 0 2.88-1.22 3-2.79L19.93 8H21V6h-5zm-6-1.5c0-.28.22-.5.5-.5h3c.27 0 .5.22.5.5V6h-4V4.5zm7.13 14.57c-.04.52-.47.93-1 .93H7.86c-.53 0-.96-.41-1-.93L6.07 8h11.85l-.79 11.07zM9 17v-6h2v6H9zm4 0v-6h2v6h-2z">
-                </path>
-              </g>
-            </svg>
-          </button>
+          {{> can-button}}
         </a>
 
         <!-- TWEET TEXT -->
@@ -66,6 +56,7 @@
             {{/tweet.media3}}
           {{/tweet.media4}}
         {{/tweet.media1}}
+
         <!-- REACTIONS -->
         <div class="flex gap-4 pb-3">
           <!-- COMMENT -->
@@ -87,7 +78,7 @@
           <!-- RETWEET -->
           <button type="button" class="flex items-center gap-1" onclick="giveRetweet('{{tweet.id}}');">
             <svg viewBox="0 0 24 24" aria-hidden="true" id="retweet-svg-{{tweet.id}}"
-                 class="w-8 p-[0.375rem] rounded-full fill-green-0">
+                 class="w-8 p-[0.375rem] transition rounded-full fill-gray-4 group-hover:fill-red-3 group-hover:bg-red-2 group-dark:hover:bg-red-0">
               <g>
                 <path
                         d="M4.5 3.88l4.432 4.14-1.364 1.46L5.5 7.55V16c0 1.1.896 2 2 2H13v2H7.5c-2.209 0-4-1.79-4-4V7.55L1.432 9.48.068 8.02 4.5 3.88zM16.5 6H11V4h5.5c2.209 0 4 1.79 4 4v8.45l2.068-1.93 1.364 1.46-4.432 4.14-4.432-4.14 1.364-1.46 2.068 1.93V8c0-1.1-.896-2-2-2z">
@@ -95,7 +86,7 @@
               </g>
             </svg>
 
-            <span class="text-green-0" id="retweet-{{tweet.id}}">
+            <span class="transition text-gray-4 group-hover:text-green-2" id="retweet-{{tweet.id}}">
                 {{numRetweets}}                      
             </span>
           </button>
@@ -103,7 +94,7 @@
           <!-- LIKE -->
           <button class="flex items-center gap-1" onclick='giveLike("{{tweet.id}}");'>
             <svg viewBox="0 0 24 24" aria-hidden="true" id="like-svg-{{tweet.id}}"
-                 class="w-8 p-[0.375rem] rounded-full fill-red-0">
+                 class="w-8 p-[0.375rem] transition rounded-full fill-gray-4 group-hover:fill-green-2 group-hover:bg-green-2 group-dark:hover:bg-green-0">
               <g>
                 <path
                         d="M20.884 13.19c-1.351 2.48-4.001 5.12-8.379 7.67l-.503.3-.504-.3c-4.379-2.55-7.029-5.19-8.382-7.67-1.36-2.5-1.41-4.86-.514-6.67.887-1.79 2.647-2.91 4.601-3.01 1.651-.09 3.368.56 4.798 2.01 1.429-1.45 3.146-2.1 4.796-2.01 1.954.1 3.714 1.22 4.601 3.01.896 1.81.846 4.17-.514 6.67z">
@@ -111,7 +102,7 @@
               </g>
             </svg>
 
-            <span class="text-red-0" id="like-{{tweet.id}}">
+            <span class="transition text-gray-4 group-hover:text-red-2" id="like-{{tweet.id}}">
                 {{numLikes}}                          
             </span>
           </button>
@@ -119,7 +110,7 @@
           <!-- BOOKMARKS -->
           <button class="flex items-center gap-1" onclick="giveBookmark('{{tweet.id}}');">
             <svg viewBox="0 0 24 24" aria-hidden="true" id="bookmark-svg-{{tweet.id}}"
-                 class="w-8 p-[0.375rem] rounded-full fill-primary">
+                 class="w-8 p-[0.375rem] transition rounded-full fill-gray-4 group-hover:fill-primary group-hover:bg-blue-1 group-dark:hover:bg-blue-0">
               <g>
                 <path
                         d="M4 4.5C4 3.12 5.119 2 6.5 2h11C18.881 2 20 3.12 20 4.5v18.44l-8-5.71-8 5.71V4.5z">

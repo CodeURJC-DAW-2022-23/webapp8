@@ -61,11 +61,13 @@ public class TweetService {
         return tweetRepository.findById(id);
     }
 
-    /*
-    This function will add or remove the like
+    /**
+     * Check the tweet to add or remove a like
+     * @param giver
+     * @param t
+     * @return
      */
     public boolean toggleLike(User giver, Tweet t){
-
         if (t.getLikes().contains(giver)){
             t.removeLike(giver);
             this.tweetRepository.save(t);
@@ -78,8 +80,11 @@ public class TweetService {
         return true;
     }
 
-    /*
-    This function will add or remove the retweet
+    /**
+     * Check the tweet to add or remove a retweet
+     * @param giver
+     * @param t
+     * @return
      */
     public boolean toggleRetweet(User giver, Tweet t){
         if (t.getRetweets().contains(giver)){
@@ -94,18 +99,33 @@ public class TweetService {
         return true;
     }
 
-    /*
-    This function will add a Commment
+    /**
+     * Check the tweet to add or remove a bookmark
+     * @param currentUser
+     * @param t
+     */
+    public void toggleBookmark(User currentUser, Tweet t) {
+
+
+    }
+
+    /**
+     * Add a comment to a tweet
+     * @param text
+     * @param files
+     * @param user
+     * @param tweet
      */
     public void addComment(String text, Blob[] files, User user, Tweet tweet){
         Tweet t = this.findById(tweet.getId()).orElse(null);
-        if (t != null){
-            Tweet comment = new Tweet(text, user, files);
-            t.addComment(comment);
+
+        if (t == null){
+            return;
         }
+
+        Tweet comment = new Tweet(text, user, files);
+        t.addComment(comment);
     }
-
-
 
     /**
      * Ask the database for more tweets for the user
@@ -210,10 +230,5 @@ public class TweetService {
         }
 
         return number;
-    }
-
-    public boolean toggleBookmark(User currentUser, Tweet t) {
-
-        return true;
     }
 }

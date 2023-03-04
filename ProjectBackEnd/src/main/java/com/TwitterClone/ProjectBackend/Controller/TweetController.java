@@ -182,7 +182,7 @@ public class TweetController {
     }
 
     /**
-     * When the like buttons is pressed, it will check if the user is giving o removing hte likeZ
+     * When the like buttons is pressed, it will check if the user is giving or removing the likes
      * @param request
      * @return
      * @throws IOException
@@ -201,7 +201,13 @@ public class TweetController {
         return "redirect:/";
     }
 
-    @PostMapping("/tweet/retweet/{id}")
+    /**
+     * When the retqeet buttons is pressed, it will check if the user is giving or removing the retweet
+     * @param request
+     * @return
+     * @throws IOException
+     */
+    @GetMapping("/tweet/retweet/{id}")
     public String toggleRetweet(@PathVariable("id") Long id,
                               HttpServletRequest request) throws IOException{
         Tweet tweet = this.tweetService.findById(id).get();
@@ -215,23 +221,26 @@ public class TweetController {
         return "redirect:/";
     }
 
-    @PostMapping("/tweet/bookmark/{id}")
+    /**
+     * When the bookmark buttons is pressed, it will check if the user is adding or removing the bookmark
+     * @param request
+     * @return
+     * @throws IOException
+     */
+    @GetMapping("/tweet/bookmark/{id}")
     public String toggleBookmark(@PathVariable("id") Long id,
                                 HttpServletRequest request) throws IOException{
         Tweet tweet = this.tweetService.findById(id).get();
         User currentUser = this.informationManager.getCurrentUser(request);
-        boolean hasGiveBookmark = this.tweetService.toggleBookmark(currentUser, tweet);
+        this.tweetService.toggleBookmark(currentUser, tweet);
 
-        if (hasGiveBookmark) {
-            return "error";
-        }
-
-        return "redirect:/";
+        return "error";
     }
 
-    @PostMapping("/delete")
-    public void deleteTweet(@RequestBody Tweet tweet){
-        tweetService.deleteTweet(tweet);
+    @GetMapping("/tweet/delete/{id}")
+    public void deleteTweet(@PathVariable("id") Long id) {
+        Tweet tweet = this.tweetService.findById(id).get();
+        this.tweetService.deleteTweet(tweet);
     }
 
 }
