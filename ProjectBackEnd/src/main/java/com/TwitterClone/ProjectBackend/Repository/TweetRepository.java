@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import javax.persistence.Tuple;
 import java.sql.Blob;
 import java.util.List;
 import java.util.Optional;
@@ -96,13 +97,6 @@ public interface TweetRepository extends JpaRepository<Tweet, Long> {
      */
     @Query(value="SELECT COUNT(*) FROM tweet_comments JOIN tweet ON tweet_id = id WHERE tweet_id = ?1 GROUP BY tweet_id", nativeQuery = true)
     Long countComments(Long id);
-
-    /*@Query(value="SELECT \"media1\" FROM \"tweet\" WHERE \"id\" = ?1",nativeQuery = true)
-    Blob findMedia1ByUserId(Long id);
-    @Query(value="SELECT \"media2\" FROM \"tweet\" WHERE \"id\" = ?1",nativeQuery = true)
-    Blob findMedia2ByUserId(Long id);
-    @Query(value="SELECT \"media3\" FROM \"tweet\" WHERE \"id\" = ?1",nativeQuery = true)
-    Blob findMedia3ByUserId(Long id);
-    @Query(value="SELECT \"media4\" FROM \"tweet\" WHERE \"id\" = ?1",nativeQuery = true)
-    Blob findMedia4ByUserId(Long id);*/
+    @Query(value = "SELECT tweet.* FROM hashtag_tweets JOIN tweet ON tweets_id = id WHERE hashtag_hashtag = ?1", nativeQuery = true)
+    List<Tweet> getTweetsOfTrend(String id);
 }
