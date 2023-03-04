@@ -12,11 +12,25 @@ import org.springframework.stereotype.Repository;
 import javax.persistence.Tuple;
 import java.util.List;
 
+/**
+ * This Repository is the connection to DB for Hashtag Entity
+ */
 @Repository
 public interface HashtagRepository extends JpaRepository<Hashtag, String> {
+    /**
+     * This Query returns the Hashtags and the number of Tweet that contains the Hashtag
+     * @param offset
+     * @param size
+     * @return
+     */
     @Query(value = "SELECT hashtag_hashtag AS hashtag, COUNT(*) numTweets FROM hashtag_tweets GROUP BY hashtag_hashtag ORDER BY numTweets DESC, hashtag LIMIT ?1,?2", nativeQuery = true)
     List<Tuple> find(int offset, int size);
 
+    /**
+     * This Query returns a List of Tweet that contains a specific Hashtag
+     * @param id
+     * @return
+     */
     @Query(value = "SELECT * FROM hashtag_tweets WHERE hashtag_hashtag = ?1", nativeQuery = true)
     List<Tweet> getTweetsOfTrend(String id);
 }

@@ -47,7 +47,7 @@ public class TweetController {
 
     @GetMapping("/{id}/casa")
     public String getRecent(@PathVariable("id") Long id) {
-        List<Tweet> t = tweetService.find10RecentForUser(id);
+        List<Tweet> t = tweetService.find10RecentForUser(id,0,10);
         return "";
     }
 

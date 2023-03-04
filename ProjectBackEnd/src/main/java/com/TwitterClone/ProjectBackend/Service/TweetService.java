@@ -37,8 +37,8 @@ public class TweetService {
         return tweetRepository.findByUser(user.getId());
     }
 
-    public List<Tweet> find10RecentForUser (Long id){
-        return tweetRepository.findByUserFollows(id);
+    public List<Tweet> find10RecentForUser (Long id, int init, int size){
+        return tweetRepository.findByUserFollows(id, init, size);
     }
 
     public Tweet createTweet(String text, Blob [] files, Long userId){

@@ -65,7 +65,7 @@ public class DBInitializer {
         User user3 = new User("antonioalanxs", "Alanís",  "",  "example3@gmail.com", passwordEncoder.encode("examplePassword3"),LocalDate.of(2019,8,7), "PRIVATE");
         user3.setImages(files);
         files = new String[]{"example_data/Ibai_profilepic.jpg", "example_data/Ibai_profilebanner.jpg"};
-        User user4 = new User("ibai","Ibai","Sigue a nuestros equipos @KOI y @PorcinosFC, http://twitch.tv/ibai","ibai@gmail.com",passwordEncoder.encode("ibai"), LocalDate.of(2014,8,5), "VERIFIED");
+        User user4 = new User("ibai","Ibai","Sigue a nuestros equipos @KOI y @PorcinosFC, http://twitch.tv/ibai","ibai@gmail.com",passwordEncoder.encode("ibai"), LocalDate.of(2014,8,5), "BANNED");
         user4.setImages(files);
         userRepository.save(user1);
         userRepository.save(user2);

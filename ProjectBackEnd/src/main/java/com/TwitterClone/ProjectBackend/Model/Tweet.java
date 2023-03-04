@@ -13,6 +13,13 @@ import java.sql.Blob;
 import java.time.LocalDateTime;
 import java.util.*;
 
+/**
+ * This is Tweet Entity. A Tweet is the core of the application.
+ * Writing a Tweet is the way to connect with people around the world.
+ * It is composed by a text of a maximum of 240 characters where Users can share with the world how they feel.
+ * This text could go along with a maximum of 4 pictures that the user can upload.
+ * Those pictures are stored in our DataBase as Blobs in order to make DB more scalable.
+ */
 @Getter
 @Setter
 @Entity

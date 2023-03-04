@@ -61,7 +61,17 @@ public class ProfileService {
             repository.save(u);
         }
     }
-    public List<Tweet> getBookmarks (Long id){
-        return tweetRepository.findBookmarksByUserId(id);
+    public List<Tweet> getBookmarks (Long id,int offset,int size){
+        return tweetRepository.findBookmarksByUserId(id,offset,size);
     }
+
+    public List<User> getVerified(){
+        return repository.findVerified();
+    }
+
+    public List<User> getBanned(){
+        return repository.findBanned();
+    }
+
+
 }

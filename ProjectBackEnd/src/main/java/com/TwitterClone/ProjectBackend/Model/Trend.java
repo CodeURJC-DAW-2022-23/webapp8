@@ -8,7 +8,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 /**
- * Trend is a Model for showing data, but it is not an Entity
+ * Trend is a Model for showing the info related to a hashtag in the explore page.
  */
 @Getter
 @Setter
