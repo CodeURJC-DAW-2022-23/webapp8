@@ -100,4 +100,10 @@ public interface UserRepository extends JpaRepository<User, Long> {
      */
     @Query(value="SELECT * FROM users WHERE type<>'VERIFIED' AND type<>'BANNED' LIMIT ?1,?2",nativeQuery = true)
     List<User> findNotVerifiedNotBanned(int init, int size);
+    
+    @Query(value = "SELECT users.* FROM users_followed JOIN users ON user_id=id WHERE user_id = ?1",nativeQuery = true)
+    List<User> findFollowed(Long id);
+
+    @Query(value = "SELECT users.* FROM users_followers JOIN users ON user_id=id WHERE user_id = ?1",nativeQuery = true)
+    List<User> findFollowers(Long id);
 }
