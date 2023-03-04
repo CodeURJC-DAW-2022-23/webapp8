@@ -1,6 +1,7 @@
 package com.TwitterClone.ProjectBackend.Model;
 
 import com.TwitterClone.ProjectBackend.userManagement.User;
+import lombok.Getter;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -12,6 +13,7 @@ import java.util.UUID;
  * generated in order to report you about your influence in other users.
  */
 @Entity
+@Getter
 public class Notification {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

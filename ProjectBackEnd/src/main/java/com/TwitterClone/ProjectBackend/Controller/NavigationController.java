@@ -42,6 +42,12 @@ public class NavigationController {
     @Autowired
     private InformationManager informationManager;
 
+    /**
+     * Change from the current page to login
+     * @param model
+     * @param request
+     * @return
+     */
     @GetMapping("/login")
     public String login(Model model, HttpServletRequest request){
         CsrfToken token = (CsrfToken) request.getAttribute("_csrf");
@@ -49,6 +55,12 @@ public class NavigationController {
         return "login";
     }
 
+    /**
+     * Change from the current page to signup
+     * @param model
+     * @param request
+     * @return
+     */
     @GetMapping("/logout")
     public String logout(Model model, HttpServletRequest request){
         CsrfToken token = (CsrfToken) request.getAttribute("_csrf");
@@ -134,10 +146,8 @@ public class NavigationController {
         UserRoles typeUser = currentUser.getRole();
         model.addAttribute("isAdmin", typeUser.equals(UserRoles.ADMIN));
 
-        List<Tweet> bookmarkTweetList =
-                this.profileService.getBookmarks(currentUser.getId(), 0, 10);
-        List<TweetInformation> bookmarks =
-                this.informationManager.calculateDataOfTweet(model, bookmarkTweetList);
+        List<Tweet> bookmarkTweetList = this.profileService.getBookmarks(currentUser.getId(), 0 , 10);
+        List<TweetInformation> bookmarks= this.informationManager.calculateDataOfTweet(bookmarkTweetList);
         model.addAttribute("tweets", bookmarks);
 
         return "bookmarks";
@@ -167,12 +177,53 @@ public class NavigationController {
         model.addAttribute("followedNumber", followedNumber);
 
         List<Tweet> tweetList = this.tweetService.find10(currentUser.getId());
-        List<TweetInformation> tweets = this.informationManager.calculateDataOfTweet(model, tweetList);
+        List<TweetInformation> tweets = this.informationManager.calculateDataOfTweet(tweetList);
         model.addAttribute("tweets", tweets);
 
         model.addAttribute("user", currentUser);
 
         return "profile";
+    }
+
+    /**
+     * Change from the current page to the user related people page
+     * @return
+     */
+    @GetMapping("/follow")
+    public String toRelatedPeople(Model model, HttpServletRequest request) {
+        User currentUser = this.informationManager.getCurrentUser(request);
+
+        String nickname = currentUser.getNickname();
+        String namePage = "People related to " + nickname;
+        this.informationManager.addNameToThePage(model, namePage);
+
+        this.informationManager.addProfileInfoToLeftBar(model, request);
+        this.informationManager.addCurrentTrends(model);
+
+        Long currentUserId = currentUser.getId();
+        List<User> followers = profileService.getFollowers(currentUserId);
+        List<User> followed = profileService.getFollowed(currentUserId);
+        model.addAttribute("followers", followers);
+        model.addAttribute("followed", followers);
+
+
+        model.addAttribute("user", currentUser);
+
+        return "follow";
+    }
+
+    /**
+     * Change from the current page to the edit profile page
+     * @return
+     */
+    @GetMapping("/edit-profile")
+    public String toEditProfile(Model model, HttpServletRequest request) {
+        User currentUser = this.informationManager.getCurrentUser(request);
+
+        this.informationManager.addNameToThePage(model, "Edit profile");
+        model.addAttribute("user", currentUser);
+
+        return "edit-profile";
     }
 
     /**

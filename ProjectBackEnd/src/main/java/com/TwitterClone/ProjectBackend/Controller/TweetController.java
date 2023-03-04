@@ -69,7 +69,7 @@ public class TweetController {
         User currentUser = this.informationManager.getCurrentUser(request);
         List<Tweet> newTweets =
                 this.tweetService.find10RecentForUser(currentUser.getId(), from, size);
-        List<TweetInformation> tweets = this.informationManager.calculateDataOfTweet(model, newTweets);
+        List<TweetInformation> tweets = this.informationManager.calculateDataOfTweet(newTweets);
         model.addAttribute("tweets", tweets);
 
         return "tweet";
@@ -90,7 +90,7 @@ public class TweetController {
         List<Tweet> newTweets =
                 this.profileService.getBookmarks(currentUser.getId(), from, size);
         List<TweetInformation> tweets =
-                this.informationManager.calculateDataOfTweet(model, newTweets);
+                this.informationManager.calculateDataOfTweet(newTweets);
         model.addAttribute("tweets", tweets);
 
         return "tweet";

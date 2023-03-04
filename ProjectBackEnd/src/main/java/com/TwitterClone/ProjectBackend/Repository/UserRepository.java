@@ -80,6 +80,14 @@ public interface UserRepository extends JpaRepository<User, Long> {
      */
     @Query(value="SELECT COUNT(*) FROM users_followers WHERE user_id = ?1 GROUP BY user_id",nativeQuery = true)
     long countFollowers (long id);
+    @Query(value="SELECT * FROM users WHERE enabled = false",nativeQuery = true)
+    List<User> findBanned (long id);
+
+    @Query(value = "SELECT users.* FROM users_followed JOIN users ON followed_id=id WHERE user_id = ?1",nativeQuery = true)
+    List<User> findFollowed(Long id);
+
+    @Query(value = "SELECT users.* FROM users_followers JOIN users ON followers_id=id WHERE user_id = ?1",nativeQuery = true)
+    List<User> findFollowers(Long id);
 
     /**
      * This Query returns the banned users
