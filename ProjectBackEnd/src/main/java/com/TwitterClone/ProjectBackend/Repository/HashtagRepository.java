@@ -31,6 +31,6 @@ public interface HashtagRepository extends JpaRepository<Hashtag, String> {
      * @param id
      * @return
      */
-    @Query(value = "SELECT * FROM hashtag_tweets WHERE hashtag_hashtag = ?1", nativeQuery = true)
+    @Query(value = "SELECT tweet.* FROM hashtag_tweets JOIN tweet ON tweets_id = id WHERE hashtag_hashtag = ?1", nativeQuery = true)
     List<Tweet> getTweetsOfTrend(String id);
 }

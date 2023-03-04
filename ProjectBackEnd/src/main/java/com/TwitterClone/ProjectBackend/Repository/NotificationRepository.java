@@ -3,6 +3,7 @@ package com.TwitterClone.ProjectBackend.Repository;
 import com.TwitterClone.ProjectBackend.Model.Notification;
 import com.TwitterClone.ProjectBackend.Model.Tweet;
 import com.TwitterClone.ProjectBackend.userManagement.User;
+import org.aspectj.weaver.ast.Not;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -36,4 +37,14 @@ public interface NotificationRepository extends JpaRepository<Notification, Long
      */
     @Query(value = "SELECT * FROM notification WHERE user_to_notify_id = ?1 AND type='MENTION' ORDER BY date DESC LIMIT ?2,?3",nativeQuery = true)
     List<Notification> findMentions(long user_id, int init, int size);
+
+    /**
+     * This Query returns the required Notification because when delete we do not have the id
+     * @param userWhoNotifiesId
+     * @param tweetId
+     * @param type
+     * @return
+     */
+    @Query(value = "SELECT * FROM notification WHERE user_who_notifies_id = ?1 AND tweet_trigger_id = ?2 AND type = ?3",nativeQuery = true)
+    Optional<Notification> findSpecificNotification(long userWhoNotifiesId,long tweetId, String type);
 }

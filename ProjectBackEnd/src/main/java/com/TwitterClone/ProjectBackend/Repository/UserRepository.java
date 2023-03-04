@@ -84,13 +84,20 @@ public interface UserRepository extends JpaRepository<User, Long> {
      * This Query returns the banned users
      * @return
      */
-    @Query(value="SELECT * FROM users WHERE type = 'BANNED'",nativeQuery = true)
-    List<User> findBanned ();
+    @Query(value="SELECT * FROM users WHERE type = 'BANNED' LIMIT ?1,?2",nativeQuery = true)
+    List<User> findBanned (int init, int size);
 
     /**
      * This Query returns the verified users
      * @return
      */
-    @Query(value="SELECT * FROM users WHERE type = 'VERIFIED'",nativeQuery = true)
-    List<User> findVerified ();
+    @Query(value="SELECT * FROM users WHERE type = 'VERIFIED' LIMIT ?1,?2",nativeQuery = true)
+    List<User> findVerified (int init, int size);
+
+    /**
+     * This Query returns the users that are neither VERIFIED nor BANNED
+     * @return
+     */
+    @Query(value="SELECT * FROM users WHERE type<>'VERIFIED' AND type<>'BANNED' LIMIT ?1,?2",nativeQuery = true)
+    List<User> findNotVerifiedNotBanned(int init, int size);
 }
