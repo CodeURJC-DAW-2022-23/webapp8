@@ -2,17 +2,14 @@ package com.TwitterClone.ProjectBackend.Controller;
 
 import com.TwitterClone.ProjectBackend.Model.MustacheObjects.InformationManager;
 import com.TwitterClone.ProjectBackend.Model.Notification;
-import com.TwitterClone.ProjectBackend.Model.Trend;
 import com.TwitterClone.ProjectBackend.Service.NotificationService;
 import com.TwitterClone.ProjectBackend.userManagement.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.websocket.server.PathParam;
@@ -55,18 +52,27 @@ public class NotificationController {
         return "notification";
     }
 
-    @PostMapping("/newNotification/{idTweet}/{owner}/{type}")
-    public void createNotification(@PathVariable("idTweet") Long idTweet,
-                                     @PathVariable("owner") Long idOwner,
-                                     @PathVariable("type") String notificationType,
-                                     HttpServletRequest request){
+    @GetMapping("/newNotification")
+    public String createNotification(@PathParam("idTweet") Long idTweet,
+                                     @PathParam("idOwner") Long idOwner,
+                                     @PathParam("notificationType") String notificationType,
+                                   HttpServletRequest request){
         User currentUser = this.informationManager.getCurrentUser(request);
-        this.notificationService.createNotification(idTweet, idOwner, currentUser, notificationType);
+        Long currentUserId = currentUser.getId();
+        if (!currentUserId.equals(idOwner)){
+            this.notificationService.createNotification(idTweet, idOwner, currentUser, notificationType);
+        }
+        return "finish-request";
     }
 
-    @DeleteMapping("/deleteNotification/{idNotification}")
-    public void deleteNotification(@PathVariable("idNotification") Long idNotification){
-        this.notificationService.deleteNotification(idNotification);
+    @GetMapping("/deleteNotification")
+    public String deleteNotification(@PathParam("idTweet") Long idTweet,
+                                     @PathParam("notificationType") String notificationType,
+                                     HttpServletRequest request){
+        User currentUser = this.informationManager.getCurrentUser(request);
+        Long currentUserId = currentUser.getId();
+        this.notificationService.deleteNotification(idTweet, currentUserId, notificationType);
+        return "finish-request";
     }
 
     @GetMapping("/all-notifications")

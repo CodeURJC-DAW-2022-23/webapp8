@@ -41,6 +41,12 @@ public class NavigationController {
     @Autowired
     private InformationManager informationManager;
 
+    /**
+     * Change from the current page to login
+     * @param model
+     * @param request
+     * @return
+     */
     @GetMapping("/login")
     public String login(Model model, HttpServletRequest request){
         CsrfToken token = (CsrfToken) request.getAttribute("_csrf");
@@ -48,6 +54,12 @@ public class NavigationController {
         return "login";
     }
 
+    /**
+     * Change from the current page to signup
+     * @param model
+     * @param request
+     * @return
+     */
     @GetMapping("/logout")
     public String logout(Model model, HttpServletRequest request){
         CsrfToken token = (CsrfToken) request.getAttribute("_csrf");
@@ -67,8 +79,8 @@ public class NavigationController {
         this.informationManager.addCurrentTrends(model);
 
         User currentUser = this.informationManager.getCurrentUser(request);
-        List<Tweet> tweetList = this.tweetService.find10RecentForUser(currentUser.getId());
-        List<TweetInformation> tweets = this.informationManager.calculateDataOfTweet(model, tweetList);
+        List<Tweet> tweetList = this.tweetService.find10RecentForUser(currentUser.getId(), 0, 10);
+        List<TweetInformation> tweets = this.informationManager.calculateDataOfTweet(tweetList);
         model.addAttribute("tweets", tweets);
 
         return "home";
@@ -132,8 +144,8 @@ public class NavigationController {
         UserRoles typeUser = currentUser.getRole();
         model.addAttribute("isAdmin", typeUser.equals(UserRoles.ADMIN));
 
-        List<Tweet> bookmarkTweetList = this.profileService.getBookmarks(currentUser.getId());
-        List<TweetInformation> bookmarks= this.informationManager.calculateDataOfTweet(model, bookmarkTweetList);
+        List<Tweet> bookmarkTweetList = this.profileService.getBookmarks(currentUser.getId(), 0 , 10);
+        List<TweetInformation> bookmarks= this.informationManager.calculateDataOfTweet(bookmarkTweetList);
         model.addAttribute("tweets", bookmarks);
 
         return "bookmarks";
@@ -163,7 +175,7 @@ public class NavigationController {
         model.addAttribute("followedNumber", followedNumber);
 
         List<Tweet> tweetList = this.tweetService.find10(currentUser.getId());
-        List<TweetInformation> tweets = this.informationManager.calculateDataOfTweet(model, tweetList);
+        List<TweetInformation> tweets = this.informationManager.calculateDataOfTweet(tweetList);
         model.addAttribute("tweets", tweets);
 
         model.addAttribute("user", currentUser);

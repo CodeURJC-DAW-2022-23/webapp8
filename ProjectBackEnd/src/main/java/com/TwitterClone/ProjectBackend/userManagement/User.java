@@ -19,7 +19,15 @@ import java.time.LocalDate;
 import java.util.*;
 
 /**
- * It is a type of user who has created an account and is registered in the DB.
+ * This is User Entity. A User is a person who has already registered in the application.
+ * They register with a mail account and a password which is cypher for security.
+ * A user has a unique username which will appear in the application with an @. It also has a customizable nickname.
+ * The User can write a description about they in order to tell other Users about them.
+ * The User can customize its own profile uploading a profile banner and a profile picture that depicts them
+ * The User can also keep Tweets as Bookmarks in order to see them later.
+ * The User has different roles. It could be a normal User or an Admin.
+ * The Admin is in charge of moderating the interactions between Users by
+ * banning Users that are not respecting the community or by verify famous Users.
  */
 @Getter
 @Setter
@@ -47,15 +55,13 @@ public class User  {
     private List<User> followers = new ArrayList<>();
     @ManyToMany
     private List<User> followed = new ArrayList<>();
-    @ManyToMany//(fetch = FetchType.EAGER)
+    @ManyToMany
     @LazyCollection(LazyCollectionOption.FALSE)
     private List<Tweet> bookmarks = new ArrayList<>();
     private final LocalDate joinDate;
     private String type;
-
     @Column(name = "verification_code", length = 64)
     private String verificationCode;
-
     @Column(name = "reset_password_token")
     private String resetPasswordToken;
     private boolean loggedIn;
@@ -81,12 +87,15 @@ public class User  {
         this.type = "PUBLIC";
     }
 
+    /**
+     * Empty constructor for DB.
+     */
     public User() {
         this.joinDate = java.time.LocalDate.now();
     }
 
-    /*
-   This constructor is for sample data
+    /**
+     * This constructor is for example data.
     */
     public User(String username, String nickname, String biography, String mail, String password, LocalDate time, String type) {
         this.username = username;
@@ -99,6 +108,11 @@ public class User  {
         this.type = type;
     }
 
+    /**
+     * This is for adding the profilePicture and the profileBanner directly from the path
+     * @param files
+     * @throws IOException
+     */
     public void setImages(String[] files) throws IOException {
         Resource image = new ClassPathResource(files[0]);
         this.profilePicture = BlobProxy.generateProxy(image.getInputStream(), image.contentLength());
@@ -106,14 +120,25 @@ public class User  {
         this.profileBanner = BlobProxy.generateProxy(image.getInputStream(), image.contentLength());
     }
 
+    /**
+     * This is for adding a follower user to the user
+     * @param user
+     */
     public void addFollower(User user) {
         this.followers.add(user);
     }
-
+    /**
+     * This is for adding a followed user to the user
+     * @param user
+     */
     public void addFollowed(User user) {
         this.followed.add(user);
     }
 
+    /**
+     * This is for storing a bookmark for the user
+     * @param tweet
+     */
     public void addBookmark(Tweet tweet) {
         this.bookmarks.add(tweet);
     }

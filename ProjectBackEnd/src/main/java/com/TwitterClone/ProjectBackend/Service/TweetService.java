@@ -37,8 +37,8 @@ public class TweetService {
         return tweetRepository.findByUser(user.getId());
     }
 
-    public List<Tweet> find10RecentForUser (Long id){
-        return tweetRepository.findByUserFollows(id);
+    public List<Tweet> find10RecentForUser (Long id, int init, int size){
+        return tweetRepository.findByUserFollows(id, init, size);
     }
 
     public Tweet createTweet(String text, Blob [] files, Long userId){
@@ -169,23 +169,6 @@ public class TweetService {
         return this.converterToTweets(tweetList);
     }
     */
-
-    /**
-     * Transform the list of Tuples to a list of Tweets
-     * @param tweetList
-     * @return
-     */
-    private List<Trend> converterToTweets(List<Tuple> tweetList) {
-        List<Trend> list = new LinkedList<>();
-
-        for (int i = 0; i < tweetList.size(); i++){
-            String numTweets = tweetList.get(i).get("numtweets").toString();
-            String hashtag = tweetList.get(i).get("hashtag").toString();
-            list.add(new Trend(hashtag,Integer.parseInt(numTweets)));
-        }
-
-        return list;
-    }
 
     /**
      * Get the number of likes of a tweet

@@ -118,3 +118,11 @@ async function showNotifications() {
     const load_more_mobile = document.getElementById("loadMore-mobile");
     load_more_mobile.onclick = loadMoreNotifications;
 }
+
+async function loadTweetsAssociated(hashtag) {
+    const response = await fetch(`/explore/${hashtag}`);
+    const newTrends = DECODER.decode(await response.arrayBuffer());
+
+    const container = document.getElementById("trend-container");
+    container.innerHTML = newTrends;
+}

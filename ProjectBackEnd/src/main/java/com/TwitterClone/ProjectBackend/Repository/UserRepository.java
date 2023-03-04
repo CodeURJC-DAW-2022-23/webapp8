@@ -15,23 +15,100 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+/**
+ * This Repository is the connection to DB for User Entity
+ */
 @Repository
 @Transactional
 public interface UserRepository extends JpaRepository<User, Long> {
+    /**
+     * This Query is the advanced one
+     * @param username
+     * @return
+     */
     List<User> findByUsernameContainingIgnoreCase(String username);
+
+    /**
+     * This Query returns a user with the provided id
+     * @param id
+     * @return
+     */
     Optional<User> findById(Long id);
+
+    /**
+     * This Query returns a user with the provided username
+     * @param username
+     * @return
+     */
     Optional<User> findByUsername(String username);
+
+    /**
+     * This Query returns a user with the provided email
+     * @param email
+     * @return
+     */
     Optional<User>findByEmail(String email);
+
+    /**
+     * This Query returns a user with the provided token
+     * @param token
+     * @return
+     */
     Optional<User> findByResetPasswordToken(String token);
+
+    /**
+     * This Query returns a user with the provided verification code
+     * @param code
+     * @return
+     */
     @Query("SELECT u FROM User u WHERE u.verificationCode = ?1")
     public User findByVerificationCode(String code);
+
+    /**
+     * This Query returns the amount of followed accounts a user has
+     * @param id
+     * @return
+     */
     @Query(value="SELECT COUNT(*) FROM users_followed WHERE user_id = ?1 GROUP BY user_id",nativeQuery = true)
     long countFollowed (long id);
+
+    /**
+     * This Query returns the amount of follower accounts a user has
+     * @param id
+     * @return
+     */
     @Query(value="SELECT COUNT(*) FROM users_followers WHERE user_id = ?1 GROUP BY user_id",nativeQuery = true)
     long countFollowers (long id);
     @Query(value="SELECT * FROM users WHERE enabled = false",nativeQuery = true)
     List<User> findBanned (long id);
 
+    @Query(value = "SELECT users.* FROM users_followed JOIN users ON followed_id=id WHERE user_id = ?1",nativeQuery = true)
+    List<User> findFollowed(Long id);
+
+    @Query(value = "SELECT users.* FROM users_followers JOIN users ON followers_id=id WHERE user_id = ?1",nativeQuery = true)
+    List<User> findFollowers(Long id);
+
+    /**
+     * This Query returns the banned users
+     * @return
+     */
+    @Query(value="SELECT * FROM users WHERE type = 'BANNED' LIMIT ?1,?2",nativeQuery = true)
+    List<User> findBanned (int init, int size);
+
+    /**
+     * This Query returns the verified users
+     * @return
+     */
+    @Query(value="SELECT * FROM users WHERE type = 'VERIFIED' LIMIT ?1,?2",nativeQuery = true)
+    List<User> findVerified (int init, int size);
+
+    /**
+     * This Query returns the users that are neither VERIFIED nor BANNED
+     * @return
+     */
+    @Query(value="SELECT * FROM users WHERE type<>'VERIFIED' AND type<>'BANNED' LIMIT ?1,?2",nativeQuery = true)
+    List<User> findNotVerifiedNotBanned(int init, int size);
+    
     @Query(value = "SELECT users.* FROM users_followed JOIN users ON followed_id=id WHERE user_id = ?1",nativeQuery = true)
     List<User> findFollowed(Long id);
 

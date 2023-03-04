@@ -52,6 +52,7 @@ public class InformationManager {
         model.addAttribute("id", currentUser.getId());
         model.addAttribute("username", currentUser.getUsername());
         model.addAttribute("nickname", currentUser.getNickname());
+        model.addAttribute("type", currentUser.getType());
 
         if (currentUser.getType().equals("PRIVATE")) {
             model.addAttribute("private-acount", currentUser.getType());
@@ -69,10 +70,9 @@ public class InformationManager {
 
     /**
      * Prepare the list with the Tweets to show at mustache
-     * @param model
      * @param tweets
      */
-    public List<TweetInformation> calculateDataOfTweet(Model model, List<Tweet> tweets) {
+    public List<TweetInformation> calculateDataOfTweet(List<Tweet> tweets) {
         List<TweetInformation> tweetsInfo = new ArrayList<>();
 
         for(Tweet tweet : tweets) {

@@ -9,6 +9,12 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * This is Hashtag Entity. A Hashtag is a String that starts with the symbol '#' and has any whitespace.
+ * A Hashtag is a phrase that represents a topic which a group of people are interested into.
+ * When a User publish a Tweet with a Hashtag this Tweet would appear in the explore page related to that Hashtag.
+ * Publishing Tweet with Hashtag will help your account to be more findable.
+ */
 @Getter
 @Setter
 @NoArgsConstructor

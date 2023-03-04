@@ -1,6 +1,7 @@
 package com.TwitterClone.ProjectBackend.Model;
 
 import com.TwitterClone.ProjectBackend.userManagement.User;
+import lombok.Getter;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -8,9 +9,11 @@ import java.util.Random;
 import java.util.UUID;
 
 /**
- * This class contains all the information related to a notification
+ * This is Notification Entity. When a user interacts with either your profile or your tweets, a notification will be
+ * generated in order to report you about your influence in other users.
  */
 @Entity
+@Getter
 public class Notification {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
