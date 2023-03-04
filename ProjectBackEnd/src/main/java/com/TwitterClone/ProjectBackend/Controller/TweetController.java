@@ -1,6 +1,7 @@
 package com.TwitterClone.ProjectBackend.Controller;
 
 import com.TwitterClone.ProjectBackend.Model.MustacheObjects.InformationManager;
+import com.TwitterClone.ProjectBackend.Model.MustacheObjects.TweetInformation;
 import com.TwitterClone.ProjectBackend.Model.Tweet;
 import com.TwitterClone.ProjectBackend.Service.HashtagService;
 import com.TwitterClone.ProjectBackend.Service.ProfileService;
@@ -10,10 +11,12 @@ import org.hibernate.engine.jdbc.BlobProxy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.websocket.server.PathParam;
 import java.io.IOException;
 import java.security.Principal;
 import java.sql.Blob;
@@ -58,17 +61,19 @@ public class TweetController {
      * @param size
      * @return
      */
-    /*
     @GetMapping("/home/tweets")
     public String loadMoreTweetsForHome(Model model,
-                                        @Param("from") int from,
-                                        @Param("size") int size) {
-        List<Trend> newTweets = this.tweetService.getSomeTweetsForUser(from, size);
-        model.addAttribute("tweets", newTweets);
+                                        HttpServletRequest request,
+                                        @PathParam("from") int from,
+                                        @PathParam("size") int size) {
+        User currentUser = this.informationManager.getCurrentUser(request);
+        List<Tweet> newTweets =
+                this.tweetService.find10RecentForUser(currentUser.getId(), from, size);
+        List<TweetInformation> tweets = this.informationManager.calculateDataOfTweet(model, newTweets);
+        model.addAttribute("tweets", tweets);
 
         return "tweet";
     }
-    */
     /**
      * Ask the database for more tweets for the bookmarks page
      * @param model
@@ -79,14 +84,20 @@ public class TweetController {
     /*
     @GetMapping("/bookmarks/tweets")
     public String loadMoreTweetsForBookmarks(Model model,
+                                             HttpServletRequest request,
                                              @Param("from") int from,
                                              @Param("size") int size) {
-        List<Trend> newTweets = this.tweetService.getSomeBookmarkTweets(from, size);
-        model.addAttribute("tweets", newTweets);
+        User currentUser = this.informationManager.getCurrentUser(request);
+        List<Tweet> newTweets =
+                this.profileService.getBookmarks(currentUser.getId(), from, size);
+        List<TweetInformation> tweets =
+                this.informationManager.calculateDataOfTweet(model, newTweets);
+        model.addAttribute("tweets", tweets);
 
         return "tweet";
     }
     */
+
 
     /**
      * Ask the database for more tweets from the user

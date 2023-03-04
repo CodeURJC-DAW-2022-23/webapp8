@@ -67,7 +67,7 @@ public class NavigationController {
         this.informationManager.addCurrentTrends(model);
 
         User currentUser = this.informationManager.getCurrentUser(request);
-        List<Tweet> tweetList = this.tweetService.find10RecentForUser(currentUser.getId());
+        List<Tweet> tweetList = this.tweetService.find10RecentForUser(currentUser.getId(), 0, 10);
         List<TweetInformation> tweets = this.informationManager.calculateDataOfTweet(model, tweetList);
         model.addAttribute("tweets", tweets);
 
@@ -132,8 +132,10 @@ public class NavigationController {
         UserRoles typeUser = currentUser.getRole();
         model.addAttribute("isAdmin", typeUser.equals(UserRoles.ADMIN));
 
-        List<Tweet> bookmarkTweetList = this.profileService.getBookmarks(currentUser.getId());
-        List<TweetInformation> bookmarks= this.informationManager.calculateDataOfTweet(model, bookmarkTweetList);
+        List<Tweet> bookmarkTweetList =
+                this.profileService.getBookmarks(currentUser.getId(), 0, 10);
+        List<TweetInformation> bookmarks =
+                this.informationManager.calculateDataOfTweet(model, bookmarkTweetList);
         model.addAttribute("tweets", bookmarks);
 
         return "bookmarks";
