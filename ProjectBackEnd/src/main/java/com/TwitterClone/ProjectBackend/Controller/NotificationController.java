@@ -58,7 +58,10 @@ public class NotificationController {
                                      @PathParam("notificationType") String notificationType,
                                    HttpServletRequest request){
         User currentUser = this.informationManager.getCurrentUser(request);
-        this.notificationService.createNotification(idTweet, idOwner, currentUser, notificationType);
+        Long currentUserId = currentUser.getId();
+        if (!currentUserId.equals(idOwner)){
+            this.notificationService.createNotification(idTweet, idOwner, currentUser, notificationType);
+        }
         return "finish-request";
     }
 

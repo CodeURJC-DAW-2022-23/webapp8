@@ -47,7 +47,9 @@ public class NotificationService {
     }
 
     public void deleteNotification(Long idTweet, Long idCurrentUser, String notificationType) {
-        Notification notification = this.notificationRepository.findSpecificNotification(idCurrentUser, idTweet, notificationType).get();
-        this.notificationRepository.delete(notification);
+        Notification notification = this.notificationRepository.findSpecificNotification(idCurrentUser, idTweet, notificationType).orElse(null);
+        if (notification != null){
+            this.notificationRepository.delete(notification);
+        }
     }
 }
