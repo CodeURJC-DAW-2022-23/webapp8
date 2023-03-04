@@ -32,8 +32,8 @@ public class TweetService {
         return tweetRepository.findAll();
     }
 
-    public List<Tweet> find10(){
-        User user = userRepository.findById(1L).orElse(null);
+    public List<Tweet> find10(Long id){
+        User user = userRepository.findById(id).orElse(null);
         return tweetRepository.findByUser(user.getId());
     }
 

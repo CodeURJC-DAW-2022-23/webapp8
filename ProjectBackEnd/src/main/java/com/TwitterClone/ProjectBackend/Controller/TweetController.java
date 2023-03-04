@@ -40,7 +40,7 @@ public class TweetController {
 
     @GetMapping("/{id}/tweet")
     public List<Tweet> get10Tweet(@PathVariable("id") Long id) {
-        List<Tweet> t = tweetService.find10();
+        List<Tweet> t = tweetService.find10(1L);
         return new ArrayList<>();
     }
 
@@ -136,7 +136,7 @@ public class TweetController {
     }
 
     private void saveHashtag(String text){
-        List<Tweet> tweets = tweetService.find10();
+        List<Tweet> tweets = tweetService.find10(1L);
         boolean hashtagFound = false;
         String hashtag = "";
         for(int i = 0; i < text.length(); i++){

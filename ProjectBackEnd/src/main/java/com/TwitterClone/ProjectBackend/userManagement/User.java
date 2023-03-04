@@ -117,4 +117,12 @@ public class User  {
     public void addBookmark(Tweet tweet) {
         this.bookmarks.add(tweet);
     }
+
+    public int getFollowersNumber() {
+        return this.followers.size();
+    }
+
+    public int getFollowedNumber() {
+        return this.followed.size();
+    }
 }

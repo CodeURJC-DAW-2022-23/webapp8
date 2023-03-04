@@ -112,12 +112,12 @@
                 <!-- FOLLOWING AND FOLLOWERS -->
                 <a class="flex gap-3" href="/follow">
                     <div class="flex items-center gap-1">
-                        <span class="font-semibold text-md dark:text-white-0 hover:underline">81</span>
+                        <span class="font-semibold text-md dark:text-white-0 hover:underline">{{followedNumber}}</span>
                         <span
                             class="font-semibold text-md dark:font-normal text-gray-2 hover:underline">Following</span>
                     </div>
                     <div class="flex items-center gap-1">
-                        <span class="font-semibold text-md dark:text-white-0 hover:underline">76</span>
+                        <span class="font-semibold text-md dark:text-white-0 hover:underline">{{followersNumber}}</span>
                         <span
                             class="font-semibold text-md dark:font-normal text-gray-2 hover:underline">Followers</span>
                     </div>
@@ -141,11 +141,7 @@
 
         <!-- TWEETS -->
         <div class="relative bottom-9">
-            <!-- FRAME -->
-            <div class="border-b cursor-pointer border-gray-9 dark:bg-black-0 dark:border-black-5">
-                <!-- TWEET -->
-                <!-- TODO - We need a previous DB query...  -->
-            </div>
+            {{> tweet}}
         </div>
 
         <!-- SPACE -->

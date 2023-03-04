@@ -152,10 +152,21 @@ public class NavigationController {
         this.informationManager.addNameToThePage(model, nickname);
 
         // Charge left and right bar information...
-        this.informationManager.addCurrentTrends(model);
         this.informationManager.addProfileInfoToLeftBar(model, request);
+        this.informationManager.addCurrentTrends(model);
 
-        model.addAttribute("user", currentUser); // (pass all the user information)
+        // Add necessary user data to model...
+        int followersNumber = currentUser.getFollowersNumber();
+        model.addAttribute("followersNumber", followersNumber);
+
+        int followedNumber = currentUser.getFollowedNumber();
+        model.addAttribute("followedNumber", followedNumber);
+
+        List<Tweet> tweetList = this.tweetService.find10(currentUser.getId());
+        List<TweetInformation> tweets = this.informationManager.calculateDataOfTweet(model, tweetList);
+        model.addAttribute("tweets", tweets);
+
+        model.addAttribute("user", currentUser);
 
         return "profile";
     }
