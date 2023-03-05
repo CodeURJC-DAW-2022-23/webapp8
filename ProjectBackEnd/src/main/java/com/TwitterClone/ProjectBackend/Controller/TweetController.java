@@ -58,7 +58,7 @@ public class TweetController {
 
         List<Tweet> newTweets =
                 this.tweetService.find10RecentForUser(currentUser.getId(), from, size);
-        List<TweetInformation> tweets = this.informationManager.calculateDataOfTweet(newTweets);
+        List<TweetInformation> tweets = this.informationManager.calculateDataOfTweet(newTweets, currentUser);
         model.addAttribute("tweets", tweets);
 
         return "tweet";
@@ -85,7 +85,7 @@ public class TweetController {
         List<Tweet> newTweets =
                 this.profileService.getBookmarks(currentUser.getId(), from, size);
         List<TweetInformation> tweets =
-                this.informationManager.calculateDataOfTweet(newTweets);
+                this.informationManager.calculateDataOfTweet(newTweets, currentUser);
         model.addAttribute("tweets", tweets);
 
         return "tweet";
@@ -257,12 +257,11 @@ public class TweetController {
      * @throws IOException
      */
     @GetMapping("/tweet/bookmark/{id}")
-    public String toggleBookmark(@PathVariable("id") Long id, HttpServletRequest request) throws IOException{
+    public String toggleBookmark(@PathVariable("id") Long id, HttpServletRequest request){
         Tweet tweet = this.tweetService.findById(id).get();
         User currentUser = this.informationManager.getCurrentUser(request);
         this.tweetService.toggleBookmark(currentUser, tweet);
-
-        return "error";
+        return "redirect:/bookmarks";
     }
 
     @GetMapping("/tweet/delete/{id}")

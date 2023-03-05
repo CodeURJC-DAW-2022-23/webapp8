@@ -21,8 +21,8 @@ async function giveLike(tweet_id, tweet_owner_id) {
         await fetch(`/deleteNotification?idTweet=${tweet_id}&notificationType=${notificationType}`);
     }
 
-    like_container.classList.toggle('text-red-0');
     like_svg.classList.toggle('fill-red-0');
+    like_svg.classList.toggle('fill-gray-4');
     like_container.textContent = value;
 };
 
@@ -49,13 +49,13 @@ async function giveRetweet(tweet_id, tweet_owner_id) {
         await fetch(`/deleteNotification?idTweet=${tweet_id}&notificationType=${notificationType}`);
     }
 
-    retweet_container.classList.toggle('text-green-0');
     retweet_svg.classList.toggle('fill-green-0');
+    retweet_svg.classList.toggle('fill-gray-4');
     retweet_container.textContent = value;
 };
 
 /**
- * Give o remove a bookmark to a tweet
+ * Give or remove a bookmark of a tweet
  * @param {String} tweet_id 
  * @returns {Promise<void>}
  */
@@ -65,6 +65,7 @@ async function giveBookmark(tweet_id) {
     await fetch(`/tweet/bookmark/${tweet_id}`);
 
     bookmark_svg.classList.toggle('fill-primary');
+    bookmark_svg.classList.toggle('fill-gray-4');
 };
 
 /**

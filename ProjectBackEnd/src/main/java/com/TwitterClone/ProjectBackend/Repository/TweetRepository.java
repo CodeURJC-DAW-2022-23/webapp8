@@ -105,4 +105,12 @@ public interface TweetRepository extends JpaRepository<Tweet, Long> {
     Long countComments(Long id);
     @Query(value = "SELECT tweet.* FROM hashtag_tweets JOIN tweet ON tweets_id = id WHERE hashtag_hashtag = ?1 ORDER BY publish_date DESC LIMIT ?2,?3", nativeQuery = true)
     List<Tweet> getTweetsOfTrend(String id, int from, int size);
+    @Query(value = "DELETE FROM tweet_comments WHERE tweet_id=?1;\n" +
+            "DELETE FROM tweet_likes WHERE tweet_id=?1;\n" +
+            "DELETE FROM tweet_retweets WHERE tweet_id=?1;\n" +
+            "DELETE FROM users_bookmarks WHERE bookmarks_id=?1;\n" +
+            "DELETE FROM notification WHERE tweet_trigger_id =?1;\n" +
+            "DELETE FROM hashtag_tweets WHERE tweets_id=?1;\n" +
+            "DELETE FROM tweet WHERE id=?1;",nativeQuery = true)
+    boolean deleteCascade(Long id);
 }

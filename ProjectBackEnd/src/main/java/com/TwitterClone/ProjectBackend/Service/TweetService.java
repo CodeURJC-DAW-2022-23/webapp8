@@ -68,16 +68,19 @@ public class TweetService {
      * @return
      */
     public boolean toggleLike(User giver, Tweet t){
-        if (t.getLikes().contains(giver)){
+        boolean liked = false;
+        if (this.isLiked(giver, t)){
             t.removeLike(giver);
-            this.tweetRepository.save(t);
-            return false;
+        } else {
+            t.addLike(giver);
+            liked = true;
         }
-
-        t.addLike(giver);
         this.tweetRepository.save(t);
+        return liked;
+    }
 
-        return true;
+    public boolean isLiked(User user, Tweet tweet) {
+        return tweet.getLikes().contains(user);
     }
 
     /**
@@ -87,16 +90,19 @@ public class TweetService {
      * @return
      */
     public boolean toggleRetweet(User giver, Tweet t){
-        if (t.getRetweets().contains(giver)){
+        boolean retweeted = false;
+        if (this.isRetweeted(giver, t)){
             t.removeRetweet(giver);
-            this.tweetRepository.save(t);
-            return false;
+        } else {
+            t.addRetweet(giver);
+            retweeted = true;
         }
-
-        t.addRetweet(giver);
         this.tweetRepository.save(t);
+        return retweeted;
+    }
 
-        return true;
+    public boolean isRetweeted(User user, Tweet tweet) {
+        return tweet.getRetweets().contains(user);
     }
 
     /**
@@ -107,12 +113,15 @@ public class TweetService {
     public void toggleBookmark(User currentUser, Tweet t) {
         List<Tweet> bookmarks = currentUser.getBookmarks();
         if (bookmarks.contains(t)){
-            bookmarks.add(t);
-        }else{
             bookmarks.remove(t);
+        }else{
+            bookmarks.add(t);
         }
         currentUser.setBookmarks(bookmarks);
         this.userRepository.save(currentUser);
+    }
+    public boolean isBookmarked(User user, Tweet tweet) {
+        return user.getBookmarks().contains(tweet);
     }
 
     /**

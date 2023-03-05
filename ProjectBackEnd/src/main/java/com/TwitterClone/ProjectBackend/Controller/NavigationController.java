@@ -82,7 +82,7 @@ public class NavigationController {
         User currentUser = this.informationManager.getCurrentUser(request);
         List<Tweet> tweetList = this.tweetService.find10RecentForUser(currentUser.getId(), 0, 10);
 
-        List<TweetInformation> tweets = this.informationManager.calculateDataOfTweet(tweetList);
+        List<TweetInformation> tweets = this.informationManager.calculateDataOfTweet(tweetList, currentUser);
         model.addAttribute("tweets", tweets);
 
         return "home";
@@ -105,6 +105,8 @@ public class NavigationController {
 
         List<Trend> trends = this.hashtagService.getCurrentTrends(0,10);
         model.addAttribute("trends", trends);
+
+        this.informationManager.addRecommended(model,request);
 
         return "explore";
     }
@@ -147,7 +149,7 @@ public class NavigationController {
         model.addAttribute("isAdmin", typeUser.equals(UserRoles.ADMIN));
 
         List<Tweet> bookmarkTweetList = this.profileService.getBookmarks(currentUser.getId(), 0 , 10);
-        List<TweetInformation> bookmarks= this.informationManager.calculateDataOfTweet(bookmarkTweetList);
+        List<TweetInformation> bookmarks= this.informationManager.calculateDataOfTweet(bookmarkTweetList, currentUser);
         model.addAttribute("tweets", bookmarks);
 
         return "bookmarks";
@@ -179,7 +181,7 @@ public class NavigationController {
         model.addAttribute("followedNumber", followedNumber);
 
         List<Tweet> tweetList = this.tweetService.find10(currentUser.getId());
-        List<TweetInformation> tweets = this.informationManager.calculateDataOfTweet(tweetList);
+        List<TweetInformation> tweets = this.informationManager.calculateDataOfTweet(tweetList, currentUser);
         model.addAttribute("tweets", tweets);
 
         model.addAttribute("user", currentUser);

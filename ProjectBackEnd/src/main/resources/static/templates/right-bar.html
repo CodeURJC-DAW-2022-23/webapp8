@@ -17,12 +17,13 @@
             {{/isExplorePage}}
         </form>
 
+        {{^ isExplorePage}}
         <div class="flex flex-col justify-start pt-3 h-fit bg-gray-6 rounded-3xl dark:bg-black-2 bg-gray-14">
             <h2 class="px-5 pb-3 text-2xl font-bold dark:text-gray-3 text-black-0">
                 What's happening
             </h2>
 
-            {{^isExplorePage}}
+            {{^ isExplorePage}}
             
             {{> explore_element}}
 
@@ -47,6 +48,20 @@
             </a>
             {{/isLogged}}
         </div>
+        {{/ isExplorePage}}
+
+        {{# isLogged}}
+        {{# isExplorePage}}
+        <div class="flex flex-col justify-start pt-3 h-fit bg-gray-6 rounded-3xl dark:bg-black-2 bg-gray-14">
+            <h2 class="px-5 pb-3 text-2xl font-bold dark:text-gray-3 text-black-0">
+                Recommended Profiles
+            </h2>
+            {{#usersToFollow}}
+                {{>user-element}}
+            {{/usersToFollow}}
+        </div>
+        {{/ isExplorePage}}
+        {{/ isLogged}}
     </div>
 </aside>
 {{> footer}}
