@@ -98,17 +98,26 @@ public class TweetController {
      * @param size
      * @return
      */
-    /*
-    @GetMapping("/profile/tweets")
+    @GetMapping("/profile/tweets/{id}")
     public String loadMoreTweetsForProfile(Model model,
-                                           @Param("from") int from,
-                                           @Param("size") int size) {
-        List<Trend> newTweets = this.tweetService.getSomeUserTweets(from, size);
-        model.addAttribute("tweets", newTweets);
+                                           @PathVariable long id,
+                                           @PathParam("from") int from,
+                                           @PathParam("size") int size) {
+
+        User user = this.profileService.findById(id).get();
+        int countTweetsOfUser = this.profileService.countTweetsOfUser(user.getId());
+
+        if (countTweetsOfUser <= from) {
+            return "redirect:/";
+        }
+
+        List<Tweet> newTweets = this.tweetService.find10(id, from, size);
+        List<TweetInformation> tweets = this.informationManager.calculateDataOfTweet(newTweets, user);
+        model.addAttribute("tweets", tweets);
 
         return "tweet";
     }
-     */
+
 
     /**
      * Add a new tweet from the trigger user to the database

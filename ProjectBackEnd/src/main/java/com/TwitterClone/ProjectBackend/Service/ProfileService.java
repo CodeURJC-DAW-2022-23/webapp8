@@ -113,4 +113,8 @@ public class ProfileService {
     public long countFollowers(Long id) {
         return this.userRepository.countFollowers(id);
     }
+
+    public int countTweetsOfUser(Long id) {
+        return  this.tweetRepository.countUserTweets(id);
+    }
 }
