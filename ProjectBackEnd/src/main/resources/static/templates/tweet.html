@@ -4,7 +4,7 @@
   <!-- TWEET -->
   <div class="flex w-full gap-4 px-5 pt-3 hover:bg-gray-7 dark:hover:bg-black-6">
     <!-- PROFILE IMAGE - TODO: hacer link a perfil y perfil -->
-    <a href="">
+    <a href="/profile/{{tweet.user.id}}">
       <figure class="mt-2 rounded-full h-11 w-11 hover:bg-black-0">
         <img src="/{{tweet.user.id}}/profile-pic" alt="Profile photo"
              class="w-full h-full rounded-full hover:opacity-80"
@@ -16,21 +16,23 @@
     <div class="flex flex-col flex-1 gap-2">
       <div class="flex flex-col gap-1">
         <!-- PROFILE -->
-        <a class="grid items-center grid-flow-col gap-2 auto-cols-auto-auto-1fr" href="#">
-          <div id="{{tweet.id}}userNameSvg" class="flex items-center gap-1 overflow-hidden font-bold dark:text-white-0 hover:underline decoration-1 text-ellipsis whitespace-nowrap">
-              {{tweet.user.nickname}}
-              <!--user svg-->
-          </div>
-          <span class="overflow-hidden text-ellipsis whitespace-nowrap text-gray-4 hover:underline">
-            @{{tweet.user.username}}
-          </span>
+        <div class="flex items-center gap-2 space-between auto-cols-auto-auto-1fr">
+          <a class="flex gap-2" href="/profile/{{tweet.user.id}}">
+            <div id="{{tweet.id}}userNameSvg" class="flex items-center gap-1 overflow-hidden font-bold dark:text-white-0 hover:underline decoration-1 text-ellipsis whitespace-nowrap">
+                {{tweet.user.nickname}}
+                <!--user svg-->
+            </div>
+            <span class="overflow-hidden text-ellipsis whitespace-nowrap text-gray-4 hover:underline">
+              @{{tweet.user.username}}
+            </span>
+          </a>
           <!-- TIME SINCE PUBLICATION -->
           <span class="text-gray-4 whitespace-nowrap">
             {{tweet.publishDate}}
           </span>
 
           {{> can-button}}
-        </a>
+        </div>
 
         <!-- TWEET TEXT -->
         <p class="overflow-hidden text-sm text-ellipsis text-twitter-dark-gray dark:text-white-0">
