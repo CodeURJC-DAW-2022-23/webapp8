@@ -12,6 +12,9 @@ The objetive is to replicated the Social Media Twitter with some upgrades for th
         * [Use Cases](#performing_arts-use-cases)
         * [Non Functional Requirements](#triangular_flag_on_post-non-functional-requirements)
         * [Advanced algorithms](#dart-advanced-algorithms)
+* [Phase 1](#triangular_ruler-phase-1---layout)
+    * [Screens](#computer-screens)
+    * [Navigation Map](#airplane-navigation-map)
 
 ***
 
@@ -39,7 +42,7 @@ To organize the team, we are using [Trello](https://trello.com/b/WpuV8KtM/la-put
 * Notifications
 * Trends
 
-![ER Diagram](./files-to-README/E-R_Diagram.svg)
+![ER Diagram](./files-to-README/phase0/E-R_Diagram.svg)
 
 #### :bust_in_silhouette: Type of User
 
@@ -73,19 +76,19 @@ To organize the team, we are using [Trello](https://trello.com/b/WpuV8KtM/la-put
             text-align: center;">
 <small>
 
-![useCase1](./files-to-README/useCase1.png)
+![useCase1](./files-to-README/phase0/useCase1.png)
 *Figure 1 - Sign Up and Log In*
 
-![useCase2](./files-to-README/useCase2.png)
+![useCase2](./files-to-README/phase0/useCase2.png)
 *Figure 2 - Admin permissions*
 
-![useCase3](./files-to-README/useCase3.png)
+![useCase3](./files-to-README/phase0/useCase3.png)
 *Figure 3 - General permissions*
 
-![useCase4](./files-to-README/useCase4.png)
+![useCase4](./files-to-README/phase0/useCase4.png)
 *Figure 4 - Registered permissions*
 
-![useCase5](./files-to-README/useCase5.png)
+![useCase5](./files-to-README/phase0/useCase5.png)
 *Figure 5 - User Actions*
 
 </small>
@@ -150,5 +153,60 @@ To organize the team, we are using [Trello](https://trello.com/b/WpuV8KtM/la-put
 * ##### Search
 
     *  We will create a strong search algorithm able to adapt to the filters that users select to provide an accurate and fast result.
+
+***
+
+
+## :triangular_ruler: Phase 1 - Layout
+
+### :computer: Screens
+
+<div style="display: flex;
+            flex-direction: column;
+            text-align: center;">
+<small>
+
+![index.html](./files-to-README/phase1/main_screen.png)
+*Figure 6 - index.html*
+
+![login.html](./files-to-README/phase1/login_screen.png)
+*Figure 7 - login.html*
+
+![signup.html](./files-to-README/phase1/sign_up_screen.png)
+*Figure 8 - signup.html*
+
+![home.html](./files-to-README/phase1/home_screen.png)
+*Figure 9 - home.html*
+
+![explore.html](./files-to-README/phase1/explore_screen.png)
+*Figure 10 - explore.html*
+
+![bookmarks.html](./files-to-README/phase1/bookmark_screen.png)
+*Figure 11 - bookmarks.html*
+
+![notifications.html](./files-to-README/phase1/notifications_screen.png)
+*Figure 12 - notifications.html*
+
+![profile.html](./files-to-README/phase1/profile_screen.png)
+*Figure 13 - profile.html*
+
+![dashboard.html](./files-to-README/phase1/dashboard_screen.png)
+*Figure 14 - dashboard.html*
+
+</small>
+</div>
+
+### :airplane: Navigation Map
+
+<div style="display: flex;
+            flex-direction: column;
+            text-align: center;">
+<small>
+
+![navigationMap](./files-to-README/phase1/navigationMap.png)
+*Figure 15 - Navigation Map*
+
+</small>
+</div>
 
 ***
