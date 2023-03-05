@@ -5,6 +5,7 @@ import com.TwitterClone.ProjectBackend.Model.MustacheObjects.TweetInformation;
 import com.TwitterClone.ProjectBackend.Model.Notification;
 import com.TwitterClone.ProjectBackend.Model.Tweet;
 import com.TwitterClone.ProjectBackend.Service.NotificationService;
+import com.TwitterClone.ProjectBackend.Service.ProfileService;
 import com.TwitterClone.ProjectBackend.userManagement.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
@@ -27,6 +28,8 @@ public class NotificationController {
     private NotificationService notificationService;
     @Autowired
     private InformationManager informationManager;
+    @Autowired
+    private ProfileService profileService;
 
     @GetMapping("/notifications/notification")
     public String loadMoreNotifications(Model model,
@@ -72,10 +75,13 @@ public class NotificationController {
                                      @PathParam("notificationType") String notificationType,
                                    HttpServletRequest request){
         User currentUser = this.informationManager.getCurrentUser(request);
+        User owner = this.profileService.findById(idOwner).get();
         Long currentUserId = currentUser.getId();
+
         if (!currentUserId.equals(idOwner)){
-            this.notificationService.createNotification(idTweet, idOwner, currentUser, notificationType);
+            this.notificationService.createNotification(idTweet, owner, currentUser, notificationType);
         }
+
         return "finish-request";
     }
 

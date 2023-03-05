@@ -4,12 +4,12 @@ import com.TwitterClone.ProjectBackend.Model.MustacheObjects.InformationManager;
 import com.TwitterClone.ProjectBackend.Model.MustacheObjects.TweetInformation;
 import com.TwitterClone.ProjectBackend.Model.Tweet;
 import com.TwitterClone.ProjectBackend.Service.HashtagService;
+import com.TwitterClone.ProjectBackend.Service.NotificationService;
 import com.TwitterClone.ProjectBackend.Service.ProfileService;
 import com.TwitterClone.ProjectBackend.Service.TweetService;
 import com.TwitterClone.ProjectBackend.userManagement.User;
 import org.hibernate.engine.jdbc.BlobProxy;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -18,9 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletRequest;
 import javax.websocket.server.PathParam;
 import java.io.IOException;
-import java.security.Principal;
 import java.sql.Blob;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -36,23 +34,8 @@ public class TweetController {
     private ProfileService profileService;
     @Autowired
     private InformationManager informationManager;
-
-    @GetMapping(path = "{id}")
-    public Tweet getOneTweet(@PathVariable("id") Long id) {
-        return tweetService.findById(id).orElse(null);
-    }
-
-    @GetMapping("/{id}/tweet")
-    public List<Tweet> get10Tweet(@PathVariable("id") Long id) {
-        List<Tweet> t = tweetService.find10(1L);
-        return new ArrayList<>();
-    }
-
-    @GetMapping("/{id}/casa")
-    public String getRecent(@PathVariable("id") Long id) {
-        List<Tweet> t = tweetService.find10RecentForUser(id,0,10);
-        return "";
-    }
+    @Autowired
+    private NotificationService notificationService;
 
     /**
      * Ask the database for more tweets for the home page
@@ -144,7 +127,7 @@ public class TweetController {
         User currentUser = this.informationManager.getCurrentUser(request);
         Long userId = currentUser.getId();
         Tweet newTweet = this.tweetService.createTweet(tweet_info, files, userId);
-        saveHashtag(tweet_info, newTweet);
+        processTextTweet(tweet_info, newTweet, currentUser);
 
         return "redirect:/home";
     }
@@ -158,11 +141,16 @@ public class TweetController {
         User currentUser = this.informationManager.getCurrentUser(request);
         Long userId = currentUser.getId();
         Tweet newTweet = this.tweetService.createTweet(tweet_info, files, userId);
-        saveHashtag(tweet_info, newTweet);
+        processTextTweet(tweet_info, newTweet, currentUser);
 
         Optional<User> user_owner = this.profileService.findById(id);
         User user_reply = user_owner.get();
         tweetService.addComment(tweet_info, files, user_reply, newTweet);
+
+        if (!userId.equals(user_reply.getId())) {
+            this.notificationService
+                    .createNotification(newTweet.getId(), user_reply, currentUser, "MENTION");
+        }
 
         return "redirect:/home";
     }
@@ -180,13 +168,34 @@ public class TweetController {
         return files;
     }
 
-    private void saveHashtag(String text, Tweet tweet){
+    private void processTextTweet(String text, Tweet tweet, User currentUser){
         String [] splitText = text.split(" ");
 
         for(String segment : splitText){
 
             if (segment.startsWith("#")) {
                 this.processHashtag(segment, tweet);
+            }
+
+            if (segment.startsWith("@")) {
+                this.processMention(segment, tweet, currentUser);
+            }
+        }
+    }
+
+    private void processMention(String segment, Tweet tweet, User currentUser) {
+        String [] splitMention = segment.split("@");
+
+        for (String mention : splitMention) {
+            User userToMention = this.profileService.findByUsername(mention).orElse(null);
+
+            if (userToMention != null && !currentUser.getId().equals(userToMention.getId())) {
+                this.notificationService
+                        .createNotification(
+                                tweet.getId(),
+                                userToMention,
+                                currentUser,
+                                "MENTION");
             }
         }
     }

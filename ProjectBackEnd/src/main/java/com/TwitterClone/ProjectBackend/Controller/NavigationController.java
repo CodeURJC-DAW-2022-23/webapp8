@@ -65,7 +65,7 @@ public class NavigationController {
     public String logout(Model model, HttpServletRequest request){
         CsrfToken token = (CsrfToken) request.getAttribute("_csrf");
         model.addAttribute("token", token.getToken());
-        return "/";
+        return "redirect:/";
     }
 
     /**

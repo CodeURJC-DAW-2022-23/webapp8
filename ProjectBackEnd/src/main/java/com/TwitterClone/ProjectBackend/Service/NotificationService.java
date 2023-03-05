@@ -37,9 +37,9 @@ public class NotificationService {
         return list;
     }
 
-    public void createNotification(Long idTweet, Long idOwner, User currentUser, String notificationType) {
-        User owner = this.userRepository.findById(idOwner).orElse(null);
+    public void createNotification(Long idTweet, User owner, User currentUser, String notificationType) {
         Tweet tweetTrigger = this.tweetRepository.findById(idTweet).orElse(null);
+
         if (owner != null && tweetTrigger != null){
             Notification notification = new Notification(tweetTrigger, owner, currentUser, notificationType);
             this.notificationRepository.save(notification);
