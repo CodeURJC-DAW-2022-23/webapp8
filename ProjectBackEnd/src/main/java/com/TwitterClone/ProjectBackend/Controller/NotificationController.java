@@ -1,7 +1,9 @@
 package com.TwitterClone.ProjectBackend.Controller;
 
 import com.TwitterClone.ProjectBackend.Model.MustacheObjects.InformationManager;
+import com.TwitterClone.ProjectBackend.Model.MustacheObjects.TweetInformation;
 import com.TwitterClone.ProjectBackend.Model.Notification;
+import com.TwitterClone.ProjectBackend.Model.Tweet;
 import com.TwitterClone.ProjectBackend.Service.NotificationService;
 import com.TwitterClone.ProjectBackend.userManagement.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +35,12 @@ public class NotificationController {
                                         HttpServletRequest request) {
         User currentUser = this.informationManager.getCurrentUser(request);
         Long idCurrentUser = currentUser.getId();
+        int numNotifications = this.notificationService.countNotifications(idCurrentUser);
+
+        if (numNotifications <= from) {
+            return "redirect:/";
+        }
+
         List<Notification> newNotifications = this.notificationService.get10NotificationsOfUser(idCurrentUser, from, size);
         model.addAttribute("notifications", newNotifications);
 
@@ -46,6 +54,12 @@ public class NotificationController {
                                         HttpServletRequest request) {
         User currentUser = this.informationManager.getCurrentUser(request);
         Long idCurrentUser = currentUser.getId();
+        int numMentions = this.notificationService.countMentions(idCurrentUser);
+
+        if (numMentions <= from) {
+            return "redirect:/";
+        }
+
         List<Notification> newMentions = this.notificationService.get10MentionsOfUser(idCurrentUser, from, size);
         model.addAttribute("notifications", newMentions);
 

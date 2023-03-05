@@ -71,27 +71,29 @@ async function loadMoreTweetsForProfile() {
 }
 
 async function loadMoreNotifications() {
-    const from = counterPetitions + 1;
+    const from = (counterPetitions + 1) * NUMBER_ELEMENTS_PER_LOAD
 
     const response = await fetch(`/notifications/notification?from=${from}&size=${NUMBER_ELEMENTS_PER_LOAD}`);
-    const newTweets = DECODER.decode(await response.arrayBuffer());
 
-    const container = document.getElementById("notification-container");
-    container.innerHTML += newTweets;
+    if (response.redirected) {
+        hideButtons();
+        return;
+    }
 
-    counterPetitions++;
+    addNewElements(response, "notification");
 }
 
 async function loadMoreMentions() {
-    const from = counterPetitions + 1;
+    const from = (counterPetitions + 1) * NUMBER_ELEMENTS_PER_LOAD
 
     const response = await fetch(`/mentions/mention?from=${from}&size=${NUMBER_ELEMENTS_PER_LOAD}`);
-    const newTweets = DECODER.decode(await response.arrayBuffer());
 
-    const container = document.getElementById("notification-container");
-    container.innerHTML += newTweets;
+    if (response.redirected) {
+        hideButtons();
+        return;
+    }
 
-    counterPetitions++;
+    addNewElements(response, "notification");
 }
 
 async function showMentions() {

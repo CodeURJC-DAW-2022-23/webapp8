@@ -52,4 +52,12 @@ public class NotificationService {
             this.notificationRepository.delete(notification);
         }
     }
+
+    public int countNotifications(Long idCurrentUser) {
+        return this.notificationRepository.countNotifications(idCurrentUser);
+    }
+
+    public int countMentions(Long idCurrentUser) {
+        return this.notificationRepository.countMentions(idCurrentUser);
+    }
 }

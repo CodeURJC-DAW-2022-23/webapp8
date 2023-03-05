@@ -47,4 +47,10 @@ public interface NotificationRepository extends JpaRepository<Notification, Long
      */
     @Query(value = "SELECT * FROM notification WHERE user_who_notifies_id = ?1 AND tweet_trigger_id = ?2 AND type = ?3",nativeQuery = true)
     Optional<Notification> findSpecificNotification(long userWhoNotifiesId,long tweetId, String type);
+
+    @Query(value = "SELECT COUNT(*) FROM notification WHERE user_to_notify_id = ?1", nativeQuery = true)
+    int countNotifications(Long idCurrentUser);
+
+    @Query(value = "SELECT COUNT(*) FROM notification WHERE user_to_notify_id = ?1 AND type='MENTION'",nativeQuery = true)
+    int countMentions(Long idCurrentUser);
 }
