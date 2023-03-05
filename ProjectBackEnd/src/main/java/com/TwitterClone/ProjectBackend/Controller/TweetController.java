@@ -143,8 +143,8 @@ public class TweetController {
         Blob [] files = this.manageImages(tweet_files);
         User currentUser = this.informationManager.getCurrentUser(request);
         Long userId = currentUser.getId();
-        this.tweetService.createTweet(tweet_info, files, userId);
-        saveHashtag(tweet_info);
+        Tweet newTweet = this.tweetService.createTweet(tweet_info, files, userId);
+        saveHashtag(tweet_info, newTweet);
 
         return "redirect:/home";
     }
@@ -158,7 +158,7 @@ public class TweetController {
         User currentUser = this.informationManager.getCurrentUser(request);
         Long userId = currentUser.getId();
         Tweet newTweet = this.tweetService.createTweet(tweet_info, files, userId);
-        saveHashtag(tweet_info);
+        saveHashtag(tweet_info, newTweet);
 
         Optional<User> user_owner = this.profileService.findById(id);
         User user_reply = user_owner.get();
@@ -180,37 +180,24 @@ public class TweetController {
         return files;
     }
 
-    private void saveHashtag(String text){
-        List<Tweet> tweets = tweetService.find10(1L);
-        boolean hashtagFound = false;
-        String hashtag = "";
+    private void saveHashtag(String text, Tweet tweet){
+        String [] splitText = text.split(" ");
 
-        for(int i = 0; i < text.length(); i++){
+        for(String segment : splitText){
 
-            if (text.charAt(i) =='#'){
+            if (segment.startsWith("#")) {
+                this.processHashtag(segment, tweet);
+            }
+        }
+    }
 
-                if (hashtagFound){
-                    hashtagService.add(hashtag, tweets.get(0));
-                    hashtag = "";
-                }
+    private void processHashtag(String segment, Tweet firstTweet) {
+        String [] splitHashtags = segment.split("#");
 
-                hashtagFound = true;
+        for (String hashtag : splitHashtags) {
 
-            } else if (hashtagFound){
-
-                if (text.charAt(i) == ' ' || text.charAt(i) == '#'){
-                    hashtagFound = false;
-                    hashtagService.add(hashtag, tweets.get(0));
-                    hashtag = "";
-
-                } else {
-
-                    hashtag += String.valueOf(text.charAt(i));
-
-                    if (i == text.length()-1){
-                        hashtagService.add(hashtag, tweets.get(0));
-                    }
-                }
+            if (!hashtag.equals("")) {
+                hashtagService.add(hashtag, firstTweet);
             }
         }
     }

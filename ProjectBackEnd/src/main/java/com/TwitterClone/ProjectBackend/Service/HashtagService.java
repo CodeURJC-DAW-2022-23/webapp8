@@ -36,16 +36,18 @@ public class HashtagService {
     }
     public void add(String hashtag, Tweet tweet){
         Optional<Hashtag> h = this.hashtagRepository.findById(hashtag);
+
         if (h.isPresent()){
             Hashtag h2 = h.get();
             h2.addTweet(tweet);
             this.hashtagRepository.save(h2);
-        } else {
-            Set<Tweet> set = new HashSet<>();
-            set.add(tweet);
-            Hashtag h2 = new Hashtag(hashtag, set);
-            this.hashtagRepository.save(h2);
+            return;
         }
+
+        Set<Tweet> set = new HashSet<>();
+        set.add(tweet);
+        Hashtag h2 = new Hashtag(hashtag, set);
+        this.hashtagRepository.save(h2);
     }
 
     private List<Trend> converterToTrend(List<Tuple> trends){
