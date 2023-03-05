@@ -37,7 +37,7 @@ public class ProfileController {
     }
 
     @PostMapping("create/")
-    public void postUser(String username, String mail, String password) {
+    public void postUser(String username, String mail, String password) throws IOException {
         profileService.createProfile(username, password, mail);
     }
 

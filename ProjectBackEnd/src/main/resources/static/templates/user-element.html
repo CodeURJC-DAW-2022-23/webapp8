@@ -7,19 +7,18 @@
                 class="flex items-center gap-4 transition rounded-full w-fit group-hover:scale-110 group-hover:bg-gray-3
                        dark:group-hover:bg-gray-13 group-focus-within:bg-gray-3 dark:group-focus-within:bg-gray-13
                        group-focus-within:scale-110">
-            <figure class="w-11">
+            <figure class="w-11" onclick="window.location.href='/profile/{{id}}'">
                 <img class="w-full h-full rounded-full" src="/{{id}}/profile-pic"
                      alt="Profile photo">
             </figure>
 
             <article>
-                <h2 class="overflow-hidden text-xl font-semibold dark:text-white-0 text-ellipsis whitespace-nowrap">
+                <h2 class="overflow-hidden text-xl font-semibold dark:text-white-0 text-ellipsis whitespace-nowrap" onclick="window.location.href='/profile/{{id}}'">
                     {{nickname}}</h2>
 
-                <h3
-                        class="overflow-hidden font-semibold text-md dark:font-normal text-gray-2 text-ellipsis
-                               whitespace-nowrap">
-                    @{{username}}</h3>
+                <h3 class="overflow-hidden font-semibold text-md dark:font-normal text-gray-2 text-ellipsis whitespace-nowrap" onclick="window.location.href='/profile/{{id}}'">
+                    @{{username}}
+                </h3>
             </article>
         </div>
 

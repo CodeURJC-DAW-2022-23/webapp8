@@ -14,6 +14,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 
 /**
@@ -39,7 +40,7 @@ public class UserSignupController {
     public String signup (@RequestParam String username,
                           @RequestParam String password,
                           @RequestParam String email)
-                            throws MessagingException, UnsupportedEncodingException {
+            throws MessagingException, IOException {
         RegisteredRequest registeredRequest = new RegisteredRequest(email, username, password);
         service.signup(registeredRequest);
 

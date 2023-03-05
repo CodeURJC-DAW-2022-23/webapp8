@@ -120,8 +120,7 @@
             <!-- LOG OUT -->
             <form action ="/logout" method="post"
                   class="w-full group">
-                <div
-                    class="flex items-center gap-6 px-4 py-3 transition rounded-full w-fit group-hover:scale-110 group-focus-within:scale-110 group-hover:bg-red-3 group-focus-within:bg-red-3">
+                <div class="flex items-center gap-6 px-4 py-3 transition rounded-full w-fit group-hover:scale-110 group-focus-within:scale-110 group-hover:bg-red-3 group-focus-within:bg-red-3 cursor-pointer">
                     <div class="w-7">
                         <svg class="dark:fill-white-0 fill-black-0 group-focus-within:fill-white-0 group-hover:fill-white-0"
                             xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -136,7 +135,7 @@
                     </div>
                     <input type="hidden" name="_csrf" value="{{token}}"/>
                     <input type="submit" value="Log out"
-                           class="text-2xl text-black-0 dark:text-white-0 group-focus-within:font-semibold group-focus-within:text-white group-hover:text-white-0">
+                           class="cursor-pointer text-2xl text-black-0 dark:text-white-0 group-focus-within:font-semibold group-focus-within:text-white group-hover:text-white-0">
                 </div>
             </form>
         </nav>

@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import javax.transaction.Transactional;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.List;
 
@@ -43,7 +44,7 @@ public class UserService {
      * @return
      */
     @Transactional
-    public String signup(RegisteredRequest request) throws MessagingException, UnsupportedEncodingException {
+    public String signup(RegisteredRequest request) throws MessagingException, IOException {
         User user = new User(request.getUsername(), request.getPassword(), request.getEmail(), "USER");
         if (!emailValidator.test(request.getEmail())) {
             throw new IllegalStateException("Invalid Mail Format");
@@ -59,6 +60,7 @@ public class UserService {
         user.setVerificationCode(randomCode);
         user.setEnabled(false);
 
+        user.setImages(new String[]{"example_data/Default_profilepic.jpg","example_data/Default_profilebanner.jpg"});
         userRepository.save(user);
 
         sendVerificationEmail(user, user.getEmail());
@@ -135,4 +137,7 @@ public class UserService {
         return userRepository.findRecommendedUsers(userId);
     }
 
+    public List<User> findByUsernameContainingIgnoreCase(String keyword) {
+        return this.userRepository.findByUsernameContainingIgnoreCase(keyword);
+    }
 }
