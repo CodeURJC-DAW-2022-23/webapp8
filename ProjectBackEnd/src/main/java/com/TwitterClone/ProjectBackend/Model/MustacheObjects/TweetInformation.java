@@ -21,4 +21,5 @@ public class TweetInformation {
     private String colorLike;
     private String colorRetweet;
     private String colorBookmark;
+    private boolean isAuthorised;
 }

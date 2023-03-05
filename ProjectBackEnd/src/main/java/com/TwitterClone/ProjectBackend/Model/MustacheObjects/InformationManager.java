@@ -6,6 +6,7 @@ import com.TwitterClone.ProjectBackend.Service.HashtagService;
 import com.TwitterClone.ProjectBackend.Service.ProfileService;
 import com.TwitterClone.ProjectBackend.Service.TweetService;
 import com.TwitterClone.ProjectBackend.userManagement.User;
+import com.TwitterClone.ProjectBackend.userManagement.UserRoles;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -73,7 +74,7 @@ public class InformationManager {
      * Prepare the list with the Tweets to show at mustache
      * @param tweets
      */
-    public List<TweetInformation> calculateDataOfTweet(List<Tweet> tweets) {
+    public List<TweetInformation> calculateDataOfTweet(List<Tweet> tweets, User currentUser) {
         List<TweetInformation> tweetsInfo = new ArrayList<>();
 
         for(Tweet tweet : tweets) {
@@ -82,29 +83,33 @@ public class InformationManager {
             currentTweetInformation.setNumLikes(this.tweetService.getLikesOfTweet(tweet.getId()));
             currentTweetInformation.setNumComments(this.tweetService.getCommentsOfTweet(tweet.getId()));
             currentTweetInformation.setNumRetweets(this.tweetService.getRetweetsOfTweet(tweet.getId()));
-
-            if (this.tweetService.toggleLike(tweet.getUser(), tweet)) {
-                currentTweetInformation.setColorLike("red-0");
-            } else {
-                currentTweetInformation.setColorLike("gray-4");
-            }
-
-            if (this.tweetService.toggleRetweet(tweet.getUser(), tweet)) {
+            currentTweetInformation.setAuthorised(this.isAuthorised(currentUser, tweet));
+            if (this.tweetService.isRetweeted(currentUser, tweet)) {
                 currentTweetInformation.setColorRetweet("green-0");
             } else {
                 currentTweetInformation.setColorRetweet("gray-4");
             }
-
-            if (this.tweetService.toggleRetweet(tweet.getUser(), tweet)) {
+            if (this.tweetService.isLiked(currentUser, tweet)) {
+                currentTweetInformation.setColorLike("red-0");
+            } else {
+                currentTweetInformation.setColorLike("gray-4");
+            }
+            if (this.tweetService.isBookmarked(currentUser, tweet)) {
                 currentTweetInformation.setColorBookmark("primary");
             } else {
-                currentTweetInformation.setColorRetweet("gray-4");
+                currentTweetInformation.setColorBookmark("gray-4");
             }
 
             tweetsInfo.add(currentTweetInformation);
         }
 
         return tweetsInfo;
+    }
+
+    private boolean isAuthorised(User currentUser, Tweet tweet) {
+        boolean condition1 = currentUser.getId().equals(tweet.getUser().getId());
+        boolean condition2 = currentUser.getRole().equals(UserRoles.ADMIN);
+        return condition2 || condition1;
     }
 
     /**
