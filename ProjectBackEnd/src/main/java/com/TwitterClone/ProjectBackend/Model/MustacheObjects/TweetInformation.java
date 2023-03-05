@@ -18,5 +18,7 @@ public class TweetInformation {
     private Long numComments;
     private Long numRetweets;
     private Long numLikes;
-
+    private String colorLike;
+    private String colorRetweet;
+    private String colorBookmark;
 }

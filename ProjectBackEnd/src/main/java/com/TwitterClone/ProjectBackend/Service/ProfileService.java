@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.persistence.Tuple;
 import java.io.IOException;
 import java.sql.Blob;
 import java.util.List;
@@ -67,8 +68,16 @@ public class ProfileService {
         return tweetRepository.findBookmarksByUserId(id, offset, size);
     }
 
+    public List<User> getVerified(int init, int size) {
+        return repository.findVerified(init, size);
+    }
+
     public List<User> getFollowers(Long id) {
         return userRepository.findFollowers(id);
+    }
+
+    public List<User> getBanned(int init, int size){
+        return repository.findBanned(init,size);
     }
 
     public List<User> getFollowed(Long id) {
@@ -101,13 +110,23 @@ public class ProfileService {
                         .getSize());
     }
 
-    /*public List<User> getVerified(){
-        return repository.findVerified();
-    }*/
+    public List<User> getToVerified(int init, int size) {
+        return this.repository.findNotVerifiedNotBanned(init,size);
+    }
 
-    /*public List<User> getBanned(){
-        return repository.findBanned();
-    }*/
+    public List<Tuple> getStatics(){
+       return this.repository.countByLast5JoinDate();
+    }
 
+    public void updateType(User user) {
+        this.repository.save(user);
+    }
 
+    public int countBookmarks(Long id) {
+        return this.tweetRepository.countBookmarks(id);
+    }
+
+    public int countTweetsForUser(Long id) {
+        return this.tweetRepository.countTweetsForUser(id);
+    }
 }

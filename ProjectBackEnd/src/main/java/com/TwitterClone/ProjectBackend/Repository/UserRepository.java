@@ -7,9 +7,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import javax.persistence.Tuple;
 import javax.transaction.Transactional;
+import java.awt.print.Pageable;
 import java.sql.Blob;
 import java.util.List;
 import java.util.Optional;
@@ -72,18 +75,8 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Query(value="SELECT COUNT(*) FROM users_followed WHERE user_id = ?1 GROUP BY user_id",nativeQuery = true)
     long countFollowed (long id);
 
-    /**
-     * This Query returns the amount of follower accounts a user has
-     * @param id
-     * @return
-     */
-    @Query(value="SELECT COUNT(*) FROM users_followers WHERE user_id = ?1 GROUP BY user_id",nativeQuery = true)
-    long countFollowers (long id);
     @Query(value="SELECT * FROM users WHERE enabled = false",nativeQuery = true)
     List<User> findBanned (long id);
-
-    @Query(value = "SELECT users.* FROM users_followed JOIN users ON followed_id=id WHERE user_id = ?1",nativeQuery = true)
-    List<User> findFollowed(Long id);
 
     @Query(value = "SELECT users.* FROM users_followers JOIN users ON followers_id=id WHERE user_id = ?1",nativeQuery = true)
     List<User> findFollowers(Long id);
@@ -108,4 +101,14 @@ public interface UserRepository extends JpaRepository<User, Long> {
      */
     @Query(value="SELECT * FROM users WHERE type<>'VERIFIED' AND type<>'BANNED' LIMIT ?1,?2",nativeQuery = true)
     List<User> findNotVerifiedNotBanned(int init, int size);
+
+    @Query(value = "SELECT join_date, COUNT(*) AS new_people FROM users GROUP BY join_date ORDER BY join_date DESC LIMIT 0,5",nativeQuery = true)
+    List<Tuple> countByLast5JoinDate();
+
+    @Query(value = "SELECT users.* FROM users_followed JOIN users ON followed_id=id WHERE user_id = ?1",nativeQuery = true)
+    List<User> findFollowed(Long id);
+
+    @Query("SELECT DISTINCT u FROM User u JOIN u.followers f JOIN f.followers f2 WHERE f2.id = :userId AND u.id NOT IN (SELECT f2.id FROM User u2 JOIN u2.followed f2 WHERE u2.id = :userId) AND u.id <> :userId")
+    List<User> findRecommendedUsers(@Param("userId") Long userId);
 }
+

@@ -17,6 +17,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import javax.persistence.Tuple;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Optional;
@@ -64,7 +65,7 @@ public class NavigationController {
     public String logout(Model model, HttpServletRequest request){
         CsrfToken token = (CsrfToken) request.getAttribute("_csrf");
         model.addAttribute("token", token.getToken());
-        return "/";
+        return "redirect:/";
     }
 
     /**
@@ -80,6 +81,7 @@ public class NavigationController {
 
         User currentUser = this.informationManager.getCurrentUser(request);
         List<Tweet> tweetList = this.tweetService.find10RecentForUser(currentUser.getId(), 0, 10);
+
         List<TweetInformation> tweets = this.informationManager.calculateDataOfTweet(tweetList);
         model.addAttribute("tweets", tweets);
 
@@ -155,9 +157,11 @@ public class NavigationController {
      * Change from the current page to the profile page
      * @return
      */
-    @GetMapping("/profile")
-    public String toProfile(Model model, HttpServletRequest request) {
-        User currentUser = this.informationManager.getCurrentUser(request);
+    @GetMapping("/profile/{id}")
+    public String toProfile(Model model,
+                            HttpServletRequest request,
+                            @PathVariable Long id) {
+        User currentUser = this.profileService.findById(id).get();
 
         // Profile page shows username as page name...
         String nickname = currentUser.getNickname();
@@ -179,6 +183,13 @@ public class NavigationController {
         model.addAttribute("tweets", tweets);
 
         model.addAttribute("user", currentUser);
+
+        //Hide Go To Dashboard button
+        if (currentUser.getRole() == UserRoles.ADMIN){
+            model.addAttribute("isAdmin",true);
+        }else{
+            model.addAttribute("isAdmin",false);
+        }
 
         return "profile";
     }
@@ -260,4 +271,57 @@ public class NavigationController {
         return "error";
     }
 
+    @GetMapping("/dashboard")
+    public String toDashboard(Model model, HttpServletRequest request){
+        this.informationManager.addNameToThePage(model,"Dashboard");
+        this.informationManager.addProfileInfoToLeftBar(model,request);
+        this.informationManager.addCurrentTrends(model);
+        List<User> users = this.profileService.getVerified(0,10);
+        model.addAttribute("verified", users);
+        users = this.profileService.getBanned(0,10);
+        model.addAttribute("banned", users);
+        users = this.profileService.getToVerified(0,10);
+        model.addAttribute("toVerify",users);
+        this.informationManager.addStatistics(model);
+        return "admin-dashboard";
+    }
+    @GetMapping("/unban/{id}")
+    public String unban(@PathVariable Long id){
+        User user = this.profileService.findById(id).get();
+        user.setType("PUBLIC");
+        user.setEnabled(true);
+        this.profileService.updateType(user);
+        return "redirect:/dashboard";
+    }
+    @GetMapping("/verify/{id}")
+    public String verify(@PathVariable Long id){
+        User user = this.profileService.findById(id).get();
+        user.setType("VERIFIED");
+        this.profileService.updateType(user);
+        return "redirect:/dashboard";
+    }
+
+    @GetMapping("/unverify/{id}")
+    public String unverify(@PathVariable Long id){
+        User user = this.profileService.findById(id).get();
+        user.setType("PUBLIC");
+        this.profileService.updateType(user);
+        return "redirect:/dashboard";
+    }
+
+    @GetMapping("/ban/{id}")
+    public String ban(@PathVariable Long id){
+        User user = this.profileService.findById(id).get();
+        user.setType("BANNED");
+        user.setEnabled(false);
+        this.profileService.updateType(user);
+        return "redirect:/dashboard";
+    }
+
+    @GetMapping("/users/{userId}/recommended")
+    public String getRecommendedUsers(@PathVariable Long userId, Model model) {
+        List<User> recommendedUsers = userService.getRecommendedUsers(userId); // Obtener 1 usuario recomendados para el usuario con el ID especificado
+        model.addAttribute("recommendedUsers", recommendedUsers);
+        return "recommended-users"; // Devolver el nombre de la vista para mostrar la lista de usuarios recomendados
+    }
 }

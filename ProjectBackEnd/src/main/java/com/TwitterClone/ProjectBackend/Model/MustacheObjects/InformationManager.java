@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.ui.Model;
 
+import javax.persistence.Tuple;
 import javax.servlet.http.HttpServletRequest;
 import java.security.Principal;
 import java.util.ArrayList;
@@ -81,6 +82,25 @@ public class InformationManager {
             currentTweetInformation.setNumLikes(this.tweetService.getLikesOfTweet(tweet.getId()));
             currentTweetInformation.setNumComments(this.tweetService.getCommentsOfTweet(tweet.getId()));
             currentTweetInformation.setNumRetweets(this.tweetService.getRetweetsOfTweet(tweet.getId()));
+
+            if (this.tweetService.toggleLike(tweet.getUser(), tweet)) {
+                currentTweetInformation.setColorLike("red-0");
+            } else {
+                currentTweetInformation.setColorLike("gray-4");
+            }
+
+            if (this.tweetService.toggleRetweet(tweet.getUser(), tweet)) {
+                currentTweetInformation.setColorRetweet("green-0");
+            } else {
+                currentTweetInformation.setColorRetweet("gray-4");
+            }
+
+            if (this.tweetService.toggleRetweet(tweet.getUser(), tweet)) {
+                currentTweetInformation.setColorBookmark("primary");
+            } else {
+                currentTweetInformation.setColorRetweet("gray-4");
+            }
+
             tweetsInfo.add(currentTweetInformation);
         }
 
@@ -107,5 +127,17 @@ public class InformationManager {
         List<Trend> trends = this.hashtagService.getCurrentTrends(0,5);
 
         model.addAttribute("trends", trends);
+    }
+
+    public void addStatistics(Model model) {
+        List<Tuple> statics = this.profileService.getStatics();
+        String[] amounts = new String[statics.size()];
+        String[] dates = new String[statics.size()];
+        for (int i = 0;i<statics.size();i++){
+            dates[i] = statics.get(i).get("join_date").toString();
+            amounts[i] = statics.get(i).get("new_people").toString();
+        }
+        model.addAttribute("amounts",amounts);
+        model.addAttribute("dates",dates);
     }
 }

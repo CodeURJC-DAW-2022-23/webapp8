@@ -56,8 +56,9 @@ public class DBInitializer {
 
         //Sample Users
         String[] files = {"example_data/elrubius_profilepic.jpg","example_data/elrubius_profilebanner.jpg"};
-        User user1 = new User("Rubiu5","elrubius","Rata Noruega.  Me gustan los gatos obesos.","rubius@gmail.com",passwordEncoder.encode("rubius"), LocalDate.of(2013,10,13),"VERIFIED");
+        User user1 = new User("Rubiu5","elrubius","Rata Noruega.  Me gustan los gatos obesos.","rubius@gmail.com",passwordEncoder.encode("rubius"), LocalDate.of(2013,10,13),"BANNED");
         user1.setImages(files);
+        user1.setEnabled(false);
         files = new String[]{"example_data/KOI_KEYLAND_profilepic.jpg", "example_data/KOI_KEYLAND_profilebanner.jpg"};
         User user2 = new User("Keyland71", "KOI KEYLAND71", "19 y/o\nRocket League proplayer for @KOI", "example2@gmail.com", passwordEncoder.encode("examplePassword2"), LocalDate.of(2018,4,21), "PUBLIC");
         user2.setImages(files);
@@ -65,7 +66,7 @@ public class DBInitializer {
         User user3 = new User("antonioalanxs", "Alanís",  "",  "example3@gmail.com", passwordEncoder.encode("examplePassword3"),LocalDate.of(2019,8,7), "PRIVATE");
         user3.setImages(files);
         files = new String[]{"example_data/Ibai_profilepic.jpg", "example_data/Ibai_profilebanner.jpg"};
-        User user4 = new User("ibai","Ibai","Sigue a nuestros equipos @KOI y @PorcinosFC, http://twitch.tv/ibai","ibai@gmail.com",passwordEncoder.encode("ibai"), LocalDate.of(2014,8,5), "BANNED");
+        User user4 = new User("ibai","Ibai","Sigue a nuestros equipos @KOI y @PorcinosFC, http://twitch.tv/ibai","ibai@gmail.com",passwordEncoder.encode("ibai"), LocalDate.of(2014,8,5), "VERIFIED");
         user4.setImages(files);
         userRepository.save(user1);
         userRepository.save(user2);
@@ -216,7 +217,7 @@ public class DBInitializer {
                 null,
                 null
         };
-        Tweet tweet11 = new Tweet("#KingsLeague #Tailwind #RCLS #Pokemon #Grupo8 #DAW #JOPELINES #MicaEl6DelEquipo #Twitter #H2-console", users.get(4), LocalDateTime.of(2003,12,31,21,00,00), images);
+        Tweet tweet11 = new Tweet("#KingsLeague #Tailwind #RCLS #Pokemon #Grupo8 #DAW #JOPELINES #MicaEl6DelEquipo #Twitter #H2-console", users.get(4), LocalDateTime.of(2023,3,1,0,00,00), images);
         tweetRepository.save(tweet11);
         images = new Blob[] {
                 null,
@@ -224,7 +225,7 @@ public class DBInitializer {
                 null,
                 null
         };
-        Tweet tweet12 = new Tweet("I am using Twitter; the best app", users.get(4), LocalDateTime.of(2003,12,31,21,00,00), images);
+        Tweet tweet12 = new Tweet("I am using Twitter; the best app", users.get(4), LocalDateTime.of(2023,3,1,0,00,00), images);
         tweetRepository.save(tweet12);
         images = new Blob[] {
                 null,
@@ -232,7 +233,7 @@ public class DBInitializer {
                 null,
                 null
         };
-        Tweet tweet13 = new Tweet("I am using Twitter; the best app #RCLS", users.get(4), LocalDateTime.of(2003,12,31,21,00,00), images);
+        Tweet tweet13 = new Tweet("I am using Twitter; the best app #RCLS", users.get(4), LocalDateTime.of(2023,3,1,0,00,00), images);
         tweetRepository.save(tweet13);
         images = new Blob[] {
                 null,
@@ -240,7 +241,7 @@ public class DBInitializer {
                 null,
                 null
         };
-        Tweet tweet14 = new Tweet("I am using Twitter; the best app #DAW", users.get(4), LocalDateTime.of(2003,12,31,21,00,00), images);
+        Tweet tweet14 = new Tweet("I am using Twitter; the best app #DAW", users.get(4), LocalDateTime.of(2023,3,1,0,00,00), images);
         tweetRepository.save(tweet14);
         images = new Blob[] {
                 null,
@@ -248,7 +249,7 @@ public class DBInitializer {
                 null,
                 null
         };
-        Tweet tweet15 = new Tweet("I am using Twitter; the best app #DAW", users.get(4), LocalDateTime.of(2003,12,31,21,00,00), images);
+        Tweet tweet15 = new Tweet("I am using Twitter; the best app #DAW", users.get(4), LocalDateTime.of(2023,3,1,0,00,00), images);
         tweetRepository.save(tweet15);
         images = new Blob[] {
                 null,
@@ -256,21 +257,21 @@ public class DBInitializer {
                 null,
                 null
         };
-        Tweet tweet16 = new Tweet("I am using Twitter; the best app", users.get(4), LocalDateTime.of(2003,12,31,21,00,00), images);
+        Tweet tweet16 = new Tweet("I am using Twitter; the best app", users.get(4), LocalDateTime.of(2023,3,1,0,00,00), images);
         tweetRepository.save(tweet16);images = new Blob[] {
                 null,
                 null,
                 null,
                 null
         };
-        Tweet tweet17 = new Tweet("I am using Twitter; the best app", users.get(4), LocalDateTime.of(2003,12,31,21,00,00), images);
+        Tweet tweet17 = new Tweet("I am using Twitter; the best app", users.get(4), LocalDateTime.of(2023,3,1,0,00,00), images);
         tweetRepository.save(tweet17);images = new Blob[] {
                 null,
                 null,
                 null,
                 null
         };
-        Tweet tweet18 = new Tweet("I am using Twitter; the best app", users.get(4), LocalDateTime.of(2003,12,31,21,00,00), images);
+        Tweet tweet18 = new Tweet("I am using Twitter; the best app", users.get(4), LocalDateTime.of(2023,3,1,0,00,00), images);
         tweetRepository.save(tweet18);
         images = new Blob[] {
                 null,
@@ -278,7 +279,7 @@ public class DBInitializer {
                 null,
                 null
         };
-        Tweet tweet19 = new Tweet("I am using Twitter; the best app #MySQL", users.get(4), LocalDateTime.of(2003,12,31,21,00,00), images);
+        Tweet tweet19 = new Tweet("I am using Twitter; the best app #MySQL", users.get(4), LocalDateTime.of(2023,3,1,0,00,00), images);
         tweetRepository.save(tweet19);
         images = new Blob[] {
                 null,
@@ -286,7 +287,7 @@ public class DBInitializer {
                 null,
                 null
         };
-        Tweet tweet20 = new Tweet("I am using Twitter; the best app #MySQL", users.get(4), LocalDateTime.of(2003,12,31,21,00,00), images);
+        Tweet tweet20 = new Tweet("I am using Twitter; the best app #MySQL", users.get(4), LocalDateTime.of(2023,3,1,0,00,00), images);
         tweetRepository.save(tweet20);
         images = new Blob[] {
                 null,
@@ -294,7 +295,7 @@ public class DBInitializer {
                 null,
                 null
         };
-        Tweet tweet21 = new Tweet("I am using Twitter; the best app #MySQL", users.get(4), LocalDateTime.of(2003,12,31,21,00,00), images);
+        Tweet tweet21 = new Tweet("I am using Twitter; the best app #MySQL", users.get(4), LocalDateTime.of(2023,3,1,0,00,00), images);
         tweetRepository.save(tweet21);
 
 

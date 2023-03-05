@@ -71,7 +71,7 @@
 
             <form action="/tweets/{{type}}-tweet" method="post" enctype="multipart/form-data">
                 <div class="flex flex-col gap-3">
-                    <textarea
+                    <textarea required
                         class="p-5 text-lg bg-transparent border-[2.8px] resize-none rounded-xl border-primary dark:text-white-0"
                         placeholder="Write your tweet here" maxlength="240" rows="6"
                         name="tweet_info"></textarea>
