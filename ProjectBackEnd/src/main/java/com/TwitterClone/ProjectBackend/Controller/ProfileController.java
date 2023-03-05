@@ -1,11 +1,8 @@
 package com.TwitterClone.ProjectBackend.Controller;
 
 import com.TwitterClone.ProjectBackend.Model.MustacheObjects.InformationManager;
-import com.TwitterClone.ProjectBackend.Model.Tweet;
 import com.TwitterClone.ProjectBackend.Service.ProfileService;
 import com.TwitterClone.ProjectBackend.userManagement.User;
-import com.fasterxml.jackson.annotation.JsonView;
-import org.hibernate.engine.jdbc.BlobProxy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,11 +10,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.websocket.server.PathParam;
 import java.io.IOException;
-import java.sql.Blob;
 import java.util.List;
-import java.util.UUID;
 
 @Controller
 public class ProfileController {
@@ -73,6 +67,24 @@ public class ProfileController {
         model.addAttribute("follows", followed);
 
         return "follow-content";
+    }
+
+    @GetMapping("/ban/{id}")
+    public String ban(@PathVariable Long id){
+        User user = this.profileService.findById(id).get();
+        user.setType("BANNED");
+        user.setEnabled(false);
+        this.profileService.updateUserBan(user);
+        return "redirect:/profile/" + id.toString();
+    }
+
+    @GetMapping("/unban/{id}")
+    public String unban(@PathVariable Long id){
+        User user = this.profileService.findById(id).get();
+        user.setType("PUBLIC");
+        user.setEnabled(true);
+        this.profileService.updateUserBan(user);
+        return "redirect:/dashboard";
     }
 
 }

@@ -17,7 +17,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
-import javax.persistence.Tuple;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Optional;
@@ -163,10 +162,13 @@ public class NavigationController {
     public String toProfile(Model model,
                             HttpServletRequest request,
                             @PathVariable Long id) {
-        User currentUser = this.profileService.findById(id).get();
+        User profileUser = this.profileService.findById(id).get();
+        User currentUser = this.informationManager.getCurrentUser(request);
+        model.addAttribute("isYourProfile", id.equals(currentUser.getId()));
+        model.addAttribute("isBanned", profileUser.isEnabled());
 
         // Profile page shows username as page name...
-        String nickname = currentUser.getNickname();
+        String nickname = profileUser.getNickname();
         this.informationManager.addNameToThePage(model, nickname);
 
         // Charge left and right bar information...
@@ -174,17 +176,17 @@ public class NavigationController {
         this.informationManager.addCurrentTrends(model);
 
         // Add necessary user data to model...
-        int followersNumber = currentUser.getFollowersNumber();
+        int followersNumber = profileUser.getFollowersNumber();
         model.addAttribute("followersNumber", followersNumber);
 
-        int followedNumber = currentUser.getFollowedNumber();
+        int followedNumber = profileUser.getFollowedNumber();
         model.addAttribute("followedNumber", followedNumber);
 
-        List<Tweet> tweetList = this.tweetService.find10(currentUser.getId(),0, 10);
+        List<Tweet> tweetList = this.tweetService.find10(profileUser.getId(),0, 10);
         List<TweetInformation> tweets = this.informationManager.calculateDataOfTweet(tweetList, currentUser);
         model.addAttribute("tweets", tweets);
 
-        model.addAttribute("user", currentUser);
+        model.addAttribute("user", profileUser);
 
         //Hide Go To Dashboard button
         if (currentUser.getRole() == UserRoles.ADMIN){
@@ -287,19 +289,12 @@ public class NavigationController {
         this.informationManager.addStatistics(model);
         return "admin-dashboard";
     }
-    @GetMapping("/unban/{id}")
-    public String unban(@PathVariable Long id){
-        User user = this.profileService.findById(id).get();
-        user.setType("PUBLIC");
-        user.setEnabled(true);
-        this.profileService.updateType(user);
-        return "redirect:/dashboard";
-    }
+
     @GetMapping("/verify/{id}")
     public String verify(@PathVariable Long id){
         User user = this.profileService.findById(id).get();
         user.setType("VERIFIED");
-        this.profileService.updateType(user);
+        this.profileService.updateUserBan(user);
         return "redirect:/dashboard";
     }
 
@@ -307,16 +302,7 @@ public class NavigationController {
     public String unverify(@PathVariable Long id){
         User user = this.profileService.findById(id).get();
         user.setType("PUBLIC");
-        this.profileService.updateType(user);
-        return "redirect:/dashboard";
-    }
-
-    @GetMapping("/ban/{id}")
-    public String ban(@PathVariable Long id){
-        User user = this.profileService.findById(id).get();
-        user.setType("BANNED");
-        user.setEnabled(false);
-        this.profileService.updateType(user);
+        this.profileService.updateUserBan(user);
         return "redirect:/dashboard";
     }
 

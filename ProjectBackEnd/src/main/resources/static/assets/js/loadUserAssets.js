@@ -32,7 +32,7 @@ users = {
 }
 
 function loadUserSVG(divId, userType){
-    if (userType === "PUBLIC" || userType === "BANNED"){
+    if (userType === "PUBLIC"){
         return;
     }
 
@@ -71,12 +71,21 @@ usersOthers = {
     `
 }
 
-function loadUserOthersSvg(divId, userType){
+function loadLeftBarSvg(divId, userType){
+    if (userType === "PUBLIC"){
+        return;
+    }
+
+    let userNameDiv = document.getElementById(divId + "left-user-svg");
+    let svgToLoad = usersOthers[userType];
+    userNameDiv.innerHTML += svgToLoad;
+}
+
+function loadUserOthersSvg(userType){
     if (userType === "PUBLIC"){
         return;
     }
     let divsArray = [document.getElementById("userNameProfileSvg"),
-                    document.getElementById("left-user-svg"),
                     document.getElementById("userNameSvgNick")];
     let svgToLoad = usersOthers[userType];
     for (let div of divsArray) {
