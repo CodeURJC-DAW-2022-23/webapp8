@@ -1,5 +1,6 @@
 package com.TwitterClone.ProjectBackend.Controller;
 
+import com.TwitterClone.ProjectBackend.Model.MustacheObjects.InformationManager;
 import com.TwitterClone.ProjectBackend.Model.Tweet;
 import com.TwitterClone.ProjectBackend.Service.ProfileService;
 import com.TwitterClone.ProjectBackend.userManagement.User;
@@ -10,36 +11,29 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.sql.Blob;
 import java.util.List;
 import java.util.UUID;
 
-@RequestMapping("profiles/")
 @Controller
 public class ProfileController {
     @Autowired
     private ProfileService profileService;
 
-    @GetMapping
-    public List<User> getAllUsers() {
-        return profileService.findAll();
-    }
+    @Autowired
+    private InformationManager informationManager;
 
-    @GetMapping(path = "{id}")
-    public User getOneUser(@PathVariable("id") Long id) {
-        return profileService.findById(id).orElse(null);
+    @PostMapping("/profile/edit-profile")
+    public String editProfile(HttpServletRequest request,
+                              @RequestParam MultipartFile banner,
+                              @RequestParam MultipartFile profile,
+                              @RequestParam String nickname,
+                              @RequestParam String biography) throws IOException {
+        User currentUser = this.informationManager.getCurrentUser(request);
+        this.profileService.uploadProfile(currentUser, banner, profile, nickname, biography);
+        return "redirect:/profile";
     }
-
-    @GetMapping(path = "{username}")
-    public User getOneUser(@PathVariable("username") String username) {
-        return profileService.findByUsername(username).orElse(null);
-    }
-
-    @PostMapping("create/")
-    public void postUser(String username, String mail, String password) {
-        profileService.createProfile(username, password, mail);
-    }
-
 
 }
