@@ -193,6 +193,15 @@ To organize the team, we are using [Trello](https://trello.com/b/WpuV8KtM/la-put
 ![dashboard.html](./files-to-README/phase1/dashboard_screen.png)
 *Figure 14 - dashboard.html*
 
+![write-tweet.html](./files-to-README/phase1/write_tweet_screen.png)
+*Figure 15 - write-tweet.html*
+
+![reply-tweet.html](./files-to-README/phase1/reply_tweet_screen.png)
+*Figure 16 - reply-tweet.html*
+
+![error.html](./files-to-README/phase1/error_screen.png)
+*Figure 17 - error.html*
+
 </small>
 </div>
 
@@ -204,7 +213,7 @@ To organize the team, we are using [Trello](https://trello.com/b/WpuV8KtM/la-put
 <small>
 
 ![navigationMap](./files-to-README/phase1/navigationMap.png)
-*Figure 15 - Navigation Map*
+*Figure 18 - Navigation Map*
 
 </small>
 </div>
