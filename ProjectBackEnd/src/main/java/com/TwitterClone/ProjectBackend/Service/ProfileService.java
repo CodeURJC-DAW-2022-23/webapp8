@@ -40,30 +40,6 @@ public class ProfileService {
         return userRepository.findByUsername(username);
     }
 
-    public void updateBanner(MultipartFile banner, Long id) throws IOException {
-        User u = userRepository.findById(id).orElse(null);
-        if (u != null) {
-            u.setProfileBanner(BlobProxy.generateProxy(banner.getInputStream(), banner.getSize()));
-            userRepository.save(u);
-        }
-    }
-
-    public void updateProfilePicture(MultipartFile profilePicture, Long id) throws IOException {
-        User u = userRepository.findById(id).orElse(null);
-        if (u != null) {
-            u.setProfilePicture(BlobProxy.generateProxy(profilePicture.getInputStream(), profilePicture.getSize()));
-            userRepository.save(u);
-        }
-    }
-
-    public void updateBiography(String biography, User user) {
-        User u = userRepository.findById(user.getId()).orElse(null);
-        if (u != null) {
-            u.setBiography(biography);
-            userRepository.save(u);
-        }
-    }
-
     public List<Tweet> getBookmarks(Long id, int offset, int size) {
         return tweetRepository.findBookmarksByUserId(id, offset, size);
     }

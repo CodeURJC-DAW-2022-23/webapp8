@@ -213,7 +213,7 @@ public class NavigationController {
         List<User> followers = profileService.getFollowers(currentUserId);
         List<User> followed = profileService.getFollowed(currentUserId);
         model.addAttribute("followers", followers);
-        model.addAttribute("followed", followers);
+        model.addAttribute("followed", followed);
 
 
         model.addAttribute("user", currentUser);
