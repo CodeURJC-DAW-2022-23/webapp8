@@ -7,6 +7,7 @@ import com.TwitterClone.ProjectBackend.Service.ProfileService;
 import com.TwitterClone.ProjectBackend.Service.TweetService;
 import com.TwitterClone.ProjectBackend.userManagement.User;
 import com.TwitterClone.ProjectBackend.userManagement.UserRoles;
+import com.TwitterClone.ProjectBackend.userManagement.UserService;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

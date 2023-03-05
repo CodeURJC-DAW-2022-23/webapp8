@@ -180,7 +180,7 @@ public class NavigationController {
         int followedNumber = currentUser.getFollowedNumber();
         model.addAttribute("followedNumber", followedNumber);
 
-        List<Tweet> tweetList = this.tweetService.find10(currentUser.getId());
+        List<Tweet> tweetList = this.tweetService.find10(currentUser.getId(),0, 10);
         List<TweetInformation> tweets = this.informationManager.calculateDataOfTweet(tweetList, currentUser);
         model.addAttribute("tweets", tweets);
 

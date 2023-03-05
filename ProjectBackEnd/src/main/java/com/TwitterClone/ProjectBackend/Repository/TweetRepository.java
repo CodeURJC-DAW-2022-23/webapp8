@@ -23,8 +23,11 @@ public interface TweetRepository extends JpaRepository<Tweet, Long> {
      * @param id
      * @return
      */
-    @Query("SELECT t from Tweet t WHERE t.user.id = :id ORDER BY t.publishDate DESC")
-    List<Tweet> findByUser(Long id);
+    @Query(value = "SELECT * from tweet WHERE user_id = ?1 ORDER BY publish_date DESC LIMIT ?2, ?3", nativeQuery = true)
+    List<Tweet> findByUser(Long id, int from, int size);
+
+    @Query(value = "SELECT COUNT(*) from tweet WHERE user_id = ?1", nativeQuery = true)
+    int countUserTweets(Long id);
 
     /**
      * This Query returns a List of Tweets written by the users who the user follows ordered by the date when they were published
@@ -113,4 +116,6 @@ public interface TweetRepository extends JpaRepository<Tweet, Long> {
             "DELETE FROM hashtag_tweets WHERE tweets_id=?1;\n" +
             "DELETE FROM tweet WHERE id=?1;",nativeQuery = true)
     boolean deleteCascade(Long id);
+
+
 }

@@ -60,16 +60,17 @@ async function loadMoreTweetsForHome() {
  * Realize an HTTP petition to request more tweets with AJAX at home page
  * @returns {Promise<void>}
  */
-async function loadMoreTweetsForProfile() {
-    const from = counterPetitions + 1;
+async function loadMoreTweetsForProfile(userId) {
+    const from = (counterPetitions + 1) * NUMBER_ELEMENTS_PER_LOAD
+    
+    const response = await fetch(`/profile/tweets/${userId}?from=${from}&size=${NUMBER_ELEMENTS_PER_LOAD}`);
 
-    const response = await fetch(`/profile/tweets?from=${from}&size=${NUMBER_ELEMENTS_PER_LOAD}`);
-    const newTweets = DECODER.decode(await response.arrayBuffer());
+    if (response.redirected) {
+        hideButtons();
+        return;
+    }
 
-    const container = document.getElementById("tweet-container");
-    container.innerHTML += newTweets;
-
-    counterPetitions++;
+    addNewElements(response, "tweet");
 }
 
 async function loadMoreNotifications() {
