@@ -75,11 +75,14 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Query(value="SELECT COUNT(*) FROM users_followed WHERE user_id = ?1 GROUP BY user_id",nativeQuery = true)
     long countFollowed (long id);
 
+    @Query(value="SELECT COUNT(*) FROM users_followers WHERE user_id = ?1 GROUP BY user_id",nativeQuery = true)
+    long countFollowers(Long id);
+
     @Query(value="SELECT * FROM users WHERE enabled = false",nativeQuery = true)
     List<User> findBanned (long id);
 
-    @Query(value = "SELECT users.* FROM users_followers JOIN users ON followers_id=id WHERE user_id = ?1",nativeQuery = true)
-    List<User> findFollowers(Long id);
+    @Query(value = "SELECT users.* FROM users_followers JOIN users ON followers_id=id WHERE user_id = ?1 LIMIT ?2,?3",nativeQuery = true)
+    List<User> findFollowers(Long id, int from, int size);
 
     /**
      * This Query returns the banned users
@@ -105,8 +108,8 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Query(value = "SELECT join_date, COUNT(*) AS new_people FROM users GROUP BY join_date ORDER BY join_date DESC LIMIT 0,5",nativeQuery = true)
     List<Tuple> countByLast5JoinDate();
 
-    @Query(value = "SELECT users.* FROM users_followed JOIN users ON followed_id=id WHERE user_id = ?1",nativeQuery = true)
-    List<User> findFollowed(Long id);
+    @Query(value = "SELECT users.* FROM users_followed JOIN users ON followed_id=id WHERE user_id = ?1 LIMIT ?2,?3 ",nativeQuery = true)
+    List<User> findFollowed(Long id, int from, int size);
 
     @Query("SELECT DISTINCT u FROM User u JOIN u.followers f JOIN f.followers f2 WHERE f2.id = :userId AND u.id NOT IN (SELECT f2.id FROM User u2 JOIN u2.followed f2 WHERE u2.id = :userId) AND u.id <> :userId")
     List<User> findRecommendedUsers(@Param("userId") Long userId);

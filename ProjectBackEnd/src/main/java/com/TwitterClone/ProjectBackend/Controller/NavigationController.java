@@ -210,10 +210,8 @@ public class NavigationController {
         this.informationManager.addCurrentTrends(model);
 
         Long currentUserId = currentUser.getId();
-        List<User> followers = profileService.getFollowers(currentUserId);
-        List<User> followed = profileService.getFollowed(currentUserId);
-        model.addAttribute("followers", followers);
-        model.addAttribute("followed", followed);
+        List<User> followed = profileService.getFollowed(currentUserId, 0, 10);
+        model.addAttribute("follows", followed);
 
 
         model.addAttribute("user", currentUser);

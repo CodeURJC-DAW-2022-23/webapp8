@@ -91,8 +91,6 @@ public class TweetController {
         return "tweet";
     }
 
-
-
     /**
      * Ask the database for more tweets from the user
      * @param model

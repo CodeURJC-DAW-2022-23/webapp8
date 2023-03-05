@@ -55,28 +55,37 @@
             <!-- NAVBAR -->
             <nav id="navBar"
                  class="grid items-center justify-center grid-cols-2 text-center dark:text-gray-5 text-gray-4">
-                <button id="following-tab" onclick="showPage('following-tab', ['followers-tab'])"
+                <button id="following-tab" onclick="showFollowed('{{user.username}}')"
                         class="py-4 font-bold border-b-4 cursor-pointer border-primary dark:text-white-0 text-black-0 dark:hover:bg-gray-1 hover:bg-gray-3">
                     Following
                 </button>
 
-                <button id="followers-tab" onclick="showPage('followers-tab', ['following-tab'])"
+                <button id="followers-tab" onclick="showFollowers('{{user.username}}')"
                         class="py-4 font-semibold border-b-4 border-transparent cursor-pointer border-p-2 dark:hover:bg-gray-1 hover:bg-gray-3 dark:text-gray-5">
                     Followers
                 </button>
             </nav>
         </header>
 
+        <!-- SHOW TWEETS BUTTON -->
+        <button onclick="loadMoreFollowed();" id='loadMoreButton'
+                class="hidden w-full py-4 text-lg font-semibold border-b llg:block border-gray-9 dark:bg-black-0 hover:bg-gray-7 dark:border-black-5 dark:hover:bg-black-6 text-primary">
+            Load More
+        </button>
+
+        <!-- SHOW TWEETS BUTTON - MOBILE -->
+        <div class="sticky flex justify-center">
+            <button onclick="loadMoreFollowed();" id='loadMoreButtonMobile'
+                    class="fixed px-5 py-3 text-sm font-semibold transition cursor-pointer top-[5.4rem] llg:hidden hover:scale-110 rounded-3xl text-white-0 bg-primary">
+                Load More
+            </button>
+        </div>
+
         <!-- PEOPLE RELATED -->
         <div>
-            <!-- FOLLOWING -->
-            <div id="following">
-                {{> followed}}
-            </div>
-
-            <!-- FOLLOWERS -->
-            <div id="followers" class="hidden">
-                {{> followers}}
+            <!-- FOLLOWING AND FOLLOWERS -->
+            <div id="follow-container">
+                {{> follow-content}}
             </div>
         </div>
 

@@ -48,16 +48,16 @@ public class ProfileService {
         return userRepository.findVerified(init, size);
     }
 
-    public List<User> getFollowers(Long id) {
-        return userRepository.findFollowers(id);
+    public List<User> getFollowers(Long id, int from, int size) {
+        return userRepository.findFollowers(id, from, size);
     }
 
     public List<User> getBanned(int init, int size){
         return userRepository.findBanned(init,size);
     }
 
-    public List<User> getFollowed(Long id) {
-        return userRepository.findFollowed(id);
+    public List<User> getFollowed(Long id, int from, int size) {
+        return userRepository.findFollowed(id, from, size);
     }
 
     public void uploadProfile(User user, MultipartFile banner,
@@ -104,5 +104,13 @@ public class ProfileService {
 
     public int countTweetsForUser(Long id) {
         return this.tweetRepository.countTweetsForUser(id);
+    }
+
+    public long countFollowed(Long id) {
+        return this.userRepository.countFollowed(id);
+    }
+
+    public long countFollowers(Long id) {
+        return this.userRepository.countFollowers(id);
     }
 }

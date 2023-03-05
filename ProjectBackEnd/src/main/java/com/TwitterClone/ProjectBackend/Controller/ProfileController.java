@@ -8,10 +8,12 @@ import com.fasterxml.jackson.annotation.JsonView;
 import org.hibernate.engine.jdbc.BlobProxy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.websocket.server.PathParam;
 import java.io.IOException;
 import java.sql.Blob;
 import java.util.List;
@@ -34,6 +36,42 @@ public class ProfileController {
         User currentUser = this.informationManager.getCurrentUser(request);
         this.profileService.uploadProfile(currentUser, banner, profile, nickname, biography);
         return "redirect:/profile/" + currentUser.getId().toString();
+    }
+
+    @GetMapping("/followed/{username}/{from}/{size}")
+    public String getFollowed(Model model,
+                              @PathVariable int from,
+                              @PathVariable int size,
+                              @PathVariable String username) {
+        User user = this.profileService.findByUsername(username).get();
+        long countFollowed = this.profileService.countFollowed(user.getId());
+
+        if (countFollowed <= from) {
+            return "redirect:/";
+        }
+
+        List<User> followed = profileService.getFollowed(user.getId(), from, size);
+        model.addAttribute("follows", followed);
+
+        return "follow-content";
+    }
+
+    @GetMapping("/followers/{username}/{from}/{size}")
+    public String getFollowers(Model model,
+                               @PathVariable int from,
+                               @PathVariable int size,
+                               @PathVariable String username) {
+        User user = this.profileService.findByUsername(username).get();
+        long countFollowers = this.profileService.countFollowers(user.getId());
+
+        if (countFollowers <= from) {
+            return "redirect:/";
+        }
+
+        List<User> followed = profileService.getFollowers(user.getId(), from, size);
+        model.addAttribute("follows", followed);
+
+        return "follow-content";
     }
 
 }

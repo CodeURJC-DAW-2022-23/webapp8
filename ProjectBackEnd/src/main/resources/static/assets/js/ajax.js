@@ -1,6 +1,7 @@
 const DECODER = new TextDecoder('iso-8859-1');
 const NUMBER_ELEMENTS_PER_LOAD = 10;
 let ACTUAL_HASHTAG;
+let ACTUAL_PROFILE;
 
 let counterPetitions = 0;
 
@@ -152,10 +153,68 @@ async function showTweetsAssociated(hashtag) {
     ACTUAL_HASHTAG = hashtag;
 }
 
+async function showFollowers(userId) {
+    counterPetitions = 0;
+
+    if (userId) {
+        ACTUAL_PROFILE = userId;
+    }
+
+    const response = await fetch(`/followers/${ACTUAL_PROFILE}/${counterPetitions}/${NUMBER_ELEMENTS_PER_LOAD}`);
+    const newFollowers = DECODER.decode(await response.arrayBuffer());
+
+    const container = document.getElementById("follow-container");
+    container.innerHTML = newFollowers;
+    const load_more = document.getElementById("loadMoreButton");
+    load_more.onclick = loadMoreFollowers;
+    const load_more_mobile = document.getElementById("loadMoreButtonMobile");
+    load_more_mobile.onclick = loadMoreFollowers;
+}
+
+async function loadMoreFollowers() {
+    const from = (counterPetitions + 1) * NUMBER_ELEMENTS_PER_LOAD
+
+    const response = await fetch(`/followers/${ACTUAL_PROFILE}/${from}/${NUMBER_ELEMENTS_PER_LOAD}`);
+
+    if (response.redirected) {
+        hideButtons();
+        return;
+    }
+
+    addNewElements(response, "follow");
+}
+
+async function showFollowed() {
+    counterPetitions = 0;
+
+    const response = await fetch(`/followed/${ACTUAL_PROFILE}/${counterPetitions}/${NUMBER_ELEMENTS_PER_LOAD}`);
+    const newFollowed = DECODER.decode(await response.arrayBuffer());
+
+    const container = document.getElementById("follow-container");
+    container.innerHTML = newFollowed;
+    const load_more = document.getElementById("loadMoreButton");
+    load_more.onclick = loadMoreFollowed;
+    const load_more_mobile = document.getElementById("loadMoreButtonMobile");
+    load_more_mobile.onclick = loadMoreFollowed;
+}
+
+async function loadMoreFollowed() {
+    const from = (counterPetitions + 1) * NUMBER_ELEMENTS_PER_LOAD
+
+    const response = await fetch(`/followed/${ACTUAL_PROFILE}/${from}/${NUMBER_ELEMENTS_PER_LOAD}`);
+
+    if (response.redirected) {
+        hideButtons();
+        return;
+    }
+
+    addNewElements(response, "follow");
+}
+
 /**
  * Add the new elements obtained in the correspondient container
- * @param {HTTP} response 
- * @param {String} container_name 
+ * @param {HTTP} response
+ * @param {String} container_name
  */
 async function addNewElements(response, container_name) {
     const newElements = DECODER.decode(await response.arrayBuffer());
