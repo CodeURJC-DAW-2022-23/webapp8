@@ -87,4 +87,12 @@ public class ProfileService {
     public List<Tuple> getStatics(){
        return this.repository.countByLast5JoinDate();
     }
+
+    public int countBookmarks(Long id) {
+        return this.tweetRepository.countBookmarks(id);
+    }
+
+    public int countTweetsForUser(Long id) {
+        return this.tweetRepository.countTweetsForUser(id);
+    }
 }

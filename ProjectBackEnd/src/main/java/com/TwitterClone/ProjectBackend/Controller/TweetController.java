@@ -67,6 +67,12 @@ public class TweetController {
                                         @PathParam("from") int from,
                                         @PathParam("size") int size) {
         User currentUser = this.informationManager.getCurrentUser(request);
+        int numTweetsForUser = this.profileService.countTweetsForUser(currentUser.getId());
+
+        if (numTweetsForUser <= from) {
+            return "redirect:/";
+        }
+
         List<Tweet> newTweets =
                 this.tweetService.find10RecentForUser(currentUser.getId(), from, size);
         List<TweetInformation> tweets = this.informationManager.calculateDataOfTweet(newTweets);
@@ -84,9 +90,15 @@ public class TweetController {
     @GetMapping("/bookmarks/tweets")
     public String loadMoreTweetsForBookmarks(Model model,
                                              HttpServletRequest request,
-                                             @Param("from") int from,
-                                             @Param("size") int size) {
+                                             @PathParam("from") int from,
+                                             @PathParam("size") int size) {
         User currentUser = this.informationManager.getCurrentUser(request);
+        int numBookmarks = this.profileService.countBookmarks(currentUser.getId());
+
+        if (numBookmarks <= from) {
+            return "redirect:/";
+        }
+
         List<Tweet> newTweets =
                 this.profileService.getBookmarks(currentUser.getId(), from, size);
         List<TweetInformation> tweets =
@@ -172,20 +184,29 @@ public class TweetController {
         List<Tweet> tweets = tweetService.find10(1L);
         boolean hashtagFound = false;
         String hashtag = "";
+
         for(int i = 0; i < text.length(); i++){
+
             if (text.charAt(i) =='#'){
+
                 if (hashtagFound){
                     hashtagService.add(hashtag, tweets.get(0));
                     hashtag = "";
                 }
+
                 hashtagFound = true;
+
             } else if (hashtagFound){
+
                 if (text.charAt(i) == ' ' || text.charAt(i) == '#'){
                     hashtagFound = false;
                     hashtagService.add(hashtag, tweets.get(0));
                     hashtag = "";
+
                 } else {
+
                     hashtag += String.valueOf(text.charAt(i));
+
                     if (i == text.length()-1){
                         hashtagService.add(hashtag, tweets.get(0));
                     }

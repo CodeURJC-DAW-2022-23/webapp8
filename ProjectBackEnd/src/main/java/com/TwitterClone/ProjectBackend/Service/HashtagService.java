@@ -64,4 +64,7 @@ public class HashtagService {
         return this.tweetRepository.getTweetsOfTrend(hashtag);
     }
 
+    public int countTrends() {
+        return this.hashtagRepository.countTrends();
+    }
 }

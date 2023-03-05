@@ -8,15 +8,16 @@ let counterPetitions = 0;
  * @returns {Promise<void>}
  */
 async function loadMoreTrends() {
-    const from = counterPetitions + NUMBER_ELEMENTS_PER_LOAD;
+    const from = (counterPetitions + 1) * NUMBER_ELEMENTS_PER_LOAD
 
     const response = await fetch(`/explore/trends?from=${from}&size=${NUMBER_ELEMENTS_PER_LOAD}`);
-    const newTrends = DECODER.decode(await response.arrayBuffer());
-
-    const container = document.getElementById("trend-container");
-    container.innerHTML += newTrends;
-
-    counterPetitions++;
+    
+    if (response.redirected) {
+        hideButtons();
+        return;
+    }
+    
+    addNewElements(response, "trend");
 }
 
 /**
@@ -24,15 +25,16 @@ async function loadMoreTrends() {
  * @returns {Promise<void>}
  */
 async function loadMoreTweetsForBookmarks() {
-    const from = counterPetitions + 1;
+    const from = (counterPetitions + 1) * NUMBER_ELEMENTS_PER_LOAD
 
     const response = await fetch(`/bookmarks/tweets?from=${from}&size=${NUMBER_ELEMENTS_PER_LOAD}`);
-    const newNotifications = DECODER.decode(await response.arrayBuffer());
 
-    const container = document.getElementById("tweet-container");
-    container.innerHTML += newNotifications;
-
-    counterPetitions++;
+    if (response.redirected) {
+        hideButtons();
+        return;
+    }
+    
+    addNewElements(response, "tweet");
 }
 
 /**
@@ -40,15 +42,16 @@ async function loadMoreTweetsForBookmarks() {
  * @returns {Promise<void>}
  */
 async function loadMoreTweetsForHome() {
-    const from = counterPetitions + 1;
+    const from = (counterPetitions + 1) * NUMBER_ELEMENTS_PER_LOAD
 
     const response = await fetch(`/home/tweets?from=${from}&size=${NUMBER_ELEMENTS_PER_LOAD}`);
-    const newTweets = DECODER.decode(await response.arrayBuffer());
-
-    const container = document.getElementById("tweet-container");
-    container.innerHTML += newTweets;
-
-    counterPetitions++;
+    
+    if (response.redirected) {
+        hideButtons();
+        return;
+    }
+    
+    addNewElements(response, "tweet");
 }
 
 /**
@@ -126,3 +129,33 @@ async function loadTweetsAssociated(hashtag) {
     const container = document.getElementById("trend-container");
     container.innerHTML = newTrends;
 }
+
+/**
+ * Add the new elements obtained in the correspondient container
+ * @param {HTTP} response 
+ * @param {String} container_name 
+ */
+async function addNewElements(response, container_name) {
+    const newElements = DECODER.decode(await response.arrayBuffer());
+
+    const container = document.getElementById(container_name + "-container");
+    container.innerHTML += newElements;
+
+    counterPetitions++;
+}
+
+/**
+ * Hide the load more buttons when is not possible to load more elements
+ */
+function hideButtons() {
+    changeVisibility(document.getElementById("loadMoreButton"));
+    changeVisibility(document.getElementById("loadMoreButtonMobile"));
+};
+
+/**
+ * Change the current element visibility
+ * @param {String} element 
+ */
+function changeVisibility(element) {
+    element.classList.add('hidden');
+};

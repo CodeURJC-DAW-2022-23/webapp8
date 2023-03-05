@@ -28,6 +28,12 @@ public class HashtagController {
     public String loadMoreTrends(Model model,
                                  @Param("from") int from,
                                  @Param("size") int size) {
+        int numTrends = this.hashtagService.countTrends();
+
+        if (numTrends <= from) {
+            return "redirect:/";
+        }
+
         List<Trend> newTrends = this.hashtagService.getCurrentTrends(from, size);
         model.addAttribute("trends", newTrends);
 
