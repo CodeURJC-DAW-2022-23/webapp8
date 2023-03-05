@@ -33,7 +33,7 @@ public class ProfileController {
                               @RequestParam String biography) throws IOException {
         User currentUser = this.informationManager.getCurrentUser(request);
         this.profileService.uploadProfile(currentUser, banner, profile, nickname, biography);
-        return "redirect:/profile";
+        return "redirect:/profile/" + currentUser.getId().toString();
     }
 
 }
