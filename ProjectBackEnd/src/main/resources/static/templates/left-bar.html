@@ -74,9 +74,7 @@
                     </div>
                 </div>
             </a>
-            {{/isLogged}}
 
-            {{#isLogged}}
             <a class="w-full group" href="/bookmarks">
                 <div
                     class="flex items-center gap-5 px-4 py-3 transition rounded-full w-fit group-hover:scale-110 group-hover:bg-gray-3 dark:group-hover:bg-gray-13 group-focus-within:bg-gray-3 dark:group-focus-within:bg-gray-13 group-focus-within:scale-110">
@@ -94,11 +92,9 @@
                     </div>
                 </div>
             </a>
-            {{/isLogged}}
 
-            {{#isLogged}}
             <!-- PROFILE -->
-            <a class="w-full group" href="/profile">
+            <a class="w-full group" href="/profile/{{id}}">
                 <div
                     class="flex items-center gap-5 px-4 py-3 transition rounded-full w-fit group-hover:scale-110 group-hover:bg-gray-3 dark:group-hover:bg-gray-13 group-focus-within:bg-gray-3 dark:group-focus-within:bg-gray-13 group-focus-within:scale-110">
                     <picture class="w-9">
@@ -120,9 +116,7 @@
                     </article>
                 </div>
             </a>
-            {{/isLogged}}
 
-            {{#isLogged}}
             <!-- LOG OUT -->
             <form action ="/logout" method="post"
                   class="w-full group">
@@ -146,9 +140,7 @@
                 </div>
             </form>
         </nav>
-        {{/isLogged}}
 
-        {{#isLogged}}
         <a class="py-4 text-xl font-bold text-center transition rounded-full cursor-pointer text-white-0 hover:scale-110 bg-primary"
             href="/write-tweet">
             Tweet

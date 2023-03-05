@@ -131,4 +131,8 @@ public class UserService {
         userRepository.save(user);
     }
 
+    public List<User> getRecommendedUsers(Long userId) {
+        return userRepository.findRecommendedUsers(userId);
+    }
+
 }

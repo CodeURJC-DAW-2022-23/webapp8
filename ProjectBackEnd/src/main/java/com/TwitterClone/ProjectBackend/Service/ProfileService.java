@@ -66,7 +66,7 @@ public class ProfileService {
         return tweetRepository.findBookmarksByUserId(id,offset,size);
     }
 
-    public List<User> getVerified(int init, int size){
+    public List<User> getVerified(int init, int size) {
         return repository.findVerified(init, size);
     }
 
@@ -92,5 +92,13 @@ public class ProfileService {
 
     public void updateType(User user) {
         this.repository.save(user);
+    }
+
+    public int countBookmarks(Long id) {
+        return this.tweetRepository.countBookmarks(id);
+    }
+
+    public int countTweetsForUser(Long id) {
+        return this.tweetRepository.countTweetsForUser(id);
     }
 }

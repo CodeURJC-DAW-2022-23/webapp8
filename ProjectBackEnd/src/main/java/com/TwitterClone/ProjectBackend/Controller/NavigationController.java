@@ -65,7 +65,7 @@ public class NavigationController {
     public String logout(Model model, HttpServletRequest request){
         CsrfToken token = (CsrfToken) request.getAttribute("_csrf");
         model.addAttribute("token", token.getToken());
-        return "/";
+        return "redirect:/";
     }
 
     /**
@@ -157,9 +157,11 @@ public class NavigationController {
      * Change from the current page to the profile page
      * @return
      */
-    @GetMapping("/profile")
-    public String toProfile(Model model, HttpServletRequest request) {
-        User currentUser = this.informationManager.getCurrentUser(request);
+    @GetMapping("/profile/{id}")
+    public String toProfile(Model model,
+                            HttpServletRequest request,
+                            @PathVariable Long id) {
+        User currentUser = this.profileService.findById(id).get();
 
         // Profile page shows username as page name...
         String nickname = currentUser.getNickname();
@@ -314,5 +316,12 @@ public class NavigationController {
         user.setEnabled(false);
         this.profileService.updateType(user);
         return "redirect:/dashboard";
+    }
+
+    @GetMapping("/users/{userId}/recommended")
+    public String getRecommendedUsers(@PathVariable Long userId, Model model) {
+        List<User> recommendedUsers = userService.getRecommendedUsers(userId); // Obtener 1 usuario recomendados para el usuario con el ID especificado
+        model.addAttribute("recommendedUsers", recommendedUsers);
+        return "recommended-users"; // Devolver el nombre de la vista para mostrar la lista de usuarios recomendados
     }
 }

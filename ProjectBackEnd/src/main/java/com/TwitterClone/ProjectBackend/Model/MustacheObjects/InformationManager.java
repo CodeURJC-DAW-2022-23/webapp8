@@ -82,6 +82,25 @@ public class InformationManager {
             currentTweetInformation.setNumLikes(this.tweetService.getLikesOfTweet(tweet.getId()));
             currentTweetInformation.setNumComments(this.tweetService.getCommentsOfTweet(tweet.getId()));
             currentTweetInformation.setNumRetweets(this.tweetService.getRetweetsOfTweet(tweet.getId()));
+
+            if (this.tweetService.toggleLike(tweet.getUser(), tweet)) {
+                currentTweetInformation.setColorLike("red-0");
+            } else {
+                currentTweetInformation.setColorLike("gray-4");
+            }
+
+            if (this.tweetService.toggleRetweet(tweet.getUser(), tweet)) {
+                currentTweetInformation.setColorRetweet("green-0");
+            } else {
+                currentTweetInformation.setColorRetweet("gray-4");
+            }
+
+            if (this.tweetService.toggleRetweet(tweet.getUser(), tweet)) {
+                currentTweetInformation.setColorBookmark("primary");
+            } else {
+                currentTweetInformation.setColorRetweet("gray-4");
+            }
+
             tweetsInfo.add(currentTweetInformation);
         }
 

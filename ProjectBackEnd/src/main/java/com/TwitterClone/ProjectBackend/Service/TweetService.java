@@ -104,9 +104,9 @@ public class TweetService {
      * @param currentUser
      * @param t
      */
-    public void toggleBookmark(User currentUser, Tweet t) {
+    public boolean toggleBookmark(User currentUser, Tweet t) {
 
-
+        return true;
     }
 
     /**
@@ -123,8 +123,8 @@ public class TweetService {
             return;
         }
 
-        Tweet comment = new Tweet(text, user, files);
-        t.addComment(comment);
+        t.addComment(tweet);
+        this.tweetRepository.save(t);
     }
 
     /**

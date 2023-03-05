@@ -34,6 +34,9 @@ public interface TweetRepository extends JpaRepository<Tweet, Long> {
     @Query(value = "SELECT * from tweet t join (SELECT followed_id from users_followed WHERE user_id = ?1) f on t.user_id = f.followed_id ORDER BY t.publish_date DESC LIMIT ?2, ?3", nativeQuery = true)
     List<Tweet> findByUserFollows(Long id, int init, int size);
 
+    @Query(value = "SELECT COUNT(*) from tweet t join (SELECT followed_id from users_followed WHERE user_id = ?1) f on t.user_id = f.followed_id", nativeQuery = true)
+    int countTweetsForUser(Long id);
+
     /**
      * This Query returns a List of Tweets bookmarked by the user
      * @param id
@@ -43,6 +46,9 @@ public interface TweetRepository extends JpaRepository<Tweet, Long> {
      */
     @Query(value = "SELECT * FROM tweet t JOIN (SELECT bookmarks_id FROM users_bookmarks WHERE user_id = ?1) b ON t.id = b.bookmarks_id ORDER BY publish_date LIMIT ?2,?3",nativeQuery = true)
     List<Tweet>findBookmarksByUserId(Long id, int offset, int size);
+
+    @Query(value = "SELECT COUNT(*) FROM tweet t JOIN (SELECT bookmarks_id FROM users_bookmarks WHERE user_id = ?1) b ON t.id = b.bookmarks_id",nativeQuery = true)
+    int countBookmarks(Long id);
 
     /**
      * This Query returns a List of Tweets that are comments of another Tweet
@@ -97,6 +103,6 @@ public interface TweetRepository extends JpaRepository<Tweet, Long> {
      */
     @Query(value="SELECT COUNT(*) FROM tweet_comments JOIN tweet ON tweet_id = id WHERE tweet_id = ?1 GROUP BY tweet_id", nativeQuery = true)
     Long countComments(Long id);
-    @Query(value = "SELECT tweet.* FROM hashtag_tweets JOIN tweet ON tweets_id = id WHERE hashtag_hashtag = ?1", nativeQuery = true)
-    List<Tweet> getTweetsOfTrend(String id);
+    @Query(value = "SELECT tweet.* FROM hashtag_tweets JOIN tweet ON tweets_id = id WHERE hashtag_hashtag = ?1 ORDER BY publish_date DESC LIMIT ?2,?3", nativeQuery = true)
+    List<Tweet> getTweetsOfTrend(String id, int from, int size);
 }
