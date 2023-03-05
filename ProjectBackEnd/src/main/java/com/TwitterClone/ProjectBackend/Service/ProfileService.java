@@ -66,14 +66,16 @@ public class ProfileService {
         return tweetRepository.findBookmarksByUserId(id,offset,size);
     }
 
-    public List<User> getVerified(int init, int size){
+    public List<User> getVerified(int init, int size) {
         return repository.findVerified(init, size);
+    }
     public List<User> getFollowers(Long id) {
         return repository.findFollowers(id);
     }
 
-    public List<User> getBanned(int init, int size){
-        return repository.findBanned(init,size);
+    public List<User> getBanned(int init, int size) {
+        return repository.findBanned(init, size);
+    }
     public List<User> getFollowed(Long id) {
         return repository.findFollowed(id);
     }
