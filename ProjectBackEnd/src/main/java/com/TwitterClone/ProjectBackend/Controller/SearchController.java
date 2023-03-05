@@ -1,12 +1,16 @@
 package com.TwitterClone.ProjectBackend.Controller;
 
+import com.TwitterClone.ProjectBackend.Model.MustacheObjects.InformationManager;
 import com.TwitterClone.ProjectBackend.Repository.UserRepository;
 import com.TwitterClone.ProjectBackend.userManagement.User;
+import com.TwitterClone.ProjectBackend.userManagement.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
@@ -17,11 +21,23 @@ import java.util.List;
 public class SearchController {
 
     @Autowired
-    private UserRepository userRepository;
+    private InformationManager informationManager;
+    @Autowired
+    private UserService userService;
+
 
     @GetMapping("/search")
-    public List<User> lookForUsers(@RequestParam String keyword) {
-        List<User> list = userRepository.findByUsernameContainingIgnoreCase(keyword);
-        return list;
+    public String search(@RequestParam String keyword, HttpServletRequest request){
+        return "redirect:/search/"+keyword;
+    }
+
+    @GetMapping("/search/{keyword}")
+    public String toSearch(@PathVariable String keyword,Model model, HttpServletRequest request){
+        List<User> list = userService.findByUsernameContainingIgnoreCase(keyword);
+        this.informationManager.addCurrentTrends(model);
+        this.informationManager.addNameToThePage(model,keyword);
+        this.informationManager.addProfileInfoToLeftBar(model,request);
+        model.addAttribute("users",list);
+        return "search";
     }
 }

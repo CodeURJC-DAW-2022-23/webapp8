@@ -27,7 +27,7 @@ public class ProfileService {
         return userRepository.findAll();
     }
 
-    public void createProfile(String username, String password, String mail) {
+    public void createProfile(String username, String password, String mail) throws IOException {
         User user = new User(username, password, mail, "USER");
         userRepository.save(user);
     }

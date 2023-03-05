@@ -157,7 +157,7 @@ public class TweetController {
 
     private Blob[] manageImages(MultipartFile [] tweet_files) throws IOException {
         Blob [] files = new Blob[4];
-        if(tweet_files[0].getContentType().equals("")){
+        if(!tweet_files[0].isEmpty()){
             for (int index = 0; (index < tweet_files.length) && (index < 4); index++) {
                 files[index] = BlobProxy
                         .generateProxy(tweet_files[index]
@@ -259,8 +259,7 @@ public class TweetController {
      * @throws IOException
      */
     @GetMapping("/tweet/bookmark/{id}")
-    public String toggleBookmark(@PathVariable("id") Long id,
-                                HttpServletRequest request) throws IOException{
+    public String toggleBookmark(@PathVariable("id") Long id, HttpServletRequest request) throws IOException{
         Tweet tweet = this.tweetService.findById(id).get();
         User currentUser = this.informationManager.getCurrentUser(request);
         this.tweetService.toggleBookmark(currentUser, tweet);

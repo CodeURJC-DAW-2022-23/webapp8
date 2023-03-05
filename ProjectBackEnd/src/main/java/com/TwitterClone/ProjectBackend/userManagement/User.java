@@ -74,7 +74,7 @@ public class User  {
     public User(@NotNull @NotBlank String username,
                 @NotNull @NotBlank String password,
                 @NotNull @NotBlank String email,
-                String role) {
+                String role) throws IOException {
         super();
         this.username = username;
         this.nickname = username;
