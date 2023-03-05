@@ -111,7 +111,7 @@
           </button>
 
           <!-- BOOKMARKS -->
-          <button class="flex items-center gap-1" onclick="giveBookmark('{{tweet.id}}');">
+          <button class="flex items-center gap-1" onclick="window.location.href='/tweet/bookmark/{{tweet.id}}';">
             <svg viewBox="0 0 24 24" aria-hidden="true" id="bookmark-svg-{{tweet.id}}"
                  class="w-8 p-[0.375rem] transition rounded-full fill-gray-4 group-hover:fill-primary group-hover:bg-blue-1 group-dark:hover:bg-blue-0">
               <g>

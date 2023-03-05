@@ -69,7 +69,7 @@ public class ProfileService {
     }
 
     public List<User> getVerified(int init, int size) {
-        return repository.findVerified(init, size);
+        return userRepository.findVerified(init, size);
     }
 
     public List<User> getFollowers(Long id) {
@@ -77,7 +77,7 @@ public class ProfileService {
     }
 
     public List<User> getBanned(int init, int size){
-        return repository.findBanned(init,size);
+        return userRepository.findBanned(init,size);
     }
 
     public List<User> getFollowed(Long id) {
@@ -111,15 +111,15 @@ public class ProfileService {
     }
 
     public List<User> getToVerified(int init, int size) {
-        return this.repository.findNotVerifiedNotBanned(init,size);
+        return this.userRepository.findNotVerifiedNotBanned(init,size);
     }
 
     public List<Tuple> getStatics(){
-       return this.repository.countByLast5JoinDate();
+       return this.userRepository.countByLast5JoinDate();
     }
 
     public void updateType(User user) {
-        this.repository.save(user);
+        this.userRepository.save(user);
     }
 
     public int countBookmarks(Long id) {

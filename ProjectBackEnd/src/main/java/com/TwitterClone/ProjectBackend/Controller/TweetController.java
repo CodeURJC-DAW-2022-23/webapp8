@@ -259,12 +259,11 @@ public class TweetController {
      * @throws IOException
      */
     @GetMapping("/tweet/bookmark/{id}")
-    public String toggleBookmark(@PathVariable("id") Long id, HttpServletRequest request) throws IOException{
+    public String toggleBookmark(@PathVariable("id") Long id, HttpServletRequest request){
         Tweet tweet = this.tweetService.findById(id).get();
         User currentUser = this.informationManager.getCurrentUser(request);
         this.tweetService.toggleBookmark(currentUser, tweet);
-
-        return "error";
+        return "redirect:/bookmarks";
     }
 
     @GetMapping("/tweet/delete/{id}")
