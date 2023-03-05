@@ -7,10 +7,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.Tuple;
 import javax.transaction.Transactional;
+import java.awt.print.Pageable;
 import java.sql.Blob;
 import java.util.List;
 import java.util.Optional;
@@ -106,4 +108,8 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Query(value = "SELECT users.* FROM users_followed JOIN users ON followed_id=id WHERE user_id = ?1",nativeQuery = true)
     List<User> findFollowed(Long id);
 
+
+    @Query("SELECT DISTINCT u FROM User u JOIN u.followers f JOIN f.followers f2 WHERE f2.id = :userId AND u.id NOT IN (SELECT f2.id FROM User u2 JOIN u2.followed f2 WHERE u2.id = :userId) AND u.id <> :userId")
+    List<User> findRecommendedUsers(@Param("userId") Long userId);
 }
+

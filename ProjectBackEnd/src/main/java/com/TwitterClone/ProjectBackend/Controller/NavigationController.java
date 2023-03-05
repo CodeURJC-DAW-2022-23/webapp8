@@ -276,4 +276,11 @@ public class NavigationController {
         this.informationManager.addStatistics(model);
         return "admin-dashboard";
     }
+
+    @GetMapping("/users/{userId}/recommended")
+    public String getRecommendedUsers(@PathVariable Long userId, Model model) {
+        List<User> recommendedUsers = userService.getRecommendedUsers(userId); // Obtener 1 usuario recomendados para el usuario con el ID especificado
+        model.addAttribute("recommendedUsers", recommendedUsers);
+        return "recommended-users"; // Devolver el nombre de la vista para mostrar la lista de usuarios recomendados
+    }
 }
