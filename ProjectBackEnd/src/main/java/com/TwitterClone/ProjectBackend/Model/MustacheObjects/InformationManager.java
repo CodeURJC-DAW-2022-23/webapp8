@@ -29,6 +29,8 @@ public class InformationManager {
     private HashtagService hashtagService;
     @Autowired
     private TweetService tweetService;
+    @Autowired
+    private UserService userService;
 
     /**
      * Add the current user to the left-bar
@@ -144,5 +146,11 @@ public class InformationManager {
         }
         model.addAttribute("amounts",amounts);
         model.addAttribute("dates",dates);
+    }
+
+    public void addRecommended(Model model, HttpServletRequest request){
+        User currentUser = this.getCurrentUser(request);
+        List<User> recommended = this.userService.getRecommendedUsers(currentUser.getId());
+        model.addAttribute("usersToFollow",recommended);
     }
 }

@@ -106,6 +106,8 @@ public class NavigationController {
         List<Trend> trends = this.hashtagService.getCurrentTrends(0,10);
         model.addAttribute("trends", trends);
 
+        this.informationManager.addRecommended(model,request);
+
         return "explore";
     }
 
