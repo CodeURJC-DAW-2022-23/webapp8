@@ -1,5 +1,6 @@
 const DECODER = new TextDecoder('iso-8859-1');
 const NUMBER_ELEMENTS_PER_LOAD = 10;
+let ACTUAL_HASHTAG;
 
 let counterPetitions = 0;
 
@@ -124,12 +125,31 @@ async function showNotifications() {
     load_more_mobile.onclick = loadMoreNotifications;
 }
 
-async function loadTweetsAssociated(hashtag) {
+async function loadMoreTweetsAssociated(){
+    const from = (counterPetitions + 1) * NUMBER_ELEMENTS_PER_LOAD
+
+    const response = await fetch(`/explore_more/${ACTUAL_HASHTAG}?from=${from}&size=${NUMBER_ELEMENTS_PER_LOAD}`);
+
+    if (response.redirected) {
+        hideButtons();
+        return;
+    }
+
+    addNewElements(response, "trend");
+}
+
+async function showTweetsAssociated(hashtag) {
+    counterPetitions = 0;
     const response = await fetch(`/explore/${hashtag}`);
     const newTrends = DECODER.decode(await response.arrayBuffer());
 
     const container = document.getElementById("trend-container");
     container.innerHTML = newTrends;
+    const load_more = document.getElementById("loadMoreButton");
+    load_more.onclick = loadMoreTweetsAssociated;
+    const load_more_mobile = document.getElementById("loadMoreButtonMobile");
+    load_more_mobile.onclick = loadMoreTweetsAssociated;
+    ACTUAL_HASHTAG = hashtag;
 }
 
 /**

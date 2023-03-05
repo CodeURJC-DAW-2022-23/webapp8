@@ -40,4 +40,7 @@ public interface HashtagRepository extends JpaRepository<Hashtag, String> {
      */
     @Query(value = "SELECT COUNT(*) FROM hashtag", nativeQuery = true)
     int countTrends();
+
+    @Query(value = "SELECT count(*) FROM hashtag_tweets WHERE hashtag_hashtag = ?1", nativeQuery = true)
+    int countTweetsAssociated(String hashtag);
 }

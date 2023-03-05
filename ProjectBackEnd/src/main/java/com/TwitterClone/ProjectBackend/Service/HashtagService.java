@@ -60,11 +60,15 @@ public class HashtagService {
         return list;
     }
 
-    public List<Tweet> getTweetsAssociatedTo(String hashtag) {
-        return this.tweetRepository.getTweetsOfTrend(hashtag);
+    public List<Tweet> getTweetsAssociatedTo(String hashtag, int from, int size) {
+        return this.tweetRepository.getTweetsOfTrend(hashtag, from, size);
     }
 
     public int countTrends() {
         return this.hashtagRepository.countTrends();
+    }
+
+    public int countTweetsAssociated(String hashtag) {
+        return this.hashtagRepository.countTweetsAssociated(hashtag);
     }
 }

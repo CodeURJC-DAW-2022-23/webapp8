@@ -103,6 +103,6 @@ public interface TweetRepository extends JpaRepository<Tweet, Long> {
      */
     @Query(value="SELECT COUNT(*) FROM tweet_comments JOIN tweet ON tweet_id = id WHERE tweet_id = ?1 GROUP BY tweet_id", nativeQuery = true)
     Long countComments(Long id);
-    @Query(value = "SELECT tweet.* FROM hashtag_tweets JOIN tweet ON tweets_id = id WHERE hashtag_hashtag = ?1", nativeQuery = true)
-    List<Tweet> getTweetsOfTrend(String id);
+    @Query(value = "SELECT tweet.* FROM hashtag_tweets JOIN tweet ON tweets_id = id WHERE hashtag_hashtag = ?1 ORDER BY publish_date DESC LIMIT ?2,?3", nativeQuery = true)
+    List<Tweet> getTweetsOfTrend(String id, int from, int size);
 }
