@@ -157,9 +157,11 @@ public class NavigationController {
      * Change from the current page to the profile page
      * @return
      */
-    @GetMapping("/profile")
-    public String toProfile(Model model, HttpServletRequest request) {
-        User currentUser = this.informationManager.getCurrentUser(request);
+    @GetMapping("/profile/{id}")
+    public String toProfile(Model model,
+                            HttpServletRequest request,
+                            @PathVariable Long id) {
+        User currentUser = this.profileService.findById(id).get();
 
         // Profile page shows username as page name...
         String nickname = currentUser.getNickname();
