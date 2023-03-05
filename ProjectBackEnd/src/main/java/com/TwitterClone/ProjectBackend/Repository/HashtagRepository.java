@@ -2,9 +2,6 @@ package com.TwitterClone.ProjectBackend.Repository;
 
 import com.TwitterClone.ProjectBackend.Model.Hashtag;
 import com.TwitterClone.ProjectBackend.Model.Tweet;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -43,4 +40,6 @@ public interface HashtagRepository extends JpaRepository<Hashtag, String> {
 
     @Query(value = "SELECT count(*) FROM hashtag_tweets WHERE hashtag_hashtag = ?1", nativeQuery = true)
     int countTweetsAssociated(String hashtag);
+    List<Hashtag> findByHashtagIsContainingIgnoreCase(String name);
+
 }

@@ -6,7 +6,6 @@ import com.TwitterClone.ProjectBackend.Model.Tweet;
 import com.TwitterClone.ProjectBackend.Repository.HashtagRepository;
 import com.TwitterClone.ProjectBackend.Repository.TweetRepository;
 import com.TwitterClone.ProjectBackend.Repository.UserRepository;
-import com.TwitterClone.ProjectBackend.userManagement.User;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +28,10 @@ public class HashtagService {
     @Autowired
     private TweetRepository tweetRepository;
 
+    public List<Hashtag> findByHashtagIsContainingIgnoreCase(String keyword) {
+        List <Hashtag> meQuieroPegarUnPutoTiro = this.hashtagRepository.findByHashtagIsContainingIgnoreCase(keyword);
+        return meQuieroPegarUnPutoTiro;
+    }
     public List<Trend> getCurrentTrends(int init, int size) {
         List<Tuple> trends= this.hashtagRepository.find(init, size);
         List<Tuple> trendsList = trends.stream().toList();

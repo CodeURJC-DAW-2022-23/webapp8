@@ -2,6 +2,7 @@ package com.TwitterClone.ProjectBackend.Service;
 
 import com.TwitterClone.ProjectBackend.Model.Trend;
 import com.TwitterClone.ProjectBackend.Model.Tweet;
+import com.TwitterClone.ProjectBackend.Repository.HashtagRepository;
 import com.TwitterClone.ProjectBackend.Repository.TweetRepository;
 import com.TwitterClone.ProjectBackend.Repository.UserRepository;
 import com.TwitterClone.ProjectBackend.userManagement.User;
@@ -26,6 +27,7 @@ public class TweetService {
     private TweetRepository tweetRepository;
 
     @Autowired UserRepository userRepository;
+
 
 
     public List<Tweet> findAll(){

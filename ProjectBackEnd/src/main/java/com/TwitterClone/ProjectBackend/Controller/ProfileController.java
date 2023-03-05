@@ -35,7 +35,8 @@ public class ProfileController {
                               @RequestParam String biography) throws IOException {
         User currentUser = this.informationManager.getCurrentUser(request);
         this.profileService.uploadProfile(currentUser, banner, profile, nickname, biography);
-        return "redirect:/profile/" + currentUser.getId().toString();
+        String id = currentUser.getId().toString();
+        return "redirect:/profile/" + id;
     }
 
     @GetMapping("/followed/{username}/{from}/{size}")

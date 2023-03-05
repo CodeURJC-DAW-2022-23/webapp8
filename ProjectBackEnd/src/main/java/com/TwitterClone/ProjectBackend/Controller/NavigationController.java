@@ -228,6 +228,8 @@ public class NavigationController {
     @GetMapping("/edit-profile")
     public String toEditProfile(Model model, HttpServletRequest request) {
         User currentUser = this.informationManager.getCurrentUser(request);
+        CsrfToken token = (CsrfToken) request.getAttribute("_csrf");
+        model.addAttribute("token", token.getToken());
 
         this.informationManager.addNameToThePage(model, "Edit profile");
         model.addAttribute("user", currentUser);

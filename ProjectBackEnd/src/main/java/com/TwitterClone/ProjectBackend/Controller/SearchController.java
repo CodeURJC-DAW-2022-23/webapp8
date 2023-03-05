@@ -1,7 +1,10 @@
 package com.TwitterClone.ProjectBackend.Controller;
 
+import com.TwitterClone.ProjectBackend.Model.Hashtag;
 import com.TwitterClone.ProjectBackend.Model.MustacheObjects.InformationManager;
 import com.TwitterClone.ProjectBackend.Repository.UserRepository;
+import com.TwitterClone.ProjectBackend.Service.HashtagService;
+import com.TwitterClone.ProjectBackend.Service.TweetService;
 import com.TwitterClone.ProjectBackend.userManagement.User;
 import com.TwitterClone.ProjectBackend.userManagement.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +28,9 @@ public class SearchController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private HashtagService hashtagService;
+
 
     @GetMapping("/search")
     public String search(@RequestParam String keyword, HttpServletRequest request){
@@ -34,10 +40,12 @@ public class SearchController {
     @GetMapping("/search/{keyword}")
     public String toSearch(@PathVariable String keyword,Model model, HttpServletRequest request){
         List<User> list = userService.findByUsernameContainingIgnoreCase(keyword);
+        List<Hashtag> list2 = hashtagService.findByHashtagIsContainingIgnoreCase(keyword);
         this.informationManager.addCurrentTrends(model);
         this.informationManager.addNameToThePage(model,keyword);
         this.informationManager.addProfileInfoToLeftBar(model,request);
         model.addAttribute("users",list);
+        model.addAttribute("trends", list2);
         return "search";
     }
 }
