@@ -1,6 +1,7 @@
 package com.TwitterClone.ProjectBackend.Controller;
 
 import com.TwitterClone.ProjectBackend.Model.MustacheObjects.InformationManager;
+import com.TwitterClone.ProjectBackend.Service.NotificationService;
 import com.TwitterClone.ProjectBackend.Service.ProfileService;
 import com.TwitterClone.ProjectBackend.userManagement.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,8 @@ public class ProfileController {
 
     @Autowired
     private InformationManager informationManager;
+    @Autowired
+    private NotificationService notificationService;
 
     @PostMapping("/profile/edit-profile")
     public String editProfile(HttpServletRequest request,
@@ -91,8 +94,15 @@ public class ProfileController {
     @GetMapping("/toggleFollow/{id}")
     public String toggleFollow(@PathVariable Long id,
                          HttpServletRequest request){
-        Long idCurrentUser = this.informationManager.getCurrentUser(request).getId();
-        this.profileService.toggleFollow(id, idCurrentUser);
+        User profileUser = this.profileService.findById(id).get();
+        User currentUser = this.informationManager.getCurrentUser(request);
+        boolean hasFollowed = this.profileService.toggleFollow(profileUser, currentUser);
+        if (hasFollowed){
+            this.notificationService.createNotification(null, profileUser, currentUser, "FOLLOW");
+        } else {
+            this.notificationService.deleteNotification(null,
+                    currentUser.getId(), "FOLLOW", profileUser.getId());
+        }
         return "redirect:/profile/" + id;
     }
 

@@ -38,16 +38,24 @@ public class NotificationService {
     }
 
     public void createNotification(Long idTweet, User owner, User currentUser, String notificationType) {
-        Tweet tweetTrigger = this.tweetRepository.findById(idTweet).orElse(null);
+        Tweet tweetTrigger = null;
+        if(idTweet != null){
+            tweetTrigger = this.tweetRepository.findById(idTweet).orElse(null);
+        }
 
-        if (owner != null && tweetTrigger != null){
+        if (owner != null){
             Notification notification = new Notification(tweetTrigger, owner, currentUser, notificationType);
             this.notificationRepository.save(notification);
         }
     }
 
-    public void deleteNotification(Long idTweet, Long idCurrentUser, String notificationType) {
-        Notification notification = this.notificationRepository.findSpecificNotification(idCurrentUser, idTweet, notificationType).orElse(null);
+    public void deleteNotification(Long idTweet, Long idCurrentUser, String notificationType, Long idUserToNotify) {
+        Notification notification;
+        if (idTweet != null){
+            notification = this.notificationRepository.findSpecificNotification(idCurrentUser, idTweet, notificationType).orElse(null);
+        } else {
+            notification = this.notificationRepository.findFollowNotification(idCurrentUser, idUserToNotify).orElse(null);
+        }
         if (notification != null){
             this.notificationRepository.delete(notification);
         }

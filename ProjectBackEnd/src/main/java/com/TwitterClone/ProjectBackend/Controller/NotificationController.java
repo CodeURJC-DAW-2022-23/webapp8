@@ -91,7 +91,7 @@ public class NotificationController {
                                      HttpServletRequest request){
         User currentUser = this.informationManager.getCurrentUser(request);
         Long currentUserId = currentUser.getId();
-        this.notificationService.deleteNotification(idTweet, currentUserId, notificationType);
+        this.notificationService.deleteNotification(idTweet, currentUserId, notificationType, 0L);
         return "finish-request";
     }
 

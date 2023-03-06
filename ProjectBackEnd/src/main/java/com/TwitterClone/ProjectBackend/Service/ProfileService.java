@@ -123,17 +123,18 @@ public class ProfileService {
         return profileUser.getFollowers().contains(currentUser);
     }
 
-    public void toggleFollow(Long idProfileUser, Long idCurrentUser) {
-        User profileUser = this.findById(idProfileUser).get();
-        User currentUser = this.findById(idCurrentUser).get();
+    public boolean toggleFollow(User profileUser, User currentUser) {
+        boolean hasFollowed = false;
         if (!this.isFollowedBy(profileUser, currentUser)){
             profileUser.addFollower(currentUser);
             currentUser.addFollowed(profileUser);
+            hasFollowed = true;
         } else {
             profileUser.removeFollower(currentUser);
             currentUser.removeFollowed(profileUser);
         }
         this.userRepository.save(profileUser);
         this.userRepository.save(currentUser);
+        return hasFollowed;
     }
 }
