@@ -22,6 +22,11 @@ users = {
     `
 }
 
+/**
+ * Load the svg associated to users
+ * @param divId
+ * @param userType
+ */
 function loadUserSVG(divId, userType){
     if (userType === "PUBLIC"){
         return;
@@ -53,6 +58,11 @@ usersOthers = {
     `
 }
 
+/**
+ * Load the svg associated at the left bar
+ * @param divId
+ * @param userType
+ */
 function loadLeftBarSvg(divId, userType){
     if (userType === "PUBLIC"){
         return;
@@ -62,6 +72,7 @@ function loadLeftBarSvg(divId, userType){
     let svgToLoad = usersOthers[userType];
     userNameDiv.innerHTML += svgToLoad;
 }
+
 
 function loadUserOthersSvg(userType){
     if (userType === "PUBLIC"){
@@ -83,6 +94,12 @@ dashBoardText.set("BANNED","Unban");
 dashBoardText.set("PUBLIC","Verify");
 dashBoardText.set("PRIVATE","Verify");
 
+/**
+ * Change the color of the text depending on the type
+ * @param type
+ * @param index
+ * @param id
+ */
 function changeText(type,index,id){
     document.getElementById(type+index).innerHTML=dashBoardText.get(type);
     if (type==="BANNED"||type==="VERIFIED"){

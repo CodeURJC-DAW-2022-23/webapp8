@@ -136,25 +136,33 @@ public class User  {
     }
 
     /**
-     * This is for storing a bookmark for the user
-     * @param tweet
+     * Get the number of followers
+     * @return
      */
-    public void addBookmark(Tweet tweet) {
-        this.bookmarks.add(tweet);
-    }
-
     public int getFollowersNumber() {
         return this.followers.size();
     }
 
+    /**
+     * Get the number of followed
+     * @return
+     */
     public int getFollowedNumber() {
         return this.followed.size();
     }
 
+    /**
+     * Remove a follower user
+     * @param user
+     */
     public void removeFollower(User user) {
         this.followers.remove(user);
     }
 
+    /**
+     * Remove a followed user
+     * @param user
+     */
     public void removeFollowed(User user) {
         this.followed.remove(user);
     }

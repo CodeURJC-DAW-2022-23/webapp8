@@ -24,10 +24,6 @@ async function loadMoreTrends() {
     removeSpinner()
 }
 
-function updateNumbers(){
-
-}
-
 /**
  * Realize an HTTP petition to request more notifications with AJAX
  * @returns {Promise<void>}
@@ -88,6 +84,10 @@ async function loadMoreTweetsForProfile(userId) {
     removeSpinner()
 }
 
+/**
+ * Realize an HTTP petition to request more notifications with AJAX
+ * @returns {Promise<void>}
+ */
 async function loadMoreNotifications() {
     addSpinner()
     const from = (counterPetitions + 1) * NUMBER_ELEMENTS_PER_LOAD
@@ -104,6 +104,10 @@ async function loadMoreNotifications() {
     removeSpinner()
 }
 
+/**
+ * Realize an HTTP petition to request more mentions with AJAX
+ * @returns {Promise<void>}
+ */
 async function loadMoreMentions() {
     addSpinner()
     const from = (counterPetitions + 1) * NUMBER_ELEMENTS_PER_LOAD
@@ -120,6 +124,10 @@ async function loadMoreMentions() {
     removeSpinner()
 }
 
+/**
+ * Update the page to show the mentions associated
+ * @returns {Promise<void>}
+ */
 async function showMentions() {
     counterPetitions = 0;
 
@@ -134,6 +142,10 @@ async function showMentions() {
     load_more_mobile.onclick = loadMoreMentions;
 }
 
+/**
+ * Update the page to show the notifications associated
+ * @returns {Promise<void>}
+ */
 async function showNotifications() {
     counterPetitions = 0;
 
@@ -148,6 +160,10 @@ async function showNotifications() {
     load_more_mobile.onclick = loadMoreNotifications;
 }
 
+/**
+ * Realize an HTTP petition to request more tweets associated with AJAX
+ * @returns {Promise<void>}
+ */
 async function loadMoreTweetsAssociated(){
     addSpinner()
     const from = (counterPetitions + 1) * NUMBER_ELEMENTS_PER_LOAD
@@ -164,6 +180,10 @@ async function loadMoreTweetsAssociated(){
     removeSpinner()
 }
 
+/**
+ * Update the page to show the tweets associated to a hashtag
+ * @returns {Promise<void>}
+ */
 async function showTweetsAssociated(hashtag) {
     counterPetitions = 0;
     const response = await fetch(`/explore/${hashtag}`);
@@ -178,6 +198,10 @@ async function showTweetsAssociated(hashtag) {
     ACTUAL_HASHTAG = hashtag;
 }
 
+/**
+ * Update the page to show the followers associated
+ * @returns {Promise<void>}
+ */
 async function showFollowers(userId) {
     counterPetitions = 0;
 
@@ -196,6 +220,10 @@ async function showFollowers(userId) {
     load_more_mobile.onclick = loadMoreFollowers;
 }
 
+/**
+ * Realize an HTTP petition to request more followers with AJAX
+ * @returns {Promise<void>}
+ */
 async function loadMoreFollowers() {
     addSpinner()
     const from = (counterPetitions + 1) * NUMBER_ELEMENTS_PER_LOAD
@@ -212,6 +240,10 @@ async function loadMoreFollowers() {
     removeSpinner()
 }
 
+/**
+ * Update the page to show the mentions associated
+ * @returns {Promise<void>}
+ */
 async function showFollowed() {
     counterPetitions = 0;
 
@@ -226,6 +258,10 @@ async function showFollowed() {
     load_more_mobile.onclick = loadMoreFollowed;
 }
 
+/**
+ * Realize an HTTP petition to request more followed with AJAX
+ * @returns {Promise<void>}
+ */
 async function loadMoreFollowed() {
     addSpinner()
     const from = (counterPetitions + 1) * NUMBER_ELEMENTS_PER_LOAD
@@ -279,6 +315,9 @@ function changeVisibility(element) {
     element.classList.remove('llg:block')
 };
 
+/**
+ * Add a spinner animation when the page is loading more elements
+ */
 function addSpinner(){
     document.getElementById("spinner").innerHTML=`<div class="flex items-center justify-center">
                 <div class="inline-block h-8 w-8 animate-spin rounded-full border-4 border-primary border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]" role="status">
@@ -289,6 +328,9 @@ function addSpinner(){
             </div>`
 }
 
+/**
+ * Remove the spinner animation when the page had load all the elements
+ */
 function removeSpinner(){
     document.getElementById("spinner").innerHTML=``
 }

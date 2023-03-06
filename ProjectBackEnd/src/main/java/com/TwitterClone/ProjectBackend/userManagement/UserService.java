@@ -68,6 +68,13 @@ public class UserService {
         return "It works";
     }
 
+    /**
+     * Send a verification email to the new user
+     * @param user
+     * @param userMail
+     * @throws MessagingException
+     * @throws UnsupportedEncodingException
+     */
     private void sendVerificationEmail(User user, String userMail)
             throws MessagingException, UnsupportedEncodingException {
         String toAddress = userMail;
@@ -98,6 +105,11 @@ public class UserService {
 
     }
 
+    /**
+     * Verify the new user
+     * @param verificationCode
+     * @return
+     */
     public boolean verify(String verificationCode) {
         User user = userRepository.findByVerificationCode(verificationCode);
 
@@ -113,6 +125,11 @@ public class UserService {
 
     }
 
+    /**
+     * Creates a token for the reset password form
+     * @param token
+     * @param email
+     */
     public void updateResetPasswordToken(String token, String email) {
         User user = userRepository.findByEmail(email).orElseThrow();
         if (user != null) {
@@ -121,9 +138,20 @@ public class UserService {
         }
     }
 
+    /**
+     * Obtain a user using the token associated with
+     * @param token
+     * @return
+     */
     public User getByResetPasswordToken(String token) {
         return userRepository.findByResetPasswordToken(token).orElseThrow();
     }
+
+    /**
+     * Updates the current password to the new one
+     * @param user
+     * @param newPassword
+     */
     public void updatePassword(User user, String newPassword) {
 
         String encodedPassword = passwordEncoder.encode(newPassword);
@@ -133,10 +161,20 @@ public class UserService {
         userRepository.save(user);
     }
 
+    /**
+     * Obtain recommended users
+     * @param userId
+     * @return
+     */
     public List<User> getRecommendedUsers(Long userId) {
         return userRepository.findRecommendedUsers(userId);
     }
 
+    /**
+     * Obtains user that has a relation with the keyword
+     * @param keyword
+     * @return
+     */
     public List<User> findByUsernameContainingIgnoreCase(String keyword) {
         return this.userRepository.findByUsernameContainingIgnoreCase(keyword);
     }
