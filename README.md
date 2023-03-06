@@ -362,3 +362,22 @@ If you have selected to not let the server to run when the system starts you can
 | [5º](https://github.com/CodeURJC-DAW-2022-23/webapp8/tree/34066d1d40a06962bbd767c14ebf71edb4368347)      | Update Hashtag           |
 
 ***
+### Sample users
+#### @admin
+- username: admin
+- password: adminpass
+#### @user
+- username: user
+- password: pass
+#### @antonioalanxs
+- username: antonioalanxs
+- password: examplePassword3
+#### @Keyland71
+- username: Keyland71
+- password: examplePassword2
+#### @ibai
+- username: ibai
+- password: ibai
+#### @Rubiu5
+- username: Rubiu5
+- password: rubius
