@@ -290,6 +290,7 @@ If you have selected to not let the server to run when the system starts you can
 #### Requirements
 - MySQL: v.8.0.32 (Explained in DataBase Configuration)
 - Java: JDK 17 --> https://www.oracle.com/java/technologies/javase/jdk17-archive-downloads.html
+- Spring Boot 2.7.4
 - IDE (explained in IDE Configuration)
 
 ### :card_index: DataBase
@@ -298,6 +299,9 @@ If you have selected to not let the server to run when the system starts you can
 *Figure 26 - DataBase*
 
 ### :flower_playing_cards: Diagrams
+
+![diagram](./files-to-README/phase2/Templates.svg)
+*Figure 27 - Class Diagram*
 
 ### :busts_in_silhouette: Members Participation
 
@@ -315,7 +319,7 @@ If you have selected to not let the server to run when the system starts you can
 
 #### Laura María Camino Yuste
 
-* Our security scientist has prepared all the security of our application, together with all the logic of registering users and login.
+* Our security scientist has prepared all the security of our application, together with all the user and session management logic.
 
 | Commit | Description |
 | :----: | :---------: |
