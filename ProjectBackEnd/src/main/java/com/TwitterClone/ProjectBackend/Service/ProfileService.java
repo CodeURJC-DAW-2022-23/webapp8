@@ -57,12 +57,10 @@ public class ProfileService {
 
     /**
      * Obtain some verified user
-     * @param init
-     * @param size
      * @return
      */
-    public List<User> getVerified(int init, int size) {
-        return userRepository.findVerified(init, size);
+    public List<User> getVerified() {
+        return userRepository.findVerified();
     }
 
     /**
@@ -139,12 +137,10 @@ public class ProfileService {
 
     /**
      * Obtain some user that can be verified
-     * @param init
-     * @param size
      * @return
      */
-    public List<User> getToVerified(int init, int size) {
-        return this.userRepository.findNotVerifiedNotBanned(init,size);
+    public List<User> getToVerified() {
+        return this.userRepository.findNotVerifiedNotBanned();
     }
 
     /**

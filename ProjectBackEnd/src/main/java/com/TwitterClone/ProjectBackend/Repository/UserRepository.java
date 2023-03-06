@@ -85,7 +85,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     /**
      * Find all the banned user
-     * @param id
      * @return
      */
     @Query(value="SELECT * FROM users WHERE enabled = false",nativeQuery = true)
@@ -105,15 +104,15 @@ public interface UserRepository extends JpaRepository<User, Long> {
      * This Query returns the verified users
      * @return
      */
-    @Query(value="SELECT * FROM users WHERE type = 'VERIFIED' LIMIT ?1,?2",nativeQuery = true)
-    List<User> findVerified (int init, int size);
+    @Query(value="SELECT * FROM users WHERE type = 'VERIFIED'",nativeQuery = true)
+    List<User> findVerified ();
 
     /**
      * This Query returns the users that are neither VERIFIED nor BANNED
      * @return
      */
-    @Query(value="SELECT * FROM users WHERE type<>'VERIFIED' AND type<>'BANNED' LIMIT ?1,?2",nativeQuery = true)
-    List<User> findNotVerifiedNotBanned(int init, int size);
+    @Query(value="SELECT * FROM users WHERE type<>'VERIFIED' AND type<>'BANNED'",nativeQuery = true)
+    List<User> findNotVerifiedNotBanned();
 
     /**
      * Counts the new user in the last 5 days
