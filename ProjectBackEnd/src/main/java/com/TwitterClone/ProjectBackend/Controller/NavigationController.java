@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 
@@ -312,5 +314,25 @@ public class NavigationController {
         List<User> recommendedUsers = userService.getRecommendedUsers(userId); // Obtener 1 usuario recomendados para el usuario con el ID especificado
         model.addAttribute("recommendedUsers", recommendedUsers);
         return "recommended-users"; // Devolver el nombre de la vista para mostrar la lista de usuarios recomendados
+    }
+
+    @GetMapping("/tweet/{id}")
+    public String toShowTweet(@PathVariable Long id, Model model, HttpServletRequest request){
+        this.informationManager.addCurrentTrends(model);
+        this.informationManager.addNameToThePage(model,"Tweet");
+        this.informationManager.addProfileInfoToLeftBar(model,request);
+
+        Tweet tweet = this.tweetService.findById(id).get();
+        List<Tweet> tweets = new LinkedList<>();
+        tweets.add(tweet);
+        User currentUser = this.informationManager.getCurrentUser(request);
+        List<TweetInformation> tweetInformation = this.informationManager.calculateDataOfTweet(tweets,currentUser);
+        model.addAttribute("tweet", tweetInformation);
+
+        List<Tweet> replies = this.tweetService.getComments(id,0,10);
+        tweetInformation = this.informationManager.calculateDataOfTweet(replies,currentUser);
+        model.addAttribute("tweets",tweetInformation);
+
+        return "show-tweet";
     }
 }

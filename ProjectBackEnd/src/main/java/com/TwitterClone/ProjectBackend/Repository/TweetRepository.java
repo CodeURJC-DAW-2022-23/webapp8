@@ -63,7 +63,7 @@ public interface TweetRepository extends JpaRepository<Tweet, Long> {
      * @param size
      * @return
      */
-    @Query(value ="SELECT * from  tweet_comments WHERE tweet_id = ?1 ORDER BY publish_date LIMIT ?2,?3", nativeQuery = true)
+    @Query(value ="SELECT * from  tweet WHERE comments_id = ?1 ORDER BY publish_date LIMIT ?2,?3", nativeQuery = true)
     List<Tweet> findCommentsById(Long id, int offset, int size);
 
     /**

@@ -157,49 +157,6 @@ public class TweetService {
     }
 
     /**
-     * Ask the database for more tweets for the user
-     * @param init
-     * @param size
-     * @return
-     */
-    /*
-    public List<Trend> getSomeTweetsForUser(int init, int size) {
-        Page<Tuple> tweets = this.tweetRepository.(PageRequest.of(init,size));
-        List<Tuple> tweetList = tweets.stream().toList();
-        return this.converterToTweets(tweetList);
-    }
-    */
-
-    /**
-     * Ask the database for more bookmark tweets
-     * @param init
-     * @param size
-     * @return
-     */
-    /*
-    public List<Trend> getSomeBookmarkTweets(int init, int size) {
-        Page<Tuple> tweets = this.tweetRepository.(PageRequest.of(init,size));
-        List<Tuple> tweetList = tweets.stream().toList();
-        return this.converterToTweets(tweetList);
-    }
-     */
-
-
-    /**
-     * Ask the database for more tweets from the user
-     * @param init
-     * @param size
-     * @return
-     */
-    /*
-    public List<Trend> getSomeUserTweets(int init, int size) {
-        Page<Tuple> tweets = this.tweetRepository.(PageRequest.of(init,size));
-        List<Tuple> tweetList = tweets.stream().toList();
-        return this.converterToTweets(tweetList);
-    }
-    */
-
-    /**
      * Get the number of likes of a tweet
      * @param id
      * @return
@@ -242,5 +199,9 @@ public class TweetService {
         }
 
         return number;
+    }
+
+    public List<Tweet> getComments(Long id, int offset, int size){
+        return this.tweetRepository.findCommentsById(id,offset,size);
     }
 }
