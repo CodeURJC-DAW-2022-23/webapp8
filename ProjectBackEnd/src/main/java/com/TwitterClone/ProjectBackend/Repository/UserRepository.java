@@ -89,7 +89,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
      * @return
      */
     @Query(value="SELECT * FROM users WHERE enabled = false",nativeQuery = true)
-    List<User> findBanned (long id);
+    List<User> findBanned ();
 
     /**
      * Get some followers of a user

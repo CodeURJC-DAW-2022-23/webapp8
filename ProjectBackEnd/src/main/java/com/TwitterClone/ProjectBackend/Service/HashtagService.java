@@ -14,6 +14,9 @@ import org.springframework.stereotype.Service;
 import javax.persistence.Tuple;
 import java.util.*;
 
+/**
+ * Connect the hashtag controller with the hashtag repository
+ */
 @NoArgsConstructor
 @AllArgsConstructor
 @Service
@@ -23,20 +26,35 @@ public class HashtagService {
     private HashtagRepository hashtagRepository;
 
     @Autowired
-    private UserRepository userRepository;
-
-    @Autowired
     private TweetRepository tweetRepository;
 
+    /**
+     * Obtain hashtag relation with the keyword
+     * @param keyword
+     * @return
+     */
     public List<Hashtag> findByHashtagIsContainingIgnoreCase(String keyword) {
-        List <Hashtag> meQuieroPegarUnPutoTiro = this.hashtagRepository.findByHashtagIsContainingIgnoreCase(keyword);
-        return meQuieroPegarUnPutoTiro;
+        List <Hashtag> someHashtags = this.hashtagRepository.findByHashtagIsContainingIgnoreCase(keyword);
+        return someHashtags;
     }
+
+    /**
+     * Get some trends
+     * @param init
+     * @param size
+     * @return
+     */
     public List<Trend> getCurrentTrends(int init, int size) {
         List<Tuple> trends= this.hashtagRepository.find(init, size);
         List<Tuple> trendsList = trends.stream().toList();
         return this.converterToTrend(trendsList);
     }
+
+    /**
+     * Add the tweet to a hashtag
+     * @param hashtag
+     * @param tweet
+     */
     public void add(String hashtag, Tweet tweet){
         Optional<Hashtag> h = this.hashtagRepository.findById(hashtag);
 
@@ -53,6 +71,11 @@ public class HashtagService {
         this.hashtagRepository.save(h2);
     }
 
+    /**
+     * Convert a list of Tuples to a list of Trends
+     * @param trends
+     * @return
+     */
     private List<Trend> converterToTrend(List<Tuple> trends){
         List<Trend> list = new LinkedList<>();
 
@@ -65,14 +88,30 @@ public class HashtagService {
         return list;
     }
 
+    /**
+     * Get some tweets associated to a trend
+     * @param hashtag
+     * @param from
+     * @param size
+     * @return
+     */
     public List<Tweet> getTweetsAssociatedTo(String hashtag, int from, int size) {
         return this.tweetRepository.getTweetsOfTrend(hashtag, from, size);
     }
 
+    /**
+     * Obtains the amount of trends
+     * @return
+     */
     public int countTrends() {
         return this.hashtagRepository.countTrends();
     }
 
+    /**
+     * Obtains the amount of tweets associated to a hashtag
+     * @param hashtag
+     * @return
+     */
     public int countTweetsAssociated(String hashtag) {
         return this.hashtagRepository.countTweetsAssociated(hashtag);
     }

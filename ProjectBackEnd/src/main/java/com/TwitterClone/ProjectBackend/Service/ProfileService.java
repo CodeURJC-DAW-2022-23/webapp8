@@ -11,12 +11,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.Tuple;
-import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.sql.Blob;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Connect the profile controller with the user repository
+ */
 @Service
 public class ProfileService {
     @Autowired
@@ -24,43 +26,85 @@ public class ProfileService {
     @Autowired
     private TweetRepository tweetRepository;
 
-    public List<User> findAll() {
-        return userRepository.findAll();
-    }
-
-    public void createProfile(String username, String password, String mail) throws IOException {
-        User user = new User(username, password, mail, "USER");
-        userRepository.save(user);
-    }
-
+    /**
+     * Obtain a user using an id
+     * @param id
+     * @return
+     */
     public Optional<User> findById(Long id) {
         return userRepository.findById(id);
     }
 
+    /**
+     * Obtain a user using a username
+     * @param username
+     * @return
+     */
     public Optional<User> findByUsername(String username) {
         return userRepository.findByUsername(username);
     }
 
+    /**
+     * Obtain some bookmarks from current user
+     * @param id
+     * @param offset
+     * @param size
+     * @return
+     */
     public List<Tweet> getBookmarks(Long id, int offset, int size) {
         return tweetRepository.findBookmarksByUserId(id, offset, size);
     }
 
+    /**
+     * Obtain some verified user
+     * @param init
+     * @param size
+     * @return
+     */
     public List<User> getVerified(int init, int size) {
         return userRepository.findVerified(init, size);
     }
 
+    /**
+     * Obtain some followers of a user
+     * @param id
+     * @param from
+     * @param size
+     * @return
+     */
     public List<User> getFollowers(Long id, int from, int size) {
         return userRepository.findFollowers(id, from, size);
     }
 
-    public List<User> getBanned(int init, int size){
-        return userRepository.findBanned(init,size);
+    /**
+     * Obtain some banned users
+     * @return
+     */
+    public List<User> getBanned(){
+        return userRepository.findBanned();
     }
 
+    /**
+     * Obtain some followed user of a user
+     * @param id
+     * @param from
+     * @param size
+     * @return
+     */
     public List<User> getFollowed(Long id, int from, int size) {
         return userRepository.findFollowed(id, from, size);
     }
 
+
+    /**
+     * Update a user profile
+     * @param user
+     * @param banner
+     * @param profile
+     * @param nickname
+     * @param biography
+     * @throws IOException
+     */
     public void uploadProfile(User user, MultipartFile banner,
                               MultipartFile profile,
                               String nickname,
@@ -80,6 +124,12 @@ public class ProfileService {
         this.userRepository.save(userToChange);
     }
 
+    /**
+     * Prepare the new image to be save it in the database
+     * @param file
+     * @return
+     * @throws IOException
+     */
     private Blob prepareImageFile(MultipartFile file) throws IOException {
         return BlobProxy
                 .generateProxy(file
@@ -87,42 +137,93 @@ public class ProfileService {
                         .getSize());
     }
 
+    /**
+     * Obtain some user that can be verified
+     * @param init
+     * @param size
+     * @return
+     */
     public List<User> getToVerified(int init, int size) {
         return this.userRepository.findNotVerifiedNotBanned(init,size);
     }
 
+    /**
+     * Obtain the statistics of the website
+     * @return
+     */
     public List<Tuple> getStatics(){
        return this.userRepository.countByLast5JoinDate();
     }
 
+    /**
+     * Update the state of user that has been banned
+     * @param user
+     */
     public void updateUserBan(User user) {
         this.userRepository.save(user);
     }
 
+    /**
+     * Obtain the amount of bookmarks associated to a user
+     * @param id
+     * @return
+     */
     public int countBookmarks(Long id) {
         return this.tweetRepository.countBookmarks(id);
     }
 
+    /**
+     * Obtain the amount of tweets for a user
+     * @param id
+     * @return
+     */
     public int countTweetsForUser(Long id) {
         return this.tweetRepository.countTweetsForUser(id);
     }
 
+    /**
+     * Obtain the amount of followed users
+     * @param id
+     * @return
+     */
     public long countFollowed(Long id) {
         return this.userRepository.countFollowed(id);
     }
 
+    /**
+     * Obtain the amount of followers
+     * @param id
+     * @return
+     */
     public long countFollowers(Long id) {
         return this.userRepository.countFollowers(id);
     }
 
+    /**
+     * Obtain the amount of tweet of a user
+     * @param id
+     * @return
+     */
     public int countTweetsOfUser(Long id) {
         return  this.tweetRepository.countUserTweets(id);
     }
 
+    /**
+     * Checks if a user is followed by another
+     * @param profileUser
+     * @param currentUser
+     * @return
+     */
     public boolean isFollowedBy(User profileUser, User currentUser) {
         return profileUser.getFollowers().contains(currentUser);
     }
 
+    /**
+     * Analyze the state of the follow by the current user
+     * @param profileUser
+     * @param currentUser
+     * @return
+     */
     public boolean toggleFollow(User profileUser, User currentUser) {
         boolean hasFollowed = false;
         if (!this.isFollowedBy(profileUser, currentUser)){

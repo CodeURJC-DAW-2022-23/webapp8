@@ -32,6 +32,9 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
 
+/**
+ * Initialize the database with some examples data
+ */
 @Service
 public class DBInitializer {
     @Autowired
@@ -51,6 +54,10 @@ public class DBInitializer {
     @Value("${admin.pass}")
     String adminPass;
 
+    /**
+     * Init the database
+     * @throws IOException
+     */
     @PostConstruct
     public void init() throws IOException {
 

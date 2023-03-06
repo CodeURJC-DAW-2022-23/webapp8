@@ -4,7 +4,6 @@ import com.TwitterClone.ProjectBackend.Model.Notification;
 import com.TwitterClone.ProjectBackend.Model.Tweet;
 import com.TwitterClone.ProjectBackend.Repository.NotificationRepository;
 import com.TwitterClone.ProjectBackend.Repository.TweetRepository;
-import com.TwitterClone.ProjectBackend.Repository.UserRepository;
 import com.TwitterClone.ProjectBackend.userManagement.User;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
@@ -23,20 +22,39 @@ public class NotificationService {
     @Autowired
     private NotificationRepository notificationRepository;
     @Autowired
-    private UserRepository userRepository;
-    @Autowired
     private TweetRepository tweetRepository;
 
-    public List<Notification> get10NotificationsOfUser(Long userId, int init, int size) {
+    /**
+     * Get some notifications from a user
+     * @param userId
+     * @param init
+     * @param size
+     * @return
+     */
+    public List<Notification> getSomeNotificationsOfUser(Long userId, int init, int size) {
         List<Notification> list = this.notificationRepository.findNotifications(userId, init, size);
         return list;
     }
 
-    public List<Notification> get10MentionsOfUser(Long userId, int init, int size) {
+    /**
+     * Get some mentions from a user
+     * @param userId
+     * @param init
+     * @param size
+     * @return
+     */
+    public List<Notification> getSomeMentionsOfUser(Long userId, int init, int size) {
         List<Notification> list = this.notificationRepository.findMentions(userId, init, size);
         return list;
     }
 
+    /**
+     * Creates a new notification due to an action with a tweet or a user
+     * @param idTweet
+     * @param owner
+     * @param currentUser
+     * @param notificationType
+     */
     public void createNotification(Long idTweet, User owner, User currentUser, String notificationType) {
         Tweet tweetTrigger = null;
         if(idTweet != null){
@@ -49,6 +67,13 @@ public class NotificationService {
         }
     }
 
+    /**
+     * Deletes a notification due to an action with a tweet or a user
+     * @param idTweet
+     * @param idCurrentUser
+     * @param notificationType
+     * @param idUserToNotify
+     */
     public void deleteNotification(Long idTweet, Long idCurrentUser, String notificationType, Long idUserToNotify) {
         Notification notification;
         if (idTweet != null){
@@ -61,10 +86,20 @@ public class NotificationService {
         }
     }
 
+    /**
+     * Obtain the amount of notifications from a user
+     * @param idCurrentUser
+     * @return
+     */
     public int countNotifications(Long idCurrentUser) {
         return this.notificationRepository.countNotifications(idCurrentUser);
     }
 
+    /**
+     * Obtain the amount of mentions from a user
+     * @param idCurrentUser
+     * @return
+     */
     public int countMentions(Long idCurrentUser) {
         return this.notificationRepository.countMentions(idCurrentUser);
     }

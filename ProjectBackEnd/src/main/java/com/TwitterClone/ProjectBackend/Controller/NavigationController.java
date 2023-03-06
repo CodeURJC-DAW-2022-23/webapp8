@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
@@ -80,7 +79,7 @@ public class NavigationController {
         this.informationManager.addCurrentTrends(model);
 
         User currentUser = this.informationManager.getCurrentUser(request);
-        List<Tweet> tweetList = this.tweetService.find10RecentForUser(currentUser.getId(), 0, 10);
+        List<Tweet> tweetList = this.tweetService.findSomeRecentForUser(currentUser.getId(), 0, 10);
 
         List<TweetInformation> tweets = this.informationManager.calculateDataOfTweet(tweetList, currentUser);
         model.addAttribute("tweets", tweets);
@@ -125,7 +124,7 @@ public class NavigationController {
         this.informationManager.addProfileInfoToLeftBar(model, request);
         User currentUser = this.informationManager.getCurrentUser(request);
 
-        List<Notification> notifications = this.notificationService.get10NotificationsOfUser(currentUser.getId(), 0, 10);
+        List<Notification> notifications = this.notificationService.getSomeNotificationsOfUser(currentUser.getId(), 0, 10);
         model.addAttribute("notifications", notifications);
 
         return "notifications";
@@ -178,7 +177,7 @@ public class NavigationController {
         int followedNumber = profileUser.getFollowedNumber();
         model.addAttribute("followedNumber", followedNumber);
 
-        List<Tweet> tweetList = this.tweetService.find10(profileUser.getId(),0, 10);
+        List<Tweet> tweetList = this.tweetService.findSomeTweetOfUser(profileUser.getId(),0, 10);
         List<TweetInformation> tweets = this.informationManager.calculateDataOfTweet(tweetList, currentUser);
         model.addAttribute("tweets", tweets);
         model.addAttribute("user", profileUser);

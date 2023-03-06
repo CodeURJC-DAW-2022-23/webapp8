@@ -1,20 +1,13 @@
 package com.TwitterClone.ProjectBackend.Service;
 
-import com.TwitterClone.ProjectBackend.Model.Trend;
 import com.TwitterClone.ProjectBackend.Model.Tweet;
-import com.TwitterClone.ProjectBackend.Repository.HashtagRepository;
 import com.TwitterClone.ProjectBackend.Repository.TweetRepository;
 import com.TwitterClone.ProjectBackend.Repository.UserRepository;
 import com.TwitterClone.ProjectBackend.userManagement.User;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.Tuple;
 import java.sql.Blob;
-import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 
@@ -29,20 +22,35 @@ public class TweetService {
 
     @Autowired UserRepository userRepository;
 
-
-
-    public List<Tweet> findAll(){
-        return tweetRepository.findAll();
-    }
-
-    public List<Tweet> find10(Long id, int from, int size){
+    /**
+     * Obtain some tweets associated to a user
+     * @param id
+     * @param from
+     * @param size
+     * @return
+     */
+    public List<Tweet> findSomeTweetOfUser(Long id, int from, int size){
         return tweetRepository.findByUser(id, from, size);
     }
 
-    public List<Tweet> find10RecentForUser (Long id, int init, int size){
+    /**
+     * Obtain some recent tweets for the current user
+     * @param id
+     * @param init
+     * @param size
+     * @return
+     */
+    public List<Tweet> findSomeRecentForUser(Long id, int init, int size){
         return tweetRepository.findByUserFollows(id, init, size);
     }
 
+    /**
+     * Creates a new tweet
+     * @param text
+     * @param files
+     * @param userId
+     * @return
+     */
     public Tweet createTweet(String text, Blob [] files, Long userId){
         User user = userRepository.findById(userId).orElse(null);
 
@@ -55,6 +63,10 @@ public class TweetService {
         return tweet;
     }
 
+    /**
+     * Deletes a tweet
+     * @param tweet
+     */
     public void deleteTweet(Tweet tweet){
         tweetRepository.deleteHashtagOfTweet(tweet.getId());
         tweetRepository.deleteBookmarkOfTweet(tweet.getId());
@@ -62,6 +74,11 @@ public class TweetService {
         tweetRepository.delete(tweet);
     }
 
+    /**
+     * Obtain a tweet using an id
+     * @param id
+     * @return
+     */
     public Optional<Tweet> findById(Long id){
         return tweetRepository.findById(id);
     }
@@ -84,6 +101,12 @@ public class TweetService {
         return liked;
     }
 
+    /**
+     * Checks if the current user had given a like
+     * @param user
+     * @param tweet
+     * @return
+     */
     public boolean isLiked(User user, Tweet tweet) {
         if (user == null) {
             return false;
@@ -110,6 +133,12 @@ public class TweetService {
         return retweeted;
     }
 
+    /**
+     * Checks if the current user had given a retweet
+     * @param user
+     * @param tweet
+     * @return
+     */
     public boolean isRetweeted(User user, Tweet tweet) {
         if (user == null) {
             return false;
@@ -133,6 +162,13 @@ public class TweetService {
         currentUser.setBookmarks(bookmarks);
         this.userRepository.save(currentUser);
     }
+
+    /**
+     * Checks if the current user had bookmarked
+     * @param user
+     * @param tweet
+     * @return
+     */
     public boolean isBookmarked(User user, Tweet tweet) {
         if (user == null) {
             return false;
@@ -201,6 +237,13 @@ public class TweetService {
         return number;
     }
 
+    /**
+     * Get some comments associated to a tweet
+     * @param id
+     * @param offset
+     * @param size
+     * @return
+     */
     public List<Tweet> getComments(Long id, int offset, int size){
         return this.tweetRepository.findCommentsById(id,offset,size);
     }

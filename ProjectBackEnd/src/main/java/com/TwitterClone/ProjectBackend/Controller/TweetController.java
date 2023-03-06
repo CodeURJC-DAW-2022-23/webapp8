@@ -60,7 +60,7 @@ public class TweetController {
         }
 
         List<Tweet> newTweets =
-                this.tweetService.find10RecentForUser(currentUser.getId(), from, size);
+                this.tweetService.findSomeRecentForUser(currentUser.getId(), from, size);
         List<TweetInformation> tweets = this.informationManager.calculateDataOfTweet(newTweets, currentUser);
         model.addAttribute("tweets", tweets);
 
@@ -114,7 +114,7 @@ public class TweetController {
             return "redirect:/";
         }
 
-        List<Tweet> newTweets = this.tweetService.find10(id, from, size);
+        List<Tweet> newTweets = this.tweetService.findSomeTweetOfUser(id, from, size);
         List<TweetInformation> tweets = this.informationManager.calculateDataOfTweet(newTweets, user);
         model.addAttribute("tweets", tweets);
 
