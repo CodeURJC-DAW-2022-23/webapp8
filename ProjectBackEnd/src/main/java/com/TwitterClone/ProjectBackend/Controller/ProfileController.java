@@ -88,4 +88,12 @@ public class ProfileController {
         return "redirect:/dashboard";
     }
 
+    @GetMapping("/toggleFollow/{id}")
+    public String toggleFollow(@PathVariable Long id,
+                         HttpServletRequest request){
+        Long idCurrentUser = this.informationManager.getCurrentUser(request).getId();
+        this.profileService.toggleFollow(id, idCurrentUser);
+        return "redirect:/profile/" + id;
+    }
+
 }

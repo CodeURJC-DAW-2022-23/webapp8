@@ -1,5 +1,6 @@
 package com.TwitterClone.ProjectBackend.Service;
 
+import com.TwitterClone.ProjectBackend.Model.MustacheObjects.InformationManager;
 import com.TwitterClone.ProjectBackend.Model.Tweet;
 import com.TwitterClone.ProjectBackend.Repository.TweetRepository;
 import com.TwitterClone.ProjectBackend.Repository.UserRepository;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.Tuple;
+import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.sql.Blob;
 import java.util.List;
@@ -115,5 +117,23 @@ public class ProfileService {
 
     public int countTweetsOfUser(Long id) {
         return  this.tweetRepository.countUserTweets(id);
+    }
+
+    public boolean isFollowedBy(User profileUser, User currentUser) {
+        return profileUser.getFollowers().contains(currentUser);
+    }
+
+    public void toggleFollow(Long idProfileUser, Long idCurrentUser) {
+        User profileUser = this.findById(idProfileUser).get();
+        User currentUser = this.findById(idCurrentUser).get();
+        if (!this.isFollowedBy(profileUser, currentUser)){
+            profileUser.addFollower(currentUser);
+            currentUser.addFollowed(profileUser);
+        } else {
+            profileUser.removeFollower(currentUser);
+            currentUser.removeFollowed(profileUser);
+        }
+        this.userRepository.save(profileUser);
+        this.userRepository.save(currentUser);
     }
 }

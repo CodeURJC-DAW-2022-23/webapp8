@@ -150,4 +150,12 @@ public class User  {
     public int getFollowedNumber() {
         return this.followed.size();
     }
+
+    public void removeFollower(User user) {
+        this.followers.remove(user);
+    }
+
+    public void removeFollowed(User user) {
+        this.followed.remove(user);
+    }
 }

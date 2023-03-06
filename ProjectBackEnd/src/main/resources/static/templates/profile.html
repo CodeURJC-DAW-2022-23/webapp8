@@ -137,16 +137,20 @@
                 {{/isBanned}}
                 {{/isAdmin}}
 
-                <button
-                        class="px-4 py-2 font-bold text-center transition rounded-full cursor-pointer text-white-0 bg-primary hover:scale-110">
+                {{^isFollowed}}
+                <button id="follow-button"
+                        class="px-4 py-2 font-bold text-center transition rounded-full cursor-pointer text-white-0 bg-primary hover:scale-110"
+                        onclick="window.location.href = '/toggleFollow/{{user.id}}'">
                     Follow
                 </button>
-
-                <!-- (hidden) -->
-                <button
-                        class="hidden px-4 py-2 font-bold text-center transition rounded-full cursor-pointer text-white-0 bg-red-3 hover:scale-110">
+                {{/isFollowed}}
+                {{#isFollowed}}
+                <button id="unfollow-button"
+                        class="px-4 py-2 font-bold text-center transition rounded-full cursor-pointer text-white-0 bg-red-3 hover:scale-110"
+                        onclick="window.location.href = '/toggleFollow/{{user.id}}'">
                     Unfollow
                 </button>
+                {{/isFollowed}}
             </div>
             {{/isYourProfile}}
             {{/isLogged}}

@@ -165,6 +165,7 @@ public class NavigationController {
         User profileUser = this.profileService.findById(id).get();
         User currentUser = this.informationManager.getCurrentUser(request);
         model.addAttribute("isYourProfile", id.equals(currentUser.getId()));
+        model.addAttribute("isFollowed", this.profileService.isFollowedBy(profileUser, currentUser));
         model.addAttribute("isBanned", profileUser.isEnabled());
 
         // Profile page shows username as page name...
