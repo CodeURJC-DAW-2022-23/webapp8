@@ -72,6 +72,21 @@ public class DBInitializer {
         userRepository.save(user2);
         userRepository.save(user3);
         userRepository.save(user4);
+        files = new String[]{"example_data/Default_profilepic.jpg", "example_data/Default_profilebanner.jpg"};
+        User testUser = new User("user", passwordEncoder.encode("pass"), "ikablue0185@gmail.com", "USER");
+        testUser.setImages(files);
+        testUser.setNickname("user");
+        userRepository.save(testUser);
+        User admin = new User("admin", adminPass, "admin@mail.com", "ADMIN");
+        admin.setImages(files);
+        admin.setNickname("admin");
+        userRepository.save(admin);
+
+        testUser.addFollower(user3);
+        user3.addFollowed(testUser);
+
+        user3.addFollower(testUser);
+        testUser.addFollowed(user3);
         
         user4.addFollower(user1);
         user1.addFollowed(user4);
@@ -88,20 +103,8 @@ public class DBInitializer {
         userRepository.save(user2);
         userRepository.save(user3);
         userRepository.save(user4);
-        files = new String[]{"example_data/Default_profilepic.jpg", "example_data/Default_profilebanner.jpg"};
-        User testUser = new User("user", passwordEncoder.encode("pass"), "ikablue0185@gmail.com", "USER");
-        testUser.setImages(files);
-        testUser.setNickname("user");
         userRepository.save(testUser);
-        User admin = new User("admin", adminPass, "admin@mail.com", "ADMIN");
-        admin.setImages(files);
-        admin.setNickname("admin");
-        userRepository.save(admin);
 
-        testUser.addFollower(user3);
-        user3.addFollowed(testUser);
-        user3.addFollower(testUser);
-        testUser.addFollowed(user3);
 
         //Sample Tweets
         //@ibai
