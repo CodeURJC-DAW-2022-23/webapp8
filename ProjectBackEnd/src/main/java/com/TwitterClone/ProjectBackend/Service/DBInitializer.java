@@ -110,7 +110,6 @@ public class DBInitializer {
         userRepository.save(user2);
         userRepository.save(user3);
         userRepository.save(user4);
-        userRepository.save(testUser);
 
 
         //Sample Tweets
