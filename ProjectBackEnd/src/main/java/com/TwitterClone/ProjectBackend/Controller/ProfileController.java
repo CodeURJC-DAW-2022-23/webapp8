@@ -108,11 +108,16 @@ public class ProfileController {
      * @return
      */
     @GetMapping("/ban/{id}")
-    public String ban(@PathVariable Long id){
-        User user = this.profileService.findById(id).get();
-        user.setType("BANNED");
-        user.setEnabled(false);
-        this.profileService.updateUserBan(user);
+    public String ban(@PathVariable Long id,
+                        HttpServletRequest request){
+
+        User currentUser = this.informationManager.getCurrentUser(request);
+        if(currentUser.getRole().toString().equals("ADMIN")){
+            User user = this.profileService.findById(id).get();
+            user.setType("BANNED");
+            user.setEnabled(false);
+            this.profileService.updateUserBan(user);
+        }
         return "redirect:/profile/" + id.toString();
     }
 
@@ -122,11 +127,15 @@ public class ProfileController {
      * @return
      */
     @GetMapping("/unban/{id}")
-    public String unban(@PathVariable Long id){
-        User user = this.profileService.findById(id).get();
-        user.setType("PUBLIC");
-        user.setEnabled(true);
-        this.profileService.updateUserBan(user);
+    public String unban(@PathVariable Long id,
+                        HttpServletRequest request){
+        User currentUser = this.informationManager.getCurrentUser(request);
+        if(currentUser.getRole().toString().equals("ADMIN")) {
+            User user = this.profileService.findById(id).get();
+            user.setType("PUBLIC");
+            user.setEnabled(true);
+            this.profileService.updateUserBan(user);
+        }
         return "redirect:/dashboard";
     }
 

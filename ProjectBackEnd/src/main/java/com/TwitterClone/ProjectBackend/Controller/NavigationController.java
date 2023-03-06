@@ -292,10 +292,14 @@ public class NavigationController {
      * @return
      */
     @GetMapping("/verify/{id}")
-    public String verify(@PathVariable Long id){
-        User user = this.profileService.findById(id).get();
-        user.setType("VERIFIED");
-        this.profileService.updateUserBan(user);
+    public String verify(@PathVariable Long id,
+                         HttpServletRequest request){
+        User currentUser = this.informationManager.getCurrentUser(request);
+        if(currentUser.getRole().toString().equals("ADMIN")) {
+            User user = this.profileService.findById(id).get();
+            user.setType("VERIFIED");
+            this.profileService.updateUserBan(user);
+        }
         return "redirect:/dashboard";
     }
 
@@ -305,10 +309,14 @@ public class NavigationController {
      * @return
      */
     @GetMapping("/unverify/{id}")
-    public String unverify(@PathVariable Long id){
-        User user = this.profileService.findById(id).get();
-        user.setType("PUBLIC");
-        this.profileService.updateUserBan(user);
+    public String unverify(@PathVariable Long id,
+                           HttpServletRequest request){
+        User currentUser = this.informationManager.getCurrentUser(request);
+        if(currentUser.getRole().toString().equals("ADMIN")) {
+            User user = this.profileService.findById(id).get();
+            user.setType("PUBLIC");
+            this.profileService.updateUserBan(user);
+        }
         return "redirect:/dashboard";
     }
 
