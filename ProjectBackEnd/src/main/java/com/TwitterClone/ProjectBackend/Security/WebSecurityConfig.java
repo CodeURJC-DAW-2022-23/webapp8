@@ -63,16 +63,24 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests().antMatchers("/bookmarks").hasAnyRole("USER", "ADMIN");
         http.authorizeRequests().antMatchers("/write-tweet").hasAnyRole("USER", "ADMIN");
         http.authorizeRequests().antMatchers("/edit-profile").hasAnyRole("USER", "ADMIN");
+        http.authorizeRequests().antMatchers("/follow/**").hasAnyRole("USER");
+        http.authorizeRequests().antMatchers("/write-tweet/comment/**").hasAnyRole("USER");
+        http.authorizeRequests().antMatchers("/explore_more/**").hasAnyRole("USER");
+        http.authorizeRequests().antMatchers("/tweets/reply-tweet/**").hasAnyRole("USER");
+        http.authorizeRequests().antMatchers("/tweets/delete/**").hasAnyRole("USER");
         //ADMIN Page
         http.authorizeRequests().antMatchers("/dashboard").hasAnyRole("ADMIN");
-
+        http.authorizeRequests().antMatchers("/ban/**").hasAnyRole("ADMIN");
+        http.authorizeRequests().antMatchers("/unbanned/**").hasAnyRole("ADMIN");
+        http.authorizeRequests().antMatchers("/verify/**").hasAnyRole("ADMIN");
+        http.authorizeRequests().antMatchers("/unverify/**").hasAnyRole("ADMIN");
 
         // Logout
         http.logout().logoutUrl("/logout");
         http.logout().logoutSuccessUrl("/");
         //http.csrf().disable();
         // Allow H2 console
-        http.authorizeRequests().antMatchers("/h2-console/**").permitAll();
+        // http.authorizeRequests().antMatchers("/h2-console/**").permitAll();
         http.headers().frameOptions().sameOrigin();
 
     }
