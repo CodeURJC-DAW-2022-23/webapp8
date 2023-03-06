@@ -275,11 +275,11 @@ public class NavigationController {
         this.informationManager.addNameToThePage(model,"Dashboard");
         this.informationManager.addProfileInfoToLeftBar(model,request);
         this.informationManager.addCurrentTrends(model);
-        List<User> users = this.profileService.getVerified(0,10);
+        List<User> users = this.profileService.getVerified();
         model.addAttribute("verified", users);
-        users = this.profileService.getBanned(0,10);
+        users = this.profileService.getBanned();
         model.addAttribute("banned", users);
-        users = this.profileService.getToVerified(0,10);
+        users = this.profileService.getToVerified();
         model.addAttribute("toVerify",users);
         this.informationManager.addStatistics(model);
         return "admin-dashboard";
