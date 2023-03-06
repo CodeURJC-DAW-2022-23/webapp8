@@ -10,16 +10,19 @@ let counterPetitions = 0;
  * @returns {Promise<void>}
  */
 async function loadMoreTrends() {
+    addSpinner()
     const from = (counterPetitions + 1) * NUMBER_ELEMENTS_PER_LOAD
 
     const response = await fetch(`/explore/trends?from=${from}&size=${NUMBER_ELEMENTS_PER_LOAD}`);
     
     if (response.redirected) {
         hideButtons();
+        removeSpinner()
         return;
     }
     
     addNewElements(response, "trend");
+    removeSpinner()
 }
 
 /**
@@ -27,16 +30,19 @@ async function loadMoreTrends() {
  * @returns {Promise<void>}
  */
 async function loadMoreTweetsForBookmarks() {
+    addSpinner()
     const from = (counterPetitions + 1) * NUMBER_ELEMENTS_PER_LOAD
 
     const response = await fetch(`/bookmarks/tweets?from=${from}&size=${NUMBER_ELEMENTS_PER_LOAD}`);
 
     if (response.redirected) {
         hideButtons();
+        removeSpinner()
         return;
     }
     
     addNewElements(response, "tweet");
+    removeSpinner()
 }
 
 /**
@@ -44,16 +50,19 @@ async function loadMoreTweetsForBookmarks() {
  * @returns {Promise<void>}
  */
 async function loadMoreTweetsForHome() {
+    addSpinner()
     const from = (counterPetitions + 1) * NUMBER_ELEMENTS_PER_LOAD
 
     const response = await fetch(`/home/tweets?from=${from}&size=${NUMBER_ELEMENTS_PER_LOAD}`);
     
     if (response.redirected) {
         hideButtons();
+        removeSpinner()
         return;
     }
     
     addNewElements(response, "tweet");
+    removeSpinner()
 }
 
 /**
@@ -61,42 +70,51 @@ async function loadMoreTweetsForHome() {
  * @returns {Promise<void>}
  */
 async function loadMoreTweetsForProfile(userId) {
+    addSpinner()
     const from = (counterPetitions + 1) * NUMBER_ELEMENTS_PER_LOAD
     
     const response = await fetch(`/profile/tweets/${userId}?from=${from}&size=${NUMBER_ELEMENTS_PER_LOAD}`);
 
     if (response.redirected) {
         hideButtons();
+        removeSpinner()
         return;
     }
 
     addNewElements(response, "tweet");
+    removeSpinner()
 }
 
 async function loadMoreNotifications() {
+    addSpinner()
     const from = (counterPetitions + 1) * NUMBER_ELEMENTS_PER_LOAD
 
     const response = await fetch(`/notifications/notification?from=${from}&size=${NUMBER_ELEMENTS_PER_LOAD}`);
 
     if (response.redirected) {
         hideButtons();
+        removeSpinner()
         return;
     }
 
     addNewElements(response, "notification");
+    removeSpinner()
 }
 
 async function loadMoreMentions() {
+    addSpinner()
     const from = (counterPetitions + 1) * NUMBER_ELEMENTS_PER_LOAD
 
     const response = await fetch(`/mentions/mention?from=${from}&size=${NUMBER_ELEMENTS_PER_LOAD}`);
 
     if (response.redirected) {
+        removeSpinner()
         hideButtons();
         return;
     }
 
     addNewElements(response, "notification");
+    removeSpinner()
 }
 
 async function showMentions() {
@@ -128,16 +146,19 @@ async function showNotifications() {
 }
 
 async function loadMoreTweetsAssociated(){
+    addSpinner()
     const from = (counterPetitions + 1) * NUMBER_ELEMENTS_PER_LOAD
 
     const response = await fetch(`/explore_more/${ACTUAL_HASHTAG}?from=${from}&size=${NUMBER_ELEMENTS_PER_LOAD}`);
 
     if (response.redirected) {
         hideButtons();
+        removeSpinner()
         return;
     }
 
     addNewElements(response, "trend");
+    removeSpinner()
 }
 
 async function showTweetsAssociated(hashtag) {
@@ -173,16 +194,19 @@ async function showFollowers(userId) {
 }
 
 async function loadMoreFollowers() {
+    addSpinner()
     const from = (counterPetitions + 1) * NUMBER_ELEMENTS_PER_LOAD
 
     const response = await fetch(`/followers/${ACTUAL_PROFILE}/${from}/${NUMBER_ELEMENTS_PER_LOAD}`);
 
     if (response.redirected) {
         hideButtons();
+        removeSpinner()
         return;
     }
 
     addNewElements(response, "follow");
+    removeSpinner()
 }
 
 async function showFollowed() {
@@ -200,16 +224,19 @@ async function showFollowed() {
 }
 
 async function loadMoreFollowed() {
+    addSpinner()
     const from = (counterPetitions + 1) * NUMBER_ELEMENTS_PER_LOAD
 
     const response = await fetch(`/followed/${ACTUAL_PROFILE}/${from}/${NUMBER_ELEMENTS_PER_LOAD}`);
 
     if (response.redirected) {
         hideButtons();
+        removeSpinner()
         return;
     }
 
     addNewElements(response, "follow");
+    removeSpinner()
 }
 
 /**
@@ -230,14 +257,29 @@ async function addNewElements(response, container_name) {
  * Hide the load more buttons when is not possible to load more elements
  */
 function hideButtons() {
-    changeVisibility(document.getElementById("loadMoreButton"));
-    changeVisibility(document.getElementById("loadMoreButtonMobile"));
+    changeVisibility(document.getElementById("loadMore"));
+    changeVisibility(document.getElementById("loadMore-mobile"));
 };
 
 /**
  * Change the current element visibility
- * @param {String} element 
+ * @param {HTMLElement} element
  */
 function changeVisibility(element) {
     element.classList.add('hidden');
+    element.classList.remove('llg:block')
 };
+
+function addSpinner(){
+    document.getElementById("spinner").innerHTML=`<div class="flex items-center justify-center">
+                <div class="inline-block h-8 w-8 animate-spin rounded-full border-4 border-primary border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]" role="status">
+                    <span class="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]">
+                        Loading...
+                    </span>
+                </div>
+            </div>`
+}
+
+function removeSpinner(){
+    document.getElementById("spinner").innerHTML=``
+}
