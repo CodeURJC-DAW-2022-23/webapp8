@@ -96,22 +96,42 @@ public class Tweet {
         }
     }
 
+    /**
+     * Add a comment to this tweet
+     * @param comment
+     */
     public void addComment(Tweet comment){
         this.comments.add(comment);
     }
 
+    /**
+     * Add a like to this tweet
+     * @param giver
+     */
     public void addLike(User giver){
         this.likes.add(giver);
     }
 
+    /**
+     * Add a retweet to this tweet
+     * @param giver
+     */
     public void addRetweet(User giver){
         this.retweets.add(giver);
     }
 
+    /**
+     * Remove a like of this tweet
+     * @param giver
+     */
     public void removeLike(User giver){
         this.likes.remove(giver);
     }
 
+    /**
+     * Remove a retweet of this tweet
+     * @param giver
+     */
     public void removeRetweet(User giver){
         this.retweets.remove(giver);
     }

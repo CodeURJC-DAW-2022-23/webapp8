@@ -20,6 +20,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Manage all the recurrent information needed by the controllers
+ */
 @Component
 @NoArgsConstructor
 public class InformationManager {
@@ -95,6 +98,12 @@ public class InformationManager {
         return tweetsInfo;
     }
 
+    /**
+     * Check the user status about the tweets to be showed
+     * @param tweet
+     * @param currentUser
+     * @param currentTweetInformation
+     */
     private void checkUserStateAboutTweets(Tweet tweet,
                                            User currentUser, TweetInformation currentTweetInformation) {
         currentTweetInformation.setAuthorised(this.isAuthorised(currentUser, tweet));
@@ -115,6 +124,12 @@ public class InformationManager {
         }
     }
 
+    /**
+     * Check if the user is authorised
+     * @param currentUser
+     * @param tweet
+     * @return
+     */
     private boolean isAuthorised(User currentUser, Tweet tweet) {
         if (currentUser == null) {
             return false;
@@ -152,6 +167,10 @@ public class InformationManager {
         model.addAttribute("trends", trends);
     }
 
+    /**
+     * Add charts to the dashboard page
+     * @param model
+     */
     public void addStatistics(Model model) {
         List<Tuple> statics = this.profileService.getStatics();
         String[] amounts = new String[statics.size()];
@@ -166,6 +185,11 @@ public class InformationManager {
         model.addAttribute("dates",dates);
     }
 
+    /**
+     * Add recommended users
+     * @param model
+     * @param request
+     */
     public void addRecommended(Model model, HttpServletRequest request){
         User currentUser = this.getCurrentUser(request);
 

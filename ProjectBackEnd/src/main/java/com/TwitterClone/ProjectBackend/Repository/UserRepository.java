@@ -65,7 +65,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
      * @return
      */
     @Query("SELECT u FROM User u WHERE u.verificationCode = ?1")
-    public User findByVerificationCode(String code);
+    User findByVerificationCode(String code);
 
     /**
      * This Query returns the amount of followed accounts a user has
@@ -75,21 +75,31 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Query(value="SELECT COUNT(*) FROM users_followed WHERE user_id = ?1 GROUP BY user_id",nativeQuery = true)
     long countFollowed (long id);
 
+    /**
+     * Count the followers of a user
+     * @param id
+     * @return
+     */
     @Query(value="SELECT COUNT(*) FROM users_followers WHERE user_id = ?1 GROUP BY user_id",nativeQuery = true)
     long countFollowers(Long id);
 
+    /**
+     * Find all the banned user
+     * @param id
+     * @return
+     */
     @Query(value="SELECT * FROM users WHERE enabled = false",nativeQuery = true)
     List<User> findBanned (long id);
 
-    @Query(value = "SELECT users.* FROM users_followers JOIN users ON followers_id=id WHERE user_id = ?1 LIMIT ?2,?3",nativeQuery = true)
-    List<User> findFollowers(Long id, int from, int size);
-
     /**
-     * This Query returns the banned users
+     * Get some followers of a user
+     * @param id
+     * @param from
+     * @param size
      * @return
      */
-    @Query(value="SELECT * FROM users WHERE type = 'BANNED' LIMIT ?1,?2",nativeQuery = true)
-    List<User> findBanned (int init, int size);
+    @Query(value = "SELECT users.* FROM users_followers JOIN users ON followers_id=id WHERE user_id = ?1 LIMIT ?2,?3",nativeQuery = true)
+    List<User> findFollowers(Long id, int from, int size);
 
     /**
      * This Query returns the verified users
@@ -105,15 +115,30 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Query(value="SELECT * FROM users WHERE type<>'VERIFIED' AND type<>'BANNED' LIMIT ?1,?2",nativeQuery = true)
     List<User> findNotVerifiedNotBanned(int init, int size);
 
+    /**
+     * Counts the new user in the last 5 days
+     * @return
+     */
     @Query(value = "SELECT join_date, COUNT(*) AS new_people FROM users GROUP BY join_date ORDER BY join_date DESC LIMIT 0,5",nativeQuery = true)
     List<Tuple> countByLast5JoinDate();
 
+    /**
+     * Get some followed user
+     * @param id
+     * @param from
+     * @param size
+     * @return
+     */
     @Query(value = "SELECT users.* FROM users_followed JOIN users ON followed_id=id WHERE user_id = ?1 LIMIT ?2,?3 ",nativeQuery = true)
     List<User> findFollowed(Long id, int from, int size);
 
+    /**
+     * Get user to be recommended
+     * @param userId
+     * @return
+     */
     @Query("SELECT DISTINCT u FROM User u JOIN u.followers f JOIN f.followers f2 WHERE f2.id = :userId AND u.id NOT IN (SELECT f2.id FROM User u2 JOIN u2.followed f2 WHERE u2.id = :userId) AND u.id <> :userId")
     List<User> findRecommendedUsers(@Param("userId") Long userId);
-
 
 }
 

@@ -27,6 +27,10 @@ public class Hashtag {
     @ManyToMany
     private Set<Tweet> tweets = new HashSet<>();
 
+    /**
+     * Add a tweet to this hashtag
+     * @param tweet
+     */
     public void addTweet(Tweet tweet) {
         this.tweets.add(tweet);
     }
