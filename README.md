@@ -264,6 +264,33 @@ To organize the team, we are using [Trello](https://trello.com/b/WpuV8KtM/la-put
 ## :satellite: Phase 2 - Web with server-generated HTML and AJAX
 
 ### :black_nib: Start-up of the aplication
+#### Steps
+1. Download this repository
+2. Check Requirements 
+3. Configure DataBase
+4. Configure IDE
+5. Run Application in the IDE
+6. Go to https://localhost/8443/
+
+#### DataBase Configuration
+- Download MySQL v.8.0.32 --> http://dev.mysql.com/downloads/
+- Select default port (3306)
+- Create a user with name Admin and password "password" with DB admin as user role
+- Configure MySQL Server as Windows Service
+- Grant full access to the user
+- Create a new Schema named twitter in the server using MySQL Workbench
+Note:
+If you have selected to not let the server to run when the system starts you can run the server with Windows R and execute the command "services.msc". In the list you can find MySQL server and run it. 
+
+#### IDE Configuration
+- We recommend IntelliJ IDEA but you can use other IDE's
+- Install Maven and Spring for your IDE
+- Add the following enviroment variable --> SPRING_MAIL_PASSWORD=APasswordForTheMail
+
+#### Requirements
+- MySQL: v.8.0.32 (Explained in DataBase Configuration)
+- Java: JDK 17 --> https://www.oracle.com/java/technologies/javase/jdk17-archive-downloads.html
+- IDE (explained in IDE Configuration)
 
 ### :card_index: DataBase
 
