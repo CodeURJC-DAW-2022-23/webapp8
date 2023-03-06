@@ -8,7 +8,7 @@
             <div class="flex items-center justify-between py-2 pl-6 pr-3">
                 <div class="flex gap-4">
                     <!-- GO BACK -->
-                    <a class="cursor-pointer group" href="/profile">
+                    <a class="cursor-pointer group" href="/profile/{{user.id}}">
                         <svg class="transition rounded-full w-7 dark:fill-white-0 fill-gray-4 group-hover:fill-primary group-hover:bg-blue-1 group-dark:hover:bg-blue-0"
                             xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true">
                             <g>
@@ -22,17 +22,6 @@
                     <!-- TITLE -->
                     <section class="flex items-center gap-2 cursor-pointer">
                         <h2 class="text-xl font-semibold dark:text-white-0">{{user.nickname}}</h2>
-
-                        <div class="w-6">
-                            <svg class="dark:fill-white-0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
-                                aria-label="Cuenta protegida" role="img" data-testid="icon-lock">
-                                <g>
-                                    <path
-                                        d="M17.5 7H17v-.25c0-2.76-2.24-5-5-5s-5 2.24-5 5V7h-.5C5.12 7 4 8.12 4 9.5v9C4 19.88 5.12 21 6.5 21h11c1.39 0 2.5-1.12 2.5-2.5v-9C20 8.12 18.89 7 17.5 7zM13 14.73V17h-2v-2.27c-.59-.34-1-.99-1-1.73 0-1.1.9-2 2-2 1.11 0 2 .9 2 2 0 .74-.4 1.39-1 1.73zM15 7H9v-.25c0-1.66 1.35-3 3-3 1.66 0 3 1.34 3 3V7z">
-                                    </path>
-                                </g>
-                            </svg>
-                        </div>
                     </section>
                 </div>
 
@@ -55,36 +44,17 @@
             <!-- NAVBAR -->
             <nav id="navBar"
                  class="grid items-center justify-center grid-cols-2 text-center dark:text-gray-5 text-gray-4">
-                <button id="following-tab" onclick="showFollowed('{{user.username}}')"
+                <button id="following-tab" onclick="changeVisualTab('following-tab', 'followers-tab'); showFollowed('{{user.username}}')"
                         class="py-4 font-bold border-b-4 cursor-pointer border-primary dark:text-white-0 text-black-0 dark:hover:bg-gray-1 hover:bg-gray-3">
                     Following
                 </button>
 
-                <button id="followers-tab" onclick="showFollowers('{{user.username}}')"
+                <button id="followers-tab" onclick="changeVisualTab('followers-tab', 'following-tab'); showFollowers('{{user.username}}')"
                         class="py-4 font-semibold border-b-4 border-transparent cursor-pointer border-p-2 dark:hover:bg-gray-1 hover:bg-gray-3 dark:text-gray-5">
                     Followers
                 </button>
             </nav>
         </header>
-
-        <!-- SHOW TWEETS BUTTON -->
-        <button onclick="loadMoreFollowed();" id="loadMore"
-                class="hidden w-full py-4 text-lg font-semibold border-b llg:block border-gray-9 dark:bg-black-0 hover:bg-gray-7 dark:border-black-5 dark:hover:bg-black-6 text-primary">
-            Load More
-        </button>
-
-        <!-- SPINNER -->
-        <div id="spinner">
-
-        </div>
-
-        <!-- SHOW TWEETS BUTTON - MOBILE -->
-        <div class="sticky flex justify-center">
-            <button onclick="loadMoreFollowed();" id="loadMore-mobile"
-                    class="fixed px-5 py-3 text-sm font-semibold transition cursor-pointer top-[5.4rem] llg:hidden hover:scale-110 rounded-3xl text-white-0 bg-primary">
-                Load More
-            </button>
-        </div>
 
         <!-- PEOPLE RELATED -->
         <div>

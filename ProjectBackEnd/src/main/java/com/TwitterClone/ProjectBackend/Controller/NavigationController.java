@@ -192,22 +192,23 @@ public class NavigationController {
      * Change from the current page to the user related people page
      * @return
      */
-    @GetMapping("/follow")
-    public String toRelatedPeople(Model model, HttpServletRequest request) {
-        User currentUser = this.informationManager.getCurrentUser(request);
+    @GetMapping("/follow/{id}")
+    public String toRelatedPeople(@PathVariable("id") Long profileUserId,
+                                  Model model,
+                                  HttpServletRequest request) {
+        User profileUser = this.profileService.findById(profileUserId).get();
 
-        String nickname = currentUser.getNickname();
+        String nickname = profileUser.getNickname();
         String namePage = "People related to " + nickname;
         this.informationManager.addNameToThePage(model, namePage);
 
         this.informationManager.addProfileInfoToLeftBar(model, request);
         this.informationManager.addCurrentTrends(model);
 
-        Long currentUserId = currentUser.getId();
-        List<User> followed = profileService.getFollowed(currentUserId, 0, 10);
+        List<User> followed = profileService.getFollowed(profileUserId, 0, 10);
         model.addAttribute("follows", followed);
 
-        model.addAttribute("user", currentUser);
+        model.addAttribute("user", profileUser);
 
         return "follow";
     }
