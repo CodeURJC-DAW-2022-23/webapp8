@@ -17,12 +17,15 @@ async function loadMoreTrends() {
     
     if (response.redirected) {
         hideButtons();
-        removeSpinner()
+        removeSpinner();
         return;
     }
-    
     addNewElements(response, "trend");
     removeSpinner()
+}
+
+function updateNumbers(){
+
 }
 
 /**
@@ -246,10 +249,16 @@ async function loadMoreFollowed() {
  */
 async function addNewElements(response, container_name) {
     const newElements = DECODER.decode(await response.arrayBuffer());
-
     const container = document.getElementById(container_name + "-container");
     container.innerHTML += newElements;
 
+    if(container_name==="trend"){
+        for(i=((counterPetitions+1) * NUMBER_ELEMENTS_PER_LOAD);i<container.children.length;i++){
+            let childNode = container.children.item(i).childNodes.item(1);
+            let trendNumber = (Number(childNode.innerHTML.charAt(0))) + ((counterPetitions+1) * NUMBER_ELEMENTS_PER_LOAD);
+            childNode.innerHTML = trendNumber + ' - Trending';
+        }
+    }
     counterPetitions++;
 }
 
