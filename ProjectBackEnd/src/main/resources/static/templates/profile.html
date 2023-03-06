@@ -157,15 +157,20 @@
     <!-- FRAME -->
     <div class="relative bottom-9">
         <!-- SHOW TWEETS BUTTON -->
-        <button onclick="loadMoreTweetsForProfile('{{user.id}}');" id='loadMoreButton'
-            class="hidden w-full py-4 text-lg font-semibold border-b llg:block border-gray-9 dark:bg-black-0 hover:bg-gray-7 dark:border-black-5 dark:hover:bg-black-6 text-primary">
+        <button onclick="loadMoreTweetsForProfile('{{user.id}}');" id="loadMore"
+                class="hidden w-full py-4 text-lg font-semibold border-b llg:block border-gray-9 dark:bg-black-0 hover:bg-gray-7 dark:border-black-5 dark:hover:bg-black-6 text-primary">
             Load More
         </button>
 
+        <!-- SPINNER -->
+        <div id="spinner">
+
+        </div>
+
         <!-- SHOW TWEETS BUTTON - MOBILE -->
         <div class="sticky flex justify-center">
-            <button onclick="loadMoreTweetsForProfile('{{user.id}}');" id='loadMoreButtonMobile'
-                class="fixed px-5 py-3 text-sm font-semibold transition cursor-pointer top-[5.4rem] llg:hidden hover:scale-110 rounded-3xl text-white-0 bg-primary">
+            <button onclick="loadMoreTweetsForProfile('{{user.id}}');" id="loadMore-mobile"
+                    class="fixed px-5 py-3 text-sm font-semibold transition cursor-pointer top-[5.4rem] llg:hidden hover:scale-110 rounded-3xl text-white-0 bg-primary">
                 Load More
             </button>
         </div>
