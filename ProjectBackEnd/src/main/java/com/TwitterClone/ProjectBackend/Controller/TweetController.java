@@ -22,6 +22,9 @@ import java.sql.Blob;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Manage all the petitions relation with tweets
+ */
 @Controller
 public class TweetController {
     @Autowired
@@ -139,6 +142,16 @@ public class TweetController {
         return "redirect:/home";
     }
 
+    /**
+     * Creates a reply of a tweet
+     * @param tweet_info
+     * @param tweet_files
+     * @param id
+     * @param idTweetReplied
+     * @param request
+     * @return
+     * @throws IOException
+     */
     @PostMapping("/tweets/reply-tweet/{idTweetReplied}")
     public String postTweet(@RequestParam String tweet_info,
                             @RequestParam MultipartFile [] tweet_files,
@@ -163,6 +176,12 @@ public class TweetController {
         return "redirect:/home";
     }
 
+    /**
+     * Process all the image files from the input
+     * @param tweet_files
+     * @return
+     * @throws IOException
+     */
     private Blob[] manageImages(MultipartFile [] tweet_files) throws IOException {
         Blob [] files = new Blob[4];
         if(!tweet_files[0].isEmpty()){
@@ -177,6 +196,12 @@ public class TweetController {
         return files;
     }
 
+    /**
+     * Process the text of a tweet to analyze if exist a hashtag or a mention
+     * @param text
+     * @param tweet
+     * @param currentUser
+     */
     private void processTextTweet(String text, Tweet tweet, User currentUser){
         String [] splitText = text.split(" ");
 
@@ -192,6 +217,12 @@ public class TweetController {
         }
     }
 
+    /**
+     * Process a mention when it appears in a tweet
+     * @param segment
+     * @param tweet
+     * @param currentUser
+     */
     private void processMention(String segment, Tweet tweet, User currentUser) {
         String [] splitMention = segment.split("@");
 
@@ -209,6 +240,11 @@ public class TweetController {
         }
     }
 
+    /**
+     * Process a hashtag when it appears in a tweet
+     * @param segment
+     * @param firstTweet
+     */
     private void processHashtag(String segment, Tweet firstTweet) {
         String [] splitHashtags = segment.split("#");
 
@@ -274,6 +310,10 @@ public class TweetController {
         return "redirect:/bookmarks";
     }
 
+    /**
+     * Deletes a tweet from the database
+     * @param id
+     */
     @GetMapping("/tweet/delete/{id}")
     public void deleteTweet(@PathVariable("id") Long id) {
         Tweet tweet = this.tweetService.findById(id).get();

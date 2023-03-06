@@ -26,7 +26,6 @@ import java.util.Optional;
 /**
  * This class is on charge of controlling the navigation through the website.
  */
-
 @Controller
 public class NavigationController {
 
@@ -57,7 +56,7 @@ public class NavigationController {
     }
 
     /**
-     * Change from the current page to signup
+     * Logout the current user
      * @param model
      * @param request
      * @return
@@ -157,28 +156,22 @@ public class NavigationController {
     }
 
     /**
-     * Change from the current page to the profile page
+     * Change from the current page to the profile page of a user
      * @return
      */
     @GetMapping("/profile/{id}")
-    public String toProfile(Model model,
-                            HttpServletRequest request,
-                            @PathVariable Long id) {
+    public String toProfile(Model model, HttpServletRequest request, @PathVariable Long id) {
         User profileUser = this.profileService.findById(id).get();
         User currentUser = this.informationManager.getCurrentUser(request);
         model.addAttribute("isYourProfile", id.equals(currentUser.getId()));
         model.addAttribute("isFollowed", this.profileService.isFollowedBy(profileUser, currentUser));
         model.addAttribute("isBanned", profileUser.isEnabled());
 
-        // Profile page shows username as page name...
         String nickname = profileUser.getNickname();
         this.informationManager.addNameToThePage(model, nickname);
-
-        // Charge left and right bar information...
         this.informationManager.addProfileInfoToLeftBar(model, request);
         this.informationManager.addCurrentTrends(model);
 
-        // Add necessary user data to model...
         int followersNumber = profileUser.getFollowersNumber();
         model.addAttribute("followersNumber", followersNumber);
 
@@ -188,10 +181,8 @@ public class NavigationController {
         List<Tweet> tweetList = this.tweetService.find10(profileUser.getId(),0, 10);
         List<TweetInformation> tweets = this.informationManager.calculateDataOfTweet(tweetList, currentUser);
         model.addAttribute("tweets", tweets);
-
         model.addAttribute("user", profileUser);
 
-        //Hide Go To Dashboard button
         if (currentUser.getRole() == UserRoles.ADMIN){
             model.addAttribute("isAdmin",true);
         }else{
@@ -219,7 +210,6 @@ public class NavigationController {
         Long currentUserId = currentUser.getId();
         List<User> followed = profileService.getFollowed(currentUserId, 0, 10);
         model.addAttribute("follows", followed);
-
 
         model.addAttribute("user", currentUser);
 
@@ -278,6 +268,12 @@ public class NavigationController {
         return "error";
     }
 
+    /**
+     * Change from the current page to the dashboard page
+     * @param model
+     * @param request
+     * @return
+     */
     @GetMapping("/dashboard")
     public String toDashboard(Model model, HttpServletRequest request){
         this.informationManager.addNameToThePage(model,"Dashboard");
@@ -293,6 +289,11 @@ public class NavigationController {
         return "admin-dashboard";
     }
 
+    /**
+     * Change the type of user to "VERIFIED"
+     * @param id
+     * @return
+     */
     @GetMapping("/verify/{id}")
     public String verify(@PathVariable Long id){
         User user = this.profileService.findById(id).get();
@@ -301,6 +302,11 @@ public class NavigationController {
         return "redirect:/dashboard";
     }
 
+    /**
+     * Change the type of user to "PUBLIC"
+     * @param id
+     * @return
+     */
     @GetMapping("/unverify/{id}")
     public String unverify(@PathVariable Long id){
         User user = this.profileService.findById(id).get();
@@ -309,13 +315,13 @@ public class NavigationController {
         return "redirect:/dashboard";
     }
 
-    @GetMapping("/users/{userId}/recommended")
-    public String getRecommendedUsers(@PathVariable Long userId, Model model) {
-        List<User> recommendedUsers = userService.getRecommendedUsers(userId); // Obtener 1 usuario recomendados para el usuario con el ID especificado
-        model.addAttribute("recommendedUsers", recommendedUsers);
-        return "recommended-users"; // Devolver el nombre de la vista para mostrar la lista de usuarios recomendados
-    }
-
+    /**
+     * Shows a tweet with yours comments
+     * @param id
+     * @param model
+     * @param request
+     * @return
+     */
     @GetMapping("/tweet/{id}")
     public String toShowTweet(@PathVariable Long id, Model model, HttpServletRequest request){
         this.informationManager.addCurrentTrends(model);

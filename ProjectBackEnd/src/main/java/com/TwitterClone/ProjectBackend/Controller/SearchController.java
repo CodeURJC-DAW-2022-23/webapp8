@@ -31,12 +31,24 @@ public class SearchController {
     @Autowired
     private HashtagService hashtagService;
 
-
+    /**
+     * Realize a petition with the asked keyword
+     * @param keyword
+     * @param request
+     * @return
+     */
     @GetMapping("/search")
     public String search(@RequestParam String keyword, HttpServletRequest request){
         return "redirect:/search/"+keyword;
     }
 
+    /**
+     * Shows all the elements relation with the keyword
+     * @param keyword
+     * @param model
+     * @param request
+     * @return
+     */
     @GetMapping("/search/{keyword}")
     public String toSearch(@PathVariable String keyword,Model model, HttpServletRequest request){
         List<User> list = userService.findByUsernameContainingIgnoreCase(keyword);

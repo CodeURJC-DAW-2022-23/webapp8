@@ -1,9 +1,7 @@
 package com.TwitterClone.ProjectBackend.Controller;
 
 import com.TwitterClone.ProjectBackend.Model.MustacheObjects.InformationManager;
-import com.TwitterClone.ProjectBackend.Model.MustacheObjects.TweetInformation;
 import com.TwitterClone.ProjectBackend.Model.Notification;
-import com.TwitterClone.ProjectBackend.Model.Tweet;
 import com.TwitterClone.ProjectBackend.Service.NotificationService;
 import com.TwitterClone.ProjectBackend.Service.ProfileService;
 import com.TwitterClone.ProjectBackend.userManagement.User;
@@ -12,7 +10,6 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.websocket.server.PathParam;
@@ -31,6 +28,14 @@ public class NotificationController {
     @Autowired
     private ProfileService profileService;
 
+    /**
+     * Load more notifications using AJAX
+     * @param model
+     * @param from
+     * @param size
+     * @param request
+     * @return
+     */
     @GetMapping("/notifications/notification")
     public String loadMoreNotifications(Model model,
                                         @Param("from") int from,
@@ -50,6 +55,14 @@ public class NotificationController {
         return "notification";
     }
 
+    /**
+     * Load more mentions using AJAX
+     * @param model
+     * @param from
+     * @param size
+     * @param request
+     * @return
+     */
     @GetMapping("/mentions/mention")
     public String loadMoreMentions(Model model,
                                         @Param("from") int from,
@@ -69,6 +82,14 @@ public class NotificationController {
         return "notification";
     }
 
+    /**
+     * Creates a new notifications when someone interacts with a tweet or user
+     * @param idTweet
+     * @param idOwner
+     * @param notificationType
+     * @param request
+     * @return
+     */
     @GetMapping("/newNotification")
     public String createNotification(@PathParam("idTweet") Long idTweet,
                                      @PathParam("idOwner") Long idOwner,
@@ -85,6 +106,13 @@ public class NotificationController {
         return "finish-request";
     }
 
+    /**
+     * Deletes a notification when someone interacts with a tweet or user
+     * @param idTweet
+     * @param notificationType
+     * @param request
+     * @return
+     */
     @GetMapping("/deleteNotification")
     public String deleteNotification(@PathParam("idTweet") Long idTweet,
                                      @PathParam("notificationType") String notificationType,
@@ -95,6 +123,14 @@ public class NotificationController {
         return "finish-request";
     }
 
+    /**
+     * Load some notifications of a user with AJAX
+     * @param from
+     * @param size
+     * @param model
+     * @param request
+     * @return
+     */
     @GetMapping("/all-notifications")
     public String getNotifications(@PathParam("from") int from,
                                    @PathParam("size") int size,
@@ -107,6 +143,12 @@ public class NotificationController {
         return "notification";
     }
 
+    /**
+     * Load some mentions of a user with AJAX
+     * @param model
+     * @param request
+     * @return
+     */
     @GetMapping("/mentions")
     public String getMentions(Model model, HttpServletRequest request){
         User currentUser = this.informationManager.getCurrentUser(request);

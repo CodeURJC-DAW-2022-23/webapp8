@@ -26,9 +26,12 @@ import java.io.UnsupportedEncodingException;
 public class UserSignupController {
     @Autowired
     private UserService service;
-
-
-
+    /**
+     * Change the current page to signup page
+     * @param model
+     * @param request
+     * @return
+     */
     @GetMapping("/signup")
     public String signup(Model model, HttpServletRequest request){
         CsrfToken token = (CsrfToken) request.getAttribute("_csrf");
@@ -36,6 +39,15 @@ public class UserSignupController {
         return "signup";
     }
 
+    /**
+     * Register a new user to the website and sends an email to the new user
+     * @param username
+     * @param password
+     * @param email
+     * @return
+     * @throws MessagingException
+     * @throws IOException
+     */
     @PostMapping("/signup")
     public String signup (@RequestParam String username,
                           @RequestParam String password,
@@ -47,6 +59,11 @@ public class UserSignupController {
         return "confirmation";
     }
 
+    /**
+     * Verify the user account
+     * @param code
+     * @return
+     */
     @GetMapping("/verify")
     public String verifyUser(@Param("code") String code) {
 

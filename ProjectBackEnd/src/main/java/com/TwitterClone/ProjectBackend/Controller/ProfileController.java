@@ -15,6 +15,9 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.util.List;
 
+/**
+ * Manages all the petitions relation with the profile
+ */
 @Controller
 public class ProfileController {
     @Autowired
@@ -25,6 +28,16 @@ public class ProfileController {
     @Autowired
     private NotificationService notificationService;
 
+    /**
+     * Update the user profile
+     * @param request
+     * @param banner
+     * @param profile
+     * @param nickname
+     * @param biography
+     * @return
+     * @throws IOException
+     */
     @PostMapping("/profile/edit-profile")
     public String editProfile(HttpServletRequest request,
                               @RequestParam MultipartFile banner,
@@ -37,6 +50,14 @@ public class ProfileController {
         return "redirect:/profile/" + id;
     }
 
+    /**
+     * Obtains some followed user with AJAX
+     * @param model
+     * @param from
+     * @param size
+     * @param username
+     * @return
+     */
     @GetMapping("/followed/{username}/{from}/{size}")
     public String getFollowed(Model model,
                               @PathVariable int from,
@@ -55,6 +76,14 @@ public class ProfileController {
         return "follow-content";
     }
 
+    /**
+     * Obtain some follower user with AJAX
+     * @param model
+     * @param from
+     * @param size
+     * @param username
+     * @return
+     */
     @GetMapping("/followers/{username}/{from}/{size}")
     public String getFollowers(Model model,
                                @PathVariable int from,
@@ -73,6 +102,11 @@ public class ProfileController {
         return "follow-content";
     }
 
+    /**
+     * Change the type of user to "BANNED"
+     * @param id
+     * @return
+     */
     @GetMapping("/ban/{id}")
     public String ban(@PathVariable Long id){
         User user = this.profileService.findById(id).get();
@@ -82,6 +116,11 @@ public class ProfileController {
         return "redirect:/profile/" + id.toString();
     }
 
+    /**
+     * Change the type of user to "PUBLIC"
+     * @param id
+     * @return
+     */
     @GetMapping("/unban/{id}")
     public String unban(@PathVariable Long id){
         User user = this.profileService.findById(id).get();
@@ -91,6 +130,12 @@ public class ProfileController {
         return "redirect:/dashboard";
     }
 
+    /**
+     * Manage when the current user follow or unfollow another user
+     * @param id
+     * @param request
+     * @return
+     */
     @GetMapping("/toggleFollow/{id}")
     public String toggleFollow(@PathVariable Long id,
                          HttpServletRequest request){

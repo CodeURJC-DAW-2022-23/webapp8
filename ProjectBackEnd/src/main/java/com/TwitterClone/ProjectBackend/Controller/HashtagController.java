@@ -1,6 +1,5 @@
 package com.TwitterClone.ProjectBackend.Controller;
 
-import com.TwitterClone.ProjectBackend.Model.Hashtag;
 import com.TwitterClone.ProjectBackend.Model.MustacheObjects.InformationManager;
 import com.TwitterClone.ProjectBackend.Model.MustacheObjects.TweetInformation;
 import com.TwitterClone.ProjectBackend.Model.Trend;
@@ -18,6 +17,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.websocket.server.PathParam;
 import java.util.List;
 
+/**
+ * This controller manages all the petitions relation with hashtags
+ */
 @Controller
 public class HashtagController {
 
@@ -27,6 +29,13 @@ public class HashtagController {
     @Autowired
     private InformationManager informationManager;
 
+    /**
+     * Load more trends using AJAX
+     * @param model
+     * @param from
+     * @param size
+     * @return
+     */
     @GetMapping("/explore/trends")
     public String loadMoreTrends(Model model,
                                  @Param("from") int from,
@@ -43,6 +52,13 @@ public class HashtagController {
         return "explore_element";
     }
 
+    /**
+     * Load some tweets associated with the hashtag clicked
+     * @param model
+     * @param hashtag
+     * @param request
+     * @return
+     */
     @GetMapping("/explore/{hashtag}")
     public String loadHashtag(Model model,
                               @PathVariable String hashtag,
@@ -55,6 +71,15 @@ public class HashtagController {
         return "tweet";
     }
 
+    /**
+     * Load more tweets associated to a hashtag using AJAX
+     * @param model
+     * @param hashtag
+     * @param from
+     * @param size
+     * @param request
+     * @return
+     */
     @GetMapping("/explore_more/{hashtag}")
     public String loadMoreTweetsAssociated(Model model,
                                            @PathVariable String hashtag,

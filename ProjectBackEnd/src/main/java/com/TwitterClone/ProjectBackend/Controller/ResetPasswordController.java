@@ -20,6 +20,9 @@ import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
 import java.io.UnsupportedEncodingException;
 
+/**
+ * Manages all the petitions referent to reset the password of user
+ */
 @Controller
 public class ResetPasswordController {
 
@@ -29,12 +32,24 @@ public class ResetPasswordController {
     @Autowired
     private UserService userService;
 
-
+    /**
+     * Change the current page to forgot password page
+     * @param model
+     * @return
+     */
     @GetMapping("/forgot-password")
     public String forgotPassword(Model model){
         return "forgot-password";
     }
 
+    /**
+     * Obtain the email of the user to prepare a token to be used to change the password
+     * @param request
+     * @param model
+     * @return
+     * @throws MessagingException
+     * @throws UnsupportedEncodingException
+     */
     @PostMapping("/forgot-password")
     public String processForgotPassword(HttpServletRequest request, Model model) throws MessagingException, UnsupportedEncodingException {
         String email = request.getParameter("email");
@@ -47,11 +62,22 @@ public class ResetPasswordController {
         return "forgot-password-confirmation";
     }
 
+    /**
+     * Change the current page to forgot password confirmation page
+     * @return
+     */
     @GetMapping("/forgot-password-confirmation")
     public String forgotPasswordConfirmation(){
         return "forgot-password-confirmation";
     }
 
+    /**
+     * Send an email with the necessary information to reset the password
+     * @param recipientEmail
+     * @param link
+     * @throws MessagingException
+     * @throws UnsupportedEncodingException
+     */
     public void sendEmail(String recipientEmail, String link)
             throws MessagingException, UnsupportedEncodingException {
         MimeMessage message = mailSender.createMimeMessage();
@@ -77,6 +103,13 @@ public class ResetPasswordController {
         mailSender.send(message);
     }
 
+    /**
+     * Change the current page to reset password page
+     * @param passwordToken
+     * @param model
+     * @param request
+     * @return
+     */
     @GetMapping("/reset-password")
     public String resetPasswordPage(@Param("passwordToken")  String passwordToken, Model model, HttpServletRequest request){
         CsrfToken token_csrf = (CsrfToken) request.getAttribute("_csrf");
@@ -85,6 +118,12 @@ public class ResetPasswordController {
         return "reset-password";
     }
 
+    /**
+     * Change the current password to the new one
+     * @param passwordToken
+     * @param password
+     * @return
+     */
     @PostMapping("/reset-password")
     public String processResetPassword(@RequestParam String passwordToken,
                                        @RequestParam String password) {
@@ -99,10 +138,12 @@ public class ResetPasswordController {
         return "error";
     }
 
-
+    /**
+     * Change the current page to password reset confirmation
+     * @return
+     */
     @GetMapping("/password-reset-confirmation")
     public String passwordResetConfirmation(){
         return "password-reset-confirmation";
     }
-
 }
