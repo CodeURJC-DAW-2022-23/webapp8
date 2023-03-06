@@ -9,6 +9,11 @@ notifsText = {
     "MENTION": "mentioned you in a Tweet"
 }
 
+/**
+ * Load the notification text
+ * @param notificationId
+ * @param notificationType
+ */
 function loadNotificationText(notificationId, notificationType){
     let notificationH2 = document.getElementById(notificationId + "userH2");
     let textToLoad = notifsText[notificationType];
@@ -58,12 +63,22 @@ notifsSVG = {
     `
 }
 
+/**
+ * Load the svg associated to the notifications
+ * @param notificationId
+ * @param notificationType
+ */
 function loadSVG(notificationId, notificationType){
     let notificationFigure = document.getElementById(notificationId + "svg");
     let svgToLoad = notifsSVG[notificationType];
     notificationFigure.innerHTML = svgToLoad;
 }
 
+/**
+ * Change the visual of the tab
+ * @param tabToShow
+ * @param tabToHide
+ */
 function changeVisualTab(tabToShow, tabToHide){
     let tabSelected = document.getElementById(tabToShow);
     tabSelected.classList.remove("dark:text-gray-5", "font-semibold", "border-transparent");
