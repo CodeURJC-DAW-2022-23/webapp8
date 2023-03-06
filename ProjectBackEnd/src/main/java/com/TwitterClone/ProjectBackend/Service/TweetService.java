@@ -81,6 +81,10 @@ public class TweetService {
     }
 
     public boolean isLiked(User user, Tweet tweet) {
+        if (user == null) {
+            return false;
+        }
+
         return tweet.getLikes().contains(user);
     }
 
@@ -103,6 +107,10 @@ public class TweetService {
     }
 
     public boolean isRetweeted(User user, Tweet tweet) {
+        if (user == null) {
+            return false;
+        }
+
         return tweet.getRetweets().contains(user);
     }
 
@@ -122,6 +130,10 @@ public class TweetService {
         this.userRepository.save(currentUser);
     }
     public boolean isBookmarked(User user, Tweet tweet) {
+        if (user == null) {
+            return false;
+        }
+
         return user.getBookmarks().contains(tweet);
     }
 

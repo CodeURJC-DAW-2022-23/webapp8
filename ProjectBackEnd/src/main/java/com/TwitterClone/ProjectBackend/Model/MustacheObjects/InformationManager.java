@@ -86,22 +86,8 @@ public class InformationManager {
             currentTweetInformation.setNumLikes(this.tweetService.getLikesOfTweet(tweet.getId()));
             currentTweetInformation.setNumComments(this.tweetService.getCommentsOfTweet(tweet.getId()));
             currentTweetInformation.setNumRetweets(this.tweetService.getRetweetsOfTweet(tweet.getId()));
-            currentTweetInformation.setAuthorised(this.isAuthorised(currentUser, tweet));
-            if (this.tweetService.isRetweeted(currentUser, tweet)) {
-                currentTweetInformation.setColorRetweet("green-0");
-            } else {
-                currentTweetInformation.setColorRetweet("gray-4");
-            }
-            if (this.tweetService.isLiked(currentUser, tweet)) {
-                currentTweetInformation.setColorLike("red-0");
-            } else {
-                currentTweetInformation.setColorLike("gray-4");
-            }
-            if (this.tweetService.isBookmarked(currentUser, tweet)) {
-                currentTweetInformation.setColorBookmark("primary");
-            } else {
-                currentTweetInformation.setColorBookmark("gray-4");
-            }
+
+            this.checkUserStateAboutTweets(tweet, currentUser, currentTweetInformation);
 
             tweetsInfo.add(currentTweetInformation);
         }
@@ -109,7 +95,31 @@ public class InformationManager {
         return tweetsInfo;
     }
 
+    private void checkUserStateAboutTweets(Tweet tweet,
+                                           User currentUser, TweetInformation currentTweetInformation) {
+        currentTweetInformation.setAuthorised(this.isAuthorised(currentUser, tweet));
+        if (this.tweetService.isRetweeted(currentUser, tweet)) {
+            currentTweetInformation.setColorRetweet("green-0");
+        } else {
+            currentTweetInformation.setColorRetweet("gray-4");
+        }
+        if (this.tweetService.isLiked(currentUser, tweet)) {
+            currentTweetInformation.setColorLike("red-0");
+        } else {
+            currentTweetInformation.setColorLike("gray-4");
+        }
+        if (this.tweetService.isBookmarked(currentUser, tweet)) {
+            currentTweetInformation.setColorBookmark("primary");
+        } else {
+            currentTweetInformation.setColorBookmark("gray-4");
+        }
+    }
+
     private boolean isAuthorised(User currentUser, Tweet tweet) {
+        if (currentUser == null) {
+            return false;
+        }
+
         boolean condition1 = currentUser.getId().equals(tweet.getUser().getId());
         boolean condition2 = currentUser.getRole().equals(UserRoles.ADMIN);
         return condition2 || condition1;
@@ -122,6 +132,11 @@ public class InformationManager {
      */
     public User getCurrentUser(HttpServletRequest request) {
         Principal principal = request.getUserPrincipal();
+
+        if (principal == null) {
+            return null;
+        }
+
         Optional<User> currentSession = this.profileService.findByUsername(principal.getName());
         return currentSession.get();
     }
@@ -141,16 +156,23 @@ public class InformationManager {
         List<Tuple> statics = this.profileService.getStatics();
         String[] amounts = new String[statics.size()];
         String[] dates = new String[statics.size()];
+
         for (int i = 0;i<statics.size();i++){
             dates[i] = statics.get(i).get("join_date").toString();
             amounts[i] = statics.get(i).get("new_people").toString();
         }
+
         model.addAttribute("amounts",amounts);
         model.addAttribute("dates",dates);
     }
 
     public void addRecommended(Model model, HttpServletRequest request){
         User currentUser = this.getCurrentUser(request);
+
+        if (currentUser == null) {
+            return;
+        }
+
         List<User> recommended = this.userService.getRecommendedUsers(currentUser.getId());
         model.addAttribute("usersToFollow",recommended);
     }
