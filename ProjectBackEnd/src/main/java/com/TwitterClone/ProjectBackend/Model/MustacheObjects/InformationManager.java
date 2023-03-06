@@ -131,7 +131,7 @@ public class InformationManager {
      * @return
      */
     private boolean isAuthorised(User currentUser, Tweet tweet) {
-        if (currentUser == null) {
+        if (currentUser == null || currentUser.getRole().equals(UserRoles.ANONYMOUS)) {
             return false;
         }
 

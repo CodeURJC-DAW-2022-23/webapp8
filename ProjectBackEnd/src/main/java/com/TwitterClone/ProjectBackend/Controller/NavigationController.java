@@ -162,7 +162,7 @@ public class NavigationController {
     public String toProfile(Model model, HttpServletRequest request, @PathVariable Long id) {
         User profileUser = this.profileService.findById(id).get();
         User currentUser = this.informationManager.getCurrentUser(request);
-        model.addAttribute("isYourProfile", id.equals(currentUser.getId()));
+        model.addAttribute("isYourProfile", (currentUser!=null)&&id.equals(currentUser.getId()));
         model.addAttribute("isFollowed", this.profileService.isFollowedBy(profileUser, currentUser));
         model.addAttribute("isBanned", profileUser.isEnabled());
 
@@ -182,11 +182,8 @@ public class NavigationController {
         model.addAttribute("tweets", tweets);
         model.addAttribute("user", profileUser);
 
-        if (currentUser.getRole() == UserRoles.ADMIN){
-            model.addAttribute("isAdmin",true);
-        }else{
-            model.addAttribute("isAdmin",false);
-        }
+        //Hide Go To Dashboard button
+        model.addAttribute("isAdmin",currentUser!=null && currentUser.getRole() == UserRoles.ADMIN);
 
         return "profile";
     }
