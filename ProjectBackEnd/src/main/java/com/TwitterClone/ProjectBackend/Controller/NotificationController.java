@@ -76,7 +76,7 @@ public class NotificationController {
             return "redirect:/";
         }
 
-        List<Notification> newMentions = this.notificationService.get10MentionsOfUser(idCurrentUser, from, size);
+        List<Notification> newMentions = this.notificationService.getSomeMentionsOfUser(idCurrentUser, from, size);
         model.addAttribute("notifications", newMentions);
 
         return "notification";
@@ -153,7 +153,7 @@ public class NotificationController {
     public String getMentions(Model model, HttpServletRequest request){
         User currentUser = this.informationManager.getCurrentUser(request);
         Long id = currentUser.getId();
-        List<Notification> mentions = this.notificationService.get10MentionsOfUser(id, 0, 10);
+        List<Notification> mentions = this.notificationService.getSomeMentionsOfUser(id, 0, 10);
         model.addAttribute("notifications", mentions);
 
         return "notification";
