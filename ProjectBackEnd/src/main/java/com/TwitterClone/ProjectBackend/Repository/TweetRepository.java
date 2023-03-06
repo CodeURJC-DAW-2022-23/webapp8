@@ -2,13 +2,16 @@ package com.TwitterClone.ProjectBackend.Repository;
 
 import com.TwitterClone.ProjectBackend.Model.Tweet;
 import com.TwitterClone.ProjectBackend.userManagement.User;
+import org.hibernate.annotations.SQLDelete;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.Tuple;
+import javax.transaction.Transactional;
 import java.sql.Blob;
 import java.util.List;
 import java.util.Optional;
@@ -104,18 +107,21 @@ public interface TweetRepository extends JpaRepository<Tweet, Long> {
      * @param id
      * @return
      */
-    @Query(value="SELECT COUNT(*) FROM tweet_comments JOIN tweet ON tweet_id = id WHERE tweet_id = ?1 GROUP BY tweet_id", nativeQuery = true)
+    @Query(value="SELECT COUNT(*) FROM tweet WHERE comments_id = ?1 GROUP BY comments_id", nativeQuery = true)
     Long countComments(Long id);
     @Query(value = "SELECT tweet.* FROM hashtag_tweets JOIN tweet ON tweets_id = id WHERE hashtag_hashtag = ?1 ORDER BY publish_date DESC LIMIT ?2,?3", nativeQuery = true)
     List<Tweet> getTweetsOfTrend(String id, int from, int size);
-    @Query(value = "DELETE FROM tweet_comments WHERE tweet_id=?1;\n" +
-            "DELETE FROM tweet_likes WHERE tweet_id=?1;\n" +
-            "DELETE FROM tweet_retweets WHERE tweet_id=?1;\n" +
-            "DELETE FROM users_bookmarks WHERE bookmarks_id=?1;\n" +
-            "DELETE FROM notification WHERE tweet_trigger_id =?1;\n" +
-            "DELETE FROM hashtag_tweets WHERE tweets_id=?1;\n" +
-            "DELETE FROM tweet WHERE id=?1;",nativeQuery = true)
-    boolean deleteCascade(Long id);
 
-
+    @Transactional
+    @Modifying
+    @Query(value = "DELETE FROM hashtag_tweets WHERE tweets_id=?1",nativeQuery = true)
+    void deleteHashtagOfTweet(Long id);
+    @Transactional
+    @Modifying
+    @Query(value = "DELETE FROM users_bookmarks WHERE bookmarks_id=?1",nativeQuery = true)
+    void deleteBookmarkOfTweet(Long id);
+    @Transactional
+    @Modifying
+    @Query(value = "DELETE FROM notification WHERE tweet_trigger_id=?1", nativeQuery = true)
+    void deleteNotificationsOfTweet(Long id);
 }

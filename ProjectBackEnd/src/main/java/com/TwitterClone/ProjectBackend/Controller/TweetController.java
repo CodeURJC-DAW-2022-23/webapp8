@@ -139,10 +139,11 @@ public class TweetController {
         return "redirect:/home";
     }
 
-    @PostMapping("/tweets/reply-tweet")
+    @PostMapping("/tweets/reply-tweet/{idTweetReplied}")
     public String postTweet(@RequestParam String tweet_info,
                             @RequestParam MultipartFile [] tweet_files,
                             @RequestParam("user_reply") Long id,
+                            @PathVariable("idTweetReplied") Long idTweetReplied,
                             HttpServletRequest request) throws IOException {
         Blob [] files = this.manageImages(tweet_files);
         User currentUser = this.informationManager.getCurrentUser(request);
@@ -152,7 +153,7 @@ public class TweetController {
 
         Optional<User> user_owner = this.profileService.findById(id);
         User user_reply = user_owner.get();
-        tweetService.addComment(tweet_info, files, user_reply, newTweet);
+        tweetService.addComment(idTweetReplied, newTweet);
 
         if (!userId.equals(user_reply.getId())) {
             this.notificationService

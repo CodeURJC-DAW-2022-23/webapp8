@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import javax.persistence.Tuple;
 import java.sql.Blob;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
@@ -54,8 +55,11 @@ public class TweetService {
         return tweet;
     }
 
-    public void deleteTweet(Tweet tweetToDelete){
-        tweetRepository.delete(tweetToDelete);
+    public void deleteTweet(Tweet tweet){
+        tweetRepository.deleteHashtagOfTweet(tweet.getId());
+        tweetRepository.deleteBookmarkOfTweet(tweet.getId());
+        tweetRepository.deleteNotificationsOfTweet(tweet.getId());
+        tweetRepository.delete(tweet);
     }
 
     public Optional<Tweet> findById(Long id){
@@ -139,13 +143,10 @@ public class TweetService {
 
     /**
      * Add a comment to a tweet
-     * @param text
-     * @param files
-     * @param user
      * @param tweet
      */
-    public void addComment(String text, Blob[] files, User user, Tweet tweet){
-        Tweet t = this.findById(tweet.getId()).orElse(null);
+    public void addComment(Long idTweetReplied, Tweet tweet){
+        Tweet t = this.tweetRepository.findById(idTweetReplied).orElse(null);
 
         if (t == null){
             return;

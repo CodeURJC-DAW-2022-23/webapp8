@@ -56,7 +56,8 @@
             <!-- PHOTO -->
             <figure
                 class="overflow-hidden transition border-[6px] rounded-full cursor-pointer hover:scale-110 w-28 lmd:w-36 dark:border-black-0 border-white-0">
-                <img class="object-fill w-full h-full rounded-full" src="/{{user.id}}/profile-pic" alt="Profile photo">
+                <img class="object-fill w-full h-full rounded-full" src="/{{user.id}}/profile-pic" alt="Profile photo"
+                onload="loadUserOthersSvg('{{user.type}}');">
             </figure>
 
             <!-- USERNAME AND @ -->
@@ -107,21 +108,47 @@
 
             <!-- EDIT PROFILE AND "GO TO DASHBOARD" BUTTONS -->
             {{#isLogged}}
+            {{#isYourProfile}}
             <div class="xlsm:absolute xlsm:right-8 xlsm:top-[62px]">
                 <div class="flex items-center gap-1 xlsm:gap-4">
                     <a class="px-4 py-2 text-sm font-bold text-center transition bg-transparent border-2 cursor-pointer w-fit border-black-0 rounded-3xl dark:border-white-0 dark:text-white-0 text-black-0 hover:scale-110"
-                        href="/edit-profile">
+                       href="/edit-profile">
                         Edit profile
                     </a>
 
                     {{#isAdmin}}
                     <a class="px-4 py-2 font-semibold text-center transition scale-90 rounded-full cursor-pointer xlsm:scale-100 text-white-0 bg-primary hover:scale-100 xlsm:hover:scale-110"
-                        href="/dashboard">
+                       href="/dashboard">
                         Go to dashboard
                     </a>
                     {{/isAdmin}}
                 </div>
             </div>
+            {{/isYourProfile}}
+            {{^isYourProfile}}
+            <div class="absolute right-8 top-[62px] flex gap-5">
+                {{#isAdmin}}
+                {{#isBanned}}
+                <button
+                        class="px-4 py-2 font-bold text-center transition rounded-full cursor-pointer text-white-0 bg-red-3 hover:scale-110"
+                        onclick="window.location.href = '/ban/{{user.id}}'">
+                    Ban user
+                </button>
+                {{/isBanned}}
+                {{/isAdmin}}
+
+                <button
+                        class="px-4 py-2 font-bold text-center transition rounded-full cursor-pointer text-white-0 bg-primary hover:scale-110">
+                    Follow
+                </button>
+
+                <!-- (hidden) -->
+                <button
+                        class="hidden px-4 py-2 font-bold text-center transition rounded-full cursor-pointer text-white-0 bg-red-3 hover:scale-110">
+                    Unfollow
+                </button>
+            </div>
+            {{/isYourProfile}}
             {{/isLogged}}
         </div>
 
