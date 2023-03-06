@@ -127,13 +127,10 @@ public class TweetService {
 
     /**
      * Add a comment to a tweet
-     * @param text
-     * @param files
-     * @param user
      * @param tweet
      */
-    public void addComment(String text, Blob[] files, User user, Tweet tweet){
-        Tweet t = this.findById(tweet.getId()).orElse(null);
+    public void addComment(Long idTweetReplied, Tweet tweet){
+        Tweet t = this.tweetRepository.findById(idTweetReplied).orElse(null);
 
         if (t == null){
             return;

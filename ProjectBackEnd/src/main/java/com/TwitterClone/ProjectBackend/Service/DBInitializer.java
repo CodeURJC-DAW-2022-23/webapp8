@@ -63,7 +63,7 @@ public class DBInitializer {
         User user2 = new User("Keyland71", "KOI KEYLAND71", "19 y/o\nRocket League proplayer for @KOI", "example2@gmail.com", passwordEncoder.encode("examplePassword2"), LocalDate.of(2018,4,21), "PUBLIC");
         user2.setImages(files);
         files = new String[]{"example_data/Alanis_profilepic.jpg", "example_data/Alanis_profilebanner.jpg"};
-        User user3 = new User("antonioalanxs", "Alanís",  "",  "example3@gmail.com", passwordEncoder.encode("examplePassword3"),LocalDate.of(2019,8,7), "PRIVATE");
+        User user3 = new User("antonioalanxs", "Alanís",  "",  "example3@gmail.com", passwordEncoder.encode("examplePassword3"),LocalDate.of(2019,8,7), "PUBLIC");
         user3.setImages(files);
         files = new String[]{"example_data/Ibai_profilepic.jpg", "example_data/Ibai_profilebanner.jpg"};
         User user4 = new User("ibai","Ibai","Sigue a nuestros equipos @KOI y @PorcinosFC, http://twitch.tv/ibai","ibai@gmail.com",passwordEncoder.encode("ibai"), LocalDate.of(2014,8,5), "VERIFIED");
