@@ -30,16 +30,20 @@ public class Tweet {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     @ManyToOne
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private User user;
     private final LocalDateTime publishDate;
     @ManyToMany
     @LazyCollection(LazyCollectionOption.FALSE)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private List<User> likes = new ArrayList<>();
     @ManyToMany
     @LazyCollection(LazyCollectionOption.FALSE)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private List<User> retweets = new ArrayList<>();
     @OneToMany
-    @LazyCollection(LazyCollectionOption.FALSE)
+    @JoinColumn
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private List<Tweet> comments = new ArrayList<>();
     private String text;
     @Lob
