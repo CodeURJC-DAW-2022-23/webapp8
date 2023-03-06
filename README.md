@@ -317,6 +317,16 @@ If you have selected to not let the server to run when the system starts you can
 | [4º](https://github.com/CodeURJC-DAW-2022-23/webapp8/tree/d53cbd016b685d91330d00e712c598f91442cc7d)      | Show all user-type svg           |
 | [5º](https://github.com/CodeURJC-DAW-2022-23/webapp8/tree/d19088352f881d82a8ee3d772be41e93365c76df)      | Add showing notifications            |
 
+Files in which I have participated the most
+
+| Order | File |
+| :----: | :---------: |
+| 1º      | [Navigation Controller](https://github.com/CodeURJC-DAW-2022-23/webapp8/blob/main/ProjectBackEnd/src/main/java/com/TwitterClone/ProjectBackend/Controller/NavigationController.java)           |
+|2º       | [Notification Controller](https://github.com/CodeURJC-DAW-2022-23/webapp8/blob/main/ProjectBackEnd/src/main/java/com/TwitterClone/ProjectBackend/Controller/NotificationController.java)        |
+| 3º     | [Notification Service](https://github.com/CodeURJC-DAW-2022-23/webapp8/blob/main/ProjectBackEnd/src/main/java/com/TwitterClone/ProjectBackend/Service/NotificationService.java)         |
+| 4º | [Tweet Controller](https://github.com/CodeURJC-DAW-2022-23/webapp8/blob/main/ProjectBackEnd/src/main/java/com/TwitterClone/ProjectBackend/Controller/TweetController.java)        |
+| 5º     | [Load Notifications Assets](https://github.com/CodeURJC-DAW-2022-23/webapp8/blob/main/ProjectBackEnd/src/main/resources/static/assets/js/loadNotificationAssets.js)       |
+
 #### Laura María Camino Yuste
 
 * Our security scientist has prepared all the security of our application, together with all the user and session management logic.
@@ -328,6 +338,16 @@ If you have selected to not let the server to run when the system starts you can
 | [3º](https://github.com/CodeURJC-DAW-2022-23/webapp8/tree/f790a17eef5b6e652aa4c775882168751855a3ba)      | Add verify account through email          |
 | [4º](https://github.com/CodeURJC-DAW-2022-23/webapp8/tree/7dcddbd22abe9fbd79514002821fefcab2454aa8)      | Add Change Password functionality         |
 | [5º](https://github.com/CodeURJC-DAW-2022-23/webapp8/tree/424b562089ab081a17524988596943d4df3d7e87)      | Fix CSRF management          |
+
+Files in which I have participated the most
+
+| Order | File |
+| :----: | :---------: |
+| 1º      | [Web Security Configuration](https://github.com/CodeURJC-DAW-2022-23/webapp8/blob/main/ProjectBackEnd/src/main/java/com/TwitterClone/ProjectBackend/Security/WebSecurityConfig.java)           |
+|2º       | [User Details Service](https://github.com/CodeURJC-DAW-2022-23/webapp8/blob/main/ProjectBackEnd/src/main/java/com/TwitterClone/ProjectBackend/userManagement/RepositoryUserDetailsService.java)        |
+| 3º     | [SingUp Controller](https://github.com/CodeURJC-DAW-2022-23/webapp8/blob/main/ProjectBackEnd/src/main/java/com/TwitterClone/ProjectBackend/Controller/UserSignupController.java)         |
+| 4º | [User Service](https://github.com/CodeURJC-DAW-2022-23/webapp8/blob/main/ProjectBackEnd/src/main/java/com/TwitterClone/ProjectBackend/userManagement/UserService.java)        |
+| 5º     | [ResetPasswordController](https://github.com/CodeURJC-DAW-2022-23/webapp8/blob/main/ProjectBackEnd/src/main/java/com/TwitterClone/ProjectBackend/Controller/ResetPasswordController.java)       |
 
 #### Antonio José Alanís Bernal
 
@@ -341,6 +361,16 @@ If you have selected to not let the server to run when the system starts you can
 | [4º](https://github.com/CodeURJC-DAW-2022-23/webapp8/tree/bcb1b65cac838afed0f26596813e54a0211bc043)     | Add edit profile logic and refactor template           |
 | [5º](https://github.com/CodeURJC-DAW-2022-23/webapp8/tree/14bc14bd048baae34b9bd13c837b3673413a0495)      | Show user profile           |
 
+Files in which I have participated the most
+
+| Order | File |
+| :----: | :---------: |
+| 1º      | [Ajax](https://github.com/CodeURJC-DAW-2022-23/webapp8/blob/main/ProjectBackEnd/src/main/resources/static/assets/js/ajax.js)           |
+|2º       | [Navigation Controller](https://github.com/CodeURJC-DAW-2022-23/webapp8/blob/main/ProjectBackEnd/src/main/java/com/TwitterClone/ProjectBackend/Controller/NavigationController.java)          |
+| 3º     | [Profile Controller](https://github.com/CodeURJC-DAW-2022-23/webapp8/blob/main/ProjectBackEnd/src/main/java/com/TwitterClone/ProjectBackend/Controller/ProfileController.java)         |
+| 4º | [User Repository](https://github.com/CodeURJC-DAW-2022-23/webapp8/blob/main/ProjectBackEnd/src/main/java/com/TwitterClone/ProjectBackend/Repository/UserRepository.java)        |
+| 5º     | [Profile View](https://github.com/CodeURJC-DAW-2022-23/webapp8/blob/main/ProjectBackEnd/src/main/resources/static/templates/profile.html)       |
+
 #### Ikár Vladislav Martínez de Lizarduy Kostornichenko
 
 * Worker of the bridge between the front and the backend of the web application, together with the documentation of our website.
@@ -353,6 +383,17 @@ If you have selected to not let the server to run when the system starts you can
 | [4º](https://github.com/CodeURJC-DAW-2022-23/webapp8/tree/7cc6a246259b5bbc1e6ba1af4b55f316cc375699)      | Add to be able to see tweets associated with a hashtag           |
 | [5º](https://github.com/CodeURJC-DAW-2022-23/webapp8/tree/ee6628227241561cc08f54e56400dc6484ad7f78)      | Fix problem with AJAX           |
 
+Files in which I have participated the most
+
+| Order | File |
+| :----: | :---------: |
+| 1º      | [Information Manager](https://github.com/CodeURJC-DAW-2022-23/webapp8/blob/main/ProjectBackEnd/src/main/java/com/TwitterClone/ProjectBackend/Model/MustacheObjects/InformationManager.java)           |
+|2º       | [Ajax](https://github.com/CodeURJC-DAW-2022-23/webapp8/blob/main/ProjectBackEnd/src/main/resources/static/assets/js/ajax.js)          |
+| 3º     | [Navigation Controller](https://github.com/CodeURJC-DAW-2022-23/webapp8/blob/main/ProjectBackEnd/src/main/java/com/TwitterClone/ProjectBackend/Controller/NavigationController.java)         |
+| 4º | [Image Controller](https://github.com/CodeURJC-DAW-2022-23/webapp8/blob/main/ProjectBackEnd/src/main/java/com/TwitterClone/ProjectBackend/Controller/ImageController.java)        |
+| 5º     | [Hashtag Controller](https://github.com/CodeURJC-DAW-2022-23/webapp8/blob/main/ProjectBackEnd/src/main/java/com/TwitterClone/ProjectBackend/Controller/HashtagController.java)       |
+
+
 #### Miguel Ángel Sánchez Miranda
 
 * Manager of everything related to the Database, being the one who most dominates this aspect with his great ability to perform queries.
@@ -364,6 +405,16 @@ If you have selected to not let the server to run when the system starts you can
 | [3º](https://github.com/CodeURJC-DAW-2022-23/webapp8/tree/d52e49cab7f1d11ef12e9fd7b7aa800aaff93f3a)      | Rework DataBase to fix circular references           |
 | [4º](https://github.com/CodeURJC-DAW-2022-23/webapp8/tree/f2413dcc7beb1a50c471210f36c1aea6be090d45)      | Add new queries to Tweet           |
 | [5º](https://github.com/CodeURJC-DAW-2022-23/webapp8/tree/34066d1d40a06962bbd767c14ebf71edb4368347)      | Update Hashtag           |
+
+Files in which I have participated the most
+
+| Order | File |
+| :----: | :---------: |
+| 1º      | [Database Initializer](https://github.com/CodeURJC-DAW-2022-23/webapp8/blob/main/ProjectBackEnd/src/main/java/com/TwitterClone/ProjectBackend/Service/DBInitializer.java)           |
+|2º       | [Tweet Repository](https://github.com/CodeURJC-DAW-2022-23/webapp8/blob/main/ProjectBackEnd/src/main/java/com/TwitterClone/ProjectBackend/Repository/TweetRepository.javaa)        |
+| 3º     | [User](https://github.com/CodeURJC-DAW-2022-23/webapp8/blob/main/ProjectBackEnd/src/main/java/com/TwitterClone/ProjectBackend/userManagement/User.java)         |
+| 4º | [Tweet](https://github.com/CodeURJC-DAW-2022-23/webapp8/blob/main/ProjectBackEnd/src/main/java/com/TwitterClone/ProjectBackend/Model/Tweet.java)        |
+| 5º     | [Tweet Service](https://github.com/CodeURJC-DAW-2022-23/webapp8/blob/main/ProjectBackEnd/src/main/java/com/TwitterClone/ProjectBackend/Service/TweetService.javajs)       |
 
 ***
 ### Sample users
