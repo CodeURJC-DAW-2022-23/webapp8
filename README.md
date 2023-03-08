@@ -20,6 +20,7 @@ The objetive is to replicated the Social Media Twitter with some upgrades for th
     * [DataBase](#card_index-database)
     * [Diagrams](#flower_playing_cards-diagrams)
     * [Members Participation](#busts_in_silhouette-members-participation)
+    * [Sample User](#closed_lock_with_key-sample-users)
 
 ***
 
@@ -416,23 +417,16 @@ Files in which I have participated the most
 | 4º | [Tweet](https://github.com/CodeURJC-DAW-2022-23/webapp8/blob/main/ProjectBackEnd/src/main/java/com/TwitterClone/ProjectBackend/Model/Tweet.java)        |
 | 5º     | [Tweet Service](https://github.com/CodeURJC-DAW-2022-23/webapp8/blob/main/ProjectBackEnd/src/main/java/com/TwitterClone/ProjectBackend/Service/TweetService.javajs)       |
 
+### :closed_lock_with_key: Sample users
+
+| User               | Username      | Password           |
+| :----------------: | :-----------: | :----------------: |
+| **@admin**         | admin         | *adminpass*        |
+| **@user**          | user          | *pass*             |
+| **@antonioalanxs** | antonioalanxs | *examplePassword3* |
+| **@Keyland71**     | Keyland71     | *examplePassword2* |
+| **@ibai**          | ibai          | *ibai*             |
+| **@Rubiu5**        | Rubiu5        | *rubius*           |
+
+
 ***
-### Sample users
-#### @admin
-- username: admin
-- password: adminpass
-#### @user
-- username: user
-- password: pass
-#### @antonioalanxs
-- username: antonioalanxs
-- password: examplePassword3
-#### @Keyland71
-- username: Keyland71
-- password: examplePassword2
-#### @ibai
-- username: ibai
-- password: ibai
-#### @Rubiu5
-- username: Rubiu5
-- password: rubius
