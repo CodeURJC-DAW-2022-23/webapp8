@@ -1,7 +1,6 @@
 package com.TwitterClone.ProjectBackend.userManagement;
 
 import com.TwitterClone.ProjectBackend.DTO.RegisteredRequest;
-import com.TwitterClone.ProjectBackend.Model.Tweet;
 import com.TwitterClone.ProjectBackend.Repository.UserRepository;
 import com.TwitterClone.ProjectBackend.Security.EmailValidator;
 import lombok.AllArgsConstructor;
