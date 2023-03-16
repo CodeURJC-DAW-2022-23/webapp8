@@ -29,10 +29,8 @@ import java.util.Optional;
 public class TweetController {
     @Autowired
     private TweetService tweetService;
-
     @Autowired
     private HashtagService hashtagService;
-
     @Autowired
     private ProfileService profileService;
     @Autowired
