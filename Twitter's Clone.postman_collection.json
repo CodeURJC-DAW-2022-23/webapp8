@@ -1,0 +1,290 @@
+{
+	"info": {
+		"_postman_id": "d3b3a7a3-563a-4832-9ae8-6ba5914cfb44",
+		"name": "Twitter's Clone",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "25857672"
+	},
+	"item": [
+		{
+			"name": "RestHashtagController",
+			"item": [
+				{
+					"name": "getSomeTrends",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "/api/hashtags/trends?from=0&size=10",
+							"path": [
+								"api",
+								"hashtags",
+								"trends"
+							],
+							"query": [
+								{
+									"key": "from",
+									"value": "0",
+									"description": "Start position "
+								},
+								{
+									"key": "size",
+									"value": "10",
+									"description": "Offset"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getSomeTweetsAssociatedToAHashtag",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "/api/hashtags/explore/DAW?from=0&size=10",
+							"path": [
+								"api",
+								"hashtags",
+								"explore",
+								"DAW"
+							],
+							"query": [
+								{
+									"key": "from",
+									"value": "0"
+								},
+								{
+									"key": "size",
+									"value": "10"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "RestImageController",
+			"item": [
+				{
+					"name": "downloadProfilePic",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "/api/images/1/profile-pic",
+							"path": [
+								"api",
+								"images",
+								"1",
+								"profile-pic"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "downloadBannerPic",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "/api/images/1/banner-pic",
+							"path": [
+								"api",
+								"images",
+								"1",
+								"banner-pic"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "downloadTweetImage1",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "/api/images/26/tweet-image1",
+							"path": [
+								"api",
+								"images",
+								"26",
+								"tweet-image1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "downloadTweetImage2",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "/api/images/26/tweet-image2",
+							"path": [
+								"api",
+								"images",
+								"26",
+								"tweet-image2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "downloadTweetImage3",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "/api/images/26/tweet-image3",
+							"path": [
+								"api",
+								"images",
+								"26",
+								"tweet-image3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "downloadTweetImage4",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "/api/images/26/tweet-image4",
+							"path": [
+								"api",
+								"images",
+								"26",
+								"tweet-image4"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "RestNotificationsController",
+			"item": [
+				{
+					"name": "getSomeNotifications",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "/api/notifications/more-notifications?from=0&size=10",
+							"path": [
+								"api",
+								"notifications",
+								"more-notifications"
+							],
+							"query": [
+								{
+									"key": "from",
+									"value": "0"
+								},
+								{
+									"key": "size",
+									"value": "10"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getSomeMentions",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "/api/notifications/more-mentions?from=0&size=10",
+							"path": [
+								"api",
+								"notifications",
+								"more-mentions"
+							],
+							"query": [
+								{
+									"key": "from",
+									"value": "0"
+								},
+								{
+									"key": "size",
+									"value": "10"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "postNotification",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "/api/notifications/new-notification?idTweet=1&idOwner=1&notificationType=\"MENTION\"",
+							"path": [
+								"api",
+								"notifications",
+								"new-notification"
+							],
+							"query": [
+								{
+									"key": "idTweet",
+									"value": "1"
+								},
+								{
+									"key": "idOwner",
+									"value": "1"
+								},
+								{
+									"key": "notificationType",
+									"value": "\"MENTION\""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteNotification",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "/api/notifications/delete-notification?idTweet=1&notificationType=MENTION",
+							"path": [
+								"api",
+								"notifications",
+								"delete-notification"
+							],
+							"query": [
+								{
+									"key": "idTweet",
+									"value": "1"
+								},
+								{
+									"key": "notificationType",
+									"value": "MENTION"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
