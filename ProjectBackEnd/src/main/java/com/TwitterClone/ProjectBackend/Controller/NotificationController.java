@@ -83,7 +83,7 @@ public class NotificationController {
     }
 
     /**
-     * Creates a new notifications when someone interacts with a tweet or user
+     * Creates a new notification when someone interacts with a tweet or user
      * @param idTweet
      * @param idOwner
      * @param notificationType

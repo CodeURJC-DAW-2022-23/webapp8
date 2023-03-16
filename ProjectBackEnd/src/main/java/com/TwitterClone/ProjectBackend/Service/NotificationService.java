@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * This class contains all logic needed for the notifications
@@ -55,16 +56,20 @@ public class NotificationService {
      * @param currentUser
      * @param notificationType
      */
-    public void createNotification(Long idTweet, User owner, User currentUser, String notificationType) {
+    public Optional<Notification> createNotification(Long idTweet, User owner, User currentUser, String notificationType) {
         Tweet tweetTrigger = null;
         if(idTweet != null){
             tweetTrigger = this.tweetRepository.findById(idTweet).orElse(null);
+            return Optional.empty();
         }
 
-        if (owner != null){
-            Notification notification = new Notification(tweetTrigger, owner, currentUser, notificationType);
-            this.notificationRepository.save(notification);
+        if (owner == null){
+            return Optional.empty();
         }
+
+        Notification notification = new Notification(tweetTrigger, owner, currentUser, notificationType);
+        this.notificationRepository.save(notification);
+        return Optional.of(notification);
     }
 
     /**
@@ -74,16 +79,21 @@ public class NotificationService {
      * @param notificationType
      * @param idUserToNotify
      */
-    public void deleteNotification(Long idTweet, Long idCurrentUser, String notificationType, Long idUserToNotify) {
+    public Optional<Notification> deleteNotification(Long idTweet, Long idCurrentUser, String notificationType, Long idUserToNotify) {
         Notification notification;
+
         if (idTweet != null){
             notification = this.notificationRepository.findSpecificNotification(idCurrentUser, idTweet, notificationType).orElse(null);
         } else {
             notification = this.notificationRepository.findFollowNotification(idCurrentUser, idUserToNotify).orElse(null);
         }
-        if (notification != null){
-            this.notificationRepository.delete(notification);
+
+        if (notification == null){
+            return Optional.empty();
         }
+
+        this.notificationRepository.delete(notification);
+        return Optional.of(notification);
     }
 
     /**
