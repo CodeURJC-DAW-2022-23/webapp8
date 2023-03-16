@@ -35,18 +35,26 @@ import java.util.*;
 @Entity
 @Table(name = "users")
 public class User  {
+    public interface Basic{};
+    public interface Profile{};
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @JsonView({Basic.class, Profile.class})
     private Long id;
     @Column(unique=true)
+    @JsonView({Basic.class, Profile.class})
     private String username;
     @Column(unique=true)
     private  String email;
+    @JsonView({Basic.class, Profile.class})
     private  String nickname;
+    @JsonView(Profile.class)
     private  String biography = "";
     private  String password;
+    @JsonView({Basic.class, Profile.class})
     @Lob
     private  Blob profilePicture;
+    @JsonView(Profile.class)
     @Lob
     private  Blob profileBanner;
     @Enumerated(EnumType.STRING)

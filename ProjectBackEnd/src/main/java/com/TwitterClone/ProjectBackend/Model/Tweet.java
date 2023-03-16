@@ -26,11 +26,14 @@ import java.util.*;
 @Setter
 @Entity
 public class Tweet {
+    public interface Basic{}
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @JsonView(Basic.class)
     private Long id;
     @ManyToOne
     @OnDelete(action = OnDeleteAction.CASCADE)
+    @JsonView(Basic.class)
     private User user;
     private final LocalDateTime publishDate;
     @ManyToMany
@@ -45,14 +48,19 @@ public class Tweet {
     @JoinColumn
     @OnDelete(action = OnDeleteAction.CASCADE)
     private List<Tweet> comments = new ArrayList<>();
+    @JsonView(Basic.class)
     private String text;
     @Lob
+    @JsonView(Basic.class)
     private Blob media1;
     @Lob
+    @JsonView(Basic.class)
     private Blob media2;
     @Lob
+    @JsonView(Basic.class)
     private Blob media3;
     @Lob
+    @JsonView(Basic.class)
     private Blob media4;
 
     public Tweet(){

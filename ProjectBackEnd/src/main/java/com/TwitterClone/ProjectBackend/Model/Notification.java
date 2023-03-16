@@ -1,6 +1,7 @@
 package com.TwitterClone.ProjectBackend.Model;
 
 import com.TwitterClone.ProjectBackend.userManagement.User;
+import com.fasterxml.jackson.annotation.JsonView;
 import lombok.Getter;
 
 import javax.persistence.*;
@@ -15,14 +16,19 @@ import java.util.UUID;
 @Entity
 @Getter
 public class Notification {
+    public interface Basic{};
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @JsonView(Basic.class)
     private final Long id;
     @ManyToOne
+    @JsonView(Basic.class)
     private Tweet tweetTrigger;
     @ManyToOne
+    @JsonView(Basic.class)
     private User userToNotify;
     @ManyToOne
+    @JsonView(Basic.class)
     private User userWhoNotifies;
     private LocalDateTime date;
     private String type;

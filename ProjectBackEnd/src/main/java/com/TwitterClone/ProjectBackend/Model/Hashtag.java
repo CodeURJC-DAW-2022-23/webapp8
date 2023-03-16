@@ -1,5 +1,6 @@
 package com.TwitterClone.ProjectBackend.Model;
 
+import com.fasterxml.jackson.annotation.JsonView;
 import lombok.*;
 import org.hibernate.validator.constraints.UniqueElements;
 
@@ -21,10 +22,12 @@ import java.util.Set;
 @AllArgsConstructor
 @Entity
 public class Hashtag {
-
+    public interface Basic{};
     @Id
+    @JsonView(Basic.class)
     private String hashtag;
     @ManyToMany
+    @JsonView(Basic.class)
     private Set<Tweet> tweets = new HashSet<>();
 
     /**
