@@ -2,6 +2,7 @@ package com.TwitterClone.ProjectBackend.Controller;
 
 import com.TwitterClone.ProjectBackend.Model.*;
 import com.TwitterClone.ProjectBackend.Model.MustacheObjects.InformationManager;
+import com.TwitterClone.ProjectBackend.Model.MustacheObjects.ModelManager;
 import com.TwitterClone.ProjectBackend.Model.MustacheObjects.TweetInformation;
 import com.TwitterClone.ProjectBackend.Service.HashtagService;
 import com.TwitterClone.ProjectBackend.Service.NotificationService;
@@ -31,8 +32,6 @@ public class NavigationController {
     @Autowired
     private HashtagService hashtagService;
     @Autowired
-    private UserService userService;
-    @Autowired
     private ProfileService profileService;
     @Autowired
     private TweetService tweetService;
@@ -40,6 +39,8 @@ public class NavigationController {
     private NotificationService notificationService;
     @Autowired
     private InformationManager informationManager;
+    @Autowired
+    private ModelManager modelManager;
 
     /**
      * Change from the current page to login
@@ -76,7 +77,7 @@ public class NavigationController {
     public String toHome(Model model, HttpServletRequest request) {
         this.informationManager.addNameToThePage(model,"Home");
         this.informationManager.addProfileInfoToLeftBar(model, request);
-        this.informationManager.addCurrentTrends(model);
+        this.modelManager.addCurrentTrends(model);
 
         User currentUser = this.informationManager.getCurrentUser(request);
         List<Tweet> tweetList = this.tweetService.findSomeRecentForUser(currentUser.getId(), 0, 10);
@@ -99,13 +100,13 @@ public class NavigationController {
         this.informationManager.addNameToThePage(model, "Explore");
         model.addAttribute("isExplorePage", true);
 
-        this.informationManager.addCurrentTrends(model);
+        this.modelManager.addCurrentTrends(model);
         this.informationManager.addProfileInfoToLeftBar(model, request);
 
         List<Trend> trends = this.hashtagService.getCurrentTrends(0,10);
         model.addAttribute("trends", trends);
 
-        this.informationManager.addRecommended(model,request);
+        this.modelManager.addRecommended(model,request);
 
         return "explore";
     }
@@ -120,7 +121,7 @@ public class NavigationController {
 
         this.informationManager.addNameToThePage(model, "Notifications");
 
-        this.informationManager.addCurrentTrends(model);
+        this.modelManager.addCurrentTrends(model);
         this.informationManager.addProfileInfoToLeftBar(model, request);
         User currentUser = this.informationManager.getCurrentUser(request);
 
@@ -140,7 +141,7 @@ public class NavigationController {
 
         this.informationManager.addNameToThePage(model, "Bookmarks");
 
-        this.informationManager.addCurrentTrends(model);
+        this.modelManager.addCurrentTrends(model);
         this.informationManager.addProfileInfoToLeftBar(model, request);
 
         User currentUser = this.informationManager.getCurrentUser(request);
@@ -169,7 +170,7 @@ public class NavigationController {
         String nickname = profileUser.getNickname();
         this.informationManager.addNameToThePage(model, nickname);
         this.informationManager.addProfileInfoToLeftBar(model, request);
-        this.informationManager.addCurrentTrends(model);
+        this.modelManager.addCurrentTrends(model);
 
         int followersNumber = profileUser.getFollowersNumber();
         model.addAttribute("followersNumber", followersNumber);
@@ -203,7 +204,7 @@ public class NavigationController {
         this.informationManager.addNameToThePage(model, namePage);
 
         this.informationManager.addProfileInfoToLeftBar(model, request);
-        this.informationManager.addCurrentTrends(model);
+        this.modelManager.addCurrentTrends(model);
 
         List<User> followed = profileService.getFollowed(profileUserId, 0, 10);
         model.addAttribute("follows", followed);
@@ -275,14 +276,14 @@ public class NavigationController {
     public String toDashboard(Model model, HttpServletRequest request){
         this.informationManager.addNameToThePage(model,"Dashboard");
         this.informationManager.addProfileInfoToLeftBar(model,request);
-        this.informationManager.addCurrentTrends(model);
+        this.modelManager.addCurrentTrends(model);
         List<User> users = this.profileService.getVerified();
         model.addAttribute("verified", users);
         users = this.profileService.getBanned();
         model.addAttribute("banned", users);
         users = this.profileService.getToVerified();
         model.addAttribute("toVerify",users);
-        this.informationManager.addStatistics(model);
+        this.modelManager.addStatistics(model);
         return "admin-dashboard";
     }
 
@@ -295,11 +296,13 @@ public class NavigationController {
     public String verify(@PathVariable Long id,
                          HttpServletRequest request){
         User currentUser = this.informationManager.getCurrentUser(request);
+
         if(currentUser.getRole().toString().equals("ADMIN")) {
             User user = this.profileService.findById(id).get();
             user.setType("VERIFIED");
             this.profileService.updateUserBan(user);
         }
+
         return "redirect:/dashboard";
     }
 
@@ -312,11 +315,13 @@ public class NavigationController {
     public String unverify(@PathVariable Long id,
                            HttpServletRequest request){
         User currentUser = this.informationManager.getCurrentUser(request);
+
         if(currentUser.getRole().toString().equals("ADMIN")) {
             User user = this.profileService.findById(id).get();
             user.setType("PUBLIC");
             this.profileService.updateUserBan(user);
         }
+
         return "redirect:/dashboard";
     }
 
@@ -329,7 +334,7 @@ public class NavigationController {
      */
     @GetMapping("/tweet/{id}")
     public String toShowTweet(@PathVariable Long id, Model model, HttpServletRequest request){
-        this.informationManager.addCurrentTrends(model);
+        this.modelManager.addCurrentTrends(model);
         this.informationManager.addNameToThePage(model,"Tweet");
         this.informationManager.addProfileInfoToLeftBar(model,request);
 

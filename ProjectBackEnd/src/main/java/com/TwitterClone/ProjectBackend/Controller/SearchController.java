@@ -2,6 +2,7 @@ package com.TwitterClone.ProjectBackend.Controller;
 
 import com.TwitterClone.ProjectBackend.Model.Hashtag;
 import com.TwitterClone.ProjectBackend.Model.MustacheObjects.InformationManager;
+import com.TwitterClone.ProjectBackend.Model.MustacheObjects.ModelManager;
 import com.TwitterClone.ProjectBackend.Repository.UserRepository;
 import com.TwitterClone.ProjectBackend.Service.HashtagService;
 import com.TwitterClone.ProjectBackend.Service.TweetService;
@@ -25,6 +26,8 @@ public class SearchController {
 
     @Autowired
     private InformationManager informationManager;
+    @Autowired
+    private ModelManager modelManager;
     @Autowired
     private UserService userService;
 
@@ -53,7 +56,7 @@ public class SearchController {
     public String toSearch(@PathVariable String keyword,Model model, HttpServletRequest request){
         List<User> list = userService.findByUsernameContainingIgnoreCase(keyword);
         List<Hashtag> list2 = hashtagService.findByHashtagIsContainingIgnoreCase(keyword);
-        this.informationManager.addCurrentTrends(model);
+        this.modelManager.addCurrentTrends(model);
         this.informationManager.addNameToThePage(model,keyword);
         this.informationManager.addProfileInfoToLeftBar(model,request);
         model.addAttribute("users",list);

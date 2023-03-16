@@ -92,6 +92,7 @@ public class HashtagController {
         if (numTweetsAssociated <= from){
             return "redirect:/";
         }
+
         List<Tweet> tweetsAssociated = this.hashtagService.getTweetsAssociatedTo(hashtag, from, size);
         List<TweetInformation> tweets = this.informationManager.calculateDataOfTweet(tweetsAssociated, currentUser);
         model.addAttribute("tweets", tweets);

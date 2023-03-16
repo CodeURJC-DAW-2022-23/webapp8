@@ -155,49 +155,4 @@ public class InformationManager {
         Optional<User> currentSession = this.profileService.findByUsername(principal.getName());
         return currentSession.get();
     }
-
-    /**
-     * Add to the template the current trends
-     * @param model
-     */
-    public void addCurrentTrends(Model model) {
-
-        List<Trend> trends = this.hashtagService.getCurrentTrends(0,5);
-
-        model.addAttribute("trends", trends);
-    }
-
-    /**
-     * Add charts to the dashboard page
-     * @param model
-     */
-    public void addStatistics(Model model) {
-        List<Tuple> statics = this.profileService.getStatics();
-        String[] amounts = new String[statics.size()];
-        String[] dates = new String[statics.size()];
-
-        for (int i = 0;i<statics.size();i++){
-            dates[i] = statics.get(i).get("join_date").toString();
-            amounts[i] = statics.get(i).get("new_people").toString();
-        }
-
-        model.addAttribute("amounts",amounts);
-        model.addAttribute("dates",dates);
-    }
-
-    /**
-     * Add recommended users
-     * @param model
-     * @param request
-     */
-    public void addRecommended(Model model, HttpServletRequest request){
-        User currentUser = this.getCurrentUser(request);
-
-        if (currentUser == null) {
-            return;
-        }
-
-        List<User> recommended = this.userService.getRecommendedUsers(currentUser.getId());
-        model.addAttribute("usersToFollow",recommended);
-    }
 }
