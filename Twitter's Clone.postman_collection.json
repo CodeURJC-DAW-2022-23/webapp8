@@ -1,290 +1,504 @@
 {
-	"info": {
-		"_postman_id": "d3b3a7a3-563a-4832-9ae8-6ba5914cfb44",
-		"name": "Twitter's Clone",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "25857672"
-	},
-	"item": [
-		{
-			"name": "RestHashtagController",
-			"item": [
-				{
-					"name": "getSomeTrends",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "/api/hashtags/trends?from=0&size=10",
-							"path": [
-								"api",
-								"hashtags",
-								"trends"
-							],
-							"query": [
-								{
-									"key": "from",
-									"value": "0",
-									"description": "Start position "
-								},
-								{
-									"key": "size",
-									"value": "10",
-									"description": "Offset"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "getSomeTweetsAssociatedToAHashtag",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "/api/hashtags/explore/DAW?from=0&size=10",
-							"path": [
-								"api",
-								"hashtags",
-								"explore",
-								"DAW"
-							],
-							"query": [
-								{
-									"key": "from",
-									"value": "0"
-								},
-								{
-									"key": "size",
-									"value": "10"
-								}
-							]
-						}
-					},
-					"response": []
-				}
-			]
+	"collection": {
+		"info": {
+			"_postman_id": "8e5a09fe-038a-4238-be7f-da7c5e93c248",
+			"name": "Twitter's Clone",
+			"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+			"updatedAt": "2023-03-16T14:00:16.000Z"
 		},
-		{
-			"name": "RestImageController",
-			"item": [
-				{
-					"name": "downloadProfilePic",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "/api/images/1/profile-pic",
-							"path": [
-								"api",
-								"images",
-								"1",
-								"profile-pic"
-							]
-						}
+		"item": [
+			{
+				"name": "RestHashtagController",
+				"item": [
+					{
+						"name": "getSomeTrends",
+						"id": "c5b382cf-b0bb-453c-a876-ad19e8c9ce4e",
+						"protocolProfileBehavior": {
+							"disableBodyPruning": true
+						},
+						"request": {
+							"method": "GET",
+							"header": [],
+							"url": {
+								"raw": "/api/hashtags/trends?from=0&size=10",
+								"path": [
+									"api",
+									"hashtags",
+									"trends"
+								],
+								"query": [
+									{
+										"key": "from",
+										"value": "0",
+										"description": "Start position "
+									},
+									{
+										"key": "size",
+										"value": "10",
+										"description": "Offset"
+									}
+								]
+							}
+						},
+						"response": []
 					},
-					"response": []
-				},
-				{
-					"name": "downloadBannerPic",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "/api/images/1/banner-pic",
-							"path": [
-								"api",
-								"images",
-								"1",
-								"banner-pic"
-							]
-						}
+					{
+						"name": "getSomeTweetsAssociatedToAHashtag",
+						"id": "5904c78a-36ba-4f34-a960-308dd9dd2f80",
+						"protocolProfileBehavior": {
+							"disableBodyPruning": true
+						},
+						"request": {
+							"method": "GET",
+							"header": [],
+							"url": {
+								"raw": "/api/hashtags/explore/DAW?from=0&size=10",
+								"path": [
+									"api",
+									"hashtags",
+									"explore",
+									"DAW"
+								],
+								"query": [
+									{
+										"key": "from",
+										"value": "0"
+									},
+									{
+										"key": "size",
+										"value": "10"
+									}
+								]
+							}
+						},
+						"response": []
+					}
+				],
+				"id": "4d194379-366e-485a-96f6-54e79e90923a"
+			},
+			{
+				"name": "RestImageController",
+				"item": [
+					{
+						"name": "downloadProfilePic",
+						"id": "2e7bd622-fb91-48c6-ae31-8962dfb3ab7d",
+						"protocolProfileBehavior": {
+							"disableBodyPruning": true
+						},
+						"request": {
+							"method": "GET",
+							"header": [],
+							"url": {
+								"raw": "/api/images/1/profile-pic",
+								"path": [
+									"api",
+									"images",
+									"1",
+									"profile-pic"
+								]
+							}
+						},
+						"response": []
 					},
-					"response": []
-				},
-				{
-					"name": "downloadTweetImage1",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "/api/images/26/tweet-image1",
-							"path": [
-								"api",
-								"images",
-								"26",
-								"tweet-image1"
-							]
-						}
+					{
+						"name": "downloadBannerPic",
+						"id": "9e6b31b3-2581-44f3-a6b5-a0d9fbf7d1a1",
+						"protocolProfileBehavior": {
+							"disableBodyPruning": true
+						},
+						"request": {
+							"method": "GET",
+							"header": [],
+							"url": {
+								"raw": "/api/images/1/banner-pic",
+								"path": [
+									"api",
+									"images",
+									"1",
+									"banner-pic"
+								]
+							}
+						},
+						"response": []
 					},
-					"response": []
-				},
-				{
-					"name": "downloadTweetImage2",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "/api/images/26/tweet-image2",
-							"path": [
-								"api",
-								"images",
-								"26",
-								"tweet-image2"
-							]
-						}
+					{
+						"name": "downloadTweetImage1",
+						"id": "1af53bb9-f9e7-47f1-9c94-04b847a9b7df",
+						"protocolProfileBehavior": {
+							"disableBodyPruning": true
+						},
+						"request": {
+							"method": "GET",
+							"header": [],
+							"url": {
+								"raw": "/api/images/26/tweet-image1",
+								"path": [
+									"api",
+									"images",
+									"26",
+									"tweet-image1"
+								]
+							}
+						},
+						"response": []
 					},
-					"response": []
-				},
-				{
-					"name": "downloadTweetImage3",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "/api/images/26/tweet-image3",
-							"path": [
-								"api",
-								"images",
-								"26",
-								"tweet-image3"
-							]
-						}
+					{
+						"name": "downloadTweetImage2",
+						"id": "de938709-5853-4b35-9683-249c7a545e7d",
+						"protocolProfileBehavior": {
+							"disableBodyPruning": true
+						},
+						"request": {
+							"method": "GET",
+							"header": [],
+							"url": {
+								"raw": "/api/images/26/tweet-image2",
+								"path": [
+									"api",
+									"images",
+									"26",
+									"tweet-image2"
+								]
+							}
+						},
+						"response": []
 					},
-					"response": []
-				},
-				{
-					"name": "downloadTweetImage4",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "/api/images/26/tweet-image4",
-							"path": [
-								"api",
-								"images",
-								"26",
-								"tweet-image4"
-							]
-						}
+					{
+						"name": "downloadTweetImage3",
+						"id": "bd31c833-2d7e-4ea4-9f07-8215fa796ff0",
+						"protocolProfileBehavior": {
+							"disableBodyPruning": true
+						},
+						"request": {
+							"method": "GET",
+							"header": [],
+							"url": {
+								"raw": "/api/images/26/tweet-image3",
+								"path": [
+									"api",
+									"images",
+									"26",
+									"tweet-image3"
+								]
+							}
+						},
+						"response": []
 					},
-					"response": []
-				}
-			]
-		},
-		{
-			"name": "RestNotificationsController",
-			"item": [
-				{
-					"name": "getSomeNotifications",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "/api/notifications/more-notifications?from=0&size=10",
-							"path": [
-								"api",
-								"notifications",
-								"more-notifications"
-							],
-							"query": [
-								{
-									"key": "from",
-									"value": "0"
-								},
-								{
-									"key": "size",
-									"value": "10"
+					{
+						"name": "downloadTweetImage4",
+						"id": "0f13b209-9b64-4192-b0c7-fe5986f81050",
+						"protocolProfileBehavior": {
+							"disableBodyPruning": true
+						},
+						"request": {
+							"method": "GET",
+							"header": [],
+							"url": {
+								"raw": "/api/images/26/tweet-image4",
+								"path": [
+									"api",
+									"images",
+									"26",
+									"tweet-image4"
+								]
+							}
+						},
+						"response": []
+					}
+				],
+				"id": "61deddcf-af5d-4a55-a4cf-e8edb51a494c"
+			},
+			{
+				"name": "RestNotificationsController",
+				"item": [
+					{
+						"name": "getSomeNotifications",
+						"id": "61ee34c0-8bdc-430f-9373-260cb460dc03",
+						"protocolProfileBehavior": {
+							"disableBodyPruning": true
+						},
+						"request": {
+							"method": "GET",
+							"header": [],
+							"url": {
+								"raw": "/api/notifications/more-notifications?from=0&size=10",
+								"path": [
+									"api",
+									"notifications",
+									"more-notifications"
+								],
+								"query": [
+									{
+										"key": "from",
+										"value": "0"
+									},
+									{
+										"key": "size",
+										"value": "10"
+									}
+								]
+							}
+						},
+						"response": []
+					},
+					{
+						"name": "getSomeMentions",
+						"id": "4326a8b6-d471-40a7-b985-f1f01bea36be",
+						"protocolProfileBehavior": {
+							"disableBodyPruning": true
+						},
+						"request": {
+							"method": "GET",
+							"header": [],
+							"url": {
+								"raw": "/api/notifications/more-mentions?from=0&size=10",
+								"path": [
+									"api",
+									"notifications",
+									"more-mentions"
+								],
+								"query": [
+									{
+										"key": "from",
+										"value": "0"
+									},
+									{
+										"key": "size",
+										"value": "10"
+									}
+								]
+							}
+						},
+						"response": []
+					},
+					{
+						"name": "postNotification",
+						"id": "1fc410e1-e9ea-4cd3-8998-69fd949e5031",
+						"protocolProfileBehavior": {
+							"disableBodyPruning": true
+						},
+						"request": {
+							"method": "POST",
+							"header": [],
+							"url": {
+								"raw": "/api/notifications/new-notification?idTweet=1&idOwner=1&notificationType=\"MENTION\"",
+								"path": [
+									"api",
+									"notifications",
+									"new-notification"
+								],
+								"query": [
+									{
+										"key": "idTweet",
+										"value": "1"
+									},
+									{
+										"key": "idOwner",
+										"value": "1"
+									},
+									{
+										"key": "notificationType",
+										"value": "\"MENTION\""
+									}
+								]
+							}
+						},
+						"response": []
+					},
+					{
+						"name": "deleteNotification",
+						"id": "b651f015-094c-4a2f-8cf4-d232e49b0602",
+						"protocolProfileBehavior": {
+							"disableBodyPruning": true
+						},
+						"request": {
+							"method": "DELETE",
+							"header": [],
+							"url": {
+								"raw": "/api/notifications/delete-notification?idTweet=1&notificationType=MENTION",
+								"path": [
+									"api",
+									"notifications",
+									"delete-notification"
+								],
+								"query": [
+									{
+										"key": "idTweet",
+										"value": "1"
+									},
+									{
+										"key": "notificationType",
+										"value": "MENTION"
+									}
+								]
+							}
+						},
+						"response": []
+					}
+				],
+				"id": "7a2cb7e8-738f-46be-aea1-3092eb3e2b23"
+			},
+			{
+				"name": "RestTweetController",
+				"item": [
+					{
+						"name": "getTweetsOfAUser",
+						"id": "9866c34d-1a3b-4779-b187-1664478e105e",
+						"protocolProfileBehavior": {
+							"disableBodyPruning": true
+						},
+						"request": {
+							"method": "GET",
+							"header": [],
+							"url": {
+								"raw": "https://localhost:8443/api/profile/3/tweets?from=0&size=10",
+								"protocol": "https",
+								"host": [
+									"localhost"
+								],
+								"port": "8443",
+								"path": [
+									"api",
+									"profile",
+									"3",
+									"tweets"
+								],
+								"query": [
+									{
+										"key": "from",
+										"value": "0",
+										"type": "text"
+									},
+									{
+										"key": "size",
+										"value": "10",
+										"type": "text"
+									}
+								]
+							}
+						},
+						"response": []
+					},
+					{
+						"name": "getBokmarksOfTheCurrentUser",
+						"id": "e3f7e62a-123a-4682-a042-6e72f6ebc062",
+						"protocolProfileBehavior": {
+							"disableBodyPruning": true
+						},
+						"request": {
+							"auth": {
+								"type": "noauth"
+							},
+							"method": "GET",
+							"header": [],
+							"url": {
+								"raw": "https://localhost:8443/api/bookmarks?from=0&size=10",
+								"protocol": "https",
+								"host": [
+									"localhost"
+								],
+								"port": "8443",
+								"path": [
+									"api",
+									"bookmarks"
+								],
+								"query": [
+									{
+										"key": "from",
+										"value": "0",
+										"type": "text"
+									},
+									{
+										"key": "size",
+										"value": "10",
+										"type": "text"
+									}
+								]
+							}
+						},
+						"response": []
+					},
+					{
+						"name": "getTweetsForCurrentUser",
+						"id": "b835b086-a4b5-432b-8fb5-9a7e29652beb",
+						"protocolProfileBehavior": {
+							"disableBodyPruning": true
+						},
+						"request": {
+							"method": "GET",
+							"header": [],
+							"url": {
+								"raw": "https://localhost:8443/api/tweets?from=0&size=10",
+								"protocol": "https",
+								"host": [
+									"localhost"
+								],
+								"port": "8443",
+								"path": [
+									"api",
+									"tweets"
+								],
+								"query": [
+									{
+										"key": "from",
+										"value": "0",
+										"type": "text"
+									},
+									{
+										"key": "size",
+										"value": "10",
+										"type": "text"
+									}
+								]
+							}
+						},
+						"response": []
+					}
+				],
+				"id": "2603a661-b9fa-4e0d-aa26-e6c3cbdad1c9"
+			},
+			{
+				"name": "RestLoginController",
+				"item": [
+					{
+						"name": "Login",
+						"id": "ce63c92a-5eac-4074-85f4-d8e5720783cd",
+						"protocolProfileBehavior": {
+							"disableBodyPruning": true
+						},
+						"request": {
+							"auth": {
+								"type": "noauth"
+							},
+							"method": "POST",
+							"header": [],
+							"body": {
+								"mode": "raw",
+								"raw": "{\r\n  \"username\":\"user\",\r\n  \"password\":\"pass\"\r\n}",
+								"options": {
+									"raw": {
+										"language": "json"
+									}
 								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "getSomeMentions",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "/api/notifications/more-mentions?from=0&size=10",
-							"path": [
-								"api",
-								"notifications",
-								"more-mentions"
-							],
-							"query": [
-								{
-									"key": "from",
-									"value": "0"
-								},
-								{
-									"key": "size",
-									"value": "10"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "postNotification",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"url": {
-							"raw": "/api/notifications/new-notification?idTweet=1&idOwner=1&notificationType=\"MENTION\"",
-							"path": [
-								"api",
-								"notifications",
-								"new-notification"
-							],
-							"query": [
-								{
-									"key": "idTweet",
-									"value": "1"
-								},
-								{
-									"key": "idOwner",
-									"value": "1"
-								},
-								{
-									"key": "notificationType",
-									"value": "\"MENTION\""
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "deleteNotification",
-					"request": {
-						"method": "DELETE",
-						"header": [],
-						"url": {
-							"raw": "/api/notifications/delete-notification?idTweet=1&notificationType=MENTION",
-							"path": [
-								"api",
-								"notifications",
-								"delete-notification"
-							],
-							"query": [
-								{
-									"key": "idTweet",
-									"value": "1"
-								},
-								{
-									"key": "notificationType",
-									"value": "MENTION"
-								}
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		}
-	]
+							},
+							"url": {
+								"raw": "https://localhost:8443/api/login",
+								"protocol": "https",
+								"host": [
+									"localhost"
+								],
+								"port": "8443",
+								"path": [
+									"api",
+									"login"
+								]
+							}
+						},
+						"response": []
+					}
+				],
+				"id": "febb4537-dc9e-4c7c-a674-43fba1f80377"
+			}
+		]
+	}
 }
