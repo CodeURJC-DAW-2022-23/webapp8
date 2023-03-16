@@ -1,4 +1,4 @@
-package com.TwitterClone.ProjectBackend.Controller;
+package com.TwitterClone.ProjectBackend.Controller.RestController;
 
 import com.TwitterClone.ProjectBackend.Model.MustacheObjects.InformationManager;
 import com.TwitterClone.ProjectBackend.Model.MustacheObjects.TweetInformation;
@@ -6,6 +6,7 @@ import com.TwitterClone.ProjectBackend.Model.Trend;
 import com.TwitterClone.ProjectBackend.Model.Tweet;
 import com.TwitterClone.ProjectBackend.Service.HashtagService;
 import com.TwitterClone.ProjectBackend.userManagement.User;
+import com.fasterxml.jackson.annotation.JsonView;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -74,6 +75,7 @@ public class RestHashtagController {
             @ApiResponse(responseCode = "404", description = "Tweets not found", content = @Content)
     })
     @GetMapping("/explore/{hashtag}")
+    @JsonView(RestTweetController.Basic.class)
     public ResponseEntity<List<TweetInformation>> getSomeTweetsAssociatedToAHashtag(
                                                             @PathParam("from") int from,
                                                             @PathParam("size") int size,
@@ -86,9 +88,9 @@ public class RestHashtagController {
                 this.informationManager.calculateDataOfTweet(tweetsAssociated, currentUser);
 
         if (tweets.size() == 0) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return ResponseEntity.notFound().build();
         }
 
-        return new ResponseEntity<>(tweets, HttpStatus.OK);
+        return ResponseEntity.ok(tweets);
     }
 }

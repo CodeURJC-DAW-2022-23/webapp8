@@ -1,23 +1,22 @@
-package com.TwitterClone.ProjectBackend.Controller;
+package com.TwitterClone.ProjectBackend.Controller.RestController;
 
 import com.TwitterClone.ProjectBackend.Model.MustacheObjects.InformationManager;
 import com.TwitterClone.ProjectBackend.Model.Notification;
 import com.TwitterClone.ProjectBackend.Service.NotificationService;
 import com.TwitterClone.ProjectBackend.Service.ProfileService;
 import com.TwitterClone.ProjectBackend.userManagement.User;
+import com.fasterxml.jackson.annotation.JsonView;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
-import org.aspectj.weaver.ast.Not;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.swing.text.html.Option;
 import javax.websocket.server.PathParam;
 import java.util.List;
 import java.util.Optional;
@@ -44,9 +43,10 @@ public class RestNotificationController {
             @ApiResponse(responseCode = "200", description = "Notifications obtained", content = {
                     @Content(mediaType = "application/json", schema = @Schema(implementation = Notification.class))
             }),
-            @ApiResponse(responseCode = "404", description = "Notifications not found", content = @Content)
+            @ApiResponse(responseCode = "202", description = "Notifications not found", content = @Content)
     })
     @GetMapping("/more-notifications")
+    @JsonView(RestTweetController.Basic.class)
     public ResponseEntity<List<Notification>> getSomeNotifications(
                                                     @PathParam("from") int from,
                                                     @PathParam("size") int size,
@@ -56,7 +56,7 @@ public class RestNotificationController {
         List<Notification> newNotifications = this.notificationService.getSomeNotificationsOfUser(idCurrentUser, from, size);
 
         if (newNotifications.size() == 0) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(HttpStatus.ACCEPTED);
         }
 
         return new ResponseEntity<>(newNotifications, HttpStatus.OK);
@@ -74,9 +74,10 @@ public class RestNotificationController {
             @ApiResponse(responseCode = "200", description = "Mentions obtained", content = {
                     @Content(mediaType = "application/json", schema = @Schema(implementation = Notification.class))
             }),
-            @ApiResponse(responseCode = "404", description = "Mentions not found", content = @Content)
+            @ApiResponse(responseCode = "202", description = "Mentions not found", content = @Content)
     })
     @GetMapping("/more-mentions")
+    @JsonView(RestTweetController.Basic.class)
     public ResponseEntity<List<Notification>> getSomeMentions(
                                                     @PathParam("from") int from,
                                                     @PathParam("size") int size,
@@ -86,7 +87,7 @@ public class RestNotificationController {
         List<Notification> newMentions = this.notificationService.getSomeMentionsOfUser(idCurrentUser, from, size);
 
         if (newMentions.size() == 0) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(HttpStatus.ACCEPTED);
         }
 
         return new ResponseEntity<>(newMentions, HttpStatus.OK);
@@ -109,6 +110,7 @@ public class RestNotificationController {
             @ApiResponse(responseCode = "400", description = "Cannot create the notification", content = @Content)
     })
     @PostMapping("/new-notification")
+    @JsonView(RestTweetController.Basic.class)
     public ResponseEntity<Notification> postNotification(@PathParam("idTweet") Long idTweet,
                                                          @PathParam("idOwner") Long idOwner,
                                                          @PathParam("notificationType") String notificationType,
@@ -143,6 +145,7 @@ public class RestNotificationController {
             @ApiResponse(responseCode = "400", description = "Cannot delete the notification", content = @Content)
     })
     @DeleteMapping("/delete-notification")
+    @JsonView(RestTweetController.Basic.class)
     public ResponseEntity<Notification> deleteNotification(@PathParam("idTweet") Long idTweet,
                                                            @PathParam("notificationType") String notificationType,
                                                            HttpServletRequest request){

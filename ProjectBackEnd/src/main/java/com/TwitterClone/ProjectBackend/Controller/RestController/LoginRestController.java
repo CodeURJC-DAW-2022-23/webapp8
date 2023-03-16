@@ -1,4 +1,4 @@
-package com.TwitterClone.ProjectBackend.RestController;
+package com.TwitterClone.ProjectBackend.Controller.RestController;
 
 import com.TwitterClone.ProjectBackend.Security.jwt.AuthResponse;
 import com.TwitterClone.ProjectBackend.Security.jwt.LoginRequest;

@@ -1,4 +1,4 @@
-package com.TwitterClone.ProjectBackend.Controller;
+package com.TwitterClone.ProjectBackend.Controller.RestController;
 
 import com.TwitterClone.ProjectBackend.Model.MustacheObjects.InformationManager;
 import com.TwitterClone.ProjectBackend.Model.MustacheObjects.TweetInformation;
