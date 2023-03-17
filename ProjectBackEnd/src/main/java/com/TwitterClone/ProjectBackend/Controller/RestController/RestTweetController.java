@@ -107,4 +107,17 @@ public class RestTweetController {
 
         return newTweet;
     }
+
+    @DeleteMapping("api/tweet/delete/{id}")
+    @JsonView(Basic.class)
+    public Tweet deleteTweet(@PathVariable("id") Long id) {
+        Tweet tweet = this.tweetService.findById(id).orElse(null);
+        if ((tweet != null)){
+            this.tweetService.deleteTweet(tweet);
+            return tweet;
+        }
+        else{
+            return null;
+        }
+    }
 }
