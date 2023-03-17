@@ -131,11 +131,11 @@ public class TweetController {
     public String postTweet(@RequestParam String tweet_info,
                             @RequestParam MultipartFile [] tweet_files,
                             HttpServletRequest request) throws IOException {
-        Blob [] files = this.manageImages(tweet_files);
+        Blob [] files = this.informationManager.manageImages(tweet_files);
         User currentUser = this.informationManager.getCurrentUser(request);
         Long userId = currentUser.getId();
         Tweet newTweet = this.tweetService.createTweet(tweet_info, files, userId);
-        processTextTweet(tweet_info, newTweet, currentUser);
+        this.informationManager.processTextTweet(tweet_info, newTweet, currentUser);
 
         return "redirect:/home";
     }
@@ -156,11 +156,11 @@ public class TweetController {
                             @RequestParam("user_reply") Long id,
                             @PathVariable("idTweetReplied") Long idTweetReplied,
                             HttpServletRequest request) throws IOException {
-        Blob [] files = this.manageImages(tweet_files);
+        Blob [] files = this.informationManager.manageImages(tweet_files);
         User currentUser = this.informationManager.getCurrentUser(request);
         Long userId = currentUser.getId();
         Tweet newTweet = this.tweetService.createTweet(tweet_info, files, userId);
-        processTextTweet(tweet_info, newTweet, currentUser);
+        this.informationManager.processTextTweet(tweet_info, newTweet, currentUser);
 
         Optional<User> user_owner = this.profileService.findById(id);
         User user_reply = user_owner.get();
@@ -172,86 +172,6 @@ public class TweetController {
         }
 
         return "redirect:/home";
-    }
-
-    /**
-     * Process all the image files from the input
-     * @param tweet_files
-     * @return
-     * @throws IOException
-     */
-    private Blob[] manageImages(MultipartFile [] tweet_files) throws IOException {
-        Blob [] files = new Blob[4];
-        if(!tweet_files[0].isEmpty()){
-            for (int index = 0; (index < tweet_files.length) && (index < 4); index++) {
-                files[index] = BlobProxy
-                        .generateProxy(tweet_files[index]
-                                .getInputStream(), tweet_files[index]
-                                .getSize());
-            }
-        }
-
-        return files;
-    }
-
-    /**
-     * Process the text of a tweet to analyze if exist a hashtag or a mention
-     * @param text
-     * @param tweet
-     * @param currentUser
-     */
-    private void processTextTweet(String text, Tweet tweet, User currentUser){
-        String [] splitText = text.split(" ");
-
-        for(String segment : splitText){
-
-            if (segment.startsWith("#")) {
-                this.processHashtag(segment, tweet);
-            }
-
-            if (segment.startsWith("@")) {
-                this.processMention(segment, tweet, currentUser);
-            }
-        }
-    }
-
-    /**
-     * Process a mention when it appears in a tweet
-     * @param segment
-     * @param tweet
-     * @param currentUser
-     */
-    private void processMention(String segment, Tweet tweet, User currentUser) {
-        String [] splitMention = segment.split("@");
-
-        for (String mention : splitMention) {
-            User userToMention = this.profileService.findByUsername(mention).orElse(null);
-
-            if (userToMention != null && !currentUser.getId().equals(userToMention.getId())) {
-                this.notificationService
-                        .createNotification(
-                                tweet.getId(),
-                                userToMention,
-                                currentUser,
-                                "MENTION");
-            }
-        }
-    }
-
-    /**
-     * Process a hashtag when it appears in a tweet
-     * @param segment
-     * @param firstTweet
-     */
-    private void processHashtag(String segment, Tweet firstTweet) {
-        String [] splitHashtags = segment.split("#");
-
-        for (String hashtag : splitHashtags) {
-
-            if (!hashtag.equals("")) {
-                hashtagService.add(hashtag, firstTweet);
-            }
-        }
     }
 
     /**

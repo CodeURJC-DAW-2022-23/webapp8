@@ -10,13 +10,15 @@ import com.TwitterClone.ProjectBackend.Service.TweetService;
 import com.TwitterClone.ProjectBackend.userManagement.User;
 import com.fasterxml.jackson.annotation.JsonView;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.websocket.server.PathParam;
+import java.io.IOException;
+import java.sql.Blob;
 import java.util.List;
+import java.util.Optional;
 
 
 @RestController
@@ -65,5 +67,44 @@ public class RestTweetController {
         return this.informationManager.calculateDataOfTweet(tweets, user);
     }
 
+    //It makes an error in console but works
+    @PostMapping("/api/tweets/reply-tweet/{idTweetReplied}")
+    @JsonView(Basic.class)
+    public Tweet postTweet(@RequestParam("text") String tweet_info,
+                           @RequestParam("files") MultipartFile[] tweet_files,
+                           @PathVariable("idTweetReplied") Long idTweetReplied,
+                           HttpServletRequest request) throws IOException {
+        Blob[] files = this.informationManager.manageImages(tweet_files);
+        User currentUser = this.informationManager.getCurrentUser(request);
+        Long userId = currentUser.getId();
+        Tweet newTweet = this.tweetService.createTweet(tweet_info, files, userId);
+        this.informationManager.processTextTweet(tweet_info, newTweet, currentUser);
 
+        Tweet tweetReplied = this.tweetService.findById(idTweetReplied).orElse(null);
+        User user_reply = tweetReplied.getUser();
+
+        tweetService.addComment(idTweetReplied, newTweet);
+
+        if (!userId.equals(user_reply.getId())) {
+            this.notificationService
+                    .createNotification(newTweet.getId(), user_reply, currentUser, "MENTION");
+        }
+
+        return newTweet;
+    }
+
+    //It makes an error in console but works
+    @PostMapping("/api/tweets/new-tweet")
+    @JsonView(Basic.class)
+    public Tweet postTweet(@RequestParam("text") String tweet_info,
+                           @RequestParam("files") MultipartFile[] tweet_files,
+                           HttpServletRequest request) throws IOException {
+        Blob [] files = this.informationManager.manageImages(tweet_files);
+        User currentUser = this.informationManager.getCurrentUser(request);
+        Long userId = currentUser.getId();
+        Tweet newTweet = this.tweetService.createTweet(tweet_info, files, userId);
+        this.informationManager.processTextTweet(tweet_info, newTweet, currentUser);
+
+        return newTweet;
+    }
 }

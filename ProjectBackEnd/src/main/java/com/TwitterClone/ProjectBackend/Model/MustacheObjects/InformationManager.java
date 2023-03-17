@@ -1,21 +1,24 @@
 package com.TwitterClone.ProjectBackend.Model.MustacheObjects;
 
-import com.TwitterClone.ProjectBackend.Model.Trend;
 import com.TwitterClone.ProjectBackend.Model.Tweet;
 import com.TwitterClone.ProjectBackend.Service.HashtagService;
+import com.TwitterClone.ProjectBackend.Service.NotificationService;
 import com.TwitterClone.ProjectBackend.Service.ProfileService;
 import com.TwitterClone.ProjectBackend.Service.TweetService;
 import com.TwitterClone.ProjectBackend.userManagement.User;
 import com.TwitterClone.ProjectBackend.userManagement.UserRoles;
 import com.TwitterClone.ProjectBackend.userManagement.UserService;
 import lombok.NoArgsConstructor;
+import org.hibernate.engine.jdbc.BlobProxy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.ui.Model;
+import org.springframework.web.multipart.MultipartFile;
 
-import javax.persistence.Tuple;
 import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 import java.security.Principal;
+import java.sql.Blob;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -35,6 +38,8 @@ public class InformationManager {
     private TweetService tweetService;
     @Autowired
     private UserService userService;
+    @Autowired
+    private NotificationService notificationService;
 
     /**
      * Add the current user to the left-bar
@@ -154,5 +159,85 @@ public class InformationManager {
 
         Optional<User> currentSession = this.profileService.findByUsername(principal.getName());
         return currentSession.get();
+    }
+
+    /**
+     * Process all the image files from the input
+     * @param tweet_files
+     * @return
+     * @throws IOException
+     */
+    public Blob[] manageImages(MultipartFile[] tweet_files) throws IOException {
+        Blob [] files = new Blob[4];
+        if(!tweet_files[0].isEmpty()){
+            for (int index = 0; (index < tweet_files.length) && (index < 4); index++) {
+                files[index] = BlobProxy
+                        .generateProxy(tweet_files[index]
+                                .getInputStream(), tweet_files[index]
+                                .getSize());
+            }
+        }
+
+        return files;
+    }
+
+    /**
+     * Process the text of a tweet to analyze if exist a hashtag or a mention
+     * @param text
+     * @param tweet
+     * @param currentUser
+     */
+    public void processTextTweet(String text, Tweet tweet, User currentUser){
+        String [] splitText = text.split(" ");
+
+        for(String segment : splitText){
+
+            if (segment.startsWith("#")) {
+                this.processHashtag(segment, tweet);
+            }
+
+            if (segment.startsWith("@")) {
+                this.processMention(segment, tweet, currentUser);
+            }
+        }
+    }
+
+    /**
+     * Process a mention when it appears in a tweet
+     * @param segment
+     * @param tweet
+     * @param currentUser
+     */
+    public void processMention(String segment, Tweet tweet, User currentUser) {
+        String [] splitMention = segment.split("@");
+
+        for (String mention : splitMention) {
+            User userToMention = this.profileService.findByUsername(mention).orElse(null);
+
+            if (userToMention != null && !currentUser.getId().equals(userToMention.getId())) {
+                this.notificationService
+                        .createNotification(
+                                tweet.getId(),
+                                userToMention,
+                                currentUser,
+                                "MENTION");
+            }
+        }
+    }
+
+    /**
+     * Process a hashtag when it appears in a tweet
+     * @param segment
+     * @param firstTweet
+     */
+    public void processHashtag(String segment, Tweet firstTweet) {
+        String [] splitHashtags = segment.split("#");
+
+        for (String hashtag : splitHashtags) {
+
+            if (!hashtag.equals("")) {
+                hashtagService.add(hashtag, firstTweet);
+            }
+        }
     }
 }
