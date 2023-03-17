@@ -191,9 +191,9 @@ async function showTweetsAssociated(hashtag) {
 
     const container = document.getElementById("trend-container");
     container.innerHTML = newTrends;
-    const load_more = document.getElementById("loadMoreButton");
+    const load_more = document.getElementById("loadMore");
     load_more.onclick = loadMoreTweetsAssociated;
-    const load_more_mobile = document.getElementById("loadMoreButtonMobile");
+    const load_more_mobile = document.getElementById("loadMore-mobile");
     load_more_mobile.onclick = loadMoreTweetsAssociated;
     ACTUAL_HASHTAG = hashtag;
 }

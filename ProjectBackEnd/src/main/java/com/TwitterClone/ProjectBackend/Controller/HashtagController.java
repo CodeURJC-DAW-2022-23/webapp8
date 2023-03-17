@@ -67,6 +67,9 @@ public class HashtagController {
         List<Tweet> tweetsAssociated = this.hashtagService.getTweetsAssociatedTo(hashtag, 0, 10);
         List<TweetInformation> tweets = this.informationManager.calculateDataOfTweet(tweetsAssociated, currentUser);
         model.addAttribute("tweets", tweets);
+        if(currentUser!=null){
+            model.addAttribute("isLogged", true);
+        }
 
         return "tweet";
     }
