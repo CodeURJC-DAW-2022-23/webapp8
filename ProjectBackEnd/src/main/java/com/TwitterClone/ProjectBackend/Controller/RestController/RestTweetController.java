@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.websocket.server.PathParam;
 import java.io.IOException;
 import java.sql.Blob;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -108,7 +109,7 @@ public class RestTweetController {
         return newTweet;
     }
 
-    @DeleteMapping("api/tweet/delete/{id}")
+    @DeleteMapping("/api/tweet/delete/{id}")
     @JsonView(Basic.class)
     public Tweet deleteTweet(@PathVariable("id") Long id) {
         Tweet tweet = this.tweetService.findById(id).orElse(null);
@@ -119,5 +120,45 @@ public class RestTweetController {
         else{
             return null;
         }
+    }
+
+    @PutMapping("/api/tweet/like/{id}")
+    @JsonView(Basic.class)
+    public TweetInformation toggleLike(@PathVariable("id") Long id,
+                             HttpServletRequest request){
+        Tweet tweet = this.tweetService.findById(id).get();
+        User currentUser = this.informationManager.getCurrentUser(request);
+        tweetService.toggleLike(currentUser, tweet);
+
+        List list = new ArrayList();
+        list.add(tweet);
+        List<TweetInformation> tweetInformation = this.informationManager.calculateDataOfTweet(list, currentUser);
+        return tweetInformation.get(0);
+    }
+
+    @PutMapping("/api/tweet/retweet/{id}")
+    @JsonView(Basic.class)
+    public TweetInformation toggleRetweet(@PathVariable("id") Long id,
+                                       HttpServletRequest request){
+        Tweet tweet = this.tweetService.findById(id).get();
+        User currentUser = this.informationManager.getCurrentUser(request);
+        tweetService.toggleRetweet(currentUser, tweet);
+
+        List<Tweet> list = new ArrayList();
+        list.add(tweet);
+        List<TweetInformation> tweetInformation = this.informationManager.calculateDataOfTweet(list, currentUser);
+        return tweetInformation.get(0);
+    }
+
+    @PutMapping("/api/tweet/bookmark/{id}")
+    @JsonView(Basic.class)
+    public List<TweetInformation> toggleBookmark(@PathVariable("id") Long id,
+                                                 HttpServletRequest request){
+        Tweet tweet = this.tweetService.findById(id).get();
+        User currentUser = this.informationManager.getCurrentUser(request);
+        this.tweetService.toggleBookmark(currentUser, tweet);
+        List<Tweet> bookmarks = new ArrayList<>();
+        bookmarks.add(tweet);
+        return this.informationManager.calculateDataOfTweet(bookmarks, currentUser);
     }
 }
