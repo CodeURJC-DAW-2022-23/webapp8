@@ -152,15 +152,18 @@ public class TweetService {
      * @param currentUser
      * @param t
      */
-    public void toggleBookmark(User currentUser, Tweet t) {
+    public boolean toggleBookmark(User currentUser, Tweet t) {
+        boolean bookmarked = false;
         List<Tweet> bookmarks = currentUser.getBookmarks();
         if (bookmarks.contains(t)){
             bookmarks.remove(t);
         }else{
             bookmarks.add(t);
+            bookmarked = true;
         }
         currentUser.setBookmarks(bookmarks);
         this.userRepository.save(currentUser);
+        return bookmarked;
     }
 
     /**
