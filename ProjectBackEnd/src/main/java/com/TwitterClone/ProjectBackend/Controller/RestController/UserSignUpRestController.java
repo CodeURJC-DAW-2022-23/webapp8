@@ -35,13 +35,17 @@ public class UserSignUpRestController {
             @ApiResponse(responseCode = "200", description = "Registration successful", content = {
                     @Content(mediaType = "application/json")
             }),
-            @ApiResponse(responseCode = "400", description = "Invalid rquest", content = @Content)
+            @ApiResponse(responseCode = "400", description = "Invalid request", content = @Content)
     })
     @PostMapping("/signup")
     public ResponseEntity<User> signup (@RequestBody RegisteredRequest request)
             throws MessagingException, IOException {
-        service.signup(request);
-        return new ResponseEntity<>(HttpStatus.OK);
+        boolean hasBeenRegistered = service.signup(request);
+        if (hasBeenRegistered)
+            return new ResponseEntity<>(HttpStatus.OK);
+        else
+            return ResponseEntity.badRequest().build();
+
     }
 
     @Operation(summary = "Check the verification code to create an account")
@@ -58,7 +62,7 @@ public class UserSignUpRestController {
             return new ResponseEntity<>(HttpStatus.OK);
         }
 
-        return ResponseEntity.accepted().build();
+        return ResponseEntity.notFound().build();
     }
 
 }

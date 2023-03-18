@@ -43,13 +43,16 @@ public class UserService {
      * @return
      */
     @Transactional
-    public String signup(RegisteredRequest request) throws MessagingException, IOException {
+    public boolean signup(RegisteredRequest request) throws MessagingException, IOException {
         User user = new User(request.getUsername(), request.getPassword(), request.getEmail(), "USER");
         if (!emailValidator.test(request.getEmail())) {
-            throw new IllegalStateException("Invalid Mail Format");
+            return false;
         }
         if (userRepository.findByUsername(user.getUsername()).isPresent()) {
-            throw new IllegalStateException("Username already taken");
+            return false;
+        }
+        if (userRepository.findByEmail(user.getEmail()).isPresent()){
+            return false;
         }
 
         String encodedPassword = passwordEncoder.encode(user.getPassword());
@@ -64,7 +67,7 @@ public class UserService {
 
         sendVerificationEmail(user, user.getEmail());
 
-        return "It works";
+        return true;
     }
 
     /**

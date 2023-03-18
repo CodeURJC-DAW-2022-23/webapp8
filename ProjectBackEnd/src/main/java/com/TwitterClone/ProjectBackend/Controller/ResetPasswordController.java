@@ -1,5 +1,6 @@
 package com.TwitterClone.ProjectBackend.Controller;
 
+import com.TwitterClone.ProjectBackend.Service.MailService;
 import com.TwitterClone.ProjectBackend.userManagement.User;
 import com.TwitterClone.ProjectBackend.userManagement.UserService;
 import net.bytebuddy.utility.RandomString;
@@ -27,10 +28,10 @@ import java.io.UnsupportedEncodingException;
 public class ResetPasswordController {
 
     @Autowired
-    private JavaMailSender mailSender;
+    private UserService userService;
 
     @Autowired
-    private UserService userService;
+    private MailService mailService;
 
     /**
      * Change the current page to forgot password page
@@ -57,7 +58,7 @@ public class ResetPasswordController {
 
         userService.updateResetPasswordToken(passwordToken, email);
         String resetPasswordLink = "https://localhost:8443/reset-password?passwordToken=" + passwordToken;
-        sendEmail(email, resetPasswordLink);
+        mailService.sendEmail(email, resetPasswordLink);
 
         return "forgot-password-confirmation";
     }
@@ -69,38 +70,6 @@ public class ResetPasswordController {
     @GetMapping("/forgot-password-confirmation")
     public String forgotPasswordConfirmation(){
         return "forgot-password-confirmation";
-    }
-
-    /**
-     * Send an email with the necessary information to reset the password
-     * @param recipientEmail
-     * @param link
-     * @throws MessagingException
-     * @throws UnsupportedEncodingException
-     */
-    public void sendEmail(String recipientEmail, String link)
-            throws MessagingException, UnsupportedEncodingException {
-        MimeMessage message = mailSender.createMimeMessage();
-        MimeMessageHelper helper = new MimeMessageHelper(message);
-
-        helper.setFrom("twitterclone027@gmail.com\n", "Twitter Clone Support");
-        helper.setTo(recipientEmail);
-
-        String subject = "Here's the link to reset your password";
-
-        String content = "<p>Hello,</p>"
-                + "<p>You have requested to reset your password.</p>"
-                + "<p>Click the link below to change your password:</p>"
-                + "<p><a href=\"" + link + "\">Change my password</a></p>"
-                + "<br>"
-                + "<p>Ignore this email if you do remember your password, "
-                + "or you have not made the request.</p>";
-
-        helper.setSubject(subject);
-
-        helper.setText(content, true);
-
-        mailSender.send(message);
     }
 
     /**
