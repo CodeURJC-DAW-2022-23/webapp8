@@ -60,7 +60,6 @@ public class NotificationService {
         Tweet tweetTrigger = null;
         if(idTweet != null){
             tweetTrigger = this.tweetRepository.findById(idTweet).orElse(null);
-            return Optional.empty();
         }
 
         if (owner == null){

@@ -45,7 +45,7 @@ public class RestHashtagController {
             @ApiResponse(responseCode = "200", description = "Trends obtained", content = {
                     @Content(mediaType = "application/json", schema = @Schema(implementation = Trend.class))
             }),
-            @ApiResponse(responseCode = "404", description = "Trends not found", content = @Content)
+            @ApiResponse(responseCode = "202", description = "Trends not found", content = @Content)
     })
     @GetMapping("/trends")
     public ResponseEntity<List<Trend>> getSomeTrends(@PathParam("from") int from,
@@ -53,7 +53,7 @@ public class RestHashtagController {
         List<Trend> newTrends = this.hashtagService.getCurrentTrends(from, size);
 
         if (newTrends.size() == 0){
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(HttpStatus.ACCEPTED);
         }
 
         return new ResponseEntity<>(newTrends, HttpStatus.OK);
@@ -72,7 +72,7 @@ public class RestHashtagController {
             @ApiResponse(responseCode = "200", description = "Tweets obtained", content = {
                     @Content(mediaType = "application/json", schema = @Schema(implementation = TweetInformation.class))
             }),
-            @ApiResponse(responseCode = "404", description = "Tweets not found", content = @Content)
+            @ApiResponse(responseCode = "202", description = "Tweets not found", content = @Content)
     })
     @GetMapping("/explore/{hashtag}")
     @JsonView(RestTweetController.Basic.class)
@@ -88,7 +88,7 @@ public class RestHashtagController {
                 this.informationManager.calculateDataOfTweet(tweetsAssociated, currentUser);
 
         if (tweets.size() == 0) {
-            return ResponseEntity.notFound().build();
+            return ResponseEntity.accepted().build();
         }
 
         return ResponseEntity.ok(tweets);
