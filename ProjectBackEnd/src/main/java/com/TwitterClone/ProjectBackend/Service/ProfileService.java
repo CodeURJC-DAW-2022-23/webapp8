@@ -14,6 +14,7 @@ import javax.persistence.Tuple;
 import java.io.IOException;
 import java.sql.Blob;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 /**
@@ -233,5 +234,35 @@ public class ProfileService {
         this.userRepository.save(profileUser);
         this.userRepository.save(currentUser);
         return hasFollowed;
+    }
+
+    public void updateProfilePic(Long id, MultipartFile picture) throws IOException {
+        User userToChange = this.userRepository.findById(id).get();
+        if (!picture.isEmpty()) {
+            userToChange.setProfilePicture(this.prepareImageFile(picture));
+        }
+        this.userRepository.save(userToChange);
+    }
+
+    public void updateProfileBanner(Long id, MultipartFile picture) throws IOException {
+        User userToChange = this.userRepository.findById(id).get();
+        if (!picture.isEmpty()) {
+            userToChange.setProfileBanner(this.prepareImageFile(picture));
+        }
+        this.userRepository.save(userToChange);
+    }
+
+    public void updateNickname(Long id, String nick){
+        User userToChange = this.userRepository.findById(id).get();
+        if (!nick.equals("")) {
+            userToChange.setNickname(nick);
+        }
+        this.userRepository.save(userToChange);
+    }
+
+    public void updateBio(Long id, String bio){
+        User userToChange = this.userRepository.findById(id).get();
+        userToChange.setBiography(bio);
+        this.userRepository.save(userToChange);
     }
 }

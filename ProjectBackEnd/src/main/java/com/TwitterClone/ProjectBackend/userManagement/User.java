@@ -36,22 +36,22 @@ import java.util.*;
 @Table(name = "users")
 public class User  {
     public interface Basic{};
-    public interface Profile{};
+    public interface Profile extends Basic{};
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @JsonView({Basic.class, Profile.class})
+    @JsonView(Basic.class)
     private Long id;
     @Column(unique=true)
-    @JsonView({Basic.class, Profile.class})
+    @JsonView(Basic.class)
     private String username;
     @Column(unique=true)
     private  String email;
-    @JsonView({Basic.class, Profile.class})
+    @JsonView(Basic.class)
     private  String nickname;
     @JsonView(Profile.class)
     private  String biography = "";
     private  String password;
-    @JsonView({Basic.class, Profile.class})
+    @JsonView(Basic.class)
     @Lob
     private  Blob profilePicture;
     @JsonView(Profile.class)
