@@ -48,10 +48,18 @@ public class RestSecurityConfig extends WebSecurityConfigurerAdapter {
         http.antMatcher("/api/**");
 
         // URLs that need authentication to access to it
-        http.authorizeRequests().antMatchers(HttpMethod.POST, "/api/tweets/write-tweet").hasRole("USER");
-        http.authorizeRequests().antMatchers(HttpMethod.POST, "/api/tweets/reply-tweet/**").hasRole("USER");
-        http.authorizeRequests().antMatchers(HttpMethod.DELETE, "/api/tweets/**").hasRole("ADMIN");
+        http.authorizeRequests().antMatchers(HttpMethod.POST, "/api/tweets/write-tweet").hasAnyRole("USER","ADMIN");
+        http.authorizeRequests().antMatchers(HttpMethod.POST, "/api/tweets/reply-tweet/**").hasAnyRole("USER", "ADMIN");
+        http.authorizeRequests().antMatchers(HttpMethod.POST, "/api/images/**").hasAnyRole("USER", "ADMIN");
+        http.authorizeRequests().antMatchers(HttpMethod.POST, "/api/profile/**").hasAnyRole("USER", "ADMIN");
+        http.authorizeRequests().antMatchers(HttpMethod.POST, "/api/bookmark/**").hasAnyRole("USER", "ADMIN");
+        http.authorizeRequests().antMatchers(HttpMethod.POST, "/api/notifications/**").hasAnyRole("USER", "ADMIN");
 
+
+        http.authorizeRequests().antMatchers(HttpMethod.DELETE, "/api/ban/**").hasRole("ADMIN");
+        http.authorizeRequests().antMatchers(HttpMethod.DELETE, "/api/unban/**").hasRole("ADMIN");
+        http.authorizeRequests().antMatchers(HttpMethod.DELETE, "/api/verify/**").hasRole("ADMIN");
+        http.authorizeRequests().antMatchers(HttpMethod.DELETE, "/api/unverify/**").hasRole("ADMIN");
         // Other URLs can be accessed without authentication
         http.authorizeRequests().anyRequest().permitAll();
 

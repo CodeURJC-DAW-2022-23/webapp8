@@ -50,8 +50,9 @@ public class AdminDashboardRestController {
                 user.setType("BANNED");
                 user.setEnabled(false);
                 this.profileService.updateUserBan(user);
+                return ResponseEntity.ok(user);
             }
-            return ResponseEntity.ok(user);
+            return ResponseEntity.badRequest().build();
         }
         return ResponseEntity.notFound().build();
     }
@@ -75,8 +76,9 @@ public class AdminDashboardRestController {
                 user.setType("PUBLIC");
                 user.setEnabled(true);
                 this.profileService.updateUserBan(user);
+                return ResponseEntity.ok(user);
             }
-            return ResponseEntity.ok(user);
+            return ResponseEntity.badRequest().build();
         }
         return ResponseEntity.notFound().build();
     }
@@ -100,6 +102,7 @@ public class AdminDashboardRestController {
                 this.profileService.updateUserBan(user);
                 return ResponseEntity.ok(user);
             }
+            return ResponseEntity.badRequest().build();
         }
         return ResponseEntity.notFound().build();
     }
@@ -121,9 +124,9 @@ public class AdminDashboardRestController {
             if(currentUser.getRole().toString().equals("ADMIN")) {
                 user.setType("PUBLIC");
                 this.profileService.updateUserBan(user);
+                return ResponseEntity.ok(user);
             }
-
-            return ResponseEntity.ok(user);
+            return ResponseEntity.badRequest().build();
         }
         return ResponseEntity.notFound().build();
     }
