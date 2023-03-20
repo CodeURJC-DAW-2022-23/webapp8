@@ -67,12 +67,14 @@ public class User  {
     @LazyCollection(LazyCollectionOption.FALSE)
     private List<Tweet> bookmarks = new ArrayList<>();
     private final LocalDate joinDate;
+    @JsonView(Basic.class)
     private String type;
     @Column(name = "verification_code", length = 64)
     private String verificationCode;
     @Column(name = "reset_password_token")
     private String resetPasswordToken;
     private boolean loggedIn;
+    @JsonView(Basic.class)
     private boolean enabled = true;
 
     /**
