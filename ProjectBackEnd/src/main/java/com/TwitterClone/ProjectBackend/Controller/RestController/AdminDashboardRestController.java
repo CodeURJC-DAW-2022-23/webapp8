@@ -11,10 +11,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -38,23 +35,22 @@ public class AdminDashboardRestController {
             }),
             @ApiResponse(responseCode = "404", description = "User ID not found", content = @Content)
     })
-    @GetMapping("/ban/{id}")
+    @PutMapping("/ban/{id}")
     @JsonView(Basic.class)
     public ResponseEntity<Object> ban(@PathVariable Long id,
                                       HttpServletRequest request){
-
         User currentUser = this.informationManager.getCurrentUser(request);
-        if (profileService.findById(id).isPresent()){
-            User user = this.profileService.findById(id).get();
+        if (profileService.findById(id).isEmpty()){
+            return ResponseEntity.notFound().build();
+        }
+        User user = this.profileService.findById(id).get();
             if(currentUser.getRole().toString().equals("ADMIN")){
                 user.setType("BANNED");
                 user.setEnabled(false);
                 this.profileService.updateUserBan(user);
                 return ResponseEntity.ok(user);
             }
-            return ResponseEntity.badRequest().build();
-        }
-        return ResponseEntity.notFound().build();
+        return ResponseEntity.badRequest().build();
     }
 
 
@@ -65,22 +61,22 @@ public class AdminDashboardRestController {
             }),
             @ApiResponse(responseCode = "404", description = "User ID not found", content = @Content)
     })
-    @GetMapping("/unban/{id}")
+    @PutMapping("/unban/{id}")
     @JsonView(Basic.class)
     public ResponseEntity<Object> unban(@PathVariable Long id,
                         HttpServletRequest request){
         User currentUser = this.informationManager.getCurrentUser(request);
-        if (profileService.findById(id).isPresent()){
-            User user = this.profileService.findById(id).get();
-            if(currentUser.getRole().toString().equals("ADMIN")) {
-                user.setType("PUBLIC");
-                user.setEnabled(true);
-                this.profileService.updateUserBan(user);
-                return ResponseEntity.ok(user);
-            }
-            return ResponseEntity.badRequest().build();
+        if (profileService.findById(id).isEmpty()){
+            return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.notFound().build();
+        User user = this.profileService.findById(id).get();
+        if(currentUser.getRole().toString().equals("ADMIN")) {
+            user.setType("PUBLIC");
+            user.setEnabled(true);
+            this.profileService.updateUserBan(user);
+             return ResponseEntity.ok(user);
+        }
+        return ResponseEntity.badRequest().build();
     }
 
     @Operation(summary = "If the user is a admin, he can verify another user according to his ID")
@@ -90,12 +86,14 @@ public class AdminDashboardRestController {
             }),
             @ApiResponse(responseCode = "404", description = "User ID not found", content = @Content)
     })
-    @GetMapping("/verify/{id}")
+    @PutMapping("/verify/{id}")
     @JsonView(Basic.class)
     public ResponseEntity<Object> verify(@PathVariable Long id,
                          HttpServletRequest request){
         User currentUser = this.informationManager.getCurrentUser(request);
-        if (profileService.findById(id).isPresent()) {
+        if (profileService.findById(id).isEmpty()){
+            return ResponseEntity.notFound().build();
+        }
             User user = this.profileService.findById(id).get();
             if(currentUser.getRole().toString().equals("ADMIN")) {
                 user.setType("VERIFIED");
@@ -104,9 +102,6 @@ public class AdminDashboardRestController {
             }
             return ResponseEntity.badRequest().build();
         }
-        return ResponseEntity.notFound().build();
-    }
-
     @Operation(summary = "If the user is a admin, he can unverify another user according to his ID")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "User Banned", content = {
@@ -114,21 +109,21 @@ public class AdminDashboardRestController {
             }),
             @ApiResponse(responseCode = "404", description = "User ID not found", content = @Content)
     })
-    @GetMapping("/unverify/{id}")
+    @PutMapping("/unverify/{id}")
     @JsonView(Basic.class)
     public ResponseEntity<Object> unverify(@PathVariable Long id,
                            HttpServletRequest request){
         User currentUser = this.informationManager.getCurrentUser(request);
-        if (profileService.findById(id).isPresent()) {
+        if (profileService.findById(id).isEmpty()){
+            return ResponseEntity.notFound().build();
+        }
             User user = this.profileService.findById(id).get();
             if(currentUser.getRole().toString().equals("ADMIN")) {
                 user.setType("PUBLIC");
                 this.profileService.updateUserBan(user);
                 return ResponseEntity.ok(user);
             }
-            return ResponseEntity.badRequest().build();
-        }
-        return ResponseEntity.notFound().build();
+         return ResponseEntity.badRequest().build();
     }
 
 }
