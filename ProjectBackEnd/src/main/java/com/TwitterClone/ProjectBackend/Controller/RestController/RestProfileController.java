@@ -1,10 +1,13 @@
 package com.TwitterClone.ProjectBackend.Controller.RestController;
 
+import com.TwitterClone.ProjectBackend.Model.Hashtag;
 import com.TwitterClone.ProjectBackend.Model.MustacheObjects.InformationManager;
+import com.TwitterClone.ProjectBackend.Model.Tweet;
 import com.TwitterClone.ProjectBackend.Service.NotificationService;
 import com.TwitterClone.ProjectBackend.Service.ProfileService;
 import com.TwitterClone.ProjectBackend.Service.TweetService;
 import com.TwitterClone.ProjectBackend.userManagement.User;
+import com.fasterxml.jackson.annotation.JsonView;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -39,6 +42,8 @@ public class RestProfileController {
     @Autowired
     private NotificationService notificationService;
 
+    interface Basic extends User.Profile{};
+
     @Operation(summary = "Get a User")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "User Found", content = {
@@ -47,6 +52,7 @@ public class RestProfileController {
             @ApiResponse(responseCode = "404", description = "User not found", content = @Content)
     })
     @GetMapping("/{username}")
+    @JsonView(SearchRestController.Basic.class)
     public ResponseEntity<User> getUserByUsername(@PathVariable String username) {
         Optional<User> user = this.profileService.findByUsername(username);
         if (user.isEmpty()){
@@ -63,6 +69,7 @@ public class RestProfileController {
             @ApiResponse(responseCode = "404", description = "User not found", content = @Content)
     })
     @GetMapping("/followed/{username}")
+    @JsonView(SearchRestController.Basic.class)
     public ResponseEntity<List<User>> getFollowed(@PathParam("from") int from,
                                                   @PathParam("size") int size,
                                                   @PathVariable String username) {
@@ -82,6 +89,7 @@ public class RestProfileController {
             @ApiResponse(responseCode = "404", description = "User not found", content = @Content)
     })
     @GetMapping("/followers/{username}")
+    @JsonView(SearchRestController.Basic.class)
     public ResponseEntity<List<User>> getFollowers(@PathParam("from") int from,
                                                    @PathParam("size") int size,
                                                    @PathVariable String username) {
@@ -101,6 +109,7 @@ public class RestProfileController {
             @ApiResponse(responseCode = "404", description = "User not found", content = @Content)
     })
     @PutMapping("/updateProfilePicture/{id}")
+    @JsonView(SearchRestController.Basic.class)
     public ResponseEntity<Object> updateProfilePic(@PathVariable long id,
                                                    @RequestParam("file") MultipartFile profilePic) throws IOException, SQLException {
         Optional<User> user = profileService.findById(id);
@@ -126,6 +135,7 @@ public class RestProfileController {
             @ApiResponse(responseCode = "404", description = "User not found", content = @Content)
     })
     @PutMapping("/updateProfileBanner/{id}")
+    @JsonView(SearchRestController.Basic.class)
     public ResponseEntity<Object> updateProfileBanner(@PathVariable long id,
                                                       @RequestParam("file") MultipartFile profileBanner) throws IOException, SQLException {
         Optional<User> user = profileService.findById(id);
@@ -151,6 +161,7 @@ public class RestProfileController {
             @ApiResponse(responseCode = "404", description = "User not found", content = @Content)
     })
     @PutMapping ("/updateNickname/{id}")
+    @JsonView(SearchRestController.Basic.class)
     public ResponseEntity<User> updateNickname(@PathVariable long id,
                                                @RequestParam("nickname") String nick){
         Optional<User> user = profileService.findById(id);
@@ -173,6 +184,7 @@ public class RestProfileController {
             @ApiResponse(responseCode = "404", description = "User not found", content = @Content)
     })
     @PutMapping("/updateBiography/{id}")
+    @JsonView(SearchRestController.Basic.class)
     public ResponseEntity<User> updateBiography(@PathVariable long id,
                                                 @RequestParam("biography") String bio){
         Optional<User> user = profileService.findById(id);
@@ -198,6 +210,7 @@ public class RestProfileController {
             @ApiResponse(responseCode = "404", description = "User not found", content = @Content)
     })
     @PutMapping("/toggleFollow/{id}")
+    @JsonView(SearchRestController.Basic.class)
     public ResponseEntity<List<User>> toggleFollow(@PathVariable Long id,
                                                    HttpServletRequest request){
         Optional<User> profileUser = this.profileService.findById(id);
