@@ -54,9 +54,10 @@ public class UserSignupController {
                           @RequestParam String email)
             throws MessagingException, IOException {
         RegisteredRequest registeredRequest = new RegisteredRequest(email, username, password);
-        service.signup(registeredRequest);
-
-        return "confirmation";
+        if (service.signup(registeredRequest))
+           return "confirmation";
+        else
+            return "error";
     }
 
     /**
@@ -70,7 +71,6 @@ public class UserSignupController {
         if (service.verify(code)) {
             return "verify";
         }
-
         return "error";
     }
 }
