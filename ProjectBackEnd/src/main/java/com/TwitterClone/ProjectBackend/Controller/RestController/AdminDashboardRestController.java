@@ -10,10 +10,15 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.Tuple;
 import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api")
@@ -124,6 +129,31 @@ public class AdminDashboardRestController {
                 return ResponseEntity.ok(user);
             }
          return ResponseEntity.badRequest().build();
+    }
+
+    @Operation(summary = "If the user is a admin, he can get the statistics of new accounts created in the last 5 days whit new accounts")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Statistics shown", content = {
+                    @Content(mediaType = "application/json")
+            }),
+            @ApiResponse(responseCode = "403", description = "No permission", content = @Content)
+    })
+    @GetMapping("/statistics")
+    public ResponseEntity<Map<String, String>> getNewAccountStatistics(HttpServletRequest request){
+        User currentUser = this.informationManager.getCurrentUser(request);
+
+        List<Tuple> statics = this.profileService.getStatics();
+        Map<String, String> statistics = new HashMap<>();
+        for (int i = 0;i < statics.size();i++){
+            String key = statics.get(i).get("join_date").toString();
+            String value = statics.get(i).get("new_people").toString();
+            statistics.put(key, value);
+        }
+
+        if(currentUser.getRole().toString().equals("ADMIN")) {
+            return ResponseEntity.ok(statistics);
+        }
+        return new ResponseEntity<>(HttpStatus.FORBIDDEN);
     }
 
 }
