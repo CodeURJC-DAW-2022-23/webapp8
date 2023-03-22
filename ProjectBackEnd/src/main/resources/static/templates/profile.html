@@ -48,7 +48,7 @@
     <!-- PROFILE -->
     <div>
         <!-- BANNER -->
-        <figure class="max-h-[265px]">
+        <figure class="max-h-[265px]"> <!-- h-[265px] fix the bug with the banner; play with the screen-sizes -->
             <img class="object-fill w-full h-full" src="/{{user.id}}/banner-pic" alt="Banner photo">
         </figure>
 
@@ -160,6 +160,12 @@
     
     <!-- FRAME -->
     <div class="relative bottom-9">
+
+        <!-- TWEETS -->
+        <div id="tweet-container">
+            {{> tweet}}
+        </div>
+
         <!-- SHOW TWEETS BUTTON -->
         <button onclick="loadMoreTweetsForProfile('{{user.id}}');" id="loadMore"
                 class="hidden w-full py-4 text-lg font-semibold border-b llg:block border-gray-9 dark:bg-black-0 hover:bg-gray-7 dark:border-black-5 dark:hover:bg-black-6 text-primary">
@@ -177,11 +183,6 @@
                     class="fixed px-5 py-3 text-sm font-semibold transition cursor-pointer top-[5.4rem] llg:hidden hover:scale-110 rounded-3xl text-white-0 bg-primary">
                 Load More
             </button>
-        </div>
-
-        <!-- TWEETS -->
-        <div id="tweet-container">
-            {{> tweet}}
         </div>
     </div>
 

@@ -45,6 +45,11 @@
             </button>
         </nav>
     </header>
+
+    <div id="notification-container">
+        {{> notification}}
+    </div>
+
     <!-- SHOW NOTIFICATIONS BUTTON -->
     <button id="loadMore" onclick="loadMoreNotifications();"
             class="hidden w-full py-4 text-lg font-semibold border-b llg:block border-gray-9 dark:bg-black-0 hover:bg-gray-7 dark:border-black-5 dark:hover:bg-black-6 text-primary">
@@ -63,8 +68,9 @@
             Load More
         </button>
     </div>
-    <div id="notification-container">
-        {{> notification}}
+
+    <!-- SPACE -->
+    <div class="p-10 bg-transparent">
     </div>
 
     {{> mobile-bar}}

@@ -24,7 +24,7 @@
     <div
             class="relative flex flex-col justify-center max-w-xl gap-8 px-6 border border-gray-3 dark:border-transparent xlsm:px-20 xlsm:pb-14 pt-7 bg-white-0 dark:bg-black-0 rounded-2xl">
         <!-- GO BACK -->
-        <a class="absolute cursor-pointer group top-[35px] left-8" href="/profile">
+        <a class="absolute cursor-pointer group top-[35px] left-8" href="/profile/{{user.id}}">
             <svg class="transition rounded-full w-7 dark:fill-white-0 fill-gray-4 group-hover:fill-primary group-hover:bg-blue-1 group-dark:hover:bg-blue-0"
                  xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true">
                 <g>
@@ -158,7 +158,7 @@
                             type="submit" value="Save">
 
                     <a class="px-5 py-3 text-sm font-bold text-center transition bg-transparent border-2 cursor-pointer border-black-0 rounded-3xl dark:border-white-0 dark:text-white-0 text-black-0 hover:scale-110"
-                       href="/profile">
+                       href="/profile/{{user.id}}">
                         Cancel
                     </a>
                     <input type="hidden" name="_csrf" value="{{token}}"/>

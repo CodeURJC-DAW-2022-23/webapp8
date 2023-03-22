@@ -8,7 +8,6 @@ import com.TwitterClone.ProjectBackend.Service.HashtagService;
 import com.TwitterClone.ProjectBackend.Service.NotificationService;
 import com.TwitterClone.ProjectBackend.Service.TweetService;
 import com.TwitterClone.ProjectBackend.userManagement.UserRoles;
-import com.TwitterClone.ProjectBackend.userManagement.UserService;
 import com.TwitterClone.ProjectBackend.Service.ProfileService;
 import com.TwitterClone.ProjectBackend.userManagement.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -85,6 +84,10 @@ public class NavigationController {
         List<TweetInformation> tweets = this.informationManager.calculateDataOfTweet(tweetList, currentUser);
         model.addAttribute("tweets", tweets);
 
+        if (currentUser!=null){
+            model.addAttribute("isLogged", true);
+        }
+
         return "home";
     }
 
@@ -151,6 +154,9 @@ public class NavigationController {
         List<Tweet> bookmarkTweetList = this.profileService.getBookmarks(currentUser.getId(), 0 , 10);
         List<TweetInformation> bookmarks= this.informationManager.calculateDataOfTweet(bookmarkTweetList, currentUser);
         model.addAttribute("tweets", bookmarks);
+        if (currentUser!=null){
+            model.addAttribute("isLogged", true);
+        }
 
         return "bookmarks";
     }
@@ -182,6 +188,10 @@ public class NavigationController {
         List<TweetInformation> tweets = this.informationManager.calculateDataOfTweet(tweetList, currentUser);
         model.addAttribute("tweets", tweets);
         model.addAttribute("user", profileUser);
+
+        if (currentUser!=null){
+            model.addAttribute("isLogged", true);
+        }
 
         //Hide Go To Dashboard button
         model.addAttribute("isAdmin",currentUser!=null && currentUser.getRole() == UserRoles.ADMIN);

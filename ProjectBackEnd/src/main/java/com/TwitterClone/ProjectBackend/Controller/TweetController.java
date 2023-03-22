@@ -30,8 +30,6 @@ public class TweetController {
     @Autowired
     private TweetService tweetService;
     @Autowired
-    private HashtagService hashtagService;
-    @Autowired
     private ProfileService profileService;
     @Autowired
     private InformationManager informationManager;
@@ -62,6 +60,8 @@ public class TweetController {
         List<TweetInformation> tweets = this.informationManager.calculateDataOfTweet(newTweets, currentUser);
         model.addAttribute("tweets", tweets);
 
+        model.addAttribute("isLogged", true);
+
         return "tweet";
     }
     /**
@@ -89,6 +89,8 @@ public class TweetController {
                 this.informationManager.calculateDataOfTweet(newTweets, currentUser);
         model.addAttribute("tweets", tweets);
 
+        model.addAttribute("isLogged", true);
+
         return "tweet";
     }
 
@@ -103,9 +105,11 @@ public class TweetController {
     public String loadMoreTweetsForProfile(Model model,
                                            @PathVariable long id,
                                            @PathParam("from") int from,
-                                           @PathParam("size") int size) {
+                                           @PathParam("size") int size,
+                                           HttpServletRequest request) {
 
         User user = this.profileService.findById(id).get();
+        User currentUser = this.informationManager.getCurrentUser(request);
         int countTweetsOfUser = this.profileService.countTweetsOfUser(user.getId());
 
         if (countTweetsOfUser <= from) {
@@ -113,8 +117,12 @@ public class TweetController {
         }
 
         List<Tweet> newTweets = this.tweetService.findSomeTweetOfUser(id, from, size);
-        List<TweetInformation> tweets = this.informationManager.calculateDataOfTweet(newTweets, user);
+        List<TweetInformation> tweets = this.informationManager.calculateDataOfTweet(newTweets, currentUser);
         model.addAttribute("tweets", tweets);
+
+        if (currentUser!=null){
+            model.addAttribute("isLogged", true);
+        }
 
         return "tweet";
     }

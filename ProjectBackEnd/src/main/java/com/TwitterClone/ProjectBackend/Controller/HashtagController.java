@@ -49,6 +49,8 @@ public class HashtagController {
         List<Trend> newTrends = this.hashtagService.getCurrentTrends(from, size);
         model.addAttribute("trends", newTrends);
 
+        model.addAttribute("isExplorePage", true);
+
         return "explore_element";
     }
 
@@ -99,6 +101,10 @@ public class HashtagController {
         List<Tweet> tweetsAssociated = this.hashtagService.getTweetsAssociatedTo(hashtag, from, size);
         List<TweetInformation> tweets = this.informationManager.calculateDataOfTweet(tweetsAssociated, currentUser);
         model.addAttribute("tweets", tweets);
+
+        if(currentUser!=null){
+            model.addAttribute("isLogged", true);
+        }
 
         return "tweet";
     }

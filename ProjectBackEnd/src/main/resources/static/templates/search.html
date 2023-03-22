@@ -43,25 +43,6 @@
     </div>
   </header>
 
-  <!-- MORE USERS BUTTON -->
-  <button onclick="" id='loadMore'
-          class="hidden w-full py-4 text-lg font-semibold border-b llg:block border-gray-9 dark:bg-black-0 hover:bg-gray-7 dark:border-black-5 dark:hover:bg-black-6 text-primary">
-    Load More
-  </button>
-
-  <!-- SPINNER -->
-  <div id="spinner">
-
-  </div>
-
-  <!-- SHOW MORE USERS BUTTON - MOBILE -->
-  <div class="sticky flex justify-center">
-    <button onclick=";" id='loadMore-mobile'
-            class="fixed px-5 py-3 text-sm font-semibold transition cursor-pointer top-[5.4rem] llg:hidden hover:scale-110 rounded-3xl text-white-0 bg-primary">
-      Load More
-    </button>
-  </div>
-
   <!-- USERS -->
   <div id="user-container">
     {{#users}}
@@ -71,6 +52,10 @@
 
   <div id="trend-container">
     {{> explore_element}}
+  </div>
+
+  <!-- SPACE -->
+  <div class="p-10 bg-transparent">
   </div>
 
   {{> mobile-bar}}
