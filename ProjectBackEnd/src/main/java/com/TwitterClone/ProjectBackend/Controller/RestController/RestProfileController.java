@@ -33,7 +33,7 @@ import java.util.Optional;
 
 
 @RestController
-@RequestMapping("/profile/api")
+@RequestMapping("/api/profile")
 public class RestProfileController {
     @Autowired
     private TweetService tweetService;
