@@ -38,13 +38,15 @@ public class UserSignUpRestController {
             @ApiResponse(responseCode = "400", description = "Invalid request", content = @Content)
     })
     @PostMapping("/signup")
-    public ResponseEntity<User> signup (@RequestBody RegisteredRequest request)
+    public ResponseEntity<User> signup(@RequestBody RegisteredRequest request)
             throws MessagingException, IOException {
         boolean hasBeenRegistered = service.signup(request);
-        if (hasBeenRegistered)
+
+        if (hasBeenRegistered) {
             return new ResponseEntity<>(HttpStatus.OK);
-        else
-            return ResponseEntity.badRequest().build();
+        }
+
+        return ResponseEntity.badRequest().build();
 
     }
 

@@ -37,6 +37,7 @@ public class RestHashtagController {
 
     /**
      * Get some trends
+     *
      * @param from
      * @param size
      */
@@ -49,10 +50,10 @@ public class RestHashtagController {
     })
     @GetMapping("/trends")
     public ResponseEntity<List<Trend>> getSomeTrends(@PathParam("from") int from,
-                                                     @PathParam("size") int size){
+                                                     @PathParam("size") int size) {
         List<Trend> newTrends = this.hashtagService.getCurrentTrends(from, size);
 
-        if (newTrends.size() == 0){
+        if (newTrends.size() == 0) {
             return new ResponseEntity<>(HttpStatus.ACCEPTED);
         }
 
@@ -61,6 +62,7 @@ public class RestHashtagController {
 
     /**
      * Get some tweets associated to a hashtag
+     *
      * @param from
      * @param size
      * @param hashtag
@@ -77,10 +79,10 @@ public class RestHashtagController {
     @GetMapping("/explore/{hashtag}")
     @JsonView(RestTweetController.Basic.class)
     public ResponseEntity<List<TweetInformation>> getSomeTweetsAssociatedToAHashtag(
-                                                            @PathParam("from") int from,
-                                                            @PathParam("size") int size,
-                                                            @PathVariable String hashtag,
-                                                            HttpServletRequest request) {
+            @PathParam("from") int from,
+            @PathParam("size") int size,
+            @PathVariable String hashtag,
+            HttpServletRequest request) {
         User currentUser = this.informationManager.getCurrentUser(request);
         List<Tweet> tweetsAssociated =
                 this.hashtagService.getTweetsAssociatedTo(hashtag, from, size);

@@ -37,19 +37,18 @@ public class InformationManager {
     @Autowired
     private TweetService tweetService;
     @Autowired
-    private UserService userService;
-    @Autowired
     private NotificationService notificationService;
 
     /**
      * Add the current user to the left-bar
+     *
      * @param model
      * @param request
      */
     public void addProfileInfoToLeftBar(Model model, HttpServletRequest request) {
         Principal principal = request.getUserPrincipal();
 
-        if(principal == null) {
+        if (principal == null) {
             model.addAttribute("isLogged", false);
             return;
         }
@@ -74,6 +73,7 @@ public class InformationManager {
 
     /**
      * Add name to the current page
+     *
      * @param model
      * @param namePage
      */
@@ -83,12 +83,13 @@ public class InformationManager {
 
     /**
      * Prepare the list with the Tweets to show at mustache
+     *
      * @param tweets
      */
     public List<TweetInformation> calculateDataOfTweet(List<Tweet> tweets, User currentUser) {
         List<TweetInformation> tweetsInfo = new ArrayList<>();
 
-        for(Tweet tweet : tweets) {
+        for (Tweet tweet : tweets) {
             TweetInformation currentTweetInformation = new TweetInformation();
             currentTweetInformation.setTweet(tweet);
             currentTweetInformation.setNumLikes(this.tweetService.getLikesOfTweet(tweet.getId()));
@@ -105,6 +106,7 @@ public class InformationManager {
 
     /**
      * Check the user status about the tweets to be showed
+     *
      * @param tweet
      * @param currentUser
      * @param currentTweetInformation
@@ -112,16 +114,19 @@ public class InformationManager {
     private void checkUserStateAboutTweets(Tweet tweet,
                                            User currentUser, TweetInformation currentTweetInformation) {
         currentTweetInformation.setAuthorised(this.isAuthorised(currentUser, tweet));
+
         if (this.tweetService.isRetweeted(currentUser, tweet)) {
             currentTweetInformation.setColorRetweet("green-0");
         } else {
             currentTweetInformation.setColorRetweet("gray-4");
         }
+
         if (this.tweetService.isLiked(currentUser, tweet)) {
             currentTweetInformation.setColorLike("red-0");
         } else {
             currentTweetInformation.setColorLike("gray-4");
         }
+
         if (this.tweetService.isBookmarked(currentUser, tweet)) {
             currentTweetInformation.setColorBookmark("primary");
         } else {
@@ -131,6 +136,7 @@ public class InformationManager {
 
     /**
      * Check if the user is authorised
+     *
      * @param currentUser
      * @param tweet
      * @return
@@ -147,6 +153,7 @@ public class InformationManager {
 
     /**
      * Obtain the current User in the session
+     *
      * @param request
      * @return
      */
@@ -163,13 +170,16 @@ public class InformationManager {
 
     /**
      * Process all the image files from the input
+     *
      * @param tweet_files
      * @return
      * @throws IOException
      */
     public Blob[] manageImages(MultipartFile[] tweet_files) throws IOException {
-        Blob [] files = new Blob[4];
-        if(!tweet_files[0].isEmpty()){
+        Blob[] files = new Blob[4];
+
+        if (!tweet_files[0].isEmpty()) {
+
             for (int index = 0; (index < tweet_files.length) && (index < 4); index++) {
                 files[index] = BlobProxy
                         .generateProxy(tweet_files[index]
@@ -183,14 +193,15 @@ public class InformationManager {
 
     /**
      * Process the text of a tweet to analyze if exist a hashtag or a mention
+     *
      * @param text
      * @param tweet
      * @param currentUser
      */
-    public void processTextTweet(String text, Tweet tweet, User currentUser){
-        String [] splitText = text.split(" ");
+    public void processTextTweet(String text, Tweet tweet, User currentUser) {
+        String[] splitText = text.split(" ");
 
-        for(String segment : splitText){
+        for (String segment : splitText) {
 
             if (segment.startsWith("#")) {
                 this.processHashtag(segment, tweet);
@@ -204,12 +215,13 @@ public class InformationManager {
 
     /**
      * Process a mention when it appears in a tweet
+     *
      * @param segment
      * @param tweet
      * @param currentUser
      */
     public void processMention(String segment, Tweet tweet, User currentUser) {
-        String [] splitMention = segment.split("@");
+        String[] splitMention = segment.split("@");
 
         for (String mention : splitMention) {
             User userToMention = this.profileService.findByUsername(mention).orElse(null);
@@ -227,11 +239,12 @@ public class InformationManager {
 
     /**
      * Process a hashtag when it appears in a tweet
+     *
      * @param segment
      * @param firstTweet
      */
     public void processHashtag(String segment, Tweet firstTweet) {
-        String [] splitHashtags = segment.split("#");
+        String[] splitHashtags = segment.split("#");
 
         for (String hashtag : splitHashtags) {
 

@@ -16,6 +16,7 @@ public class MailService {
 
     /**
      * Send an email with the necessary information to reset the password
+     *
      * @param recipientEmail
      * @param link
      * @throws MessagingException

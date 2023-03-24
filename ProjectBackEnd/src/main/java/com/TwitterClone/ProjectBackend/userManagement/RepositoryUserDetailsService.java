@@ -23,11 +23,12 @@ import java.util.List;
 public class RepositoryUserDetailsService implements UserDetailsService {
     private final static String USER_NOT_FOUND = "User with username %username not found";
     @Autowired
-    private  UserRepository userRepository;
+    private UserRepository userRepository;
 
     /**
      * It searchs on the repository to see if it can find a user by the username. If not, it throws an
      * exception
+     *
      * @param username
      * @return
      * @throws UsernameNotFoundException
@@ -40,7 +41,6 @@ public class RepositoryUserDetailsService implements UserDetailsService {
 
         List<GrantedAuthority> roles = new ArrayList<>();
         roles.add(new SimpleGrantedAuthority("ROLE_" + user.getRole()));
-
 
 
         return new org.springframework.security.core.userdetails.User(user.getUsername(),

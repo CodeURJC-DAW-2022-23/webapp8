@@ -22,7 +22,9 @@ import java.util.Set;
 @AllArgsConstructor
 @Entity
 public class Hashtag {
-    public interface Basic{};
+    public interface Basic {
+    }
+
     @Id
     @JsonView(Basic.class)
     private String hashtag;
@@ -32,6 +34,7 @@ public class Hashtag {
 
     /**
      * Add a tweet to this hashtag
+     *
      * @param tweet
      */
     public void addTweet(Tweet tweet) {

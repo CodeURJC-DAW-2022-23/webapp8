@@ -38,6 +38,7 @@ public class TweetController {
 
     /**
      * Ask the database for more tweets for the home page
+     *
      * @param model
      * @param from
      * @param size
@@ -64,8 +65,10 @@ public class TweetController {
 
         return "tweet";
     }
+
     /**
      * Ask the database for more tweets for the bookmarks page
+     *
      * @param model
      * @param from
      * @param size
@@ -96,6 +99,7 @@ public class TweetController {
 
     /**
      * Ask the database for more tweets from the user
+     *
      * @param model
      * @param from
      * @param size
@@ -120,7 +124,7 @@ public class TweetController {
         List<TweetInformation> tweets = this.informationManager.calculateDataOfTweet(newTweets, currentUser);
         model.addAttribute("tweets", tweets);
 
-        if (currentUser!=null){
+        if (currentUser != null) {
             model.addAttribute("isLogged", true);
         }
 
@@ -130,6 +134,7 @@ public class TweetController {
 
     /**
      * Add a new tweet from the trigger user to the database
+     *
      * @param tweet_info
      * @param tweet_files
      * @return
@@ -137,9 +142,9 @@ public class TweetController {
      */
     @PostMapping("/tweets/new-tweet")
     public String postTweet(@RequestParam String tweet_info,
-                            @RequestParam MultipartFile [] tweet_files,
+                            @RequestParam MultipartFile[] tweet_files,
                             HttpServletRequest request) throws IOException {
-        Blob [] files = this.informationManager.manageImages(tweet_files);
+        Blob[] files = this.informationManager.manageImages(tweet_files);
         User currentUser = this.informationManager.getCurrentUser(request);
         Long userId = currentUser.getId();
         Tweet newTweet = this.tweetService.createTweet(tweet_info, files, userId);
@@ -150,6 +155,7 @@ public class TweetController {
 
     /**
      * Creates a reply of a tweet
+     *
      * @param tweet_info
      * @param tweet_files
      * @param id
@@ -160,11 +166,11 @@ public class TweetController {
      */
     @PostMapping("/tweets/reply-tweet/{idTweetReplied}")
     public String postTweet(@RequestParam String tweet_info,
-                            @RequestParam MultipartFile [] tweet_files,
+                            @RequestParam MultipartFile[] tweet_files,
                             @RequestParam("user_reply") Long id,
                             @PathVariable("idTweetReplied") Long idTweetReplied,
                             HttpServletRequest request) throws IOException {
-        Blob [] files = this.informationManager.manageImages(tweet_files);
+        Blob[] files = this.informationManager.manageImages(tweet_files);
         User currentUser = this.informationManager.getCurrentUser(request);
         Long userId = currentUser.getId();
         Tweet newTweet = this.tweetService.createTweet(tweet_info, files, userId);
@@ -184,13 +190,14 @@ public class TweetController {
 
     /**
      * When the like buttons is pressed, it will check if the user is giving or removing the likes
+     *
      * @param request
      * @return
      * @throws IOException
      */
     @GetMapping("/tweet/like/{id}")
     public String toggleLike(@PathVariable("id") Long id,
-                              HttpServletRequest request) throws IOException {
+                             HttpServletRequest request) throws IOException {
         Tweet tweet = this.tweetService.findById(id).get();
         User currentUser = this.informationManager.getCurrentUser(request);
         boolean hasGiveLike = tweetService.toggleLike(currentUser, tweet);
@@ -204,13 +211,14 @@ public class TweetController {
 
     /**
      * When the retqeet buttons is pressed, it will check if the user is giving or removing the retweet
+     *
      * @param request
      * @return
      * @throws IOException
      */
     @GetMapping("/tweet/retweet/{id}")
     public String toggleRetweet(@PathVariable("id") Long id,
-                              HttpServletRequest request) throws IOException{
+                                HttpServletRequest request) throws IOException {
         Tweet tweet = this.tweetService.findById(id).get();
         User currentUser = this.informationManager.getCurrentUser(request);
         boolean hasGiveRetweet = this.tweetService.toggleRetweet(currentUser, tweet);
@@ -224,12 +232,13 @@ public class TweetController {
 
     /**
      * When the bookmark buttons is pressed, it will check if the user is adding or removing the bookmark
+     *
      * @param request
      * @return
      * @throws IOException
      */
     @GetMapping("/tweet/bookmark/{id}")
-    public String toggleBookmark(@PathVariable("id") Long id, HttpServletRequest request){
+    public String toggleBookmark(@PathVariable("id") Long id, HttpServletRequest request) {
         Tweet tweet = this.tweetService.findById(id).get();
         User currentUser = this.informationManager.getCurrentUser(request);
         this.tweetService.toggleBookmark(currentUser, tweet);
@@ -238,6 +247,7 @@ public class TweetController {
 
     /**
      * Deletes a tweet from the database
+     *
      * @param id
      */
     @GetMapping("/tweet/delete/{id}")

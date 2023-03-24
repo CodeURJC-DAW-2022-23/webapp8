@@ -56,24 +56,25 @@ public class DBInitializer {
 
     /**
      * Init the database
+     *
      * @throws IOException
      */
     @PostConstruct
     public void init() throws IOException {
 
         //Sample Users
-        String[] files = {"example_data/elrubius_profilepic.jpg","example_data/elrubius_profilebanner.jpg"};
-        User user1 = new User("Rubiu5","elrubius","Rata Noruega.  Me gustan los gatos obesos.","rubius@gmail.com",passwordEncoder.encode("rubius"), LocalDate.of(2013,10,13),"BANNED");
+        String[] files = {"example_data/elrubius_profilepic.jpg", "example_data/elrubius_profilebanner.jpg"};
+        User user1 = new User("Rubiu5", "elrubius", "Rata Noruega.  Me gustan los gatos obesos.", "rubius@gmail.com", passwordEncoder.encode("rubius"), LocalDate.of(2013, 10, 13), "BANNED");
         user1.setImages(files);
         user1.setEnabled(false);
         files = new String[]{"example_data/KOI_KEYLAND_profilepic.jpg", "example_data/KOI_KEYLAND_profilebanner.jpg"};
-        User user2 = new User("Keyland71", "KOI KEYLAND71", "19 y/o\nRocket League proplayer for @KOI", "example2@gmail.com", passwordEncoder.encode("examplePassword2"), LocalDate.of(2018,4,21), "PUBLIC");
+        User user2 = new User("Keyland71", "KOI KEYLAND71", "19 y/o\nRocket League proplayer for @KOI", "example2@gmail.com", passwordEncoder.encode("examplePassword2"), LocalDate.of(2018, 4, 21), "PUBLIC");
         user2.setImages(files);
         files = new String[]{"example_data/Alanis_profilepic.jpg", "example_data/Alanis_profilebanner.jpg"};
-        User user3 = new User("antonioalanxs", "Alanís",  "",  "example3@gmail.com", passwordEncoder.encode("examplePassword3"),LocalDate.of(2019,8,7), "PUBLIC");
+        User user3 = new User("antonioalanxs", "Alanís", "", "example3@gmail.com", passwordEncoder.encode("examplePassword3"), LocalDate.of(2019, 8, 7), "PUBLIC");
         user3.setImages(files);
         files = new String[]{"example_data/Ibai_profilepic.jpg", "example_data/Ibai_profilebanner.jpg"};
-        User user4 = new User("ibai","Ibai","Sigue a nuestros equipos @KOI y @PorcinosFC, http://twitch.tv/ibai","ibai@gmail.com",passwordEncoder.encode("ibai"), LocalDate.of(2014,8,5), "VERIFIED");
+        User user4 = new User("ibai", "Ibai", "Sigue a nuestros equipos @KOI y @PorcinosFC, http://twitch.tv/ibai", "ibai@gmail.com", passwordEncoder.encode("ibai"), LocalDate.of(2014, 8, 5), "VERIFIED");
         user4.setImages(files);
         userRepository.save(user1);
         userRepository.save(user2);
@@ -94,7 +95,7 @@ public class DBInitializer {
 
         user3.addFollower(testUser);
         testUser.addFollowed(user3);
-        
+
         user4.addFollower(user1);
         user1.addFollowed(user4);
 
@@ -114,29 +115,29 @@ public class DBInitializer {
 
         //Sample Tweets
         //@ibai
-        Blob[] images = new Blob[] {
+        Blob[] images = new Blob[]{
                 null,
                 null,
                 null,
                 null
         };
-        Tweet tweet5 = new Tweet("Devastado, afligido, descorazonado, atormentado, apenado, entristecido, desolado, triste, cabizbajo, lloroso, cariacontecido, compungido, destruido, mustio, apesadumbrado, deshecho, demolido.", user4, LocalDateTime.of(2023,02,14,20,00,00), images);
+        Tweet tweet5 = new Tweet("Devastado, afligido, descorazonado, atormentado, apenado, entristecido, desolado, triste, cabizbajo, lloroso, cariacontecido, compungido, destruido, mustio, apesadumbrado, deshecho, demolido.", user4, LocalDateTime.of(2023, 02, 14, 20, 00, 00), images);
 
-        images = new Blob[] {
+        images = new Blob[]{
                 null,
                 null,
                 null,
                 null
         };
-        Tweet tweet6 = new Tweet("Chup chup con la #KingsLeague", user4, LocalDateTime.of(2023,02,14,21,00,00), images);
+        Tweet tweet6 = new Tweet("Chup chup con la #KingsLeague", user4, LocalDateTime.of(2023, 02, 14, 21, 00, 00), images);
 
-        images = new Blob[] {
+        images = new Blob[]{
                 null,
                 null,
                 null,
                 null
         };
-        Tweet tweet10 = new Tweet("Creéis que lo de Shakira iba por Piqué?", user4, LocalDateTime.of(2023,01,12,1,55,05), images);
+        Tweet tweet10 = new Tweet("Creéis que lo de Shakira iba por Piqué?", user4, LocalDateTime.of(2023, 01, 12, 1, 55, 05), images);
         tweetRepository.save(tweet6);
         tweetRepository.save(tweet10);
         tweetRepository.save(tweet5);
@@ -145,169 +146,168 @@ public class DBInitializer {
         Resource image1 = new ClassPathResource("example_data/tweet3_1.jpg");
         Resource image2 = new ClassPathResource("example_data/tweet3_2.jpg");
         Resource image3 = new ClassPathResource("example_data/tweet3_3.jpg");
-        images = new Blob[] {
-                BlobProxy.generateProxy(image1.getInputStream(),image1.contentLength()),
-                BlobProxy.generateProxy(image2.getInputStream(),image2.contentLength()),
-                BlobProxy.generateProxy(image3.getInputStream(),image3.contentLength()),
+        images = new Blob[]{
+                BlobProxy.generateProxy(image1.getInputStream(), image1.contentLength()),
+                BlobProxy.generateProxy(image2.getInputStream(), image2.contentLength()),
+                BlobProxy.generateProxy(image3.getInputStream(), image3.contentLength()),
                 null
         };
-        Tweet tweet4 = new Tweet("Deja de llorar", user1, LocalDateTime.of(2023,02,19,20,00,00), images);
+        Tweet tweet4 = new Tweet("Deja de llorar", user1, LocalDateTime.of(2023, 02, 19, 20, 00, 00), images);
 
-        images = new Blob[] {
+        images = new Blob[]{
                 null,
                 null,
                 null,
                 null
         };
-        Tweet tweet3 = new Tweet("Hoy he hecho autostop en un pueblo alejado de la mano de dios en Japón y me he montado con el perro mas majo del mundo 犬", user1, LocalDateTime.of(2023,02,14,20,30,05), images);
+        Tweet tweet3 = new Tweet("Hoy he hecho autostop en un pueblo alejado de la mano de dios en Japón y me he montado con el perro mas majo del mundo 犬", user1, LocalDateTime.of(2023, 02, 14, 20, 30, 05), images);
         tweetRepository.save(tweet4);
         tweetRepository.save(tweet3);
         //@Keyland71
         image1 = new ClassPathResource("example_data/tweet1.jpg");
-        images = new Blob[] {
-                BlobProxy.generateProxy(image1.getInputStream(),image1.contentLength()),
+        images = new Blob[]{
+                BlobProxy.generateProxy(image1.getInputStream(), image1.contentLength()),
                 null,
                 null,
                 null
         };
-        Tweet tweet1 = new Tweet("Fotito con mi fan \uD83D\uDCAA\uD83C\uDFFD\uD83D\uDCAA\uD83C\uDFFD\uD83D\uDD25\uD83D\uDD25", user2, LocalDateTime.of(2022,06,14,16,03,00), images);
+        Tweet tweet1 = new Tweet("Fotito con mi fan \uD83D\uDCAA\uD83C\uDFFD\uD83D\uDCAA\uD83C\uDFFD\uD83D\uDD25\uD83D\uDD25", user2, LocalDateTime.of(2022, 06, 14, 16, 03, 00), images);
 
         image1 = new ClassPathResource("example_data/tweet2_1.jpg");
         image2 = new ClassPathResource("example_data/tweet2_2.jpg");
         image3 = new ClassPathResource("example_data/tweet2_3.jpg");
         Resource image4 = new ClassPathResource("example_data/tweet2_4.jpg");
-        images = new Blob[] {
-                BlobProxy.generateProxy(image1.getInputStream(),image1.contentLength()),
-                BlobProxy.generateProxy(image2.getInputStream(),image2.contentLength()),
-                BlobProxy.generateProxy(image3.getInputStream(),image3.contentLength()),
-                BlobProxy.generateProxy(image4.getInputStream(),image4.contentLength())
+        images = new Blob[]{
+                BlobProxy.generateProxy(image1.getInputStream(), image1.contentLength()),
+                BlobProxy.generateProxy(image2.getInputStream(), image2.contentLength()),
+                BlobProxy.generateProxy(image3.getInputStream(), image3.contentLength()),
+                BlobProxy.generateProxy(image4.getInputStream(), image4.contentLength())
         };
-        Tweet tweet2 = new Tweet("#MarvelsSpiderManMilesMorales", user2, LocalDateTime.of(2021,8,16,20,00,00), images);
+        Tweet tweet2 = new Tweet("#MarvelsSpiderManMilesMorales", user2, LocalDateTime.of(2021, 8, 16, 20, 00, 00), images);
 
-        images = new Blob[] {
+        images = new Blob[]{
                 null,
                 null,
                 null,
                 null
         };
-        Tweet tweet9 = new Tweet("no titiritititiiiiii", user2, LocalDateTime.of(2023,02,20,14,9,00), images);
+        Tweet tweet9 = new Tweet("no titiritititiiiiii", user2, LocalDateTime.of(2023, 02, 20, 14, 9, 00), images);
         tweetRepository.save(tweet1);
         tweetRepository.save(tweet2);
         tweetRepository.save(tweet9);
 
         //@antonioalanxs
         image1 = new ClassPathResource("example_data/tweet7.jpg");
-        images = new Blob[] {
-                BlobProxy.generateProxy(image1.getInputStream(),image1.contentLength()),
+        images = new Blob[]{
+                BlobProxy.generateProxy(image1.getInputStream(), image1.contentLength()),
                 null,
                 null,
                 null
         };
-        Tweet tweet7 = new Tweet("En primaria deberían poner una asignatura de coger aceitunas @Keyland71", user3, LocalDateTime.of(2023,02,20,14,03,00), images);
+        Tweet tweet7 = new Tweet("En primaria deberían poner una asignatura de coger aceitunas @Keyland71", user3, LocalDateTime.of(2023, 02, 20, 14, 03, 00), images);
 
         //@user
-        images = new Blob[] {
+        images = new Blob[]{
                 null,
                 null,
                 null,
                 null
         };
-        Tweet tweet11 = new Tweet("#KingsLeague #Tailwind #RCLS #Pokemon #Grupo8 #DAW #JOPELINES #MicaEl6DelEquipo #Twitter #H2-console", testUser, LocalDateTime.of(2023,3,1,0,00,00), images);
+        Tweet tweet11 = new Tweet("#KingsLeague #Tailwind #RCLS #Pokemon #Grupo8 #DAW #JOPELINES #MicaEl6DelEquipo #Twitter #H2-console", testUser, LocalDateTime.of(2023, 3, 1, 0, 00, 00), images);
         tweetRepository.save(tweet11);
-        images = new Blob[] {
+        images = new Blob[]{
                 null,
                 null,
                 null,
                 null
         };
-        Tweet tweet12 = new Tweet("I am using Twitter; the best app", testUser, LocalDateTime.of(2023,3,1,0,00,00), images);
+        Tweet tweet12 = new Tweet("I am using Twitter; the best app", testUser, LocalDateTime.of(2023, 3, 1, 0, 00, 00), images);
         tweetRepository.save(tweet12);
-        images = new Blob[] {
+        images = new Blob[]{
                 null,
                 null,
                 null,
                 null
         };
-        Tweet tweet13 = new Tweet("I am using Twitter; the best app #RCLS", testUser, LocalDateTime.of(2023,3,1,0,00,00), images);
+        Tweet tweet13 = new Tweet("I am using Twitter; the best app #RCLS", testUser, LocalDateTime.of(2023, 3, 1, 0, 00, 00), images);
         tweetRepository.save(tweet13);
-        images = new Blob[] {
+        images = new Blob[]{
                 null,
                 null,
                 null,
                 null
         };
-        Tweet tweet14 = new Tweet("I am using Twitter; the best app #DAW", testUser, LocalDateTime.of(2023,3,1,0,00,00), images);
+        Tweet tweet14 = new Tweet("I am using Twitter; the best app #DAW", testUser, LocalDateTime.of(2023, 3, 1, 0, 00, 00), images);
         tweetRepository.save(tweet14);
-        images = new Blob[] {
+        images = new Blob[]{
                 null,
                 null,
                 null,
                 null
         };
-        Tweet tweet15 = new Tweet("I am using Twitter; the best app #DAW", testUser, LocalDateTime.of(2023,3,1,0,00,00), images);
+        Tweet tweet15 = new Tweet("I am using Twitter; the best app #DAW", testUser, LocalDateTime.of(2023, 3, 1, 0, 00, 00), images);
         tweetRepository.save(tweet15);
-        images = new Blob[] {
+        images = new Blob[]{
                 null,
                 null,
                 null,
                 null
         };
-        Tweet tweet16 = new Tweet("I am using Twitter; the best app", testUser, LocalDateTime.of(2023,3,1,0,00,00), images);
+        Tweet tweet16 = new Tweet("I am using Twitter; the best app", testUser, LocalDateTime.of(2023, 3, 1, 0, 00, 00), images);
         tweetRepository.save(tweet16);
-        images = new Blob[] {
+        images = new Blob[]{
                 null,
                 null,
                 null,
                 null
         };
-        Tweet tweet17 = new Tweet("I am using Twitter; the best app", testUser, LocalDateTime.of(2023,3,1,0,00,00), images);
-        tweetRepository.save(tweet17);images = new Blob[] {
+        Tweet tweet17 = new Tweet("I am using Twitter; the best app", testUser, LocalDateTime.of(2023, 3, 1, 0, 00, 00), images);
+        tweetRepository.save(tweet17);
+        images = new Blob[]{
                 null,
                 null,
                 null,
                 null
         };
-        Tweet tweet18 = new Tweet("I am using Twitter; the best app", testUser, LocalDateTime.of(2023,3,1,0,00,00), images);
+        Tweet tweet18 = new Tweet("I am using Twitter; the best app", testUser, LocalDateTime.of(2023, 3, 1, 0, 00, 00), images);
         tweetRepository.save(tweet18);
-        images = new Blob[] {
+        images = new Blob[]{
                 null,
                 null,
                 null,
                 null
         };
-        Tweet tweet19 = new Tweet("I am using Twitter; the best app #MySQL", testUser, LocalDateTime.of(2023,3,1,0,00,00), images);
+        Tweet tweet19 = new Tweet("I am using Twitter; the best app #MySQL", testUser, LocalDateTime.of(2023, 3, 1, 0, 00, 00), images);
         tweetRepository.save(tweet19);
-        images = new Blob[] {
+        images = new Blob[]{
                 null,
                 null,
                 null,
                 null
         };
-        Tweet tweet20 = new Tweet("I am using Twitter; the best app #MySQL", testUser, LocalDateTime.of(2023,3,1,0,00,00), images);
+        Tweet tweet20 = new Tweet("I am using Twitter; the best app #MySQL", testUser, LocalDateTime.of(2023, 3, 1, 0, 00, 00), images);
         tweetRepository.save(tweet20);
-        images = new Blob[] {
+        images = new Blob[]{
                 null,
                 null,
                 null,
                 null
         };
-        Tweet tweet21 = new Tweet("I am using Twitter; the best app #MySQL", testUser, LocalDateTime.of(2023,3,1,0,00,00), images);
+        Tweet tweet21 = new Tweet("I am using Twitter; the best app #MySQL", testUser, LocalDateTime.of(2023, 3, 1, 0, 00, 00), images);
         tweetRepository.save(tweet21);
 
 
-
-
         //Comments
-        images = new Blob[] {
+        images = new Blob[]{
                 null,
                 null,
                 null,
                 null
         };
-        Tweet tweet8 = new Tweet("Tienes razón \uD83E\uDD75\uD83E\uDD75", user3, LocalDateTime.of(2023,02,20,14,04,00), images);
+        Tweet tweet8 = new Tweet("Tienes razón \uD83E\uDD75\uD83E\uDD75", user3, LocalDateTime.of(2023, 02, 20, 14, 04, 00), images);
         tweetRepository.save(tweet7);
         tweetRepository.save(tweet8);
-        
+
         //Comments
         tweet7.addComment(tweet8);
         tweet7.addComment(tweet9);
@@ -379,47 +379,47 @@ public class DBInitializer {
         //Sample notifications
         Tweet tweet = tweet5;
         User user = user3;
-        Notification notification = new Notification(tweet,tweet.getUser(),user,LocalDateTime.of(2022,06,14,17,0,0),"LIKE");
+        Notification notification = new Notification(tweet, tweet.getUser(), user, LocalDateTime.of(2022, 06, 14, 17, 0, 0), "LIKE");
         notificationRepository.save(notification);
 
         tweet = tweet8;
         user = user4;
-        notification = new Notification(tweet,tweet.getUser(),user,LocalDateTime.of(2023,02,20,14,3,0),"RETWEET");
+        notification = new Notification(tweet, tweet.getUser(), user, LocalDateTime.of(2023, 02, 20, 14, 3, 0), "RETWEET");
         notificationRepository.save(notification);
 
         tweet = tweet8;
         user = user3;
-        notification = new Notification(tweet,tweet.getUser(),user,LocalDateTime.of(2023,02,20,14,9,0),"MENTION");
+        notification = new Notification(tweet, tweet.getUser(), user, LocalDateTime.of(2023, 02, 20, 14, 9, 0), "MENTION");
         notificationRepository.save(notification);
 
         //Follows
         User user_notificated = user4;
         user = user1;
-        notification = new Notification(null,user_notificated,user,LocalDateTime.of(2020,04,11,15,3,0),"FOLLOW");
+        notification = new Notification(null, user_notificated, user, LocalDateTime.of(2020, 04, 11, 15, 3, 0), "FOLLOW");
         notificationRepository.save(notification);
 
         user_notificated = user3;
         user = user2;
-        notification = new Notification(null,user_notificated,user,LocalDateTime.of(2020,04,11,15,3,0),"FOLLOW");
+        notification = new Notification(null, user_notificated, user, LocalDateTime.of(2020, 04, 11, 15, 3, 0), "FOLLOW");
         notificationRepository.save(notification);
 
         user_notificated = user2;
         user = user4;
-        notification = new Notification(null,user_notificated,user,LocalDateTime.of(2020,04,11,15,3,0),"FOLLOW");
+        notification = new Notification(null, user_notificated, user, LocalDateTime.of(2020, 04, 11, 15, 3, 0), "FOLLOW");
         notificationRepository.save(notification);
 
         user_notificated = user1;
         user = user3;
-        notification = new Notification(null,user_notificated,user,LocalDateTime.of(2020,04,11,15,3,0),"FOLLOW");
+        notification = new Notification(null, user_notificated, user, LocalDateTime.of(2020, 04, 11, 15, 3, 0), "FOLLOW");
         notificationRepository.save(notification);
 
         user_notificated = user3;
         user = testUser;
-        notification = new Notification(null,user_notificated,user,LocalDateTime.now(),"FOLLOW");
+        notification = new Notification(null, user_notificated, user, LocalDateTime.now(), "FOLLOW");
         notificationRepository.save(notification);
         user_notificated = testUser;
         user = user3;
-        notification = new Notification(null,user_notificated,user,LocalDateTime.now(),"FOLLOW");
+        notification = new Notification(null, user_notificated, user, LocalDateTime.now(), "FOLLOW");
         notificationRepository.save(notification);
 
         //Bookmarks

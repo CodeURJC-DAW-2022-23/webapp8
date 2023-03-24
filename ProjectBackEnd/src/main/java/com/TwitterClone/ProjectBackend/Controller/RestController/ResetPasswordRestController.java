@@ -59,7 +59,7 @@ public class ResetPasswordRestController {
             }),
             @ApiResponse(responseCode = "404", description = "Token not found", content = @Content)
     })
-    @PutMapping ("/reset-password")
+    @PutMapping("/reset-password")
     public ResponseEntity<Object> processResetPassword(@RequestParam String passwordToken,
                                                        @RequestBody ResetPasswordRequest request) {
 

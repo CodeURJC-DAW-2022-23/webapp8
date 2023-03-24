@@ -38,7 +38,10 @@ public class SearchRestController {
     @Autowired
     private HashtagService hashtagService;
 
-    interface Basic extends User.Basic,Tweet.Basic,  Hashtag.Basic{};
+    interface Basic extends User.Basic, Tweet.Basic, Hashtag.Basic {
+    }
+
+    ;
 
     @Operation(summary = "Find profiles which contains the keyword in their username")
     @ApiResponses(value = {
@@ -49,7 +52,7 @@ public class SearchRestController {
     })
     @GetMapping("/search/profiles/{keyword}")
     @JsonView(Basic.class)
-    public ResponseEntity<Object> SearchProfiles(@PathVariable String keyword){
+    public ResponseEntity<Object> SearchProfiles(@PathVariable String keyword) {
         List<User> list = userService.findByUsernameContainingIgnoreCase(keyword);
         //List<Hashtag> list2 = hashtagService.findByHashtagIsContainingIgnoreCase(keyword);
 
@@ -69,7 +72,7 @@ public class SearchRestController {
     })
     @GetMapping("/search/hashtags/{keyword}")
     @JsonView(Basic.class)
-    public ResponseEntity<Object> SearchHashtags(@PathVariable String keyword){
+    public ResponseEntity<Object> SearchHashtags(@PathVariable String keyword) {
         List<Hashtag> list = hashtagService.findByHashtagIsContainingIgnoreCase(keyword);
 
         if (list.size() == 0) {

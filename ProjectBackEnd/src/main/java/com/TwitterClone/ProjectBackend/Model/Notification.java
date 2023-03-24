@@ -16,7 +16,10 @@ import java.util.UUID;
 @Entity
 @Getter
 public class Notification {
-    public interface Basic{};
+    public interface Basic {
+    }
+
+    ;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @JsonView(Basic.class)
@@ -42,6 +45,7 @@ public class Notification {
 
     /**
      * Constructor
+     *
      * @param tweet
      * @param userToNotify
      * @param userWhoNotifies
@@ -57,6 +61,7 @@ public class Notification {
 
     /**
      * This constructor is for sample data
+     *
      * @param tweet
      * @param userToNotify
      * @param userWhoNotifies

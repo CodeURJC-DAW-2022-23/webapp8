@@ -31,6 +31,7 @@ public class HashtagController {
 
     /**
      * Load more trends using AJAX
+     *
      * @param model
      * @param from
      * @param size
@@ -56,6 +57,7 @@ public class HashtagController {
 
     /**
      * Load some tweets associated with the hashtag clicked
+     *
      * @param model
      * @param hashtag
      * @param request
@@ -69,7 +71,8 @@ public class HashtagController {
         List<Tweet> tweetsAssociated = this.hashtagService.getTweetsAssociatedTo(hashtag, 0, 10);
         List<TweetInformation> tweets = this.informationManager.calculateDataOfTweet(tweetsAssociated, currentUser);
         model.addAttribute("tweets", tweets);
-        if(currentUser!=null){
+
+        if (currentUser != null) {
             model.addAttribute("isLogged", true);
         }
 
@@ -78,6 +81,7 @@ public class HashtagController {
 
     /**
      * Load more tweets associated to a hashtag using AJAX
+     *
      * @param model
      * @param hashtag
      * @param from
@@ -94,7 +98,7 @@ public class HashtagController {
         User currentUser = this.informationManager.getCurrentUser(request);
         int numTweetsAssociated = this.hashtagService.countTweetsAssociated(hashtag);
 
-        if (numTweetsAssociated <= from){
+        if (numTweetsAssociated <= from) {
             return "redirect:/";
         }
 
@@ -102,7 +106,7 @@ public class HashtagController {
         List<TweetInformation> tweets = this.informationManager.calculateDataOfTweet(tweetsAssociated, currentUser);
         model.addAttribute("tweets", tweets);
 
-        if(currentUser!=null){
+        if (currentUser != null) {
             model.addAttribute("isLogged", true);
         }
 

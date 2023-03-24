@@ -20,41 +20,45 @@ public class TweetService {
     @Autowired
     private TweetRepository tweetRepository;
 
-    @Autowired UserRepository userRepository;
+    @Autowired
+    UserRepository userRepository;
 
     /**
      * Obtain some tweets associated to a user
+     *
      * @param id
      * @param from
      * @param size
      * @return
      */
-    public List<Tweet> findSomeTweetOfUser(Long id, int from, int size){
+    public List<Tweet> findSomeTweetOfUser(Long id, int from, int size) {
         return tweetRepository.findByUser(id, from, size);
     }
 
     /**
      * Obtain some recent tweets for the current user
+     *
      * @param id
      * @param init
      * @param size
      * @return
      */
-    public List<Tweet> findSomeRecentForUser(Long id, int init, int size){
+    public List<Tweet> findSomeRecentForUser(Long id, int init, int size) {
         return tweetRepository.findByUserFollows(id, init, size);
     }
 
     /**
      * Creates a new tweet
+     *
      * @param text
      * @param files
      * @param userId
      * @return
      */
-    public Tweet createTweet(String text, Blob [] files, Long userId){
+    public Tweet createTweet(String text, Blob[] files, Long userId) {
         User user = userRepository.findById(userId).orElse(null);
 
-        if (user == null){
+        if (user == null) {
             return null;
         }
 
@@ -65,9 +69,10 @@ public class TweetService {
 
     /**
      * Deletes a tweet
+     *
      * @param tweet
      */
-    public void deleteTweet(Tweet tweet){
+    public void deleteTweet(Tweet tweet) {
         tweetRepository.deleteHashtagOfTweet(tweet.getId());
         tweetRepository.deleteBookmarkOfTweet(tweet.getId());
         tweetRepository.deleteNotificationsOfTweet(tweet.getId());
@@ -76,33 +81,38 @@ public class TweetService {
 
     /**
      * Obtain a tweet using an id
+     *
      * @param id
      * @return
      */
-    public Optional<Tweet> findById(Long id){
+    public Optional<Tweet> findById(Long id) {
         return tweetRepository.findById(id);
     }
 
     /**
      * Check the tweet to add or remove a like
+     *
      * @param giver
      * @param t
      * @return
      */
-    public boolean toggleLike(User giver, Tweet t){
+    public boolean toggleLike(User giver, Tweet t) {
         boolean liked = false;
-        if (this.isLiked(giver, t)){
+
+        if (this.isLiked(giver, t)) {
             t.removeLike(giver);
         } else {
             t.addLike(giver);
             liked = true;
         }
+
         this.tweetRepository.save(t);
         return liked;
     }
 
     /**
      * Checks if the current user had given a like
+     *
      * @param user
      * @param tweet
      * @return
@@ -117,24 +127,28 @@ public class TweetService {
 
     /**
      * Check the tweet to add or remove a retweet
+     *
      * @param giver
      * @param t
      * @return
      */
-    public boolean toggleRetweet(User giver, Tweet t){
+    public boolean toggleRetweet(User giver, Tweet t) {
         boolean retweeted = false;
-        if (this.isRetweeted(giver, t)){
+
+        if (this.isRetweeted(giver, t)) {
             t.removeRetweet(giver);
         } else {
             t.addRetweet(giver);
             retweeted = true;
         }
+
         this.tweetRepository.save(t);
         return retweeted;
     }
 
     /**
      * Checks if the current user had given a retweet
+     *
      * @param user
      * @param tweet
      * @return
@@ -149,18 +163,21 @@ public class TweetService {
 
     /**
      * Check the tweet to add or remove a bookmark
+     *
      * @param currentUser
      * @param t
      */
     public boolean toggleBookmark(User currentUser, Tweet t) {
         boolean bookmarked = false;
         List<Tweet> bookmarks = currentUser.getBookmarks();
-        if (bookmarks.contains(t)){
+
+        if (bookmarks.contains(t)) {
             bookmarks.remove(t);
-        }else{
+        } else {
             bookmarks.add(t);
             bookmarked = true;
         }
+
         currentUser.setBookmarks(bookmarks);
         this.userRepository.save(currentUser);
         return bookmarked;
@@ -168,6 +185,7 @@ public class TweetService {
 
     /**
      * Checks if the current user had bookmarked
+     *
      * @param user
      * @param tweet
      * @return
@@ -182,12 +200,13 @@ public class TweetService {
 
     /**
      * Add a comment to a tweet
+     *
      * @param tweet
      */
-    public void addComment(Long idTweetReplied, Tweet tweet){
+    public void addComment(Long idTweetReplied, Tweet tweet) {
         Tweet t = this.tweetRepository.findById(idTweetReplied).orElse(null);
 
-        if (t == null){
+        if (t == null) {
             return;
         }
 
@@ -197,6 +216,7 @@ public class TweetService {
 
     /**
      * Get the number of likes of a tweet
+     *
      * @param id
      * @return
      */
@@ -212,6 +232,7 @@ public class TweetService {
 
     /**
      * Get the number of comments of a tweet
+     *
      * @param id
      * @return
      */
@@ -227,6 +248,7 @@ public class TweetService {
 
     /**
      * Get the number of retweets of a tweet
+     *
      * @param id
      * @return
      */
@@ -242,12 +264,13 @@ public class TweetService {
 
     /**
      * Get some comments associated to a tweet
+     *
      * @param id
      * @param offset
      * @param size
      * @return
      */
-    public List<Tweet> getComments(Long id, int offset, int size){
-        return this.tweetRepository.findCommentsById(id,offset,size);
+    public List<Tweet> getComments(Long id, int offset, int size) {
+        return this.tweetRepository.findCommentsById(id, offset, size);
     }
 }

@@ -30,92 +30,95 @@ import io.jsonwebtoken.UnsupportedJwtException;
 
 @Component
 public class JwtTokenProvider {
-	
-	private static final Logger LOG = LoggerFactory.getLogger(JwtRequestFilter.class);
-	
-	@Value("${jwt.secret}")
-	private String jwtSecret;
-	
-	private static long JWT_EXPIRATION_IN_MS = 5400000;
-	private static Long REFRESH_TOKEN_EXPIRATION_MSEC = 10800000l;
-	
-	@Autowired
-	private UserDetailsService userDetailsService;
 
-	public Authentication getAuthentication(String token) {
-		UserDetails userDetails = userDetailsService.loadUserByUsername(getUsername(token));
-		return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
-	}
+    private static final Logger LOG = LoggerFactory.getLogger(JwtRequestFilter.class);
 
-	public String getUsername(String token) {
-		return Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token).getBody().getSubject();
-	}
+    @Value("${jwt.secret}")
+    private String jwtSecret;
 
-	public String resolveToken(HttpServletRequest req) {
-		String bearerToken = req.getHeader("Authorization");
-		if (bearerToken != null && bearerToken.startsWith("Bearer ")) {
-			return bearerToken.substring(7, bearerToken.length());
-		}
-		return null;
-	}
+    private static long JWT_EXPIRATION_IN_MS = 5400000;
+    private static Long REFRESH_TOKEN_EXPIRATION_MSEC = 10800000l;
 
-	public boolean validateToken(String token) {
-		try {
-			Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token);
-			return true;
-		} catch (SignatureException ex) {
-			LOG.debug("Invalid JWT Signature");
-		} catch (MalformedJwtException ex) {
-			LOG.debug("Invalid JWT token");
-		} catch (ExpiredJwtException ex) {
-			LOG.debug("Expired JWT token");
-		} catch (UnsupportedJwtException ex) {
-			LOG.debug("Unsupported JWT exception");
-		} catch (IllegalArgumentException ex) {
-			LOG.debug("JWT claims string is empty");
-		}
-		return false;
-	}
+    @Autowired
+    private UserDetailsService userDetailsService;
 
-	public Token generateToken(UserDetails user) {
+    public Authentication getAuthentication(String token) {
+        UserDetails userDetails = userDetailsService.loadUserByUsername(getUsername(token));
+        return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
+    }
 
-		Claims claims = Jwts.claims().setSubject(user.getUsername());
+    public String getUsername(String token) {
+        return Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token).getBody().getSubject();
+    }
 
-		claims.put("auth", user.getAuthorities().stream().map(s -> new SimpleGrantedAuthority("ROLE_"+s))
-				.filter(Objects::nonNull).collect(Collectors.toList()));
+    public String resolveToken(HttpServletRequest req) {
+        String bearerToken = req.getHeader("Authorization");
 
-		Date now = new Date();
-		Long duration = now.getTime() + JWT_EXPIRATION_IN_MS;
-		Date expiryDate = new Date(now.getTime() + JWT_EXPIRATION_IN_MS);
-		Calendar calendar = Calendar.getInstance();
-		calendar.setTime(now);
-		calendar.add(Calendar.HOUR_OF_DAY, 8);
+        if (bearerToken != null && bearerToken.startsWith("Bearer ")) {
+            return bearerToken.substring(7, bearerToken.length());
+        }
 
-		String token = Jwts.builder().setClaims(claims).setSubject((user.getUsername())).setIssuedAt(new Date())
-				.setExpiration(expiryDate).signWith(SignatureAlgorithm.HS256, jwtSecret).compact();
+        return null;
+    }
 
-		return new Token(Token.TokenType.ACCESS, token, duration,
-				LocalDateTime.ofInstant(expiryDate.toInstant(), ZoneId.systemDefault()));
+    public boolean validateToken(String token) {
+        try {
+            Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token);
+            return true;
+        } catch (SignatureException ex) {
+            LOG.debug("Invalid JWT Signature");
+        } catch (MalformedJwtException ex) {
+            LOG.debug("Invalid JWT token");
+        } catch (ExpiredJwtException ex) {
+            LOG.debug("Expired JWT token");
+        } catch (UnsupportedJwtException ex) {
+            LOG.debug("Unsupported JWT exception");
+        } catch (IllegalArgumentException ex) {
+            LOG.debug("JWT claims string is empty");
+        }
 
-	}
+        return false;
+    }
 
-	public Token generateRefreshToken(UserDetails user) {
+    public Token generateToken(UserDetails user) {
 
-		Claims claims = Jwts.claims().setSubject(user.getUsername());
+        Claims claims = Jwts.claims().setSubject(user.getUsername());
 
-		claims.put("auth", user.getAuthorities().stream().map(s -> new SimpleGrantedAuthority("ROLE_"+s))
-				.filter(Objects::nonNull).collect(Collectors.toList()));
-		Date now = new Date();
-		Long duration = now.getTime() + REFRESH_TOKEN_EXPIRATION_MSEC;
-		Date expiryDate = new Date(now.getTime() + REFRESH_TOKEN_EXPIRATION_MSEC);
-		Calendar calendar = Calendar.getInstance();
-		calendar.setTime(now);
-		calendar.add(Calendar.HOUR_OF_DAY, 8);
-		String token = Jwts.builder().setClaims(claims).setSubject((user.getUsername())).setIssuedAt(new Date())
-				.setExpiration(expiryDate).signWith(SignatureAlgorithm.HS256, jwtSecret).compact();
+        claims.put("auth", user.getAuthorities().stream().map(s -> new SimpleGrantedAuthority("ROLE_" + s))
+                .filter(Objects::nonNull).collect(Collectors.toList()));
 
-		return new Token(Token.TokenType.REFRESH, token, duration,
-				LocalDateTime.ofInstant(expiryDate.toInstant(), ZoneId.systemDefault()));
+        Date now = new Date();
+        Long duration = now.getTime() + JWT_EXPIRATION_IN_MS;
+        Date expiryDate = new Date(now.getTime() + JWT_EXPIRATION_IN_MS);
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(now);
+        calendar.add(Calendar.HOUR_OF_DAY, 8);
 
-	}
+        String token = Jwts.builder().setClaims(claims).setSubject((user.getUsername())).setIssuedAt(new Date())
+                .setExpiration(expiryDate).signWith(SignatureAlgorithm.HS256, jwtSecret).compact();
+
+        return new Token(Token.TokenType.ACCESS, token, duration,
+                LocalDateTime.ofInstant(expiryDate.toInstant(), ZoneId.systemDefault()));
+
+    }
+
+    public Token generateRefreshToken(UserDetails user) {
+
+        Claims claims = Jwts.claims().setSubject(user.getUsername());
+
+        claims.put("auth", user.getAuthorities().stream().map(s -> new SimpleGrantedAuthority("ROLE_" + s))
+                .filter(Objects::nonNull).collect(Collectors.toList()));
+        Date now = new Date();
+        Long duration = now.getTime() + REFRESH_TOKEN_EXPIRATION_MSEC;
+        Date expiryDate = new Date(now.getTime() + REFRESH_TOKEN_EXPIRATION_MSEC);
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(now);
+        calendar.add(Calendar.HOUR_OF_DAY, 8);
+        String token = Jwts.builder().setClaims(claims).setSubject((user.getUsername())).setIssuedAt(new Date())
+                .setExpiration(expiryDate).signWith(SignatureAlgorithm.HS256, jwtSecret).compact();
+
+        return new Token(Token.TokenType.REFRESH, token, duration,
+                LocalDateTime.ofInstant(expiryDate.toInstant(), ZoneId.systemDefault()));
+
+    }
 }

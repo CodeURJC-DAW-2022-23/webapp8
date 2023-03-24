@@ -30,8 +30,8 @@ public class AdminDashboardRestController {
     @Autowired
     private InformationManager informationManager;
 
-    interface Basic extends User.Basic{};
-
+    interface Basic extends User.Basic {
+    }
 
     @Operation(summary = "If the user is a admin, he can ban another user according to his ID")
     @ApiResponses(value = {
@@ -43,18 +43,22 @@ public class AdminDashboardRestController {
     @PutMapping("/ban/{id}")
     @JsonView(Basic.class)
     public ResponseEntity<Object> ban(@PathVariable Long id,
-                                      HttpServletRequest request){
+                                      HttpServletRequest request) {
         User currentUser = this.informationManager.getCurrentUser(request);
-        if (profileService.findById(id).isEmpty()){
+
+        if (profileService.findById(id).isEmpty()) {
             return ResponseEntity.notFound().build();
         }
+
         User user = this.profileService.findById(id).get();
-            if(currentUser.getRole().toString().equals("ADMIN")){
-                user.setType("BANNED");
-                user.setEnabled(false);
-                this.profileService.updateUserBan(user);
-                return ResponseEntity.ok(user);
-            }
+
+        if (currentUser.getRole().toString().equals("ADMIN")) {
+            user.setType("BANNED");
+            user.setEnabled(false);
+            this.profileService.updateUserBan(user);
+            return ResponseEntity.ok(user);
+        }
+
         return ResponseEntity.badRequest().build();
     }
 
@@ -69,18 +73,22 @@ public class AdminDashboardRestController {
     @PutMapping("/unban/{id}")
     @JsonView(Basic.class)
     public ResponseEntity<Object> unban(@PathVariable Long id,
-                        HttpServletRequest request){
+                                        HttpServletRequest request) {
         User currentUser = this.informationManager.getCurrentUser(request);
-        if (profileService.findById(id).isEmpty()){
+
+        if (profileService.findById(id).isEmpty()) {
             return ResponseEntity.notFound().build();
         }
+
         User user = this.profileService.findById(id).get();
-        if(currentUser.getRole().toString().equals("ADMIN")) {
+
+        if (currentUser.getRole().toString().equals("ADMIN")) {
             user.setType("PUBLIC");
             user.setEnabled(true);
             this.profileService.updateUserBan(user);
-             return ResponseEntity.ok(user);
+            return ResponseEntity.ok(user);
         }
+
         return ResponseEntity.badRequest().build();
     }
 
@@ -94,19 +102,24 @@ public class AdminDashboardRestController {
     @PutMapping("/verify/{id}")
     @JsonView(Basic.class)
     public ResponseEntity<Object> verify(@PathVariable Long id,
-                         HttpServletRequest request){
+                                         HttpServletRequest request) {
         User currentUser = this.informationManager.getCurrentUser(request);
-        if (profileService.findById(id).isEmpty()){
+
+        if (profileService.findById(id).isEmpty()) {
             return ResponseEntity.notFound().build();
         }
-            User user = this.profileService.findById(id).get();
-            if(currentUser.getRole().toString().equals("ADMIN")) {
-                user.setType("VERIFIED");
-                this.profileService.updateUserBan(user);
-                return ResponseEntity.ok(user);
-            }
-            return ResponseEntity.badRequest().build();
+
+        User user = this.profileService.findById(id).get();
+
+        if (currentUser.getRole().toString().equals("ADMIN")) {
+            user.setType("VERIFIED");
+            this.profileService.updateUserBan(user);
+            return ResponseEntity.ok(user);
         }
+
+        return ResponseEntity.badRequest().build();
+    }
+
     @Operation(summary = "If the user is a admin, he can unverify another user according to his ID")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "User Banned", content = {
@@ -117,18 +130,22 @@ public class AdminDashboardRestController {
     @PutMapping("/unverify/{id}")
     @JsonView(Basic.class)
     public ResponseEntity<Object> unverify(@PathVariable Long id,
-                           HttpServletRequest request){
+                                           HttpServletRequest request) {
         User currentUser = this.informationManager.getCurrentUser(request);
-        if (profileService.findById(id).isEmpty()){
+
+        if (profileService.findById(id).isEmpty()) {
             return ResponseEntity.notFound().build();
         }
-            User user = this.profileService.findById(id).get();
-            if(currentUser.getRole().toString().equals("ADMIN")) {
-                user.setType("PUBLIC");
-                this.profileService.updateUserBan(user);
-                return ResponseEntity.ok(user);
-            }
-         return ResponseEntity.badRequest().build();
+
+        User user = this.profileService.findById(id).get();
+
+        if (currentUser.getRole().toString().equals("ADMIN")) {
+            user.setType("PUBLIC");
+            this.profileService.updateUserBan(user);
+            return ResponseEntity.ok(user);
+        }
+
+        return ResponseEntity.badRequest().build();
     }
 
     @Operation(summary = "If the user is a admin, he can get the statistics of new accounts created in the last 5 days whit new accounts")
@@ -139,20 +156,21 @@ public class AdminDashboardRestController {
             @ApiResponse(responseCode = "403", description = "No permission", content = @Content)
     })
     @GetMapping("/statistics")
-    public ResponseEntity<Map<String, String>> getNewAccountStatistics(HttpServletRequest request){
+    public ResponseEntity<Map<String, String>> getNewAccountStatistics(HttpServletRequest request) {
         User currentUser = this.informationManager.getCurrentUser(request);
-
         List<Tuple> statics = this.profileService.getStatics();
         Map<String, String> statistics = new HashMap<>();
-        for (int i = 0;i < statics.size();i++){
+
+        for (int i = 0; i < statics.size(); i++) {
             String key = statics.get(i).get("join_date").toString();
             String value = statics.get(i).get("new_people").toString();
             statistics.put(key, value);
         }
 
-        if(currentUser.getRole().toString().equals("ADMIN")) {
+        if (currentUser.getRole().toString().equals("ADMIN")) {
             return ResponseEntity.ok(statistics);
         }
+
         return new ResponseEntity<>(HttpStatus.FORBIDDEN);
     }
 

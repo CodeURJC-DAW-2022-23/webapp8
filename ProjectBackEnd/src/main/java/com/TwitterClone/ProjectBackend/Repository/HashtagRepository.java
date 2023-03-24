@@ -16,6 +16,7 @@ import java.util.List;
 public interface HashtagRepository extends JpaRepository<Hashtag, String> {
     /**
      * This Query returns the Hashtags and the number of Tweet that contains the Hashtag
+     *
      * @param offset
      * @param size
      * @return
@@ -25,6 +26,7 @@ public interface HashtagRepository extends JpaRepository<Hashtag, String> {
 
     /**
      * This Query returns a List of Tweet that contains a specific Hashtag
+     *
      * @param id
      * @return
      */
@@ -33,6 +35,7 @@ public interface HashtagRepository extends JpaRepository<Hashtag, String> {
 
     /**
      * This Query returns the number of rows of the repository
+     *
      * @return
      */
     @Query(value = "SELECT COUNT(*) FROM hashtag", nativeQuery = true)
@@ -40,6 +43,7 @@ public interface HashtagRepository extends JpaRepository<Hashtag, String> {
 
     /**
      * This Query returns the number of tweets associated to a hashtag
+     *
      * @param hashtag
      * @return
      */
@@ -48,6 +52,7 @@ public interface HashtagRepository extends JpaRepository<Hashtag, String> {
 
     /**
      * Search a hashtag using the data of the search controller
+     *
      * @param name
      * @return
      */

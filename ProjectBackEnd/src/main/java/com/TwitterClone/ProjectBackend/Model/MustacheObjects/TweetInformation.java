@@ -15,7 +15,9 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 public class TweetInformation {
-    public interface Basic{}
+    public interface Basic {
+    }
+
     @JsonView(Basic.class)
     private Tweet tweet;
     @JsonView(Basic.class)

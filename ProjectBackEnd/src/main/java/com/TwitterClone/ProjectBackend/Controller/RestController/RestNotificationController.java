@@ -33,11 +33,13 @@ public class RestNotificationController {
     @Autowired
     private ProfileService profileService;
 
-    interface Basic extends Tweet.Basic, TweetInformation.Basic, User.Basic, Notification.Basic{};
+    interface Basic extends Tweet.Basic, TweetInformation.Basic, User.Basic, Notification.Basic {
+    }
 
 
     /**
      * Get some notifications associated to the current user
+     *
      * @param from
      * @param size
      * @param request
@@ -53,9 +55,9 @@ public class RestNotificationController {
     @GetMapping("/more-notifications")
     @JsonView(Basic.class)
     public ResponseEntity<List<Notification>> getSomeNotifications(
-                                                    @PathParam("from") int from,
-                                                    @PathParam("size") int size,
-                                                    HttpServletRequest request) {
+            @PathParam("from") int from,
+            @PathParam("size") int size,
+            HttpServletRequest request) {
         User currentUser = this.informationManager.getCurrentUser(request);
         Long idCurrentUser = currentUser.getId();
         List<Notification> newNotifications = this.notificationService.getSomeNotificationsOfUser(idCurrentUser, from, size);
@@ -69,6 +71,7 @@ public class RestNotificationController {
 
     /**
      * Get some mentions associated to the current user
+     *
      * @param from
      * @param size
      * @param request
@@ -84,9 +87,9 @@ public class RestNotificationController {
     @GetMapping("/more-mentions")
     @JsonView(Basic.class)
     public ResponseEntity<List<Notification>> getSomeMentions(
-                                                    @PathParam("from") int from,
-                                                    @PathParam("size") int size,
-                                                    HttpServletRequest request) {
+            @PathParam("from") int from,
+            @PathParam("size") int size,
+            HttpServletRequest request) {
         User currentUser = this.informationManager.getCurrentUser(request);
         Long idCurrentUser = currentUser.getId();
         List<Notification> newMentions = this.notificationService.getSomeMentionsOfUser(idCurrentUser, from, size);
@@ -100,6 +103,7 @@ public class RestNotificationController {
 
     /**
      * Creates a new notification when someone interacts with a tweet or user
+     *
      * @param idTweet
      * @param idOwner
      * @param notificationType
@@ -124,7 +128,7 @@ public class RestNotificationController {
         User owner = this.profileService.findById(idOwner).get();
         Long currentUserId = currentUser.getId();
 
-        if (currentUserId.equals(idOwner)){
+        if (currentUserId.equals(idOwner)) {
             return new ResponseEntity<>(HttpStatus.ACCEPTED);
         }
 
@@ -137,6 +141,7 @@ public class RestNotificationController {
 
     /**
      * Deletes a notification when someone interacts with a tweet or user
+     *
      * @param idTweet
      * @param notificationType
      * @param request
@@ -153,7 +158,7 @@ public class RestNotificationController {
     @JsonView(Basic.class)
     public ResponseEntity<Notification> deleteNotification(@PathParam("idTweet") Long idTweet,
                                                            @PathParam("notificationType") String notificationType,
-                                                           HttpServletRequest request){
+                                                           HttpServletRequest request) {
         User currentUser = this.informationManager.getCurrentUser(request);
         Long currentUserId = currentUser.getId();
         Optional<Notification> notificationOptional = this.notificationService.deleteNotification(idTweet, currentUserId, notificationType, 0L);

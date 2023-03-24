@@ -11,6 +11,7 @@ import org.hibernate.annotations.LazyCollectionOption;
 import org.hibernate.engine.jdbc.BlobProxy;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ClassPathResource;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.io.IOException;
@@ -34,29 +35,36 @@ import java.util.*;
 @EqualsAndHashCode
 @Entity
 @Table(name = "users")
-public class User  {
-    public interface Basic{};
-    public interface Profile extends Basic{};
+public class User {
+    public interface Basic {
+    }
+
+    ;
+
+    public interface Profile extends Basic {
+    }
+
+    ;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @JsonView(Basic.class)
     private Long id;
-    @Column(unique=true)
+    @Column(unique = true)
     @JsonView(Basic.class)
     private String username;
-    @Column(unique=true)
-    private  String email;
+    @Column(unique = true)
+    private String email;
     @JsonView(Basic.class)
-    private  String nickname;
+    private String nickname;
     @JsonView(Profile.class)
-    private  String biography = "";
-    private  String password;
+    private String biography = "";
+    private String password;
     @JsonView(Basic.class)
     @Lob
-    private  Blob profilePicture;
+    private Blob profilePicture;
     @JsonView(Profile.class)
     @Lob
-    private  Blob profileBanner;
+    private Blob profileBanner;
     @Enumerated(EnumType.STRING)
     private UserRoles role;
     @ManyToMany
@@ -106,7 +114,7 @@ public class User  {
 
     /**
      * This constructor is for example data.
-    */
+     */
     public User(String username, String nickname, String biography, String mail, String password, LocalDate time, String type) {
         this.username = username;
         this.nickname = nickname;
@@ -120,6 +128,7 @@ public class User  {
 
     /**
      * This is for adding the profilePicture and the profileBanner directly from the path
+     *
      * @param files
      * @throws IOException
      */
@@ -132,13 +141,16 @@ public class User  {
 
     /**
      * This is for adding a follower user to the user
+     *
      * @param user
      */
     public void addFollower(User user) {
         this.followers.add(user);
     }
+
     /**
      * This is for adding a followed user to the user
+     *
      * @param user
      */
     public void addFollowed(User user) {
@@ -147,6 +159,7 @@ public class User  {
 
     /**
      * Get the number of followers
+     *
      * @return
      */
     public int getFollowersNumber() {
@@ -155,6 +168,7 @@ public class User  {
 
     /**
      * Get the number of followed
+     *
      * @return
      */
     public int getFollowedNumber() {
@@ -163,6 +177,7 @@ public class User  {
 
     /**
      * Remove a follower user
+     *
      * @param user
      */
     public void removeFollower(User user) {
@@ -171,6 +186,7 @@ public class User  {
 
     /**
      * Remove a followed user
+     *
      * @param user
      */
     public void removeFollowed(User user) {

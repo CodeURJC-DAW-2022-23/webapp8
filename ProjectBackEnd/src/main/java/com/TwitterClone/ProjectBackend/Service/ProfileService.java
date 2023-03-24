@@ -29,6 +29,7 @@ public class ProfileService {
 
     /**
      * Obtain a user using an id
+     *
      * @param id
      * @return
      */
@@ -38,6 +39,7 @@ public class ProfileService {
 
     /**
      * Obtain a user using a username
+     *
      * @param username
      * @return
      */
@@ -47,6 +49,7 @@ public class ProfileService {
 
     /**
      * Obtain some bookmarks from current user
+     *
      * @param id
      * @param offset
      * @param size
@@ -58,6 +61,7 @@ public class ProfileService {
 
     /**
      * Obtain some verified user
+     *
      * @return
      */
     public List<User> getVerified() {
@@ -66,6 +70,7 @@ public class ProfileService {
 
     /**
      * Obtain some followers of a user
+     *
      * @param id
      * @param from
      * @param size
@@ -77,14 +82,16 @@ public class ProfileService {
 
     /**
      * Obtain some banned users
+     *
      * @return
      */
-    public List<User> getBanned(){
+    public List<User> getBanned() {
         return userRepository.findBanned();
     }
 
     /**
      * Obtain some followed user of a user
+     *
      * @param id
      * @param from
      * @param size
@@ -97,6 +104,7 @@ public class ProfileService {
 
     /**
      * Update a user profile
+     *
      * @param user
      * @param banner
      * @param profile
@@ -113,9 +121,11 @@ public class ProfileService {
 
         userToChange.setNickname(nickname);
         userToChange.setBiography(biography);
+
         if (!profile.isEmpty()) {
             userToChange.setProfilePicture(this.prepareImageFile(profile));
         }
+
         if (!banner.isEmpty()) {
             userToChange.setProfileBanner(this.prepareImageFile(banner));
         }
@@ -125,6 +135,7 @@ public class ProfileService {
 
     /**
      * Prepare the new image to be save it in the database
+     *
      * @param file
      * @return
      * @throws IOException
@@ -138,6 +149,7 @@ public class ProfileService {
 
     /**
      * Obtain some user that can be verified
+     *
      * @return
      */
     public List<User> getToVerified() {
@@ -146,14 +158,16 @@ public class ProfileService {
 
     /**
      * Obtain the statistics of the website
+     *
      * @return
      */
-    public List<Tuple> getStatics(){
-       return this.userRepository.countByLast5JoinDate();
+    public List<Tuple> getStatics() {
+        return this.userRepository.countByLast5JoinDate();
     }
 
     /**
      * Update the state of user that has been banned
+     *
      * @param user
      */
     public void updateUserBan(User user) {
@@ -162,6 +176,7 @@ public class ProfileService {
 
     /**
      * Obtain the amount of bookmarks associated to a user
+     *
      * @param id
      * @return
      */
@@ -171,6 +186,7 @@ public class ProfileService {
 
     /**
      * Obtain the amount of tweets for a user
+     *
      * @param id
      * @return
      */
@@ -180,6 +196,7 @@ public class ProfileService {
 
     /**
      * Obtain the amount of followed users
+     *
      * @param id
      * @return
      */
@@ -189,6 +206,7 @@ public class ProfileService {
 
     /**
      * Obtain the amount of followers
+     *
      * @param id
      * @return
      */
@@ -198,15 +216,17 @@ public class ProfileService {
 
     /**
      * Obtain the amount of tweet of a user
+     *
      * @param id
      * @return
      */
     public int countTweetsOfUser(Long id) {
-        return  this.tweetRepository.countUserTweets(id);
+        return this.tweetRepository.countUserTweets(id);
     }
 
     /**
      * Checks if a user is followed by another
+     *
      * @param profileUser
      * @param currentUser
      * @return
@@ -217,13 +237,15 @@ public class ProfileService {
 
     /**
      * Analyze the state of the follow by the current user
+     *
      * @param profileUser
      * @param currentUser
      * @return
      */
     public boolean toggleFollow(User profileUser, User currentUser) {
         boolean hasFollowed = false;
-        if (!this.isFollowedBy(profileUser, currentUser)){
+
+        if (!this.isFollowedBy(profileUser, currentUser)) {
             profileUser.addFollower(currentUser);
             currentUser.addFollowed(profileUser);
             hasFollowed = true;
@@ -231,6 +253,7 @@ public class ProfileService {
             profileUser.removeFollower(currentUser);
             currentUser.removeFollowed(profileUser);
         }
+
         this.userRepository.save(profileUser);
         this.userRepository.save(currentUser);
         return hasFollowed;
@@ -238,29 +261,35 @@ public class ProfileService {
 
     public void updateProfilePic(Long id, MultipartFile picture) throws IOException {
         User userToChange = this.userRepository.findById(id).get();
+
         if (!picture.isEmpty()) {
             userToChange.setProfilePicture(this.prepareImageFile(picture));
         }
+
         this.userRepository.save(userToChange);
     }
 
     public void updateProfileBanner(Long id, MultipartFile picture) throws IOException {
         User userToChange = this.userRepository.findById(id).get();
+
         if (!picture.isEmpty()) {
             userToChange.setProfileBanner(this.prepareImageFile(picture));
         }
+
         this.userRepository.save(userToChange);
     }
 
-    public void updateNickname(Long id, String nick){
+    public void updateNickname(Long id, String nick) {
         User userToChange = this.userRepository.findById(id).get();
+
         if (!nick.equals("")) {
             userToChange.setNickname(nick);
         }
+
         this.userRepository.save(userToChange);
     }
 
-    public void updateBio(Long id, String bio){
+    public void updateBio(Long id, String bio) {
         User userToChange = this.userRepository.findById(id).get();
         userToChange.setBiography(bio);
         this.userRepository.save(userToChange);

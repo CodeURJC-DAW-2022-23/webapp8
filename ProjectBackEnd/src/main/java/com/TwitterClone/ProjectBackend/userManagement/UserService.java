@@ -39,19 +39,23 @@ public class UserService {
 
     /**
      * It takes the parameters of the request, test if they are valid and them registered a new user
+     *
      * @param request
      * @return
      */
     @Transactional
     public boolean signup(RegisteredRequest request) throws MessagingException, IOException {
         User user = new User(request.getUsername(), request.getPassword(), request.getEmail(), "USER");
+
         if (!emailValidator.test(request.getEmail())) {
             return false;
         }
+
         if (userRepository.findByUsername(user.getUsername()).isPresent()) {
             return false;
         }
-        if (userRepository.findByEmail(user.getEmail()).isPresent()){
+
+        if (userRepository.findByEmail(user.getEmail()).isPresent()) {
             return false;
         }
 
@@ -62,7 +66,7 @@ public class UserService {
         user.setVerificationCode(randomCode);
         user.setEnabled(false);
 
-        user.setImages(new String[]{"example_data/Default_profilepic.jpg","example_data/Default_profilebanner.jpg"});
+        user.setImages(new String[]{"example_data/Default_profilepic.jpg", "example_data/Default_profilebanner.jpg"});
         userRepository.save(user);
 
         sendVerificationEmail(user, user.getEmail());
@@ -72,6 +76,7 @@ public class UserService {
 
     /**
      * Send a verification email to the new user
+     *
      * @param user
      * @param userMail
      * @throws MessagingException
@@ -109,6 +114,7 @@ public class UserService {
 
     /**
      * Verify the new user
+     *
      * @param verificationCode
      * @return
      */
@@ -117,23 +123,24 @@ public class UserService {
 
         if (user == null || user.isLoggedIn()) {
             return false;
-        } else {
-            user.setVerificationCode(null);
-            user.setEnabled(true);
-            userRepository.save(user);
-
-            return true;
         }
 
+        user.setVerificationCode(null);
+        user.setEnabled(true);
+        userRepository.save(user);
+
+        return true;
     }
 
     /**
      * Creates a token for the reset password form
+     *
      * @param token
      * @param email
      */
     public void updateResetPasswordToken(String token, String email) {
         User user = userRepository.findByEmail(email).orElseThrow();
+
         if (user != null) {
             user.setResetPasswordToken(token);
             userRepository.save(user);
@@ -142,6 +149,7 @@ public class UserService {
 
     /**
      * Obtain a user using the token associated with
+     *
      * @param token
      * @return
      */
@@ -151,6 +159,7 @@ public class UserService {
 
     /**
      * Updates the current password to the new one
+     *
      * @param user
      * @param newPassword
      */
@@ -165,6 +174,7 @@ public class UserService {
 
     /**
      * Obtain recommended users
+     *
      * @param userId
      * @return
      */
@@ -174,6 +184,7 @@ public class UserService {
 
     /**
      * Obtains user that has a relation with the keyword
+     *
      * @param keyword
      * @return
      */

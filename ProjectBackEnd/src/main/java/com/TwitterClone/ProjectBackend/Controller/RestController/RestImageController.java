@@ -37,6 +37,7 @@ public class RestImageController {
 
     /**
      * Load the profile pic of a user
+     *
      * @param id
      * @return
      * @throws SQLException
@@ -65,6 +66,7 @@ public class RestImageController {
 
     /**
      * Load the banner of a user
+     *
      * @param id
      * @return
      * @throws SQLException
@@ -93,6 +95,7 @@ public class RestImageController {
 
     /**
      * Load the first image of a tweet
+     *
      * @param id
      * @return
      * @throws SQLException
@@ -120,6 +123,7 @@ public class RestImageController {
 
     /**
      * Load the second image of a tweet
+     *
      * @param id
      * @return
      * @throws SQLException
@@ -147,6 +151,7 @@ public class RestImageController {
 
     /**
      * Load the thirst image of a tweet
+     *
      * @param id
      * @return
      * @throws SQLException
@@ -174,6 +179,7 @@ public class RestImageController {
 
     /**
      * Load the fourth image of a tweet
+     *
      * @param id
      * @return
      * @throws SQLException

@@ -26,6 +26,7 @@ import java.util.UUID;
 public interface UserRepository extends JpaRepository<User, Long> {
     /**
      * This Query is the advanced one
+     *
      * @param username
      * @return
      */
@@ -33,6 +34,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     /**
      * This Query returns a user with the provided id
+     *
      * @param id
      * @return
      */
@@ -40,6 +42,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     /**
      * This Query returns a user with the provided username
+     *
      * @param username
      * @return
      */
@@ -47,13 +50,15 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     /**
      * This Query returns a user with the provided email
+     *
      * @param email
      * @return
      */
-    Optional<User>findByEmail(String email);
+    Optional<User> findByEmail(String email);
 
     /**
      * This Query returns a user with the provided token
+     *
      * @param token
      * @return
      */
@@ -61,6 +66,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     /**
      * This Query returns a user with the provided verification code
+     *
      * @param code
      * @return
      */
@@ -69,70 +75,79 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     /**
      * This Query returns the amount of followed accounts a user has
+     *
      * @param id
      * @return
      */
-    @Query(value="SELECT COUNT(*) FROM users_followed WHERE user_id = ?1 GROUP BY user_id",nativeQuery = true)
-    long countFollowed (long id);
+    @Query(value = "SELECT COUNT(*) FROM users_followed WHERE user_id = ?1 GROUP BY user_id", nativeQuery = true)
+    long countFollowed(long id);
 
     /**
      * Count the followers of a user
+     *
      * @param id
      * @return
      */
-    @Query(value="SELECT COUNT(*) FROM users_followers WHERE user_id = ?1 GROUP BY user_id",nativeQuery = true)
+    @Query(value = "SELECT COUNT(*) FROM users_followers WHERE user_id = ?1 GROUP BY user_id", nativeQuery = true)
     long countFollowers(Long id);
 
     /**
      * Find all the banned user
+     *
      * @return
      */
-    @Query(value="SELECT * FROM users WHERE enabled = false",nativeQuery = true)
-    List<User> findBanned ();
+    @Query(value = "SELECT * FROM users WHERE enabled = false", nativeQuery = true)
+    List<User> findBanned();
 
     /**
      * Get some followers of a user
+     *
      * @param id
      * @param from
      * @param size
      * @return
      */
-    @Query(value = "SELECT users.* FROM users_followers JOIN users ON followers_id=id WHERE user_id = ?1 LIMIT ?2,?3",nativeQuery = true)
+    @Query(value = "SELECT users.* FROM users_followers JOIN users ON followers_id=id WHERE user_id = ?1 LIMIT ?2,?3", nativeQuery = true)
     List<User> findFollowers(Long id, int from, int size);
 
     /**
      * This Query returns the verified users
+     *
      * @return
      */
-    @Query(value="SELECT * FROM users WHERE type = 'VERIFIED'",nativeQuery = true)
-    List<User> findVerified ();
+    @Query(value = "SELECT * FROM users WHERE type = 'VERIFIED'", nativeQuery = true)
+    List<User> findVerified();
 
     /**
      * This Query returns the users that are neither VERIFIED nor BANNED
+     *
      * @return
      */
-    @Query(value="SELECT * FROM users WHERE type<>'VERIFIED' AND type<>'BANNED'",nativeQuery = true)
+    @Query(value = "SELECT * FROM users WHERE type<>'VERIFIED' AND type<>'BANNED'", nativeQuery = true)
     List<User> findNotVerifiedNotBanned();
 
     /**
      * Counts the new user in the last 5 days
+     *
      * @return
      */
-    @Query(value = "SELECT join_date, COUNT(*) AS new_people FROM users GROUP BY join_date ORDER BY join_date DESC LIMIT 0,5",nativeQuery = true)
+    @Query(value = "SELECT join_date, COUNT(*) AS new_people FROM users GROUP BY join_date ORDER BY join_date DESC LIMIT 0,5", nativeQuery = true)
     List<Tuple> countByLast5JoinDate();
 
     /**
      * Get some followed user
+     *
      * @param id
      * @param from
      * @param size
      * @return
      */
-    @Query(value = "SELECT users.* FROM users_followed JOIN users ON followed_id=id WHERE user_id = ?1 LIMIT ?2,?3 ",nativeQuery = true)
+    @Query(value = "SELECT users.* FROM users_followed JOIN users ON followed_id=id WHERE user_id = ?1 LIMIT ?2,?3 ", nativeQuery = true)
     List<User> findFollowed(Long id, int from, int size);
 
     /**
      * Get user to be recommended
+     *
      * @param userId
      * @return
      */

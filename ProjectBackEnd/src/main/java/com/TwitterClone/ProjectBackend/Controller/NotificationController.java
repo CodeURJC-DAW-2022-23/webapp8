@@ -30,6 +30,7 @@ public class NotificationController {
 
     /**
      * Load more notifications using AJAX
+     *
      * @param model
      * @param from
      * @param size
@@ -57,6 +58,7 @@ public class NotificationController {
 
     /**
      * Load more mentions using AJAX
+     *
      * @param model
      * @param from
      * @param size
@@ -65,9 +67,9 @@ public class NotificationController {
      */
     @GetMapping("/mentions/mention")
     public String loadMoreMentions(Model model,
-                                        @Param("from") int from,
-                                        @Param("size") int size,
-                                        HttpServletRequest request) {
+                                   @Param("from") int from,
+                                   @Param("size") int size,
+                                   HttpServletRequest request) {
         User currentUser = this.informationManager.getCurrentUser(request);
         Long idCurrentUser = currentUser.getId();
         int numMentions = this.notificationService.countMentions(idCurrentUser);
@@ -84,6 +86,7 @@ public class NotificationController {
 
     /**
      * Creates a new notification when someone interacts with a tweet or user
+     *
      * @param idTweet
      * @param idOwner
      * @param notificationType
@@ -94,12 +97,12 @@ public class NotificationController {
     public String createNotification(@PathParam("idTweet") Long idTweet,
                                      @PathParam("idOwner") Long idOwner,
                                      @PathParam("notificationType") String notificationType,
-                                   HttpServletRequest request){
+                                     HttpServletRequest request) {
         User currentUser = this.informationManager.getCurrentUser(request);
         User owner = this.profileService.findById(idOwner).get();
         Long currentUserId = currentUser.getId();
 
-        if (!currentUserId.equals(idOwner)){
+        if (!currentUserId.equals(idOwner)) {
             this.notificationService.createNotification(idTweet, owner, currentUser, notificationType);
         }
 
@@ -108,6 +111,7 @@ public class NotificationController {
 
     /**
      * Deletes a notification when someone interacts with a tweet or user
+     *
      * @param idTweet
      * @param notificationType
      * @param request
@@ -116,7 +120,7 @@ public class NotificationController {
     @GetMapping("/deleteNotification")
     public String deleteNotification(@PathParam("idTweet") Long idTweet,
                                      @PathParam("notificationType") String notificationType,
-                                     HttpServletRequest request){
+                                     HttpServletRequest request) {
         User currentUser = this.informationManager.getCurrentUser(request);
         Long currentUserId = currentUser.getId();
         this.notificationService.deleteNotification(idTweet, currentUserId, notificationType, 0L);
@@ -125,6 +129,7 @@ public class NotificationController {
 
     /**
      * Load some notifications of a user with AJAX
+     *
      * @param from
      * @param size
      * @param model
@@ -134,7 +139,7 @@ public class NotificationController {
     @GetMapping("/all-notifications")
     public String getNotifications(@PathParam("from") int from,
                                    @PathParam("size") int size,
-                                   Model model, HttpServletRequest request){
+                                   Model model, HttpServletRequest request) {
         User currentUser = this.informationManager.getCurrentUser(request);
         Long id = currentUser.getId();
         List<Notification> notifications = this.notificationService.getSomeNotificationsOfUser(id, from, size);
@@ -145,12 +150,13 @@ public class NotificationController {
 
     /**
      * Load some mentions of a user with AJAX
+     *
      * @param model
      * @param request
      * @return
      */
     @GetMapping("/mentions")
-    public String getMentions(Model model, HttpServletRequest request){
+    public String getMentions(Model model, HttpServletRequest request) {
         User currentUser = this.informationManager.getCurrentUser(request);
         Long id = currentUser.getId();
         List<Notification> mentions = this.notificationService.getSomeMentionsOfUser(id, 0, 10);

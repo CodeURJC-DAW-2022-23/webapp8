@@ -30,35 +30,38 @@ public class HashtagService {
 
     /**
      * Obtain hashtag relation with the keyword
+     *
      * @param keyword
      * @return
      */
     public List<Hashtag> findByHashtagIsContainingIgnoreCase(String keyword) {
-        List <Hashtag> someHashtags = this.hashtagRepository.findByHashtagIsContainingIgnoreCase(keyword);
+        List<Hashtag> someHashtags = this.hashtagRepository.findByHashtagIsContainingIgnoreCase(keyword);
         return someHashtags;
     }
 
     /**
      * Get some trends
+     *
      * @param init
      * @param size
      * @return
      */
     public List<Trend> getCurrentTrends(int init, int size) {
-        List<Tuple> trends= this.hashtagRepository.find(init, size);
+        List<Tuple> trends = this.hashtagRepository.find(init, size);
         List<Tuple> trendsList = trends.stream().toList();
         return this.converterToTrend(trendsList);
     }
 
     /**
      * Add the tweet to a hashtag
+     *
      * @param hashtag
      * @param tweet
      */
-    public void add(String hashtag, Tweet tweet){
+    public void add(String hashtag, Tweet tweet) {
         Optional<Hashtag> h = this.hashtagRepository.findById(hashtag);
 
-        if (h.isPresent()){
+        if (h.isPresent()) {
             Hashtag h2 = h.get();
             h2.addTweet(tweet);
             this.hashtagRepository.save(h2);
@@ -73,16 +76,17 @@ public class HashtagService {
 
     /**
      * Convert a list of Tuples to a list of Trends
+     *
      * @param trends
      * @return
      */
-    private List<Trend> converterToTrend(List<Tuple> trends){
+    private List<Trend> converterToTrend(List<Tuple> trends) {
         List<Trend> list = new LinkedList<>();
 
-        for (int i = 0; i < trends.size(); i++){
+        for (int i = 0; i < trends.size(); i++) {
             String numTweets = trends.get(i).get("numtweets").toString();
             String hashtag = trends.get(i).get("hashtag").toString();
-            list.add(new Trend(hashtag,Integer.parseInt(numTweets)));
+            list.add(new Trend(hashtag, Integer.parseInt(numTweets)));
         }
 
         return list;
@@ -90,6 +94,7 @@ public class HashtagService {
 
     /**
      * Get some tweets associated to a trend
+     *
      * @param hashtag
      * @param from
      * @param size
@@ -101,6 +106,7 @@ public class HashtagService {
 
     /**
      * Obtains the amount of trends
+     *
      * @return
      */
     public int countTrends() {
@@ -109,6 +115,7 @@ public class HashtagService {
 
     /**
      * Obtains the amount of tweets associated to a hashtag
+     *
      * @param hashtag
      * @return
      */

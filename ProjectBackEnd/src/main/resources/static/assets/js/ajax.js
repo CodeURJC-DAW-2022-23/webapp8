@@ -14,7 +14,7 @@ async function loadMoreTrends() {
     const from = (counterPetitions + 1) * NUMBER_ELEMENTS_PER_LOAD
 
     const response = await fetch(`/explore/trends?from=${from}&size=${NUMBER_ELEMENTS_PER_LOAD}`);
-    
+
     if (response.redirected) {
         hideButtons();
         removeSpinner();
@@ -39,7 +39,7 @@ async function loadMoreTweetsForBookmarks() {
         removeSpinner()
         return;
     }
-    
+
     addNewElements(response, "tweet");
     removeSpinner()
 }
@@ -53,13 +53,13 @@ async function loadMoreTweetsForHome() {
     const from = (counterPetitions + 1) * NUMBER_ELEMENTS_PER_LOAD
 
     const response = await fetch(`/home/tweets?from=${from}&size=${NUMBER_ELEMENTS_PER_LOAD}`);
-    
+
     if (response.redirected) {
         hideButtons();
         removeSpinner()
         return;
     }
-    
+
     addNewElements(response, "tweet");
     removeSpinner()
 }
@@ -71,7 +71,7 @@ async function loadMoreTweetsForHome() {
 async function loadMoreTweetsForProfile(userId) {
     addSpinner()
     const from = (counterPetitions + 1) * NUMBER_ELEMENTS_PER_LOAD
-    
+
     const response = await fetch(`/profile/tweets/${userId}?from=${from}&size=${NUMBER_ELEMENTS_PER_LOAD}`);
 
     if (response.redirected) {
@@ -164,7 +164,7 @@ async function showNotifications() {
  * Realize an HTTP petition to request more tweets associated with AJAX
  * @returns {Promise<void>}
  */
-async function loadMoreTweetsAssociated(){
+async function loadMoreTweetsAssociated() {
     addSpinner()
     const from = (counterPetitions + 1) * NUMBER_ELEMENTS_PER_LOAD
 
@@ -290,10 +290,10 @@ async function addNewElements(response, container_name) {
     const container = document.getElementById(container_name + "-container");
     container.innerHTML += newElements;
 
-    if(container_name==="trend"){
-        for(i=((counterPetitions+1) * NUMBER_ELEMENTS_PER_LOAD);i<container.children.length;i++){
+    if (container_name === "trend") {
+        for (i = ((counterPetitions + 1) * NUMBER_ELEMENTS_PER_LOAD); i < container.children.length; i++) {
             let childNode = container.children.item(i).childNodes.item(1);
-            let trendNumber = (Number(childNode.innerHTML.charAt(0))) + ((counterPetitions+1) * NUMBER_ELEMENTS_PER_LOAD);
+            let trendNumber = (Number(childNode.innerHTML.charAt(0))) + ((counterPetitions + 1) * NUMBER_ELEMENTS_PER_LOAD);
             childNode.innerHTML = trendNumber + ' - Trending';
         }
     }
@@ -320,8 +320,8 @@ function changeVisibility(element) {
 /**
  * Add a spinner animation when the page is loading more elements
  */
-function addSpinner(){
-    document.getElementById("spinner").innerHTML=`<div class="flex items-center justify-center">
+function addSpinner() {
+    document.getElementById("spinner").innerHTML = `<div class="flex items-center justify-center">
                 <div class="inline-block h-8 w-8 animate-spin rounded-full border-4 border-primary border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]" role="status">
                     <span class="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]">
                         Loading...
@@ -333,6 +333,6 @@ function addSpinner(){
 /**
  * Remove the spinner animation when the page had load all the elements
  */
-function removeSpinner(){
-    document.getElementById("spinner").innerHTML=``
+function removeSpinner() {
+    document.getElementById("spinner").innerHTML = ``
 }

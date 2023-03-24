@@ -35,16 +35,18 @@ public class ResetPasswordController {
 
     /**
      * Change the current page to forgot password page
+     *
      * @param model
      * @return
      */
     @GetMapping("/forgot-password")
-    public String forgotPassword(Model model){
+    public String forgotPassword(Model model) {
         return "forgot-password";
     }
 
     /**
      * Obtain the email of the user to prepare a token to be used to change the password
+     *
      * @param request
      * @param model
      * @return
@@ -65,22 +67,24 @@ public class ResetPasswordController {
 
     /**
      * Change the current page to forgot password confirmation page
+     *
      * @return
      */
     @GetMapping("/forgot-password-confirmation")
-    public String forgotPasswordConfirmation(){
+    public String forgotPasswordConfirmation() {
         return "forgot-password-confirmation";
     }
 
     /**
      * Change the current page to reset password page
+     *
      * @param passwordToken
      * @param model
      * @param request
      * @return
      */
     @GetMapping("/reset-password")
-    public String resetPasswordPage(@Param("passwordToken")  String passwordToken, Model model, HttpServletRequest request){
+    public String resetPasswordPage(@Param("passwordToken") String passwordToken, Model model, HttpServletRequest request) {
         CsrfToken token_csrf = (CsrfToken) request.getAttribute("_csrf");
         model.addAttribute("passwordToken", passwordToken);
         model.addAttribute("_csrf", token_csrf.getToken());
@@ -89,6 +93,7 @@ public class ResetPasswordController {
 
     /**
      * Change the current password to the new one
+     *
      * @param passwordToken
      * @param password
      * @return
@@ -109,10 +114,11 @@ public class ResetPasswordController {
 
     /**
      * Change the current page to password reset confirmation
+     *
      * @return
      */
     @GetMapping("/password-reset-confirmation")
-    public String passwordResetConfirmation(){
+    public String passwordResetConfirmation() {
         return "password-reset-confirmation";
     }
 }

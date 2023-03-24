@@ -30,6 +30,7 @@ public class ProfileController {
 
     /**
      * Update the user profile
+     *
      * @param request
      * @param banner
      * @param profile
@@ -52,6 +53,7 @@ public class ProfileController {
 
     /**
      * Obtains some followed user with AJAX
+     *
      * @param model
      * @param from
      * @param size
@@ -78,6 +80,7 @@ public class ProfileController {
 
     /**
      * Obtain some follower user with AJAX
+     *
      * @param model
      * @param from
      * @param size
@@ -104,15 +107,16 @@ public class ProfileController {
 
     /**
      * Change the type of user to "BANNED"
+     *
      * @param id
      * @return
      */
     @GetMapping("/ban/{id}")
     public String ban(@PathVariable Long id,
-                        HttpServletRequest request){
+                      HttpServletRequest request) {
 
         User currentUser = this.informationManager.getCurrentUser(request);
-        if(currentUser.getRole().toString().equals("ADMIN")){
+        if (currentUser.getRole().toString().equals("ADMIN")) {
             User user = this.profileService.findById(id).get();
             user.setType("BANNED");
             user.setEnabled(false);
@@ -123,14 +127,15 @@ public class ProfileController {
 
     /**
      * Change the type of user to "PUBLIC"
+     *
      * @param id
      * @return
      */
     @GetMapping("/unban/{id}")
     public String unban(@PathVariable Long id,
-                        HttpServletRequest request){
+                        HttpServletRequest request) {
         User currentUser = this.informationManager.getCurrentUser(request);
-        if(currentUser.getRole().toString().equals("ADMIN")) {
+        if (currentUser.getRole().toString().equals("ADMIN")) {
             User user = this.profileService.findById(id).get();
             user.setType("PUBLIC");
             user.setEnabled(true);
@@ -141,22 +146,25 @@ public class ProfileController {
 
     /**
      * Manage when the current user follow or unfollow another user
+     *
      * @param id
      * @param request
      * @return
      */
     @GetMapping("/toggleFollow/{id}")
     public String toggleFollow(@PathVariable Long id,
-                         HttpServletRequest request){
+                               HttpServletRequest request) {
         User profileUser = this.profileService.findById(id).get();
         User currentUser = this.informationManager.getCurrentUser(request);
         boolean hasFollowed = this.profileService.toggleFollow(profileUser, currentUser);
-        if (hasFollowed){
+
+        if (hasFollowed) {
             this.notificationService.createNotification(null, profileUser, currentUser, "FOLLOW");
         } else {
             this.notificationService.deleteNotification(null,
                     currentUser.getId(), "FOLLOW", profileUser.getId());
         }
+
         return "redirect:/profile/" + id;
     }
 

@@ -37,6 +37,7 @@ public class LoginRestController {
 
         return userService.login(loginRequest, accessToken, refreshToken);
     }
+
     @Operation(summary = "Refresh the content of a page")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Page has been successfully refreshed", content = {

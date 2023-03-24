@@ -42,7 +42,8 @@ public class RestProfileController {
     @Autowired
     private NotificationService notificationService;
 
-    interface Basic extends User.Profile{};
+    interface Basic extends User.Profile {
+    }
 
     @Operation(summary = "Get a User")
     @ApiResponses(value = {
@@ -55,10 +56,12 @@ public class RestProfileController {
     @JsonView(SearchRestController.Basic.class)
     public ResponseEntity<User> getUserByUsername(@PathVariable String username) {
         Optional<User> user = this.profileService.findByUsername(username);
-        if (user.isEmpty()){
+
+        if (user.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<>(user.get(),HttpStatus.ACCEPTED);
+
+        return new ResponseEntity<>(user.get(), HttpStatus.ACCEPTED);
     }
 
     @Operation(summary = "Get some followed users of a User")
@@ -74,11 +77,13 @@ public class RestProfileController {
                                                   @PathParam("size") int size,
                                                   @PathVariable String username) {
         Optional<User> user = this.profileService.findByUsername(username);
-        if (user.isEmpty()){
+
+        if (user.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
+
         List<User> followed = profileService.getFollowed(user.get().getId(), from, size);
-        return new ResponseEntity<>(followed,HttpStatus.ACCEPTED);
+        return new ResponseEntity<>(followed, HttpStatus.ACCEPTED);
     }
 
     @Operation(summary = "Get some followers users of a User")
@@ -94,11 +99,13 @@ public class RestProfileController {
                                                    @PathParam("size") int size,
                                                    @PathVariable String username) {
         Optional<User> user = this.profileService.findByUsername(username);
-        if (user.isEmpty()){
+
+        if (user.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
+
         List<User> followed = profileService.getFollowers(user.get().getId(), from, size);
-        return new ResponseEntity<>(followed,HttpStatus.ACCEPTED);
+        return new ResponseEntity<>(followed, HttpStatus.ACCEPTED);
     }
 
     @Operation(summary = "Update the profile pic associated to a user")
@@ -122,9 +129,8 @@ public class RestProfileController {
             return ResponseEntity.ok().header(HttpHeaders.CONTENT_TYPE, "image/jpeg")
                     .contentLength(user.get().getProfileBanner().length()).body(file);
         }
-        else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     @Operation(summary = "Update the profile banner associated to a user")
@@ -148,9 +154,8 @@ public class RestProfileController {
             return ResponseEntity.ok().header(HttpHeaders.CONTENT_TYPE, "image/jpeg")
                     .contentLength(user.get().getProfileBanner().length()).body(file);
         }
-        else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     @Operation(summary = "Update the nickname associated to a user")
@@ -160,10 +165,10 @@ public class RestProfileController {
             }),
             @ApiResponse(responseCode = "404", description = "User not found", content = @Content)
     })
-    @PutMapping ("/updateNickname/{id}")
+    @PutMapping("/updateNickname/{id}")
     @JsonView(SearchRestController.Basic.class)
     public ResponseEntity<User> updateNickname(@PathVariable long id,
-                                               @RequestParam("nickname") String nick){
+                                               @RequestParam("nickname") String nick) {
         Optional<User> user = profileService.findById(id);
 
         if (user.isPresent()) {
@@ -171,9 +176,8 @@ public class RestProfileController {
 
             return new ResponseEntity<>(HttpStatus.OK);
         }
-        else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     @Operation(summary = "Update the biography associated to a user")
@@ -186,7 +190,7 @@ public class RestProfileController {
     @PutMapping("/updateBiography/{id}")
     @JsonView(SearchRestController.Basic.class)
     public ResponseEntity<User> updateBiography(@PathVariable long id,
-                                                @RequestParam("biography") String bio){
+                                                @RequestParam("biography") String bio) {
         Optional<User> user = profileService.findById(id);
 
         if (user.isPresent()) {
@@ -194,9 +198,8 @@ public class RestProfileController {
 
             return new ResponseEntity<>(HttpStatus.OK);
         }
-        else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     @Operation(summary = "Follow or unfollow a user")
@@ -212,22 +215,23 @@ public class RestProfileController {
     @PutMapping("/toggleFollow/{id}")
     @JsonView(SearchRestController.Basic.class)
     public ResponseEntity<List<User>> toggleFollow(@PathVariable Long id,
-                                                   HttpServletRequest request){
+                                                   HttpServletRequest request) {
         Optional<User> profileUser = this.profileService.findById(id);
-        if (profileUser.isEmpty()){
+        if (profileUser.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
+
         User currentUser = this.informationManager.getCurrentUser(request);
         boolean hasFollowed = this.profileService.toggleFollow(profileUser.get(), currentUser);
-        if (hasFollowed){
+
+        if (hasFollowed) {
             this.notificationService.createNotification(null, profileUser.get(), currentUser, "FOLLOW");
             return new ResponseEntity<>(HttpStatus.OK);
-        } else {
-            this.notificationService.deleteNotification(null,
-                    currentUser.getId(), "FOLLOW", profileUser.get().getId());
-            return new ResponseEntity<>(HttpStatus.ACCEPTED);
         }
 
+        this.notificationService.deleteNotification(null,
+                currentUser.getId(), "FOLLOW", profileUser.get().getId());
+        return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
 }
 

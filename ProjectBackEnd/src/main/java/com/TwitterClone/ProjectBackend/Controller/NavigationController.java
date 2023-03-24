@@ -154,6 +154,7 @@ public class NavigationController {
         List<Tweet> bookmarkTweetList = this.profileService.getBookmarks(currentUser.getId(), 0 , 10);
         List<TweetInformation> bookmarks= this.informationManager.calculateDataOfTweet(bookmarkTweetList, currentUser);
         model.addAttribute("tweets", bookmarks);
+
         if (currentUser!=null){
             model.addAttribute("isLogged", true);
         }

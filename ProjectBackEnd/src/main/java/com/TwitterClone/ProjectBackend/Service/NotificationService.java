@@ -27,6 +27,7 @@ public class NotificationService {
 
     /**
      * Get some notifications from a user
+     *
      * @param userId
      * @param init
      * @param size
@@ -39,6 +40,7 @@ public class NotificationService {
 
     /**
      * Get some mentions from a user
+     *
      * @param userId
      * @param init
      * @param size
@@ -51,6 +53,7 @@ public class NotificationService {
 
     /**
      * Creates a new notification due to an action with a tweet or a user
+     *
      * @param idTweet
      * @param owner
      * @param currentUser
@@ -58,11 +61,11 @@ public class NotificationService {
      */
     public Optional<Notification> createNotification(Long idTweet, User owner, User currentUser, String notificationType) {
         Tweet tweetTrigger = null;
-        if(idTweet != null){
+        if (idTweet != null) {
             tweetTrigger = this.tweetRepository.findById(idTweet).orElse(null);
         }
 
-        if (owner == null){
+        if (owner == null) {
             return Optional.empty();
         }
 
@@ -73,6 +76,7 @@ public class NotificationService {
 
     /**
      * Deletes a notification due to an action with a tweet or a user
+     *
      * @param idTweet
      * @param idCurrentUser
      * @param notificationType
@@ -81,13 +85,13 @@ public class NotificationService {
     public Optional<Notification> deleteNotification(Long idTweet, Long idCurrentUser, String notificationType, Long idUserToNotify) {
         Notification notification;
 
-        if (idTweet != null){
+        if (idTweet != null) {
             notification = this.notificationRepository.findSpecificNotification(idCurrentUser, idTweet, notificationType).orElse(null);
         } else {
             notification = this.notificationRepository.findFollowNotification(idCurrentUser, idUserToNotify).orElse(null);
         }
 
-        if (notification == null){
+        if (notification == null) {
             return Optional.empty();
         }
 
@@ -97,6 +101,7 @@ public class NotificationService {
 
     /**
      * Obtain the amount of notifications from a user
+     *
      * @param idCurrentUser
      * @return
      */
@@ -106,6 +111,7 @@ public class NotificationService {
 
     /**
      * Obtain the amount of mentions from a user
+     *
      * @param idCurrentUser
      * @return
      */

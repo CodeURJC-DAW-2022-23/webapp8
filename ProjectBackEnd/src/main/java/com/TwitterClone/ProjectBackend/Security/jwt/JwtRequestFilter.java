@@ -22,85 +22,90 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 @Component
 public class JwtRequestFilter extends OncePerRequestFilter {
-	
-	private static final Logger LOG = LoggerFactory.getLogger(JwtRequestFilter.class);
 
-	@Autowired
-	private UserDetailsService userDetailsService;
+    private static final Logger LOG = LoggerFactory.getLogger(JwtRequestFilter.class);
 
-	@Autowired
-	private JwtTokenProvider jwtTokenProvider;
+    @Autowired
+    private UserDetailsService userDetailsService;
 
-	@Override
-	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,
-			FilterChain filterChain) throws ServletException, IOException {
+    @Autowired
+    private JwtTokenProvider jwtTokenProvider;
 
-		try {
-			String token = getJwtToken(request, true);
-			
-			if (StringUtils.hasText(token) && jwtTokenProvider.validateToken(token)) {
-				
-				String username = jwtTokenProvider.getUsername(token);
-				
-				UserDetails userDetails = userDetailsService.loadUserByUsername(username);
-				
-				UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
-						userDetails, null, userDetails.getAuthorities());
-				
-				authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-				
-				SecurityContextHolder.getContext().setAuthentication(authentication);
-			}
-		} catch (Exception ex) {
-			LOG.error("Exception processing JWT Token",ex);
-		}
+    @Override
+    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,
+                                    FilterChain filterChain) throws ServletException, IOException {
 
-		filterChain.doFilter(request, response);
-	}	
+        try {
+            String token = getJwtToken(request, true);
 
-	private String getJwtToken(HttpServletRequest request, boolean fromCookie) {
-		
-		if (fromCookie) {
-			return getJwtFromCookie(request);
-		} else {
-			return getJwtFromRequest(request);
-		}
-	}
+            if (StringUtils.hasText(token) && jwtTokenProvider.validateToken(token)) {
 
-	private String getJwtFromRequest(HttpServletRequest request) {
-		
-		String bearerToken = request.getHeader("Authorization");
-		
-		if (StringUtils.hasText(bearerToken) && bearerToken.startsWith("Bearer ")) {
-		
-			String accessToken = bearerToken.substring(7);
-			if (accessToken == null) {
-				return null;
-			}
+                String username = jwtTokenProvider.getUsername(token);
 
-			return SecurityCipher.decrypt(accessToken);
-		}
-		return null;
-	}
+                UserDetails userDetails = userDetailsService.loadUserByUsername(username);
 
-	private String getJwtFromCookie(HttpServletRequest request) {
-		
-		Cookie[] cookies = request.getCookies();
-		
-		if (cookies == null) {
-			return "";
-		}
-		
-		for (Cookie cookie : cookies) {
-			if (JwtCookieManager.ACCESS_TOKEN_COOKIE_NAME.equals(cookie.getName())) {
-				String accessToken = cookie.getValue();
-				if (accessToken == null) {
-					return null;
-				}
+                UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
+                        userDetails, null, userDetails.getAuthorities());
 
-				return SecurityCipher.decrypt(accessToken);
-			}
-		}
-		return null;
-	}
+                authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+
+                SecurityContextHolder.getContext().setAuthentication(authentication);
+            }
+        } catch (Exception ex) {
+            LOG.error("Exception processing JWT Token", ex);
+        }
+
+        filterChain.doFilter(request, response);
+    }
+
+    private String getJwtToken(HttpServletRequest request, boolean fromCookie) {
+
+        if (fromCookie) {
+            return getJwtFromCookie(request);
+        }
+
+        return getJwtFromRequest(request);
+    }
+
+    private String getJwtFromRequest(HttpServletRequest request) {
+
+        String bearerToken = request.getHeader("Authorization");
+
+        if (StringUtils.hasText(bearerToken) && bearerToken.startsWith("Bearer ")) {
+
+            String accessToken = bearerToken.substring(7);
+
+            if (accessToken == null) {
+                return null;
+            }
+
+            return SecurityCipher.decrypt(accessToken);
+        }
+
+        return null;
+    }
+
+    private String getJwtFromCookie(HttpServletRequest request) {
+
+        Cookie[] cookies = request.getCookies();
+
+        if (cookies == null) {
+            return "";
+        }
+
+        for (Cookie cookie : cookies) {
+
+            if (JwtCookieManager.ACCESS_TOKEN_COOKIE_NAME.equals(cookie.getName())) {
+                String accessToken = cookie.getValue();
+
+                if (accessToken == null) {
+                    return null;
+                }
+
+                return SecurityCipher.decrypt(accessToken);
+            }
+        }
+
+        return null;
+    }
 }
