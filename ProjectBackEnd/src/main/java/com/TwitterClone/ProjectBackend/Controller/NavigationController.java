@@ -4,6 +4,7 @@ import com.TwitterClone.ProjectBackend.Model.*;
 import com.TwitterClone.ProjectBackend.Model.MustacheObjects.InformationManager;
 import com.TwitterClone.ProjectBackend.Model.MustacheObjects.ModelManager;
 import com.TwitterClone.ProjectBackend.Model.MustacheObjects.TweetInformation;
+import com.TwitterClone.ProjectBackend.Model.MustacheObjects.UserInformation;
 import com.TwitterClone.ProjectBackend.Service.HashtagService;
 import com.TwitterClone.ProjectBackend.Service.NotificationService;
 import com.TwitterClone.ProjectBackend.Service.TweetService;
@@ -179,16 +180,8 @@ public class NavigationController {
         this.informationManager.addProfileInfoToLeftBar(model, request);
         this.modelManager.addCurrentTrends(model);
 
-        int followersNumber = profileUser.getFollowersNumber();
-        model.addAttribute("followersNumber", followersNumber);
-
-        int followedNumber = profileUser.getFollowedNumber();
-        model.addAttribute("followedNumber", followedNumber);
-
-        List<Tweet> tweetList = this.tweetService.findSomeTweetOfUser(profileUser.getId(),0, 10);
-        List<TweetInformation> tweets = this.informationManager.calculateDataOfTweet(tweetList, currentUser);
-        model.addAttribute("tweets", tweets);
-        model.addAttribute("user", profileUser);
+        UserInformation userToShow = this.informationManager.prepareUserInformation(profileUser, currentUser);
+        model.addAttribute("userToShow", userToShow);
 
         if (currentUser!=null){
             model.addAttribute("isLogged", true);

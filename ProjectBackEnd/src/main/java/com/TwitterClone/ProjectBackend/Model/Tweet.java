@@ -26,7 +26,9 @@ import java.util.*;
 @Setter
 @Entity
 public class Tweet {
-    public interface Basic{}
+    public interface Basic {
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @JsonView(Basic.class)
@@ -63,14 +65,14 @@ public class Tweet {
     @JsonView(Basic.class)
     private Blob media4;
 
-    public Tweet(){
+    public Tweet() {
         this.publishDate = LocalDateTime.now();
     }
 
-    public Tweet(String text, User user, Blob [] files) {
+    public Tweet(String text, User user, Blob[] files) {
         this.publishDate = LocalDateTime.now();
         this.likes = new LinkedList<>();
-        this.retweets =  new LinkedList<>();
+        this.retweets = new LinkedList<>();
         this.comments = new LinkedList<>();
         this.text = text;
         this.user = user;
@@ -83,64 +85,85 @@ public class Tweet {
     /*
     For example data
      */
-    public Tweet(String text, User user, LocalDateTime time, Blob [] files) {
+    public Tweet(String text, User user, LocalDateTime time, Blob[] files) {
         this.publishDate = time;
         this.likes = new LinkedList<>();
-        this.retweets =  new LinkedList<>();
+        this.retweets = new LinkedList<>();
         this.comments = new LinkedList<>();
         this.text = text;
         this.user = user;
-        if (files[0] != null) {
-            this.media1 = files[0];
+
+        for (int i = 0; i < 4; i++) {
+
+            if (files[i] != null) {
+                insertMedia(files[i], i);
+            }
         }
-        if (files[1] != null) {
-            this.media2 = files[1];
+    }
+
+    private void insertMedia(Blob file, int i) {
+        if (i == 0) {
+            this.media1 = file;
+            return;
         }
-        if (files[2] != null) {
-            this.media3 = files[2];
+
+        if (i == 1) {
+            this.media2 = file;
+            return;
         }
-        if (files[3] != null) {
-            this.media4 = files[3];
+
+        if (i == 2) {
+            this.media3 = file;
+            return;
+        }
+
+        if (i == 3) {
+            this.media4 = file;
         }
     }
 
     /**
      * Add a comment to this tweet
+     *
      * @param comment
      */
-    public void addComment(Tweet comment){
+    public void addComment(Tweet comment) {
         this.comments.add(comment);
     }
 
     /**
      * Add a like to this tweet
+     *
      * @param giver
      */
-    public void addLike(User giver){
+    public void addLike(User giver) {
         this.likes.add(giver);
     }
 
     /**
      * Add a retweet to this tweet
+     *
      * @param giver
      */
-    public void addRetweet(User giver){
+    public void addRetweet(User giver) {
         this.retweets.add(giver);
     }
 
     /**
      * Remove a like of this tweet
+     *
      * @param giver
      */
-    public void removeLike(User giver){
+    public void removeLike(User giver) {
         this.likes.remove(giver);
     }
 
     /**
      * Remove a retweet of this tweet
+     *
      * @param giver
      */
-    public void removeRetweet(User giver){
+    public void removeRetweet(User giver) {
         this.retweets.remove(giver);
     }
 

@@ -2,6 +2,8 @@ package com.TwitterClone.ProjectBackend.Controller.RestController;
 
 import com.TwitterClone.ProjectBackend.Model.Hashtag;
 import com.TwitterClone.ProjectBackend.Model.MustacheObjects.InformationManager;
+import com.TwitterClone.ProjectBackend.Model.MustacheObjects.TweetInformation;
+import com.TwitterClone.ProjectBackend.Model.MustacheObjects.UserInformation;
 import com.TwitterClone.ProjectBackend.Model.Tweet;
 import com.TwitterClone.ProjectBackend.Service.NotificationService;
 import com.TwitterClone.ProjectBackend.Service.ProfileService;
@@ -42,7 +44,7 @@ public class RestProfileController {
     @Autowired
     private NotificationService notificationService;
 
-    interface Basic extends User.Profile {
+    interface Basic extends User.Profile, SearchRestController.Basic {
     }
 
     @Operation(summary = "Get a User")
@@ -53,15 +55,17 @@ public class RestProfileController {
             @ApiResponse(responseCode = "404", description = "User not found", content = @Content)
     })
     @GetMapping("/{username}")
-    @JsonView(SearchRestController.Basic.class)
-    public ResponseEntity<User> getUserByUsername(@PathVariable String username) {
+    @JsonView(Basic.class)
+    public ResponseEntity<UserInformation> getUserByUsername(@PathVariable String username) {
         Optional<User> user = this.profileService.findByUsername(username);
 
         if (user.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
-        return new ResponseEntity<>(user.get(), HttpStatus.ACCEPTED);
+        UserInformation currentUser = this.informationManager.prepareUserInformation(user.get(), null);
+
+        return new ResponseEntity<>(currentUser, HttpStatus.ACCEPTED);
     }
 
     @Operation(summary = "Get some followed users of a User")
@@ -72,8 +76,8 @@ public class RestProfileController {
             @ApiResponse(responseCode = "404", description = "User not found", content = @Content)
     })
     @GetMapping("/followed/{username}")
-    @JsonView(SearchRestController.Basic.class)
-    public ResponseEntity<List<User>> getFollowed(@PathParam("from") int from,
+    @JsonView(Basic.class)
+    public ResponseEntity<List<UserInformation>> getFollowed(@PathParam("from") int from,
                                                   @PathParam("size") int size,
                                                   @PathVariable String username) {
         Optional<User> user = this.profileService.findByUsername(username);
@@ -83,7 +87,8 @@ public class RestProfileController {
         }
 
         List<User> followed = profileService.getFollowed(user.get().getId(), from, size);
-        return new ResponseEntity<>(followed, HttpStatus.ACCEPTED);
+        List<UserInformation> listFollowed = this.informationManager.prepareListUser(followed);
+        return new ResponseEntity<>(listFollowed, HttpStatus.ACCEPTED);
     }
 
     @Operation(summary = "Get some followers users of a User")
@@ -94,8 +99,8 @@ public class RestProfileController {
             @ApiResponse(responseCode = "404", description = "User not found", content = @Content)
     })
     @GetMapping("/followers/{username}")
-    @JsonView(SearchRestController.Basic.class)
-    public ResponseEntity<List<User>> getFollowers(@PathParam("from") int from,
+    @JsonView(Basic.class)
+    public ResponseEntity<List<UserInformation>> getFollowers(@PathParam("from") int from,
                                                    @PathParam("size") int size,
                                                    @PathVariable String username) {
         Optional<User> user = this.profileService.findByUsername(username);
@@ -104,8 +109,9 @@ public class RestProfileController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
-        List<User> followed = profileService.getFollowers(user.get().getId(), from, size);
-        return new ResponseEntity<>(followed, HttpStatus.ACCEPTED);
+        List<User> followers = profileService.getFollowers(user.get().getId(), from, size);
+        List<UserInformation> listFollowers = this.informationManager.prepareListUser(followers);
+        return new ResponseEntity<>(listFollowers, HttpStatus.ACCEPTED);
     }
 
     @Operation(summary = "Update the profile pic associated to a user")
@@ -116,7 +122,7 @@ public class RestProfileController {
             @ApiResponse(responseCode = "404", description = "User not found", content = @Content)
     })
     @PutMapping("/updateProfilePicture/{id}")
-    @JsonView(SearchRestController.Basic.class)
+    @JsonView(Basic.class)
     public ResponseEntity<Object> updateProfilePic(@PathVariable long id,
                                                    @RequestParam("file") MultipartFile profilePic) throws IOException, SQLException {
         Optional<User> user = profileService.findById(id);
@@ -124,10 +130,7 @@ public class RestProfileController {
         if (user.isPresent()) {
             this.profileService.updateProfilePic(id, profilePic);
 
-            Resource file = new InputStreamResource(user.get().getProfilePicture().getBinaryStream());
-
-            return ResponseEntity.ok().header(HttpHeaders.CONTENT_TYPE, "image/jpeg")
-                    .contentLength(user.get().getProfileBanner().length()).body(file);
+            return new ResponseEntity<>(HttpStatus.OK);
         }
 
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -141,7 +144,7 @@ public class RestProfileController {
             @ApiResponse(responseCode = "404", description = "User not found", content = @Content)
     })
     @PutMapping("/updateProfileBanner/{id}")
-    @JsonView(SearchRestController.Basic.class)
+    @JsonView(Basic.class)
     public ResponseEntity<Object> updateProfileBanner(@PathVariable long id,
                                                       @RequestParam("file") MultipartFile profileBanner) throws IOException, SQLException {
         Optional<User> user = profileService.findById(id);
@@ -149,10 +152,7 @@ public class RestProfileController {
         if (user.isPresent()) {
             this.profileService.updateProfileBanner(id, profileBanner);
 
-            Resource file = new InputStreamResource(user.get().getProfileBanner().getBinaryStream());
-
-            return ResponseEntity.ok().header(HttpHeaders.CONTENT_TYPE, "image/jpeg")
-                    .contentLength(user.get().getProfileBanner().length()).body(file);
+            return new ResponseEntity<>(HttpStatus.OK);
         }
 
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -166,15 +166,16 @@ public class RestProfileController {
             @ApiResponse(responseCode = "404", description = "User not found", content = @Content)
     })
     @PutMapping("/updateNickname/{id}")
-    @JsonView(SearchRestController.Basic.class)
-    public ResponseEntity<User> updateNickname(@PathVariable long id,
+    @JsonView(Basic.class)
+    public ResponseEntity<UserInformation> updateNickname(@PathVariable long id,
                                                @RequestParam("nickname") String nick) {
         Optional<User> user = profileService.findById(id);
 
         if (user.isPresent()) {
             this.profileService.updateNickname(id, nick);
+            UserInformation currentUser = this.informationManager.prepareUserInformation(user.get(), null);
 
-            return new ResponseEntity<>(HttpStatus.OK);
+            return new ResponseEntity<>(currentUser, HttpStatus.OK);
         }
 
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -188,15 +189,16 @@ public class RestProfileController {
             @ApiResponse(responseCode = "404", description = "User not found", content = @Content)
     })
     @PutMapping("/updateBiography/{id}")
-    @JsonView(SearchRestController.Basic.class)
-    public ResponseEntity<User> updateBiography(@PathVariable long id,
+    @JsonView(Basic.class)
+    public ResponseEntity<UserInformation> updateBiography(@PathVariable long id,
                                                 @RequestParam("biography") String bio) {
         Optional<User> user = profileService.findById(id);
 
         if (user.isPresent()) {
             this.profileService.updateBio(id, bio);
+            UserInformation currentUser = this.informationManager.prepareUserInformation(user.get(), null);
 
-            return new ResponseEntity<>(HttpStatus.OK);
+            return new ResponseEntity<>(currentUser, HttpStatus.OK);
         }
 
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -213,8 +215,8 @@ public class RestProfileController {
             @ApiResponse(responseCode = "404", description = "User not found", content = @Content)
     })
     @PutMapping("/toggleFollow/{id}")
-    @JsonView(SearchRestController.Basic.class)
-    public ResponseEntity<List<User>> toggleFollow(@PathVariable Long id,
+    @JsonView(Basic.class)
+    public ResponseEntity<List<UserInformation>> toggleFollow(@PathVariable Long id,
                                                    HttpServletRequest request) {
         Optional<User> profileUser = this.profileService.findById(id);
         if (profileUser.isEmpty()) {

@@ -161,9 +161,9 @@ public class AdminDashboardRestController {
         List<Tuple> statics = this.profileService.getStatics();
         Map<String, String> statistics = new HashMap<>();
 
-        for (int i = 0; i < statics.size(); i++) {
-            String key = statics.get(i).get("join_date").toString();
-            String value = statics.get(i).get("new_people").toString();
+        for (Tuple aStatic : statics) {
+            String key = aStatic.get("join_date").toString();
+            String value = aStatic.get("new_people").toString();
             statistics.put(key, value);
         }
 

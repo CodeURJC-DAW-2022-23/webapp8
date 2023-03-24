@@ -97,11 +97,22 @@ public class InformationManager {
             currentTweetInformation.setNumRetweets(this.tweetService.getRetweetsOfTweet(tweet.getId()));
 
             this.checkUserStateAboutTweets(tweet, currentUser, currentTweetInformation);
+            this.createUrlToImages(currentTweetInformation);
 
             tweetsInfo.add(currentTweetInformation);
         }
 
         return tweetsInfo;
+    }
+
+    private void createUrlToImages(TweetInformation tweetInformation) {
+        Long tweetUserId = tweetInformation.getTweet().getUser().getId();
+        Long tweetId = tweetInformation.getTweet().getId();
+        tweetInformation.setUrlToProfilePic("/" + tweetUserId + "/profile-pic");
+        tweetInformation.setUrlToMedia1("/" +  tweetId + "/tweet-image1");
+        tweetInformation.setUrlToMedia2("/" +  tweetId + "/tweet-image2");
+        tweetInformation.setUrlToMedia3("/" +  tweetId + "/tweet-image3");
+        tweetInformation.setUrlToMedia4("/" +  tweetId + "/tweet-image4");
     }
 
     /**
@@ -252,5 +263,37 @@ public class InformationManager {
                 hashtagService.add(hashtag, firstTweet);
             }
         }
+    }
+
+    public UserInformation prepareUserInformation(User profileUser, User currentUser) {
+        UserInformation currentUserInformation = new UserInformation();
+        currentUserInformation.setUser(profileUser);
+
+        int followersNumber = profileUser.getFollowersNumber();
+        currentUserInformation.setFollowersNumber(followersNumber);
+
+        int followedNumber = profileUser.getFollowedNumber();
+        currentUserInformation.setFollowedNumber(followedNumber);
+
+        List<Tweet> tweetList = this.tweetService.findSomeTweetOfUser(profileUser.getId(),0, 10);
+        List<TweetInformation> tweets = this.calculateDataOfTweet(tweetList, currentUser);
+        currentUserInformation.setTweets(tweets);
+
+        Long id = profileUser.getId();
+        currentUserInformation.setUrlToProfilePic("/" + id + "/profile-pic");
+        currentUserInformation.setUrlToBannerPic("/" + id + "/banner-pic");
+
+        return currentUserInformation;
+    }
+
+    public List<UserInformation> prepareListUser(List<User> users) {
+        List<UserInformation> listUsers = new ArrayList<>();
+
+        for (User user: users) {
+            UserInformation currentUser = this.prepareUserInformation(user, null);
+            listUsers.add(currentUser);
+        }
+
+        return listUsers;
     }
 }

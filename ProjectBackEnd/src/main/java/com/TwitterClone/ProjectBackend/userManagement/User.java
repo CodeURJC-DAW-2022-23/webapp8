@@ -38,13 +38,11 @@ import java.util.*;
 public class User {
     public interface Basic {
     }
-
-    ;
+    
 
     public interface Profile extends Basic {
     }
 
-    ;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @JsonView(Basic.class)

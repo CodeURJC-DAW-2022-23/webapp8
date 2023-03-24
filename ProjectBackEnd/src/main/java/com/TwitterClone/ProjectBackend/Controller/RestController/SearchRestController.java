@@ -4,6 +4,7 @@ import com.TwitterClone.ProjectBackend.Model.Hashtag;
 import com.TwitterClone.ProjectBackend.Model.MustacheObjects.InformationManager;
 import com.TwitterClone.ProjectBackend.Model.MustacheObjects.ModelManager;
 import com.TwitterClone.ProjectBackend.Model.MustacheObjects.TweetInformation;
+import com.TwitterClone.ProjectBackend.Model.MustacheObjects.UserInformation;
 import com.TwitterClone.ProjectBackend.Model.Tweet;
 import com.TwitterClone.ProjectBackend.Service.HashtagService;
 import com.TwitterClone.ProjectBackend.userManagement.User;
@@ -28,17 +29,16 @@ import java.util.List;
 @RestController
 @RequestMapping("/api")
 public class SearchRestController {
+
     @Autowired
     private InformationManager informationManager;
-    @Autowired
-    private ModelManager modelManager;
     @Autowired
     private UserService userService;
 
     @Autowired
     private HashtagService hashtagService;
 
-    interface Basic extends User.Basic, Tweet.Basic, Hashtag.Basic {
+    interface Basic extends User.Basic, Tweet.Basic, TweetInformation.Basic, Hashtag.Basic, UserInformation.Basic {
     }
 
     ;
@@ -54,13 +54,14 @@ public class SearchRestController {
     @JsonView(Basic.class)
     public ResponseEntity<Object> SearchProfiles(@PathVariable String keyword) {
         List<User> list = userService.findByUsernameContainingIgnoreCase(keyword);
+        List<UserInformation> listUsers = this.informationManager.prepareListUser(list);
         //List<Hashtag> list2 = hashtagService.findByHashtagIsContainingIgnoreCase(keyword);
 
         if (list.size() == 0) {
             return ResponseEntity.notFound().build();
         }
 
-        return ResponseEntity.ok(list);
+        return ResponseEntity.ok(listUsers);
     }
 
     @Operation(summary = "Find Hashtags which contains the keyword in their username")

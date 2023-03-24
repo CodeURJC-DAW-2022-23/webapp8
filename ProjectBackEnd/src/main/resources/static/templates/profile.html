@@ -49,21 +49,21 @@
     <div>
         <!-- BANNER -->
         <figure class="max-h-[265px]"> <!-- h-[265px] fix the bug with the banner; play with the screen-sizes -->
-            <img class="object-fill w-full h-full" src="/{{user.id}}/banner-pic" alt="Banner photo">
+            <img class="object-fill w-full h-full" src="{{userToShow.urlToBannerPic}}" alt="Banner photo">
         </figure>
 
         <div class="relative flex flex-col gap-3 px-5 pb-6 border-b bottom-9 border-gray-9 dark:border-black-5">
             <!-- PHOTO -->
             <figure
                 class="overflow-hidden transition border-[6px] rounded-full cursor-pointer hover:scale-110 w-28 lmd:w-36 dark:border-black-0 border-white-0">
-                <img class="object-fill w-full h-full rounded-full" src="/{{user.id}}/profile-pic" alt="Profile photo"
-                onload="loadUserOthersSvg('{{user.type}}');">
+                <img class="object-fill w-full h-full rounded-full" src="{{userToShow.urlToProfilePic}}" alt="Profile photo"
+                onload="loadUserOthersSvg('{{userToShow.user.type}}');">
             </figure>
 
             <!-- USERNAME AND @ -->
             <article class="flex flex-col items-start justify-between">
                 <section class="flex items-center gap-2">
-                    <h2 class="text-2xl font-semibold dark:text-white-0">{{user.nickname}}</h2>
+                    <h2 class="text-2xl font-semibold dark:text-white-0">{{userToShow.user.nickname}}</h2>
 
                     <div id="userNameSvgNick" class="w-6">
 
@@ -71,12 +71,12 @@
                 </section>
 
                 <h3 class="font-semibold text-md dark:font-normal text-gray-2">
-                    @{{user.username}}</h3>
+                    @{{userToShow.user.username}}</h3>
             </article>
 
             <!-- BIOGRAPHY -->
             <p class="overflow-hidden text-md text-ellipsis text-twitter-dark-gray dark:text-white-0">
-                {{user.biography}}
+                {{userToShow.user.biography}}
             </p>
 
             <!-- JOIN DATE -->
@@ -90,18 +90,18 @@
                 </svg>
 
                 <div class="font-semibold text-md dark:font-normal text-gray-2">
-                    Joined {{user.joinDate}}
+                    Joined {{userToShow.user.joinDate}}
                 </div>
             </div>
 
             <!-- FOLLOWING AND FOLLOWERS -->
-            <a class="flex gap-3" href="/follow/{{user.id}}">
+            <a class="flex gap-3" href="/follow/{{userToShow.user.id}}">
                 <div class="flex items-center gap-1">
-                    <span class="font-semibold text-md dark:text-white-0 hover:underline">{{followedNumber}}</span>
+                    <span class="font-semibold text-md dark:text-white-0 hover:underline">{{userToShow.followedNumber}}</span>
                     <span class="font-semibold text-md dark:font-normal text-gray-2 hover:underline">Following</span>
                 </div>
                 <div class="flex items-center gap-1">
-                    <span class="font-semibold text-md dark:text-white-0 hover:underline">{{followersNumber}}</span>
+                    <span class="font-semibold text-md dark:text-white-0 hover:underline">{{userToShow.followersNumber}}</span>
                     <span class="font-semibold text-md dark:font-normal text-gray-2 hover:underline">Followers</span>
                 </div>
             </a>
@@ -131,7 +131,7 @@
                 {{#isBanned}}
                 <button
                         class="px-4 py-2 font-bold text-center transition rounded-full cursor-pointer text-white-0 bg-red-3 hover:scale-110"
-                        onclick="window.location.href = '/ban/{{user.id}}'">
+                        onclick="window.location.href = '/ban/{{userToShow.user.id}}'">
                     Ban user
                 </button>
                 {{/isBanned}}
@@ -140,14 +140,14 @@
                 {{^isFollowed}}
                 <button id="follow-button"
                         class="px-4 py-2 font-bold text-center transition rounded-full cursor-pointer text-white-0 bg-primary hover:scale-110"
-                        onclick="window.location.href = '/toggleFollow/{{user.id}}'">
+                        onclick="window.location.href = '/toggleFollow/{{userToShow.user.id}}'">
                     Follow
                 </button>
                 {{/isFollowed}}
                 {{#isFollowed}}
                 <button id="unfollow-button"
                         class="px-4 py-2 font-bold text-center transition rounded-full cursor-pointer text-white-0 bg-red-3 hover:scale-110"
-                        onclick="window.location.href = '/toggleFollow/{{user.id}}'">
+                        onclick="window.location.href = '/toggleFollow/{{userToShow.user.id}}'">
                     Unfollow
                 </button>
                 {{/isFollowed}}
@@ -167,7 +167,7 @@
         </div>
 
         <!-- SHOW TWEETS BUTTON -->
-        <button onclick="loadMoreTweetsForProfile('{{user.id}}');" id="loadMore"
+        <button onclick="loadMoreTweetsForProfile('{{userToShow.user.id}}');" id="loadMore"
                 class="hidden w-full py-4 text-lg font-semibold border-b llg:block border-gray-9 dark:bg-black-0 hover:bg-gray-7 dark:border-black-5 dark:hover:bg-black-6 text-primary">
             Load More
         </button>
@@ -179,7 +179,7 @@
 
         <!-- SHOW TWEETS BUTTON - MOBILE -->
         <div class="sticky flex justify-center">
-            <button onclick="loadMoreTweetsForProfile('{{user.id}}');" id="loadMore-mobile"
+            <button onclick="loadMoreTweetsForProfile('{{userToShow.user.id}}');" id="loadMore-mobile"
                     class="fixed px-5 py-3 text-sm font-semibold transition cursor-pointer top-[5.4rem] llg:hidden hover:scale-110 rounded-3xl text-white-0 bg-primary">
                 Load More
             </button>
