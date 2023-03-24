@@ -47,7 +47,7 @@ public class ResetPasswordRestController {
 
         userService.updateResetPasswordToken(passwordToken, request.getEmail());
         String resetPasswordLink = "https://localhost:8443/reset-password?passwordToken=" + passwordToken;
-        mailService.sendEmail(request.getEmail(), resetPasswordLink);
+        mailService.sendResetPasswordMail(request.getEmail(), resetPasswordLink);
 
         return new ResponseEntity<>(HttpStatus.OK);
     }

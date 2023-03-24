@@ -2,6 +2,7 @@ package com.TwitterClone.ProjectBackend.Controller.RestController;
 
 
 import com.TwitterClone.ProjectBackend.Model.MustacheObjects.InformationManager;
+import com.TwitterClone.ProjectBackend.Service.MailService;
 import com.TwitterClone.ProjectBackend.Service.ProfileService;
 import com.TwitterClone.ProjectBackend.userManagement.User;
 import com.fasterxml.jackson.annotation.JsonView;
@@ -14,8 +15,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.mail.MessagingException;
 import javax.persistence.Tuple;
 import javax.servlet.http.HttpServletRequest;
+import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -29,9 +32,10 @@ public class AdminDashboardRestController {
 
     @Autowired
     private InformationManager informationManager;
+    @Autowired
+    private MailService mailService;
 
-    interface Basic extends User.Basic {
-    }
+    interface Basic extends User.Basic{}
 
     @Operation(summary = "If the user is a admin, he can ban another user according to his ID")
     @ApiResponses(value = {
@@ -43,7 +47,7 @@ public class AdminDashboardRestController {
     @PutMapping("/ban/{id}")
     @JsonView(Basic.class)
     public ResponseEntity<Object> ban(@PathVariable Long id,
-                                      HttpServletRequest request) {
+                                      HttpServletRequest request) throws MessagingException, UnsupportedEncodingException {
         User currentUser = this.informationManager.getCurrentUser(request);
 
         if (profileService.findById(id).isEmpty()) {
@@ -56,6 +60,7 @@ public class AdminDashboardRestController {
             user.setType("BANNED");
             user.setEnabled(false);
             this.profileService.updateUserBan(user);
+            mailService.sendBanMail(user.getEmail());
             return ResponseEntity.ok(user);
         }
 
@@ -73,7 +78,7 @@ public class AdminDashboardRestController {
     @PutMapping("/unban/{id}")
     @JsonView(Basic.class)
     public ResponseEntity<Object> unban(@PathVariable Long id,
-                                        HttpServletRequest request) {
+                                        HttpServletRequest request) throws MessagingException, UnsupportedEncodingException {
         User currentUser = this.informationManager.getCurrentUser(request);
 
         if (profileService.findById(id).isEmpty()) {
@@ -86,6 +91,7 @@ public class AdminDashboardRestController {
             user.setType("PUBLIC");
             user.setEnabled(true);
             this.profileService.updateUserBan(user);
+            mailService.sendUnBanMail(user.getEmail());
             return ResponseEntity.ok(user);
         }
 

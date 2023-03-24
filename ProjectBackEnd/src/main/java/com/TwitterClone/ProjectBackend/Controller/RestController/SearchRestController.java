@@ -1,10 +1,6 @@
 package com.TwitterClone.ProjectBackend.Controller.RestController;
 
 import com.TwitterClone.ProjectBackend.Model.Hashtag;
-import com.TwitterClone.ProjectBackend.Model.MustacheObjects.InformationManager;
-import com.TwitterClone.ProjectBackend.Model.MustacheObjects.ModelManager;
-import com.TwitterClone.ProjectBackend.Model.MustacheObjects.TweetInformation;
-import com.TwitterClone.ProjectBackend.Model.MustacheObjects.UserInformation;
 import com.TwitterClone.ProjectBackend.Model.Tweet;
 import com.TwitterClone.ProjectBackend.Service.HashtagService;
 import com.TwitterClone.ProjectBackend.userManagement.User;
@@ -12,18 +8,15 @@ import com.TwitterClone.ProjectBackend.userManagement.UserService;
 import com.fasterxml.jackson.annotation.JsonView;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
-import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @RestController
@@ -31,15 +24,12 @@ import java.util.List;
 public class SearchRestController {
 
     @Autowired
-    private InformationManager informationManager;
-    @Autowired
     private UserService userService;
 
     @Autowired
     private HashtagService hashtagService;
 
-    interface Basic extends User.Basic, Tweet.Basic, TweetInformation.Basic, Hashtag.Basic, UserInformation.Basic {
-    }
+    interface Basic extends User.Basic,Tweet.Basic,  Hashtag.Basic{}
 
     ;
 
@@ -54,14 +44,12 @@ public class SearchRestController {
     @JsonView(Basic.class)
     public ResponseEntity<Object> SearchProfiles(@PathVariable String keyword) {
         List<User> list = userService.findByUsernameContainingIgnoreCase(keyword);
-        List<UserInformation> listUsers = this.informationManager.prepareListUser(list);
-        //List<Hashtag> list2 = hashtagService.findByHashtagIsContainingIgnoreCase(keyword);
 
         if (list.size() == 0) {
             return ResponseEntity.notFound().build();
         }
 
-        return ResponseEntity.ok(listUsers);
+        return ResponseEntity.ok(list);
     }
 
     @Operation(summary = "Find Hashtags which contains the keyword in their username")

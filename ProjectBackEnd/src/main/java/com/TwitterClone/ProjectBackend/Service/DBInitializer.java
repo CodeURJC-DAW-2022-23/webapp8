@@ -81,7 +81,7 @@ public class DBInitializer {
         userRepository.save(user3);
         userRepository.save(user4);
         files = new String[]{"example_data/Default_profilepic.jpg", "example_data/Default_profilebanner.jpg"};
-        User testUser = new User("user", passwordEncoder.encode("pass"), "ikablue0185@gmail.com", "USER");
+        User testUser = new User("user", passwordEncoder.encode("pass"), "twittercloneuser@gmail.com", "USER");
         testUser.setImages(files);
         testUser.setNickname("user");
         userRepository.save(testUser);

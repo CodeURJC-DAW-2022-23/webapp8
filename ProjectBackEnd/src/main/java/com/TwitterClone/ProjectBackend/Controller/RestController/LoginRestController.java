@@ -3,6 +3,7 @@ package com.TwitterClone.ProjectBackend.Controller.RestController;
 import com.TwitterClone.ProjectBackend.Security.jwt.AuthResponse;
 import com.TwitterClone.ProjectBackend.Security.jwt.LoginRequest;
 import com.TwitterClone.ProjectBackend.Security.jwt.UserLoginService;
+import com.TwitterClone.ProjectBackend.Service.MailService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -34,7 +35,6 @@ public class LoginRestController {
             @CookieValue(name = "accessToken", required = false) String accessToken,
             @CookieValue(name = "refreshToken", required = false) String refreshToken,
             @RequestBody LoginRequest loginRequest) {
-
         return userService.login(loginRequest, accessToken, refreshToken);
     }
 
@@ -43,7 +43,7 @@ public class LoginRestController {
             @ApiResponse(responseCode = "200", description = "Page has been successfully refreshed", content = {
                     @Content(mediaType = "application/json", schema = @Schema(implementation = Object.class))
             }),
-            @ApiResponse(responseCode = "404", description = "UURL not found", content = @Content)
+            @ApiResponse(responseCode = "404", description = "URL not found", content = @Content)
     })
     @PostMapping("/refresh")
     public ResponseEntity<AuthResponse> refreshToken(

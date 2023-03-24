@@ -3,6 +3,7 @@ package com.TwitterClone.ProjectBackend.userManagement;
 import com.TwitterClone.ProjectBackend.DTO.RegisteredRequest;
 import com.TwitterClone.ProjectBackend.Repository.UserRepository;
 import com.TwitterClone.ProjectBackend.Security.EmailValidator;
+import com.TwitterClone.ProjectBackend.Service.MailService;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import net.bytebuddy.utility.RandomString;
@@ -34,7 +35,7 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
     @Autowired
-    private JavaMailSender mailSender;
+    private MailService mailService;
 
 
     /**
@@ -69,48 +70,12 @@ public class UserService {
         user.setImages(new String[]{"example_data/Default_profilepic.jpg", "example_data/Default_profilebanner.jpg"});
         userRepository.save(user);
 
-        sendVerificationEmail(user, user.getEmail());
+        mailService.sendVerificationEmail(user, user.getEmail());
 
         return true;
     }
 
-    /**
-     * Send a verification email to the new user
-     *
-     * @param user
-     * @param userMail
-     * @throws MessagingException
-     * @throws UnsupportedEncodingException
-     */
-    private void sendVerificationEmail(User user, String userMail)
-            throws MessagingException, UnsupportedEncodingException {
-        String toAddress = userMail;
-        String fromAddress = "twitterclone027@gmail.com";
-        String senderName = "Twitter clone";
-        String subject = "Please verify your registration";
-        String content = "Dear [[name]],<br>"
-                + "Please click the link below to verify your registration:<br>"
-                + "<h3><a href=\"[[URL]]\" target=\"_self\">VERIFY</a></h3>"
-                + "Thank you,<br>"
-                + "Twitter Clone.";
 
-        MimeMessage message = mailSender.createMimeMessage();
-        MimeMessageHelper helper = new MimeMessageHelper(message);
-
-        helper.setFrom(fromAddress, senderName);
-        helper.setTo(toAddress);
-        helper.setSubject(subject);
-
-        content = content.replace("[[name]]", user.getUsername());
-        String verifyURL = "https://localhost:8443/verify?code=" + user.getVerificationCode();
-
-        content = content.replace("[[URL]]", verifyURL);
-
-        helper.setText(content, true);
-
-        mailSender.send(message);
-
-    }
 
     /**
      * Verify the new user

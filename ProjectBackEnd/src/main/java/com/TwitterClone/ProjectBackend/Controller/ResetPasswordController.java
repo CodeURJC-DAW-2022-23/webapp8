@@ -6,18 +6,14 @@ import com.TwitterClone.ProjectBackend.userManagement.UserService;
 import net.bytebuddy.utility.RandomString;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
-import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.web.csrf.CsrfToken;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.mail.MessagingException;
-import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
 import java.io.UnsupportedEncodingException;
 
@@ -60,7 +56,7 @@ public class ResetPasswordController {
 
         userService.updateResetPasswordToken(passwordToken, email);
         String resetPasswordLink = "https://localhost:8443/reset-password?passwordToken=" + passwordToken;
-        mailService.sendEmail(email, resetPasswordLink);
+        mailService.sendResetPasswordMail(email, resetPasswordLink);
 
         return "forgot-password-confirmation";
     }

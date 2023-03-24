@@ -1,6 +1,7 @@
 package com.TwitterClone.ProjectBackend.userManagement;
 
 import com.TwitterClone.ProjectBackend.Repository.UserRepository;
+import com.TwitterClone.ProjectBackend.Service.MailService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
@@ -10,6 +11,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import javax.mail.MessagingException;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,7 +27,6 @@ public class RepositoryUserDetailsService implements UserDetailsService {
     private final static String USER_NOT_FOUND = "User with username %username not found";
     @Autowired
     private UserRepository userRepository;
-
     /**
      * It searchs on the repository to see if it can find a user by the username. If not, it throws an
      * exception
@@ -41,7 +43,6 @@ public class RepositoryUserDetailsService implements UserDetailsService {
 
         List<GrantedAuthority> roles = new ArrayList<>();
         roles.add(new SimpleGrantedAuthority("ROLE_" + user.getRole()));
-
 
         return new org.springframework.security.core.userdetails.User(user.getUsername(),
                 user.getPassword(),

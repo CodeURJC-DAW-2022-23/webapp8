@@ -1,6 +1,7 @@
 package com.TwitterClone.ProjectBackend.Controller;
 
 import com.TwitterClone.ProjectBackend.Model.MustacheObjects.InformationManager;
+import com.TwitterClone.ProjectBackend.Service.MailService;
 import com.TwitterClone.ProjectBackend.Service.NotificationService;
 import com.TwitterClone.ProjectBackend.Service.ProfileService;
 import com.TwitterClone.ProjectBackend.userManagement.User;
@@ -11,8 +12,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 /**
@@ -27,6 +30,8 @@ public class ProfileController {
     private InformationManager informationManager;
     @Autowired
     private NotificationService notificationService;
+    @Autowired
+    private MailService mailService;
 
     /**
      * Update the user profile
@@ -113,13 +118,14 @@ public class ProfileController {
      */
     @GetMapping("/ban/{id}")
     public String ban(@PathVariable Long id,
-                      HttpServletRequest request) {
+                      HttpServletRequest request) throws MessagingException, UnsupportedEncodingException {
 
         User currentUser = this.informationManager.getCurrentUser(request);
         if (currentUser.getRole().toString().equals("ADMIN")) {
             User user = this.profileService.findById(id).get();
             user.setType("BANNED");
             user.setEnabled(false);
+            mailService.sendBanMail(user.getEmail());
             this.profileService.updateUserBan(user);
         }
         return "redirect:/profile/" + id.toString();
@@ -133,12 +139,13 @@ public class ProfileController {
      */
     @GetMapping("/unban/{id}")
     public String unban(@PathVariable Long id,
-                        HttpServletRequest request) {
+                        HttpServletRequest request) throws MessagingException, UnsupportedEncodingException {
         User currentUser = this.informationManager.getCurrentUser(request);
         if (currentUser.getRole().toString().equals("ADMIN")) {
             User user = this.profileService.findById(id).get();
             user.setType("PUBLIC");
             user.setEnabled(true);
+            mailService.sendUnBanMail(user.getEmail());
             this.profileService.updateUserBan(user);
         }
         return "redirect:/dashboard";

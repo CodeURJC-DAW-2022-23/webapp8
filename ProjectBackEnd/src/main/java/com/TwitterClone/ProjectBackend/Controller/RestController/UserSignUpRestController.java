@@ -1,8 +1,6 @@
 package com.TwitterClone.ProjectBackend.Controller.RestController;
 
 import com.TwitterClone.ProjectBackend.DTO.RegisteredRequest;
-import com.TwitterClone.ProjectBackend.Model.MustacheObjects.TweetInformation;
-import com.TwitterClone.ProjectBackend.Model.Tweet;
 import com.TwitterClone.ProjectBackend.userManagement.User;
 import com.TwitterClone.ProjectBackend.userManagement.UserService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -15,12 +13,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.web.csrf.CsrfToken;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.mail.MessagingException;
-import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
 @RestController
