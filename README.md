@@ -20,7 +20,13 @@ The objetive is to replicated the Social Media Twitter with some upgrades for th
         * [Sample User](#closed_lock_with_key-sample-users)
     * [DataBase](#card_index-database)
     * [Diagrams](#flower_playing_cards-diagrams)
-    * [Members Participation](#busts_in_silhouette-members-participation)
+    * [Members Participation](#busts_in_silhouette-members-participation---phase-2)
+* [Phase 3](#whale-phase-3---add-a-rest-api-to-the-web-application-and-deploy-withdocker)
+    * [API REST documentation](#postbox-api-rest-documentation)
+    * [Dockerized application execution instructions](#calling-dockerized-application-execution-instructions)
+    * [Documentation for building the docker image](#whale2-documentation-for-building-the-docker-image)
+    * [Members Participation](#busts_in_silhouette-members-participation---phase-3)
+
 
 ***
 
@@ -58,23 +64,20 @@ To organize the team, we are using [Trello](https://trello.com/b/WpuV8KtM/la-put
 
 #### :orange_book: User Permissions
 
-| User           | Tweets                                                            | People                                  | Hashtags                                        | Notifications | Trends |
-| :------------: | :---------------------------------------------------------------: | :-------------------------------------: | :---------------------------------------------: | :-----------: | :----: |
-| **Anonymous**  | Read                                                              | Read(See their profile)                 | Read (can search them and read the impressions) | Nothing       | Read   |
-| **Admin**      | Read, write (their own), detele (every tweet), modify (their own) | Read, delete, write (their own profile) | Read, write, delete                             | Read          | Read   |
-| **Registered** | Read, write (their own), delete (their Own), modify (their own)   | Read, write (their own profile)         | Read, write                                     | Read          | Read   |
+| User           | Tweets                                        | People                                  | Hashtags                                        | Notifications |
+| :------------: | :-------------------------------------------: | :-------------------------------------: | :---------------------------------------------: | :-----------: |
+| **Anonymous**  | Read                                          | Read(See their profile)                 | Read (can search them and read the impressions) | Nothing       |
+| **Admin**      | Read, write (their own), detele (every tweet) | Read, delete, write (their own profile) | Read, write                                     | Read          |
+| **Registered** | Read, write (their own), delete (their Own)   | Read, write (their own profile)         | Read, write                                     | Read          |
 
-| Permissions  | Affects to                                                                                                            |
-| ------------ | --------------------------------------------------------------------------------------------------------------------- |
-| **Images**   | All registered users can upload images                                                                                |
-| **Graphics** | All registered users can consult graphics with their statistics (followers evolution, interacts over the past month…) |
+| Permissions  | Affects to                                                                                              |
+| ------------ | ------------------------------------------------------------------------------------------------------- |
+| **Images**   | All registered users can upload images                                                                  |
+| **Graphics** | Admin users can consult graphics with the statistics of the web (Number of new registered users)        |
 
-| Complementary Technologies                                                                             |
-| :----------------------------------------------------------------------------------------------------: |
-| Generation of PDFs with all the user's tweets                                                          |
-| Python and its libraries to create a ML recommendation systems (Collaborative filtering between users) |
-| Generation of a side page on reader mode                                                               |
-| [ThreaderApp functionality](https://threadreaderapp.com/thread/1536018200697135106.html)               |
+| Complementary Technologies                                       |
+| :--------------------------------------------------------------: |
+| Mail Sender                                                      |
 
 #### :performing_arts: Use Cases
 <div style="display: flex;
@@ -112,49 +115,38 @@ To organize the team, we are using [Trello](https://trello.com/b/WpuV8KtM/la-put
 | See tweet information                                       | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: |
 | Interact with a tweet (retweet, like and comment)           |                    | :heavy_check_mark: | :heavy_check_mark: |
 | Reply to a tweet                                            |                    | :heavy_check_mark: | :heavy_check_mark: |
-| Cite a tweet                                                |                    | :heavy_check_mark: | :heavy_check_mark: |
 | Save a tweet                                                |                    | :heavy_check_mark: | :heavy_check_mark: |
 | Write a tweet                                               |                    | :heavy_check_mark: | :heavy_check_mark: |
-| Edit a tweet                                                |                    | :heavy_check_mark: | :heavy_check_mark: |
 | Delete a tweet                                              |                    | :heavy_check_mark: | :heavy_check_mark: |
 | Visualize recommend users                                   | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: |
 | Receive notifications                                       |                    | :heavy_check_mark: | :heavy_check_mark: |
-| Receive email notifications (when login and sign up)        | :heavy_check_mark: |                    |                    |
-| Choose notifications he wants to receive                    |                    | :heavy_check_mark: | :heavy_check_mark: |
-| Use Thread Reader                                           |                    | :heavy_check_mark: | :heavy_check_mark: |
-| Visualize own statistics                                    |                    | :heavy_check_mark: | :heavy_check_mark: |
-| Share a tweet (to another user, out-application)            |                    | :heavy_check_mark: | :heavy_check_mark: |
+| Receive email notifications                                 | :heavy_check_mark: |                    |                    |
+| Visualize statistics                                        |                    |                    | :heavy_check_mark: |
 | Edit profile                                                |                    | :heavy_check_mark: | :heavy_check_mark: |
 | Visualize profile                                           | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: |
 | Follow a profile                                            |                    | :heavy_check_mark: | :heavy_check_mark: |
-| Subscribe a profile (notifications)                         |                    | :heavy_check_mark: | :heavy_check_mark: |
 | Visualize tendencies                                        | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: |
-| Block a tendency (not visualize tweets within the tendency) |                    | :heavy_check_mark: | :heavy_check_mark: |
-| Receive email notifications (when login and sign up)        |                    | :heavy_check_mark: | :heavy_check_mark: |
-| Delete profiles                                             |                    |                    | :heavy_check_mark: |
 | Ban users                                                   |                    |                    | :heavy_check_mark: |
 | Unbanned users                                              |                    |                    | :heavy_check_mark: |
 | Delete tweets                                               |                    |                    | :heavy_check_mark: |
-| Ban hashtags                                                |                    |                    | :heavy_check_mark: |
-| Unbanned users                                              |                    |                    | :heavy_check_mark: |
 | Verificate users                                            |                    |                    | :heavy_check_mark: |
 | Unverificate user                                           |                    |                    | :heavy_check_mark: |
 
 #### :triangular_flag_on_post: Non Functional Requirements
 
 * Must abide by the law (Of each continent/country in which is it used)
-* Supports tweets comprising text and pictures/videos
+* Supports tweets comprising text and pictures
 * Generating the timeline should be fast within half a second (at most)
 * Systems must be available at all times (scalability and availability) 
 * Data should be durable
 * Security must be ensured at all phases
-* The size of a tweet is 140 characters at most
+* The size of a tweet is 240 characters at most
 
 #### :dart: Advanced algorithms
 
 * ##### Recommended Systems
 
-    * We will create a python/javascript based system to recommend new profiles and trends to our registered users using collaborative filtering techniques.
+    * We will create a SQL query to recommend new profiles to our registered users using collaborative filtering techniques.
 
 * ##### Search
 
@@ -265,34 +257,63 @@ To organize the team, we are using [Trello](https://trello.com/b/WpuV8KtM/la-put
 ## :satellite: Phase 2 - Web with server-generated HTML and AJAX
 
 ### :black_nib: Start-up of the aplication
-#### Steps
-1. Download this repository
-2. Check Requirements 
-3. Configure DataBase
-4. Configure IDE
-5. Run Application in the IDE
-6. Go to https://localhost/8443/
+
+#### :feet: Steps
+
+1. Check [Requirements](#requirements)
+2. Clone the repository
+
+```
+git clone https://github.com/CodeURJC-DAW-2022-23/webapp8.git
+cd webapp8
+```
+
+3. Configure [DataBase](#database-configuration)
+4. Configure [IDE](#ide-configuration)
+5. Run Application
+
+```
+cd ProjectBackEnd\src\main\java\com\TwitterClone\ProjectBackend
+javac ProjectBackendApplication
+```
+
+6. Go to [localhost URL](https://localhost/8443/)
+7. Use the [default users](#closed_lock_with_key-sample-users) to navigate or create a new user
 
 #### DataBase Configuration
-- Download MySQL v.8.0.32 --> http://dev.mysql.com/downloads/
-- Select default port (3306)
+- Download [MySQL v.8.0.32](http://dev.mysql.com/downloads/)
+
+| Section | Value |
+| :------: | :---: |
+| Port | `3306` |
+| User name | `Admin` |
+| Password | `password` |
+
 - Create a user with name Admin and password "password" with DB admin as user role
 - Configure MySQL Server as Windows Service
 - Grant full access to the user
 - Create a new Schema named twitter in the server using MySQL Workbench
-Note:
-If you have selected to not let the server to run when the system starts you can run the server with Windows R and execute the command "services.msc". In the list you can find MySQL server and run it. 
+
+> Note:
+> If you have selected to not let the server to run when the system starts you can run the server with Windows R and execute the command "services.msc". In the list you can find MySQL server and run it. 
 
 #### IDE Configuration
-- We recommend IntelliJ IDEA but you can use other IDE's
-- Install Maven and Spring for your IDE
-- Add the following enviroment variable --> SPRING_MAIL_PASSWORD=APasswordForTheMail
+- We recommend [IntelliJ IDEA](https://www.jetbrains.com/idea/) but you can use other IDE's
+- Install [Maven](https://maven.apache.org/download.cgi) and [Spring](https://spring.io/projects/spring-boot) for your IDE
+
+| Enviroment Variable |
+| :-----------------: |
+| SPRING_MAIL_PASSWORD=APasswordForTheMail |
+
 
 #### Requirements
-- MySQL: v.8.0.32 (Explained in DataBase Configuration)
-- Java: JDK 17 --> https://www.oracle.com/java/technologies/javase/jdk17-archive-downloads.html
-- Spring Boot 2.7.4
-- IDE (explained in IDE Configuration)
+
+| Requirements |
+| :----------: |
+| [MySQL v.8.0.32](http://dev.mysql.com/downloads/) |
+| [JDK 17](https://www.oracle.com/java/technologies/javase/jdk17-archive-downloads.html) |
+| [Spring Boot 2.7.4](https://spring.io/projects/spring-boot) |
+| [IDE](#ide-configuration) |
 
 #### :closed_lock_with_key: Sample users
 
@@ -315,7 +336,7 @@ If you have selected to not let the server to run when the system starts you can
 ![diagram](./files-to-README/phase2/Templates.svg)
 *Figure 27 - Class Diagram*
 
-### :busts_in_silhouette: Members Participation
+### :busts_in_silhouette: Members Participation - Phase 2
 
 #### Sergio De Oro Fernández
 
@@ -376,5 +397,80 @@ If you have selected to not let the server to run when the system starts you can
 | 3º  | [Rework DataBase to fix circular references](https://github.com/CodeURJC-DAW-2022-23/webapp8/tree/d52e49cab7f1d11ef12e9fd7b7aa800aaff93f3a) | | 3º     | [Admin Dashboard View](https://github.com/CodeURJC-DAW-2022-23/webapp8/blob/main/ProjectBackEnd/src/main/resources/static/templates/admin-dashboard.html)         |
 | 4º  | [Add new queries to Tweet](https://github.com/CodeURJC-DAW-2022-23/webapp8/tree/f2413dcc7beb1a50c471210f36c1aea6be090d45) | | 4º | [Tweet](https://github.com/CodeURJC-DAW-2022-23/webapp8/blob/main/ProjectBackEnd/src/main/java/com/TwitterClone/ProjectBackend/Model/Tweet.java)        |
 | 5º  | [Update Hashtag](https://github.com/CodeURJC-DAW-2022-23/webapp8/tree/34066d1d40a06962bbd767c14ebf71edb4368347) | | 5º     | [Tweet Service](https://github.com/CodeURJC-DAW-2022-23/webapp8/blob/main/ProjectBackEnd/src/main/java/com/TwitterClone/ProjectBackend/Service/TweetService.javajs)       |
+
+***
+
+## :whale: Phase 3 - Add a REST API to the web application and deploy withDocker
+
+### :postbox: API REST documentation
+
+| URLs | [File]() | [In Production]() | [For Developers]() |
+| :--: | :--: | :-----------: | :------------: | 
+
+### :calling: Dockerized application execution instructions
+
+### :whale2: Documentation for building the docker image
+
+### :busts_in_silhouette: Members Participation - Phase 3
+
+#### Sergio De Oro Fernández
+
+* Creator and controller of all notifications, his great creativity has allowed logical and ingenious solutions.
+
+| #   | Commit      |     | #   | File |
+| :-: | :---------: | :-: | :-: | :--: |
+| 1º  |  | | 1º      |         |
+| 2º  |  | | 2º      |         |
+| 3º  |  | | 3º      |         |
+| 4º  |  | | 4º      |         |
+| 5º  |  | | 5º      |         |
+
+#### Laura María Camino Yuste
+
+* Our security scientist has prepared all the security of our application, together with all the user and session management logic.
+
+| #   | Commit      |     | #   | File |
+| :-: | :---------: | :-: | :-: | :--: |
+| 1º  | [Finish Rest Security Configuration](https://github.com/CodeURJC-DAW-2022-23/webapp8/commit/8b7fa0564473516e405dac9445fd70ad314bf41a) | | 1º      | [RestSecurityConfig](https://github.com/CodeURJC-DAW-2022-23/webapp8/blob/main/ProjectBackEnd/src/main/java/com/TwitterClone/ProjectBackend/Security/RestSecurityConfig.java)        |
+| 2º  | [Add UserSignUpRestController](https://github.com/CodeURJC-DAW-2022-23/webapp8/commit/25b3ace3b9ae6b0d9dd027a421dcbc3da0651f5a) | | 2º      | [UserSignUpRestController](https://github.com/CodeURJC-DAW-2022-23/webapp8/blob/main/ProjectBackEnd/src/main/java/com/TwitterClone/ProjectBackend/Controller/RestController/SearchRestController.java)        |
+| 3º  | [Add SearchRestController](https://github.com/CodeURJC-DAW-2022-23/webapp8/commit/16e69880c03dc914c9fcfcdbe7f111e5b2d26f50) | | 3º      | [SearchRestController](https://github.com/CodeURJC-DAW-2022-23/webapp8/blob/main/ProjectBackEnd/src/main/java/com/TwitterClone/ProjectBackend/Controller/RestController/SearchRestController.java)        |
+| 4º  | [Add AdminDashBoardRestController](https://github.com/CodeURJC-DAW-2022-23/webapp8/commit/0a746921c17c73c295095984da17c15c489aa4d3) | | 4º      |  [AdminDashboardRestController](https://github.com/CodeURJC-DAW-2022-23/webapp8/blob/main/ProjectBackEnd/src/main/java/com/TwitterClone/ProjectBackend/Controller/RestController/AdminDashboardRestController.java)       |
+| 5º  | [Add ResetPasswordRestController](https://github.com/CodeURJC-DAW-2022-23/webapp8/commit/ce965349d4472a58b4f8336270d50702b526131b) | | 5º      | [ResetPasswordRestController](https://github.com/CodeURJC-DAW-2022-23/webapp8/blob/main/ProjectBackEnd/src/main/java/com/TwitterClone/ProjectBackend/Controller/RestController/ResetPasswordRestController.java)        |
+
+#### Antonio José Alanís Bernal
+
+* Main designer artist, he has created the entire visual section of the web application, together with all the logic referring to the profiles of the different users.
+
+| #   | Commit      |     | #   | File |
+| :-: | :---------: | :-: | :-: | :--: |
+| 1º  |  | | 1º      |         |
+| 2º  |  | | 2º      |         |
+| 3º  |  | | 3º      |         |
+| 4º  |  | | 4º      |         |
+| 5º  |  | | 5º      |         |
+
+#### Ikár Vladislav Martínez de Lizarduy Kostornichenko
+
+* Worker of the bridge between the front and the backend of the web application, together with the documentation of our website.
+
+| #   | Commit      |     | #   | File |
+| :-: | :---------: | :-: | :-: | :--: |
+| 1º  |  | | 1º      |         |
+| 2º  |  | | 2º      |         |
+| 3º  |  | | 3º      |         |
+| 4º  |  | | 4º      |         |
+| 5º  |  | | 5º      |         |
+
+#### Miguel Ángel Sánchez Miranda
+
+* Manager of everything related to the Database, being the one who most dominates this aspect with his great ability to perform queries.
+
+| #   | Commit      |     | #   | File |
+| :-: | :---------: | :-: | :-: | :--: |
+| 1º  | [Add Profile Methods for API](https://github.com/CodeURJC-DAW-2022-23/webapp8/commit/d8c17f1d925f6888b023e54daf9719c31d7d5393) | | 1º | [RestTweetController](https://github.com/CodeURJC-DAW-2022-23/webapp8/blob/main/ProjectBackEnd/src/main/java/com/TwitterClone/ProjectBackend/Controller/RestController/RestTweetController.java)       |
+| 2º  | [Add Post methods to RestTweetController](https://github.com/CodeURJC-DAW-2022-23/webapp8/commit/dc0d39ec73e47159ad8472f97fb5efc480e87d6e) | | 2º      | [RestProfileController ](https://github.com/CodeURJC-DAW-2022-23/webapp8/blob/main/ProjectBackEnd/src/main/java/com/TwitterClone/ProjectBackend/Controller/RestController/RestProfileController.java)         |
+| 3º  | [Add GET methods to RestTweetController](https://github.com/CodeURJC-DAW-2022-23/webapp8/commit/13744c51e08907a52d8386c25bc7790c46cd2aa3) | | 3º      | [AdminDashboardRestController](https://github.com/CodeURJC-DAW-2022-23/webapp8/blob/main/ProjectBackEnd/src/main/java/com/TwitterClone/ProjectBackend/Controller/RestController/AdminDashboardRestController.java)       |
+| 4º  | [Add PUT methods to RestTweetController](https://github.com/CodeURJC-DAW-2022-23/webapp8/commit/19155004768819853760d550ab71021e870618e1) | | 4º      | [Tweet](https://github.com/CodeURJC-DAW-2022-23/webapp8/blob/main/ProjectBackEnd/src/main/java/com/TwitterClone/ProjectBackend/Model/Tweet.java)        |
+| 5º  | [Create JsonViews](https://github.com/CodeURJC-DAW-2022-23/webapp8/commit/cbf5175dab165666b5afe1f7629d33d57d9a3a8f) | | 5º      | [TweetController](https://github.com/CodeURJC-DAW-2022-23/webapp8/blob/main/ProjectBackEnd/src/main/java/com/TwitterClone/ProjectBackend/Controller/TweetController.java)        |
 
 ***
