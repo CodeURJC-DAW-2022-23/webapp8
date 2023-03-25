@@ -50,17 +50,34 @@ public class RestSecurityConfig extends WebSecurityConfigurerAdapter {
         // URLs that need authentication to access to it
         http.authorizeRequests().antMatchers(HttpMethod.POST, "/api/tweets/write-tweet").hasAnyRole("USER","ADMIN");
         http.authorizeRequests().antMatchers(HttpMethod.POST, "/api/tweets/reply-tweet/**").hasAnyRole("USER", "ADMIN");
+
         http.authorizeRequests().antMatchers(HttpMethod.POST, "/api/images/**").hasAnyRole("USER", "ADMIN");
-        http.authorizeRequests().antMatchers(HttpMethod.POST, "/api/profile/**").hasAnyRole("USER", "ADMIN");
-        http.authorizeRequests().antMatchers(HttpMethod.POST, "/api/bookmark/**").hasAnyRole("USER", "ADMIN");
+        http.authorizeRequests().antMatchers(HttpMethod.GET, "/api/images/**").hasAnyRole("USER", "ADMIN");
+
+        http.authorizeRequests().antMatchers(HttpMethod.PUT, "/api/profile/**").hasAnyRole("USER", "ADMIN");
+        http.authorizeRequests().antMatchers(HttpMethod.GET, "/api/profile/followers/**").hasAnyRole("USER", "ADMIN");
+        http.authorizeRequests().antMatchers(HttpMethod.GET, "/api/profile/followed/**").hasAnyRole("USER", "ADMIN");
+
+        http.authorizeRequests().antMatchers(HttpMethod.GET, "/api/bookmark/**").hasAnyRole("USER", "ADMIN");
+
         http.authorizeRequests().antMatchers(HttpMethod.POST, "/api/notifications/**").hasAnyRole("USER", "ADMIN");
+        http.authorizeRequests().antMatchers(HttpMethod.DELETE, "/api/notifications/**").hasAnyRole("USER", "ADMIN");
+        http.authorizeRequests().antMatchers(HttpMethod.GET, "/api/notifications/**").hasAnyRole("USER", "ADMIN");
+
+        http.authorizeRequests().antMatchers(HttpMethod.POST, "/api/tweet/**").hasAnyRole("USER","ADMIN");
+        http.authorizeRequests().antMatchers(HttpMethod.DELETE, "/api/tweet/**").hasAnyRole("USER","ADMIN");
+        http.authorizeRequests().antMatchers(HttpMethod.PUT, "/api/tweet/**").hasAnyRole("USER","ADMIN");
+
+        http.authorizeRequests().antMatchers(HttpMethod.PUT, "/api/reset-password").hasAnyRole("USER","ADMIN");
+        http.authorizeRequests().antMatchers(HttpMethod.GET, "/api/verify/**").hasAnyRole("USER","ADMIN");
+        http.authorizeRequests().antMatchers(HttpMethod.POST, "/api/forgot-password").hasAnyRole("USER","ADMIN");
 
 
-
-        http.authorizeRequests().antMatchers(HttpMethod.DELETE, "/api/ban/**").hasRole("ADMIN");
-        http.authorizeRequests().antMatchers(HttpMethod.DELETE, "/api/unban/**").hasRole("ADMIN");
-        http.authorizeRequests().antMatchers(HttpMethod.DELETE, "/api/verify/**").hasRole("ADMIN");
-        http.authorizeRequests().antMatchers(HttpMethod.DELETE, "/api/unverify/**").hasRole("ADMIN");
+        http.authorizeRequests().antMatchers(HttpMethod.PUT, "/api/ban/**").hasRole("ADMIN");
+        http.authorizeRequests().antMatchers(HttpMethod.PUT, "/api/unban/**").hasRole("ADMIN");
+        http.authorizeRequests().antMatchers(HttpMethod.PUT, "/api/verify/**").hasRole("ADMIN");
+        http.authorizeRequests().antMatchers(HttpMethod.PUT, "/api/unverify/**").hasRole("ADMIN");
+        http.authorizeRequests().antMatchers(HttpMethod.GET, "/api/statistics").hasRole("ADMIN");
         // Other URLs can be accessed without authentication
         http.authorizeRequests().anyRequest().permitAll();
 
