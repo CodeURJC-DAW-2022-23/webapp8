@@ -29,7 +29,7 @@ public class SearchRestController {
     @Autowired
     private HashtagService hashtagService;
 
-    interface Basic extends User.Basic,Tweet.Basic,  Hashtag.Basic{}
+    interface Basic extends User.Basic,Tweet.Basic,Hashtag.Basic{}
 
     ;
 

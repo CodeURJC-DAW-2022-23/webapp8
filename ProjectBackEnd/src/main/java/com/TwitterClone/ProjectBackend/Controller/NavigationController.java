@@ -187,6 +187,10 @@ public class NavigationController {
             model.addAttribute("isLogged", true);
         }
 
+        List<Tweet> tweets = this.tweetService.findSomeTweetOfUser(id, 0, 10);
+        List<TweetInformation> tweetInformationList = this.informationManager.calculateDataOfTweet(tweets, currentUser);
+        model.addAttribute("tweets", tweetInformationList);
+
         //Hide Go To Dashboard button
         model.addAttribute("isAdmin",currentUser!=null && currentUser.getRole() == UserRoles.ADMIN);
 

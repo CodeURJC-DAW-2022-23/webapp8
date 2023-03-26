@@ -1,10 +1,7 @@
 package com.TwitterClone.ProjectBackend.Controller.RestController;
 
-import com.TwitterClone.ProjectBackend.Model.Hashtag;
 import com.TwitterClone.ProjectBackend.Model.MustacheObjects.InformationManager;
-import com.TwitterClone.ProjectBackend.Model.MustacheObjects.TweetInformation;
 import com.TwitterClone.ProjectBackend.Model.MustacheObjects.UserInformation;
-import com.TwitterClone.ProjectBackend.Model.Tweet;
 import com.TwitterClone.ProjectBackend.Service.NotificationService;
 import com.TwitterClone.ProjectBackend.Service.ProfileService;
 import com.TwitterClone.ProjectBackend.Service.TweetService;
@@ -16,9 +13,6 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.InputStreamResource;
-import org.springframework.core.io.Resource;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -44,7 +38,7 @@ public class RestProfileController {
     @Autowired
     private NotificationService notificationService;
 
-    interface Basic extends User.Profile, SearchRestController.Basic {
+    interface Basic extends User.Profile, UserInformation.Basic {
     }
 
     @Operation(summary = "Get a User")
@@ -88,7 +82,7 @@ public class RestProfileController {
 
         List<User> followed = profileService.getFollowed(user.get().getId(), from, size);
         List<UserInformation> listFollowed = this.informationManager.prepareListUser(followed);
-        return new ResponseEntity<>(listFollowed, HttpStatus.ACCEPTED);
+        return new ResponseEntity<>(listFollowed, HttpStatus.OK);
     }
 
     @Operation(summary = "Get some followers users of a User")
