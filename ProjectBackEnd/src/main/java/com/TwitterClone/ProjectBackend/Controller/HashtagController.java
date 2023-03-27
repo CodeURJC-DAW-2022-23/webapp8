@@ -56,30 +56,6 @@ public class HashtagController {
     }
 
     /**
-     * Load some tweets associated with the hashtag clicked
-     *
-     * @param model
-     * @param hashtag
-     * @param request
-     * @return
-     */
-    @GetMapping("/explore/{hashtag}")
-    public String loadHashtag(Model model,
-                              @PathVariable String hashtag,
-                              HttpServletRequest request) {
-        User currentUser = this.informationManager.getCurrentUser(request);
-        List<Tweet> tweetsAssociated = this.hashtagService.getTweetsAssociatedTo(hashtag, 0, 10);
-        List<TweetInformation> tweets = this.informationManager.calculateDataOfTweet(tweetsAssociated, currentUser);
-        model.addAttribute("tweets", tweets);
-
-        if (currentUser != null) {
-            model.addAttribute("isLogged", true);
-        }
-
-        return "tweet";
-    }
-
-    /**
      * Load more tweets associated to a hashtag using AJAX
      *
      * @param model

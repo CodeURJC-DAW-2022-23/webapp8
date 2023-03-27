@@ -127,41 +127,4 @@ public class NotificationController {
         return "finish-request";
     }
 
-    /**
-     * Load some notifications of a user with AJAX
-     *
-     * @param from
-     * @param size
-     * @param model
-     * @param request
-     * @return
-     */
-    @GetMapping("/all-notifications")
-    public String getNotifications(@PathParam("from") int from,
-                                   @PathParam("size") int size,
-                                   Model model, HttpServletRequest request) {
-        User currentUser = this.informationManager.getCurrentUser(request);
-        Long id = currentUser.getId();
-        List<Notification> notifications = this.notificationService.getSomeNotificationsOfUser(id, from, size);
-        model.addAttribute("notifications", notifications);
-
-        return "notification";
-    }
-
-    /**
-     * Load some mentions of a user with AJAX
-     *
-     * @param model
-     * @param request
-     * @return
-     */
-    @GetMapping("/mentions")
-    public String getMentions(Model model, HttpServletRequest request) {
-        User currentUser = this.informationManager.getCurrentUser(request);
-        Long id = currentUser.getId();
-        List<Notification> mentions = this.notificationService.getSomeMentionsOfUser(id, 0, 10);
-        model.addAttribute("notifications", mentions);
-
-        return "notification";
-    }
 }
