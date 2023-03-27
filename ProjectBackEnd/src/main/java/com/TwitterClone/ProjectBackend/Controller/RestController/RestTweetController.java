@@ -138,7 +138,10 @@ public class RestTweetController {
                                            @PathVariable("idTweetReplied") Long idTweetReplied,
                                            HttpServletRequest request) throws IOException {
         Tweet tweetReplied = this.tweetService.findById(idTweetReplied).orElse(null);
-
+        User currentUser = this.informationManager.getCurrentUser(request);
+        if(currentUser == null){
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        }
         if (tweetReplied == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
@@ -146,7 +149,6 @@ public class RestTweetController {
         User user_reply = tweetReplied.getUser();
 
         Blob[] files = this.informationManager.manageImages(tweet_files);
-        User currentUser = this.informationManager.getCurrentUser(request);
         Long userId = currentUser.getId();
         Tweet newTweet = this.tweetService.createTweet(tweet_info, files, userId);
         this.informationManager.processTextTweet(tweet_info, newTweet, currentUser);
@@ -175,6 +177,9 @@ public class RestTweetController {
                                            HttpServletRequest request) throws IOException {
         Blob[] files = this.informationManager.manageImages(tweet_files);
         User currentUser = this.informationManager.getCurrentUser(request);
+        if (currentUser == null){
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        }
         Long userId = currentUser.getId();
         Tweet newTweet = this.tweetService.createTweet(tweet_info, files, userId);
         this.informationManager.processTextTweet(tweet_info, newTweet, currentUser);

@@ -18,6 +18,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.websocket.server.PathParam;
 import java.io.IOException;
@@ -118,10 +119,14 @@ public class RestProfileController {
     @PutMapping("/updateProfilePicture/{id}")
     @JsonView(Basic.class)
     public ResponseEntity<Object> updateProfilePic(@PathVariable long id,
-                                                   @RequestParam("file") MultipartFile profilePic) throws IOException, SQLException {
+                                                   @RequestParam("file") MultipartFile profilePic,
+                                                    HttpServletRequest request) throws IOException, SQLException {
         Optional<User> user = profileService.findById(id);
-
+        User currentUser = this.informationManager.getCurrentUser(request);
         if (user.isPresent()) {
+            if (!user.get().getId().equals(currentUser.getId())){
+                return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+            }
             this.profileService.updateProfilePic(id, profilePic);
 
             return new ResponseEntity<>(HttpStatus.OK);
@@ -140,10 +145,14 @@ public class RestProfileController {
     @PutMapping("/updateProfileBanner/{id}")
     @JsonView(Basic.class)
     public ResponseEntity<Object> updateProfileBanner(@PathVariable long id,
-                                                      @RequestParam("file") MultipartFile profileBanner) throws IOException, SQLException {
+                                                      @RequestParam("file") MultipartFile profileBanner,
+                                                      HttpServletRequest request) throws IOException {
         Optional<User> user = profileService.findById(id);
-
+        User currentUser = this.informationManager.getCurrentUser(request);
         if (user.isPresent()) {
+            if (!user.get().getId().equals(currentUser.getId())){
+                return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+            }
             this.profileService.updateProfileBanner(id, profileBanner);
 
             return new ResponseEntity<>(HttpStatus.OK);
@@ -162,14 +171,19 @@ public class RestProfileController {
     @PutMapping("/updateNickname/{id}")
     @JsonView(Basic.class)
     public ResponseEntity<UserInformation> updateNickname(@PathVariable long id,
-                                               @RequestParam("nickname") String nick) {
+                                               @RequestParam("nickname") String nick,
+                                               HttpServletRequest request) {
         Optional<User> user = profileService.findById(id);
+        User currentUser = this.informationManager.getCurrentUser(request);
 
         if (user.isPresent()) {
+            if (!user.get().getId().equals(currentUser.getId())){
+                return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+            }
             this.profileService.updateNickname(id, nick);
-            UserInformation currentUser = this.informationManager.prepareUserInformation(user.get(), null);
+            UserInformation updatedUser = this.informationManager.prepareUserInformation(user.get(), null);
 
-            return new ResponseEntity<>(currentUser, HttpStatus.OK);
+            return new ResponseEntity<>(updatedUser, HttpStatus.OK);
         }
 
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -185,14 +199,19 @@ public class RestProfileController {
     @PutMapping("/updateBiography/{id}")
     @JsonView(Basic.class)
     public ResponseEntity<UserInformation> updateBiography(@PathVariable long id,
-                                                @RequestParam("biography") String bio) {
+                                                @RequestParam("biography") String bio,
+                                                           HttpServletRequest request) {
         Optional<User> user = profileService.findById(id);
 
+        User currentUser = this.informationManager.getCurrentUser(request);
         if (user.isPresent()) {
+            if (!user.get().getId().equals(currentUser.getId())){
+                return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+            }
             this.profileService.updateBio(id, bio);
-            UserInformation currentUser = this.informationManager.prepareUserInformation(user.get(), null);
+            UserInformation updatedUser = this.informationManager.prepareUserInformation(user.get(), null);
 
-            return new ResponseEntity<>(currentUser, HttpStatus.OK);
+            return new ResponseEntity<>(updatedUser, HttpStatus.OK);
         }
 
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
