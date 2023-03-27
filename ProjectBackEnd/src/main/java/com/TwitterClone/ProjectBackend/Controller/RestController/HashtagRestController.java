@@ -29,7 +29,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/api/hashtags")
-public class RestHashtagController {
+public class HashtagRestController {
     @Autowired
     private HashtagService hashtagService;
     @Autowired
@@ -77,7 +77,7 @@ public class RestHashtagController {
             @ApiResponse(responseCode = "202", description = "Tweets not found", content = @Content)
     })
     @GetMapping("/explore/{hashtag}")
-    @JsonView(RestTweetController.Basic.class)
+    @JsonView(TweetRestController.Basic.class)
     public ResponseEntity<List<TweetInformation>> getSomeTweetsAssociatedToAHashtag(
             @PathParam("from") int from,
             @PathParam("size") int size,

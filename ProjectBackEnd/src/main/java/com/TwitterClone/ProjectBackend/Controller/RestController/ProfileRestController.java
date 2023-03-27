@@ -18,7 +18,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.websocket.server.PathParam;
 import java.io.IOException;
@@ -29,7 +28,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/profile")
-public class RestProfileController {
+public class ProfileRestController {
     @Autowired
     private TweetService tweetService;
     @Autowired

@@ -27,7 +27,7 @@ import java.util.Optional;
  */
 @RestController
 @RequestMapping("/api/images")
-public class RestImageController {
+public class ImageRestController {
 
     @Autowired
     private ProfileService profileService;

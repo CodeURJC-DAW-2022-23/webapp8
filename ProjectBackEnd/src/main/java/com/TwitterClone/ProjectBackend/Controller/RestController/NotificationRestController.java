@@ -25,7 +25,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/notifications")
-public class RestNotificationController {
+public class NotificationRestController {
     @Autowired
     private NotificationService notificationService;
     @Autowired
