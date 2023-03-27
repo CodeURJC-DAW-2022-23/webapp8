@@ -404,7 +404,7 @@ javac ProjectBackendApplication
 
 ### :postbox: API REST documentation
 
-| URLs | [File]() | [In Production]() | [For Developers]() |
+| URLs | [File](./api-docs/api-docs.yaml) | [In Production](https://rawcdn.githack.com/CodeURJC-DAW-2022-23/webapp8/59faf5ae9cb5cd1cef903fc8699f87c77910a045/api-docs/api-docs.html) | [For Developers](https://raw.githack.com/CodeURJC-DAW-2022-23/webapp8/main/api-docs/api-docs.html) |
 | :--: | :--: | :-----------: | :------------: | 
 
 ### :calling: Dockerized application execution instructions
