@@ -1,9 +1,7 @@
 version: "3.9"
 services: 
   web:
-    build:
-      context: ../
-      dockerfile: Dockerfile
+    image: antonioalanxs/twitterclone:v1.0
     ports:
       - 8443:8443
     environment:
