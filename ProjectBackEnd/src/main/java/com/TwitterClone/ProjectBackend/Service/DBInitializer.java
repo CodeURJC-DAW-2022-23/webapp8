@@ -63,30 +63,27 @@ public class DBInitializer {
     public void init() throws IOException {
 
         //Sample Users
-        String[] files = {"example_data/elrubius_profilepic.jpg", "example_data/elrubius_profilebanner.jpg"};
+
         User user1 = new User("Rubiu5", "elrubius", "Rata Noruega.  Me gustan los gatos obesos.", "rubius@gmail.com", passwordEncoder.encode("rubius"), LocalDate.of(2013, 10, 13), "BANNED");
-        user1.setImages(files);
+
         user1.setEnabled(false);
-        files = new String[]{"example_data/KOI_KEYLAND_profilepic.jpg", "example_data/KOI_KEYLAND_profilebanner.jpg"};
+
         User user2 = new User("Keyland71", "KOI KEYLAND71", "19 y/o\nRocket League proplayer for @KOI", "example2@gmail.com", passwordEncoder.encode("examplePassword2"), LocalDate.of(2018, 4, 21), "PUBLIC");
-        user2.setImages(files);
-        files = new String[]{"example_data/Alanis_profilepic.jpg", "example_data/Alanis_profilebanner.jpg"};
+
         User user3 = new User("antonioalanxs", "Alanís", "", "example3@gmail.com", passwordEncoder.encode("examplePassword3"), LocalDate.of(2019, 8, 7), "PUBLIC");
-        user3.setImages(files);
-        files = new String[]{"example_data/Ibai_profilepic.jpg", "example_data/Ibai_profilebanner.jpg"};
+
         User user4 = new User("ibai", "Ibai", "Sigue a nuestros equipos @KOI y @PorcinosFC, http://twitch.tv/ibai", "ibai@gmail.com", passwordEncoder.encode("ibai"), LocalDate.of(2014, 8, 5), "VERIFIED");
-        user4.setImages(files);
+
         userRepository.save(user1);
         userRepository.save(user2);
         userRepository.save(user3);
         userRepository.save(user4);
-        files = new String[]{"example_data/Default_profilepic.jpg", "example_data/Default_profilebanner.jpg"};
+
         User testUser = new User("user", passwordEncoder.encode("pass"), "twittercloneuser@gmail.com", "USER");
-        testUser.setImages(files);
         testUser.setNickname("user");
         userRepository.save(testUser);
+
         User admin = new User("admin", adminPass, "admin@mail.com", "ADMIN");
-        admin.setImages(files);
         admin.setNickname("admin");
         userRepository.save(admin);
 
@@ -308,6 +305,7 @@ public class DBInitializer {
         tweetRepository.save(tweet7);
         tweetRepository.save(tweet8);
 
+        tweet7 = tweetRepository.findById(tweet7.getId()).get();
         //Comments
         tweet7.addComment(tweet8);
         tweet7.addComment(tweet9);
@@ -425,5 +423,32 @@ public class DBInitializer {
         //Bookmarks
         testUser.getBookmarks().add(tweet1);
         userRepository.save(testUser);
+
+        List<User> users = this.userRepository.findAll();
+        user1 = users.get(0);
+        user2 = users.get(1);
+        user3 = users.get(2);
+        user4 = users.get(3);
+        testUser = users.get(4);
+        admin = users.get(5);
+
+        String[] files = {"example_data/elrubius_profilepic.jpg", "example_data/elrubius_profilebanner.jpg"};
+        user1.setImages(files);
+        files = new String[]{"example_data/KOI_KEYLAND_profilepic.jpg", "example_data/KOI_KEYLAND_profilebanner.jpg"};
+        user2.setImages(files);
+        files = new String[]{"example_data/Alanis_profilepic.jpg", "example_data/Alanis_profilebanner.jpg"};
+        user3.setImages(files);
+        files = new String[]{"example_data/Ibai_profilepic.jpg", "example_data/Ibai_profilebanner.jpg"};
+        user4.setImages(files);
+        files = new String[]{"example_data/Default_profilepic.jpg", "example_data/Default_profilebanner.jpg"};
+        testUser.setImages(files);
+        admin.setImages(files);
+
+        this.userRepository.save(user1);
+        this.userRepository.save(user2);
+        this.userRepository.save(user3);
+        this.userRepository.save(user4);
+        this.userRepository.save(testUser);
+        this.userRepository.save(admin);
     }
 }
