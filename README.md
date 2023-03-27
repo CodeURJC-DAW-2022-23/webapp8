@@ -52,7 +52,6 @@ To organize the team, we are using [Trello](https://trello.com/b/WpuV8KtM/la-put
 * Hashtags
 * User
 * Notifications
-* Trends
 
 ![ER Diagram](./files-to-README/phase0/E-R_Diagram.svg)
 
@@ -304,6 +303,7 @@ javac ProjectBackendApplication
 | Enviroment Variable |
 | :-----------------: |
 | SPRING_MAIL_PASSWORD=APasswordForTheMail |
+| JWT_SECRET=secret |
 
 
 #### Requirements
@@ -415,7 +415,7 @@ javac ProjectBackendApplication
 
 #### Sergio De Oro Fernández
 
-* Creator and controller of all notifications, his great creativity has allowed logical and ingenious solutions.
+* One of those in charge of Dockerizar, has standardized and formatted the documents associated with the practice thanks to his temperance, allowing to have a uniform work.
 
 | #   | Commit      |     | #   | File |
 | :-: | :---------: | :-: | :-: | :--: |
@@ -427,7 +427,7 @@ javac ProjectBackendApplication
 
 #### Laura María Camino Yuste
 
-* Our security scientist has prepared all the security of our application, together with all the user and session management logic.
+* User protector and member of the REST API creation team, her security management has allowed our future clients not to suffer any data leakage.
 
 | #   | Commit      |     | #   | File |
 | :-: | :---------: | :-: | :-: | :--: |
@@ -439,7 +439,7 @@ javac ProjectBackendApplication
 
 #### Antonio José Alanís Bernal
 
-* Main designer artist, he has created the entire visual section of the web application, together with all the logic referring to the profiles of the different users.
+* Member of the application dockerization team, he has refactored the code to adapt it and allow the permanence of our database.
 
 | #   | Commit      |     | #   | File |
 | :-: | :---------: | :-: | :-: | :--: |
@@ -451,7 +451,7 @@ javac ProjectBackendApplication
 
 #### Ikár Vladislav Martínez de Lizarduy Kostornichenko
 
-* Worker of the bridge between the front and the backend of the web application, together with the documentation of our website.
+* Phase leader and organizer, and member of the REST API team. The extensive knowledge of him has allowed a calm phase and without unforeseen events.
 
 | #   | Commit      |     | #   | File |
 | :-: | :---------: | :-: | :-: | :--: |
@@ -463,7 +463,7 @@ javac ProjectBackendApplication
 
 #### Miguel Ángel Sánchez Miranda
 
-* Manager of everything related to the Database, being the one who most dominates this aspect with his great ability to perform queries.
+* Database analyst and one of the creators of the Twitter clone REST API, his extensive knowledge in information management has allowed there to be no problems when creating the files that are sent by the API.
 
 | #   | Commit      |     | #   | File |
 | :-: | :---------: | :-: | :-: | :--: |
