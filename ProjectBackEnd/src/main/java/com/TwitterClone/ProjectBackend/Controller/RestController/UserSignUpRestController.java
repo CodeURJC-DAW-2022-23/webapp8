@@ -52,7 +52,7 @@ public class UserSignUpRestController {
             }),
             @ApiResponse(responseCode = "400", description = "invalid Token", content = @Content)
     })
-    @GetMapping("/verify")
+    @GetMapping("/verification")
     public ResponseEntity<Object> verifyUser(@Param("code") String code) {
 
         if (service.verify(code)) {
