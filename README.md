@@ -317,23 +317,25 @@ javac ProjectBackendApplication
 
 #### :closed_lock_with_key: Sample users
 
-| User               | Username      | Password           |
-| :----------------: | :-----------: | :----------------: |
-| **@admin**         | admin         | *adminpass*        |
-| **@user**          | user          | *pass*             |
-| **@antonioalanxs** | antonioalanxs | *examplePassword3* |
-| **@Keyland71**     | Keyland71     | *examplePassword2* |
-| **@ibai**          | ibai          | *ibai*             |
-| **@Rubiu5**        | Rubiu5        | *rubius*           |
+| User               | Username      | Password             |
+| :----------------: | :-----------: | :------------------: |
+| **@admin**         | admin         | `*adminpass*`        |
+| **@user**          | user          | `*pass*`             |
+| **@antonioalanxs** | antonioalanxs | `*examplePassword3*` |
+| **@Keyland71**     | Keyland71     | `*examplePassword2*` |
+| **@ibai**          | ibai          | `*ibai*`             |
+| **@Rubiu5**        | Rubiu5        | `*rubius*`           |
 
 ### :card_index: DataBase
 
-![database](./files-to-README/phase2/DB_diagram.svg)
+![database](./files-to-README/phase2/DB_diagram.png)
+
 *Figure 26 - DataBase*
 
 ### :flower_playing_cards: Diagrams
 
-![diagram](./files-to-README/phase2/Templates.svg)
+![diagram](./files-to-README/phase3/Templates.svg)
+
 *Figure 27 - Class Diagram*
 
 ### :busts_in_silhouette: Members Participation - Phase 2
@@ -451,15 +453,15 @@ javac ProjectBackendApplication
 
 #### Ikár Vladislav Martínez de Lizarduy Kostornichenko
 
-* Phase leader and organizer, and member of the REST API team. The extensive knowledge of him has allowed a calm phase and without unforeseen events.
+* Phase leader and documenter, and member of the REST API team. The extensive knowledge of him has allowed a calm phase and without unforeseen events.
 
 | #   | Commit      |     | #   | File |
 | :-: | :---------: | :-: | :-: | :--: |
-| 1º  |  | | 1º      |         |
-| 2º  |  | | 2º      |         |
-| 3º  |  | | 3º      |         |
-| 4º  |  | | 4º      |         |
-| 5º  |  | | 5º      |         |
+| 1º  | [Add RestNotificationController](https://github.com/CodeURJC-DAW-2022-23/webapp8/commit/343e8999b583de6998a312ab70a255160e1b2cb4) | | 1º      | [HashtagRestController.java](https://github.com/CodeURJC-DAW-2022-23/webapp8/blob/main/ProjectBackEnd/src/main/java/com/TwitterClone/ProjectBackend/Controller/RestController/RestHashtagController.java)        |
+| 2º  | [Add RestHashtagController](https://github.com/CodeURJC-DAW-2022-23/webapp8/commit/01f8d2ab6945ab323e5813a6f09c565b44ff84b0) | | 2º      | [ImageRestController.java](https://github.com/CodeURJC-DAW-2022-23/webapp8/blob/main/ProjectBackEnd/src/main/java/com/TwitterClone/ProjectBackend/Controller/RestController/RestImageController.java)        |
+| 3º  | [Add RestImageController](https://github.com/CodeURJC-DAW-2022-23/webapp8/commit/78e7a9ae5e5290290d2d96ca60141bccfc7805ed) | | 3º      | [NotificationRestController](https://github.com/CodeURJC-DAW-2022-23/webapp8/blob/main/ProjectBackEnd/src/main/java/com/TwitterClone/ProjectBackend/Controller/RestController/RestNotificationController.java)        |
+| 4º  | [Add API REST documentation](https://github.com/CodeURJC-DAW-2022-23/webapp8/commit/59faf5ae9cb5cd1cef903fc8699f87c77910a045) | | 4º      | [UserInformation](https://github.com/CodeURJC-DAW-2022-23/webapp8/blob/main/ProjectBackend/src/main/java/com/TwitterClone/ProjectBackend/Model/MustacheObjects/UserInformation.java)        |
+| 5º  | [Add all API REST petitions from PostMan](https://github.com/CodeURJC-DAW-2022-23/webapp8/commit/d642ae2a9490fcd7b349ef3625ed9240bf4e3a2d) | | 5º      | [Twitter's Clone.postman_collection.json](https://github.com/CodeURJC-DAW-2022-23/webapp8/blob/main/Twitter's%20Clone.postman_collection.json)        |
 
 #### Miguel Ángel Sánchez Miranda
 
