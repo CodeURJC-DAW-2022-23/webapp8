@@ -21,10 +21,10 @@ The objetive is to replicated the Social Media Twitter with some upgrades for th
     * [DataBase](#card_index-database)
     * [Diagrams](#flower_playing_cards-diagrams)
     * [Members Participation](#busts_in_silhouette-members-participation---phase-2)
-* [Phase 3](#whale-phase-3---add-a-rest-api-to-the-web-application-and-deploy-withdocker)
+* [Phase 3](#whale2-phase-3---add-a-rest-api-to-the-web-application-and-deploy-withdocker)
     * [API REST documentation](#postbox-api-rest-documentation)
     * [Dockerized application execution instructions](#calling-dockerized-application-execution-instructions)
-    * [Documentation for building the docker image](#whale2-documentation-for-building-the-docker-image)
+    * [Documentation for building the docker image](#whale-documentation-for-building-the-docker-image)
     * [Members Participation](#busts_in_silhouette-members-participation---phase-3)
 
 
@@ -346,11 +346,11 @@ javac ProjectBackendApplication
 
 | #   | Commit      |     | #   | File |
 | :-: | :---------: | :-: | :-: | :--: |
-| 1º  | [Fix tweet's buttons visual](https://github.com/CodeURJC-DAW-2022-23/webapp8/tree/3768cc13aa91e8e07bacd1ffe06e3fd8dd286d56) | | 1º | [Navigation Controller](https://github.com/CodeURJC-DAW-2022-23/webapp8/blob/main/ProjectBackEnd/src/main/java/com/TwitterClone/ProjectBackend/Controller/NavigationController.java)           |
-| 2º  | [Create and Delete Like notifications](https://github.com/CodeURJC-DAW-2022-23/webapp8/tree/1ea02a266549d15e627e86671cf6ad6bb3810f9) | |2º       | [Notification Controller](https://github.com/CodeURJC-DAW-2022-23/webapp8/blob/main/ProjectBackEnd/src/main/java/com/TwitterClone/ProjectBackend/Controller/NotificationController.java) |
-| 3º  | [Add create and delete notification system](https://github.com/CodeURJC-DAW-2022-23/webapp8/tree/e3544ed8d6c275f3ca3955afef7cf071ceb8359f) | | 3º | [Notification Service](https://github.com/CodeURJC-DAW-2022-23/webapp8/blob/main/ProjectBackEnd/src/main/java/com/TwitterClone/ProjectBackend/Service/NotificationService.java) |
-| 4º  | [Show all user-type svg](https://github.com/CodeURJC-DAW-2022-23/webapp8/tree/d53cbd016b685d91330d00e712c598f91442cc7d) | | 4º | [Tweet Controller](https://github.com/CodeURJC-DAW-2022-23/webapp8/blob/main/ProjectBackEnd/src/main/java/com/TwitterClone/ProjectBackend/Controller/TweetController.java) |
-| 5º  | [Add showing notifications](https://github.com/CodeURJC-DAW-2022-23/webapp8/tree/d19088352f881d82a8ee3d772be41e93365c76df) | | 5º | [Load Notifications Assets](https://github.com/CodeURJC-DAW-2022-23/webapp8/blob/main/ProjectBackEnd/src/main/resources/static/assets/js/loadNotificationAssets.js) |
+| 1º  | [Fix tweet's buttons visual](https://github.com/CodeURJC-DAW-2022-23/webapp8/tree/3768cc13aa91e8e07bacd1ffe06e3fd8dd286d56) | | 1º | [NavigationController.java](https://github.com/CodeURJC-DAW-2022-23/webapp8/blob/main/ProjectBackEnd/src/main/java/com/TwitterClone/ProjectBackend/Controller/NavigationController.java)           |
+| 2º  | [Create and Delete Like notifications](https://github.com/CodeURJC-DAW-2022-23/webapp8/tree/1ea02a266549d15e627e86671cf6ad6bb3810f9) | |2º       | [NotificationController.java](https://github.com/CodeURJC-DAW-2022-23/webapp8/blob/main/ProjectBackEnd/src/main/java/com/TwitterClone/ProjectBackend/Controller/NotificationController.java) |
+| 3º  | [Add create and delete notification system](https://github.com/CodeURJC-DAW-2022-23/webapp8/tree/e3544ed8d6c275f3ca3955afef7cf071ceb8359f) | | 3º | [NotificationService.java](https://github.com/CodeURJC-DAW-2022-23/webapp8/blob/main/ProjectBackEnd/src/main/java/com/TwitterClone/ProjectBackend/Service/NotificationService.java) |
+| 4º  | [Show all user-type svg](https://github.com/CodeURJC-DAW-2022-23/webapp8/tree/d53cbd016b685d91330d00e712c598f91442cc7d) | | 4º | [TweetController.java](https://github.com/CodeURJC-DAW-2022-23/webapp8/blob/main/ProjectBackEnd/src/main/java/com/TwitterClone/ProjectBackend/Controller/TweetController.java) |
+| 5º  | [Add showing notifications](https://github.com/CodeURJC-DAW-2022-23/webapp8/tree/d19088352f881d82a8ee3d772be41e93365c76df) | | 5º | [LoadNotificationsAssets.js](https://github.com/CodeURJC-DAW-2022-23/webapp8/blob/main/ProjectBackEnd/src/main/resources/static/assets/js/loadNotificationAssets.js) |
 
 #### Laura María Camino Yuste
 
@@ -358,11 +358,11 @@ javac ProjectBackendApplication
 
 | #   | Commit      |     | #   | File |
 | :-: | :---------: | :-: | :-: | :--: |
-| 1º  | [Add Signup Logic](https://github.com/CodeURJC-DAW-2022-23/webapp8/tree/659bfadd4a7b28969d80f19012322817a0685a41) | | 1º | [Web Security Configuration](https://github.com/CodeURJC-DAW-2022-23/webapp8/blob/main/ProjectBackEnd/src/main/java/com/TwitterClone/ProjectBackend/Security/WebSecurityConfig.java) |
-| 2º  | [Fix Login Bug](https://github.com/CodeURJC-DAW-2022-23/webapp8/tree/a427e163f56e2ae87f7e1e11b1ec9551d1ef38c7) | |2º | [User Details Service](https://github.com/CodeURJC-DAW-2022-23/webapp8/blob/main/ProjectBackEnd/src/main/java/com/TwitterClone/ProjectBackend/userManagement/RepositoryUserDetailsService.java) |
-| 3º  | [Add verify account through email](https://github.com/CodeURJC-DAW-2022-23/webapp8/tree/f790a17eef5b6e652aa4c775882168751855a3ba) | | 3º | [SingUp Controller](https://github.com/CodeURJC-DAW-2022-23/webapp8/blob/main/ProjectBackEnd/src/main/java/com/TwitterClone/ProjectBackend/Controller/UserSignupController.java) |
-| 4º  | [Add Change Password functionality](https://github.com/CodeURJC-DAW-2022-23/webapp8/tree/7dcddbd22abe9fbd79514002821fefcab2454aa8) | | 4º | [User Service](https://github.com/CodeURJC-DAW-2022-23/webapp8/blob/main/ProjectBackEnd/src/main/java/com/TwitterClone/ProjectBackend/userManagement/UserService.java) |
-| 5º  | [Fix CSRF management](https://github.com/CodeURJC-DAW-2022-23/webapp8/tree/424b562089ab081a17524988596943d4df3d7e87) | | 5º | [ResetPasswordController](https://github.com/CodeURJC-DAW-2022-23/webapp8/blob/main/ProjectBackEnd/src/main/java/com/TwitterClone/ProjectBackend/Controller/ResetPasswordController.java) |
+| 1º  | [Add Signup Logic](https://github.com/CodeURJC-DAW-2022-23/webapp8/tree/659bfadd4a7b28969d80f19012322817a0685a41) | | 1º | [WebSecurityConfiguration.java](https://github.com/CodeURJC-DAW-2022-23/webapp8/blob/main/ProjectBackEnd/src/main/java/com/TwitterClone/ProjectBackend/Security/WebSecurityConfig.java) |
+| 2º  | [Fix Login Bug](https://github.com/CodeURJC-DAW-2022-23/webapp8/tree/a427e163f56e2ae87f7e1e11b1ec9551d1ef38c7) | |2º | [UserDetailsService.java](https://github.com/CodeURJC-DAW-2022-23/webapp8/blob/main/ProjectBackEnd/src/main/java/com/TwitterClone/ProjectBackend/userManagement/RepositoryUserDetailsService.java) |
+| 3º  | [Add verify account through email](https://github.com/CodeURJC-DAW-2022-23/webapp8/tree/f790a17eef5b6e652aa4c775882168751855a3ba) | | 3º | [SingUpController.java](https://github.com/CodeURJC-DAW-2022-23/webapp8/blob/main/ProjectBackEnd/src/main/java/com/TwitterClone/ProjectBackend/Controller/UserSignupController.java) |
+| 4º  | [Add Change Password functionality](https://github.com/CodeURJC-DAW-2022-23/webapp8/tree/7dcddbd22abe9fbd79514002821fefcab2454aa8) | | 4º | [UserService.java](https://github.com/CodeURJC-DAW-2022-23/webapp8/blob/main/ProjectBackEnd/src/main/java/com/TwitterClone/ProjectBackend/userManagement/UserService.java) |
+| 5º  | [Fix CSRF management](https://github.com/CodeURJC-DAW-2022-23/webapp8/tree/424b562089ab081a17524988596943d4df3d7e87) | | 5º | [ResetPasswordController.java](https://github.com/CodeURJC-DAW-2022-23/webapp8/blob/main/ProjectBackEnd/src/main/java/com/TwitterClone/ProjectBackend/Controller/ResetPasswordController.java) |
 
 #### Antonio José Alanís Bernal
 
@@ -370,11 +370,11 @@ javac ProjectBackendApplication
 
 | #   | Commit      |     | #   | File |
 | :-: | :---------: | :-: | :-: | :--: |
-| 1º  | [Add AJAX to profile page](https://github.com/CodeURJC-DAW-2022-23/webapp8/tree/d79cd4872900c9462e98d18cf0de728306a14f95) | | 1º      | [Ajax](https://github.com/CodeURJC-DAW-2022-23/webapp8/blob/main/ProjectBackEnd/src/main/resources/static/assets/js/ajax.js)           |
-| 2º  | [Add AJAX to follow page](https://github.com/CodeURJC-DAW-2022-23/webapp8/tree/5db370a45051cebf7f91a6c9fcea4f08a7131969)  | |2º       | [Navigation Controller](https://github.com/CodeURJC-DAW-2022-23/webapp8/blob/main/ProjectBackEnd/src/main/java/com/TwitterClone/ProjectBackend/Controller/NavigationController.java)          |
-| 3º  | [Add user's tweets to profile](https://github.com/CodeURJC-DAW-2022-23/webapp8/tree/1acd14cce631523ee2e558de35f97270acb14c11) | | 3º     | [Profile Controller](https://github.com/CodeURJC-DAW-2022-23/webapp8/blob/main/ProjectBackEnd/src/main/java/com/TwitterClone/ProjectBackend/Controller/ProfileController.java)         |
-| 4º  | [Add edit profile logic and refactor template](https://github.com/CodeURJC-DAW-2022-23/webapp8/tree/bcb1b65cac838afed0f26596813e54a0211bc043) | | 4º | [User Repository](https://github.com/CodeURJC-DAW-2022-23/webapp8/blob/main/ProjectBackEnd/src/main/java/com/TwitterClone/ProjectBackend/Repository/UserRepository.java)        |
-| 5º  | [Show user profile](https://github.com/CodeURJC-DAW-2022-23/webapp8/tree/14bc14bd048baae34b9bd13c837b3673413a0495) | | 5º     | [Profile View](https://github.com/CodeURJC-DAW-2022-23/webapp8/blob/main/ProjectBackEnd/src/main/resources/static/templates/profile.html)       |
+| 1º  | [Add AJAX to profile page](https://github.com/CodeURJC-DAW-2022-23/webapp8/tree/d79cd4872900c9462e98d18cf0de728306a14f95) | | 1º      | [Ajax.js](https://github.com/CodeURJC-DAW-2022-23/webapp8/blob/main/ProjectBackEnd/src/main/resources/static/assets/js/ajax.js)           |
+| 2º  | [Add AJAX to follow page](https://github.com/CodeURJC-DAW-2022-23/webapp8/tree/5db370a45051cebf7f91a6c9fcea4f08a7131969)  | |2º       | [NavigationController.java](https://github.com/CodeURJC-DAW-2022-23/webapp8/blob/main/ProjectBackEnd/src/main/java/com/TwitterClone/ProjectBackend/Controller/NavigationController.java)          |
+| 3º  | [Add user's tweets to profile](https://github.com/CodeURJC-DAW-2022-23/webapp8/tree/1acd14cce631523ee2e558de35f97270acb14c11) | | 3º     | [ProfileController.java](https://github.com/CodeURJC-DAW-2022-23/webapp8/blob/main/ProjectBackEnd/src/main/java/com/TwitterClone/ProjectBackend/Controller/ProfileController.java)         |
+| 4º  | [Add edit profile logic and refactor template](https://github.com/CodeURJC-DAW-2022-23/webapp8/tree/bcb1b65cac838afed0f26596813e54a0211bc043) | | 4º | [UserRepository.java](https://github.com/CodeURJC-DAW-2022-23/webapp8/blob/main/ProjectBackEnd/src/main/java/com/TwitterClone/ProjectBackend/Repository/UserRepository.java)        |
+| 5º  | [Show user profile](https://github.com/CodeURJC-DAW-2022-23/webapp8/tree/14bc14bd048baae34b9bd13c837b3673413a0495) | | 5º     | [Profile.html](https://github.com/CodeURJC-DAW-2022-23/webapp8/blob/main/ProjectBackEnd/src/main/resources/static/templates/profile.html)       |
 
 #### Ikár Vladislav Martínez de Lizarduy Kostornichenko
 
@@ -382,11 +382,11 @@ javac ProjectBackendApplication
 
 | #   | Commit      |     | #   | File |
 | :-: | :---------: | :-: | :-: | :--: |
-| 1º  | [Conect Front and Back end for trends](https://github.com/CodeURJC-DAW-2022-23/webapp8/tree/6a243d67b62d7d629f815f250b6273d26885f0d0) | | 1º      | [Information Manager](https://github.com/CodeURJC-DAW-2022-23/webapp8/blob/main/ProjectBackEnd/src/main/java/com/TwitterClone/ProjectBackend/Model/MustacheObjects/InformationManager.java)           |
-| 2º  | [Add Navigation with Spring](https://github.com/CodeURJC-DAW-2022-23/webapp8/tree/fa2ef6257095eab061411c2ebcaafb323a126e19) | |2º       | [Ajax](https://github.com/CodeURJC-DAW-2022-23/webapp8/blob/main/ProjectBackEnd/src/main/resources/static/assets/js/ajax.js)          |
-| 3º  | [Add tweet creation](https://github.com/CodeURJC-DAW-2022-23/webapp8/tree/4fdaf55a26c9a12550aea8607ffc8d0b42422ab8) | | 3º     | [Navigation Controller](https://github.com/CodeURJC-DAW-2022-23/webapp8/blob/main/ProjectBackEnd/src/main/java/com/TwitterClone/ProjectBackend/Controller/NavigationController.java)         |
-| 4º  | [Add to be able to see tweets associated with a hashtag](https://github.com/CodeURJC-DAW-2022-23/webapp8/tree/7cc6a246259b5bbc1e6ba1af4b55f316cc375699) | | 4º | [Image Controller](https://github.com/CodeURJC-DAW-2022-23/webapp8/blob/main/ProjectBackEnd/src/main/java/com/TwitterClone/ProjectBackend/Controller/ImageController.java)        |
-| 5º  | [Fix problem with AJAX](https://github.com/CodeURJC-DAW-2022-23/webapp8/tree/ee6628227241561cc08f54e56400dc6484ad7f78) | | 5º     | [Hashtag Controller](https://github.com/CodeURJC-DAW-2022-23/webapp8/blob/main/ProjectBackEnd/src/main/java/com/TwitterClone/ProjectBackend/Controller/HashtagController.java)       |
+| 1º  | [Conect Front and Back end for trends](https://github.com/CodeURJC-DAW-2022-23/webapp8/tree/6a243d67b62d7d629f815f250b6273d26885f0d0) | | 1º      | [InformationManager.java](https://github.com/CodeURJC-DAW-2022-23/webapp8/blob/main/ProjectBackEnd/src/main/java/com/TwitterClone/ProjectBackend/Model/MustacheObjects/InformationManager.java)           |
+| 2º  | [Add Navigation with Spring](https://github.com/CodeURJC-DAW-2022-23/webapp8/tree/fa2ef6257095eab061411c2ebcaafb323a126e19) | |2º       | [Ajax.js](https://github.com/CodeURJC-DAW-2022-23/webapp8/blob/main/ProjectBackEnd/src/main/resources/static/assets/js/ajax.js)          |
+| 3º  | [Add tweet creation](https://github.com/CodeURJC-DAW-2022-23/webapp8/tree/4fdaf55a26c9a12550aea8607ffc8d0b42422ab8) | | 3º     | [NavigationController.java](https://github.com/CodeURJC-DAW-2022-23/webapp8/blob/main/ProjectBackEnd/src/main/java/com/TwitterClone/ProjectBackend/Controller/NavigationController.java)         |
+| 4º  | [Add to be able to see tweets associated with a hashtag](https://github.com/CodeURJC-DAW-2022-23/webapp8/tree/7cc6a246259b5bbc1e6ba1af4b55f316cc375699) | | 4º | [ImageController.java](https://github.com/CodeURJC-DAW-2022-23/webapp8/blob/main/ProjectBackEnd/src/main/java/com/TwitterClone/ProjectBackend/Controller/ImageController.java)        |
+| 5º  | [Fix problem with AJAX](https://github.com/CodeURJC-DAW-2022-23/webapp8/tree/ee6628227241561cc08f54e56400dc6484ad7f78) | | 5º     | [HashtagController.java](https://github.com/CodeURJC-DAW-2022-23/webapp8/blob/main/ProjectBackEnd/src/main/java/com/TwitterClone/ProjectBackend/Controller/HashtagController.java)       |
 
 #### Miguel Ángel Sánchez Miranda
 
@@ -394,24 +394,24 @@ javac ProjectBackendApplication
 
 | #   | Commit      |     | #   | File |
 | :-: | :---------: | :-: | :-: | :--: |
-| 1º  | [Data Base migration to MySQL](https://github.com/CodeURJC-DAW-2022-23/webapp8/tree/36ab7219f97bfc0f8d08d7fd263e11e36a997c73) | | 1º      | [Database Initializer](https://github.com/CodeURJC-DAW-2022-23/webapp8/blob/main/ProjectBackEnd/src/main/java/com/TwitterClone/ProjectBackend/Service/DBInitializer.java)           |
-| 2º  | [Add Admin dashboard mustache and statics](https://github.com/CodeURJC-DAW-2022-23/webapp8/tree/5bb8d61e3b2fddda4c72f40f7e227fa741f5912e) | |2º       | [Tweet Repository](https://github.com/CodeURJC-DAW-2022-23/webapp8/blob/main/ProjectBackEnd/src/main/java/com/TwitterClone/ProjectBackend/Repository/TweetRepository.javaa)        |
-| 3º  | [Rework DataBase to fix circular references](https://github.com/CodeURJC-DAW-2022-23/webapp8/tree/d52e49cab7f1d11ef12e9fd7b7aa800aaff93f3a) | | 3º     | [Admin Dashboard View](https://github.com/CodeURJC-DAW-2022-23/webapp8/blob/main/ProjectBackEnd/src/main/resources/static/templates/admin-dashboard.html)         |
-| 4º  | [Add new queries to Tweet](https://github.com/CodeURJC-DAW-2022-23/webapp8/tree/f2413dcc7beb1a50c471210f36c1aea6be090d45) | | 4º | [Tweet](https://github.com/CodeURJC-DAW-2022-23/webapp8/blob/main/ProjectBackEnd/src/main/java/com/TwitterClone/ProjectBackend/Model/Tweet.java)        |
-| 5º  | [Update Hashtag](https://github.com/CodeURJC-DAW-2022-23/webapp8/tree/34066d1d40a06962bbd767c14ebf71edb4368347) | | 5º     | [Tweet Service](https://github.com/CodeURJC-DAW-2022-23/webapp8/blob/main/ProjectBackEnd/src/main/java/com/TwitterClone/ProjectBackend/Service/TweetService.javajs)       |
+| 1º  | [Data Base migration to MySQL](https://github.com/CodeURJC-DAW-2022-23/webapp8/tree/36ab7219f97bfc0f8d08d7fd263e11e36a997c73) | | 1º      | [DatabaseInitializer.java](https://github.com/CodeURJC-DAW-2022-23/webapp8/blob/main/ProjectBackEnd/src/main/java/com/TwitterClone/ProjectBackend/Service/DBInitializer.java)           |
+| 2º  | [Add Admin dashboard mustache and statics](https://github.com/CodeURJC-DAW-2022-23/webapp8/tree/5bb8d61e3b2fddda4c72f40f7e227fa741f5912e) | |2º       | [TweetRepository.java](https://github.com/CodeURJC-DAW-2022-23/webapp8/blob/main/ProjectBackEnd/src/main/java/com/TwitterClone/ProjectBackend/Repository/TweetRepository.java)        |
+| 3º  | [Rework DataBase to fix circular references](https://github.com/CodeURJC-DAW-2022-23/webapp8/tree/d52e49cab7f1d11ef12e9fd7b7aa800aaff93f3a) | | 3º     | [AdminDashboard.html](https://github.com/CodeURJC-DAW-2022-23/webapp8/blob/main/ProjectBackEnd/src/main/resources/static/templates/admin-dashboard.html)         |
+| 4º  | [Add new queries to Tweet](https://github.com/CodeURJC-DAW-2022-23/webapp8/tree/f2413dcc7beb1a50c471210f36c1aea6be090d45) | | 4º | [Tweet.java](https://github.com/CodeURJC-DAW-2022-23/webapp8/blob/main/ProjectBackEnd/src/main/java/com/TwitterClone/ProjectBackend/Model/Tweet.java)        |
+| 5º  | [Update Hashtag](https://github.com/CodeURJC-DAW-2022-23/webapp8/tree/34066d1d40a06962bbd767c14ebf71edb4368347) | | 5º     | [TweetService.java](https://github.com/CodeURJC-DAW-2022-23/webapp8/blob/main/ProjectBackEnd/src/main/java/com/TwitterClone/ProjectBackend/Service/TweetService.javajs)       |
 
 ***
 
-## :whale: Phase 3 - Add a REST API to the web application and deploy withDocker
+## :whale2: Phase 3 - Add a REST API to the web application and deploy withDocker
 
 ### :postbox: API REST documentation
 
-| URLs | [File](./api-docs/api-docs.yaml) | [In Production](https://rawcdn.githack.com/CodeURJC-DAW-2022-23/webapp8/59faf5ae9cb5cd1cef903fc8699f87c77910a045/api-docs/api-docs.html) | [For Developers](https://raw.githack.com/CodeURJC-DAW-2022-23/webapp8/main/api-docs/api-docs.html) |
+| URLs | [api-docs.yaml](./api-docs/api-docs.yaml) | [In Production](https://rawcdn.githack.com/CodeURJC-DAW-2022-23/webapp8/59faf5ae9cb5cd1cef903fc8699f87c77910a045/api-docs/api-docs.html) | [For Developers](https://raw.githack.com/CodeURJC-DAW-2022-23/webapp8/main/api-docs/api-docs.html) |
 | :--: | :--: | :-----------: | :------------: | 
 
 ### :calling: Dockerized application execution instructions
 
-### :whale2: Documentation for building the docker image
+### :whale: Documentation for building the docker image
 
 ### :busts_in_silhouette: Members Participation - Phase 3
 
@@ -433,11 +433,11 @@ javac ProjectBackendApplication
 
 | #   | Commit      |     | #   | File |
 | :-: | :---------: | :-: | :-: | :--: |
-| 1º  | [Finish Rest Security Configuration](https://github.com/CodeURJC-DAW-2022-23/webapp8/commit/8b7fa0564473516e405dac9445fd70ad314bf41a) | | 1º      | [RestSecurityConfig](https://github.com/CodeURJC-DAW-2022-23/webapp8/blob/main/ProjectBackEnd/src/main/java/com/TwitterClone/ProjectBackend/Security/RestSecurityConfig.java)        |
-| 2º  | [Add UserSignUpRestController](https://github.com/CodeURJC-DAW-2022-23/webapp8/commit/25b3ace3b9ae6b0d9dd027a421dcbc3da0651f5a) | | 2º      | [UserSignUpRestController](https://github.com/CodeURJC-DAW-2022-23/webapp8/blob/main/ProjectBackEnd/src/main/java/com/TwitterClone/ProjectBackend/Controller/RestController/SearchRestController.java)        |
-| 3º  | [Add SearchRestController](https://github.com/CodeURJC-DAW-2022-23/webapp8/commit/16e69880c03dc914c9fcfcdbe7f111e5b2d26f50) | | 3º      | [SearchRestController](https://github.com/CodeURJC-DAW-2022-23/webapp8/blob/main/ProjectBackEnd/src/main/java/com/TwitterClone/ProjectBackend/Controller/RestController/SearchRestController.java)        |
-| 4º  | [Add AdminDashBoardRestController](https://github.com/CodeURJC-DAW-2022-23/webapp8/commit/0a746921c17c73c295095984da17c15c489aa4d3) | | 4º      |  [AdminDashboardRestController](https://github.com/CodeURJC-DAW-2022-23/webapp8/blob/main/ProjectBackEnd/src/main/java/com/TwitterClone/ProjectBackend/Controller/RestController/AdminDashboardRestController.java)       |
-| 5º  | [Add ResetPasswordRestController](https://github.com/CodeURJC-DAW-2022-23/webapp8/commit/ce965349d4472a58b4f8336270d50702b526131b) | | 5º      | [ResetPasswordRestController](https://github.com/CodeURJC-DAW-2022-23/webapp8/blob/main/ProjectBackEnd/src/main/java/com/TwitterClone/ProjectBackend/Controller/RestController/ResetPasswordRestController.java)        |
+| 1º  | [Finish Rest Security Configuration](https://github.com/CodeURJC-DAW-2022-23/webapp8/commit/8b7fa0564473516e405dac9445fd70ad314bf41a) | | 1º      | [RestSecurityConfig.java](https://github.com/CodeURJC-DAW-2022-23/webapp8/blob/main/ProjectBackEnd/src/main/java/com/TwitterClone/ProjectBackend/Security/RestSecurityConfig.java)        |
+| 2º  | [Add UserSignUpRestController](https://github.com/CodeURJC-DAW-2022-23/webapp8/commit/25b3ace3b9ae6b0d9dd027a421dcbc3da0651f5a) | | 2º      | [UserSignUpRestController.java](https://github.com/CodeURJC-DAW-2022-23/webapp8/blob/main/ProjectBackEnd/src/main/java/com/TwitterClone/ProjectBackend/Controller/RestController/SearchRestController.java)        |
+| 3º  | [Add SearchRestController](https://github.com/CodeURJC-DAW-2022-23/webapp8/commit/16e69880c03dc914c9fcfcdbe7f111e5b2d26f50) | | 3º      | [SearchRestController.java](https://github.com/CodeURJC-DAW-2022-23/webapp8/blob/main/ProjectBackEnd/src/main/java/com/TwitterClone/ProjectBackend/Controller/RestController/SearchRestController.java)        |
+| 4º  | [Add AdminDashBoardRestController](https://github.com/CodeURJC-DAW-2022-23/webapp8/commit/0a746921c17c73c295095984da17c15c489aa4d3) | | 4º      |  [AdminDashboardRestController.java](https://github.com/CodeURJC-DAW-2022-23/webapp8/blob/main/ProjectBackEnd/src/main/java/com/TwitterClone/ProjectBackend/Controller/RestController/AdminDashboardRestController.java)       |
+| 5º  | [Add ResetPasswordRestController](https://github.com/CodeURJC-DAW-2022-23/webapp8/commit/ce965349d4472a58b4f8336270d50702b526131b) | | 5º      | [ResetPasswordRestController.java](https://github.com/CodeURJC-DAW-2022-23/webapp8/blob/main/ProjectBackEnd/src/main/java/com/TwitterClone/ProjectBackend/Controller/RestController/ResetPasswordRestController.java)        |
 
 #### Antonio José Alanís Bernal
 
@@ -459,8 +459,8 @@ javac ProjectBackendApplication
 | :-: | :---------: | :-: | :-: | :--: |
 | 1º  | [Add RestNotificationController](https://github.com/CodeURJC-DAW-2022-23/webapp8/commit/343e8999b583de6998a312ab70a255160e1b2cb4) | | 1º      | [HashtagRestController.java](https://github.com/CodeURJC-DAW-2022-23/webapp8/blob/main/ProjectBackEnd/src/main/java/com/TwitterClone/ProjectBackend/Controller/RestController/RestHashtagController.java)        |
 | 2º  | [Add RestHashtagController](https://github.com/CodeURJC-DAW-2022-23/webapp8/commit/01f8d2ab6945ab323e5813a6f09c565b44ff84b0) | | 2º      | [ImageRestController.java](https://github.com/CodeURJC-DAW-2022-23/webapp8/blob/main/ProjectBackEnd/src/main/java/com/TwitterClone/ProjectBackend/Controller/RestController/RestImageController.java)        |
-| 3º  | [Add RestImageController](https://github.com/CodeURJC-DAW-2022-23/webapp8/commit/78e7a9ae5e5290290d2d96ca60141bccfc7805ed) | | 3º      | [NotificationRestController](https://github.com/CodeURJC-DAW-2022-23/webapp8/blob/main/ProjectBackEnd/src/main/java/com/TwitterClone/ProjectBackend/Controller/RestController/RestNotificationController.java)        |
-| 4º  | [Add API REST documentation](https://github.com/CodeURJC-DAW-2022-23/webapp8/commit/59faf5ae9cb5cd1cef903fc8699f87c77910a045) | | 4º      | [UserInformation](https://github.com/CodeURJC-DAW-2022-23/webapp8/blob/main/ProjectBackend/src/main/java/com/TwitterClone/ProjectBackend/Model/MustacheObjects/UserInformation.java)        |
+| 3º  | [Add RestImageController](https://github.com/CodeURJC-DAW-2022-23/webapp8/commit/78e7a9ae5e5290290d2d96ca60141bccfc7805ed) | | 3º      | [NotificationRestController.java](https://github.com/CodeURJC-DAW-2022-23/webapp8/blob/main/ProjectBackEnd/src/main/java/com/TwitterClone/ProjectBackend/Controller/RestController/RestNotificationController.java)        |
+| 4º  | [Add API REST documentation](https://github.com/CodeURJC-DAW-2022-23/webapp8/commit/59faf5ae9cb5cd1cef903fc8699f87c77910a045) | | 4º      | [UserInformation.java](https://github.com/CodeURJC-DAW-2022-23/webapp8/blob/main/ProjectBackend/src/main/java/com/TwitterClone/ProjectBackend/Model/MustacheObjects/UserInformation.java)        |
 | 5º  | [Add all API REST petitions from PostMan](https://github.com/CodeURJC-DAW-2022-23/webapp8/commit/d642ae2a9490fcd7b349ef3625ed9240bf4e3a2d) | | 5º      | [Twitter's Clone.postman_collection.json](https://github.com/CodeURJC-DAW-2022-23/webapp8/blob/main/Twitter's%20Clone.postman_collection.json)        |
 
 #### Miguel Ángel Sánchez Miranda
@@ -469,10 +469,10 @@ javac ProjectBackendApplication
 
 | #   | Commit      |     | #   | File |
 | :-: | :---------: | :-: | :-: | :--: |
-| 1º  | [Add Profile Methods for API](https://github.com/CodeURJC-DAW-2022-23/webapp8/commit/d8c17f1d925f6888b023e54daf9719c31d7d5393) | | 1º | [RestTweetController](https://github.com/CodeURJC-DAW-2022-23/webapp8/blob/main/ProjectBackEnd/src/main/java/com/TwitterClone/ProjectBackend/Controller/RestController/RestTweetController.java)       |
-| 2º  | [Add Post methods to RestTweetController](https://github.com/CodeURJC-DAW-2022-23/webapp8/commit/dc0d39ec73e47159ad8472f97fb5efc480e87d6e) | | 2º      | [RestProfileController ](https://github.com/CodeURJC-DAW-2022-23/webapp8/blob/main/ProjectBackEnd/src/main/java/com/TwitterClone/ProjectBackend/Controller/RestController/RestProfileController.java)         |
-| 3º  | [Add GET methods to RestTweetController](https://github.com/CodeURJC-DAW-2022-23/webapp8/commit/13744c51e08907a52d8386c25bc7790c46cd2aa3) | | 3º      | [AdminDashboardRestController](https://github.com/CodeURJC-DAW-2022-23/webapp8/blob/main/ProjectBackEnd/src/main/java/com/TwitterClone/ProjectBackend/Controller/RestController/AdminDashboardRestController.java)       |
-| 4º  | [Add PUT methods to RestTweetController](https://github.com/CodeURJC-DAW-2022-23/webapp8/commit/19155004768819853760d550ab71021e870618e1) | | 4º      | [Tweet](https://github.com/CodeURJC-DAW-2022-23/webapp8/blob/main/ProjectBackEnd/src/main/java/com/TwitterClone/ProjectBackend/Model/Tweet.java)        |
-| 5º  | [Create JsonViews](https://github.com/CodeURJC-DAW-2022-23/webapp8/commit/cbf5175dab165666b5afe1f7629d33d57d9a3a8f) | | 5º      | [TweetController](https://github.com/CodeURJC-DAW-2022-23/webapp8/blob/main/ProjectBackEnd/src/main/java/com/TwitterClone/ProjectBackend/Controller/TweetController.java)        |
+| 1º  | [Add Profile Methods for API](https://github.com/CodeURJC-DAW-2022-23/webapp8/commit/d8c17f1d925f6888b023e54daf9719c31d7d5393) | | 1º | [RestTweetController.java](https://github.com/CodeURJC-DAW-2022-23/webapp8/blob/main/ProjectBackEnd/src/main/java/com/TwitterClone/ProjectBackend/Controller/RestController/RestTweetController.java)       |
+| 2º  | [Add Post methods to RestTweetController](https://github.com/CodeURJC-DAW-2022-23/webapp8/commit/dc0d39ec73e47159ad8472f97fb5efc480e87d6e) | | 2º      | [RestProfileController.java](https://github.com/CodeURJC-DAW-2022-23/webapp8/blob/main/ProjectBackEnd/src/main/java/com/TwitterClone/ProjectBackend/Controller/RestController/RestProfileController.java)         |
+| 3º  | [Add GET methods to RestTweetController](https://github.com/CodeURJC-DAW-2022-23/webapp8/commit/13744c51e08907a52d8386c25bc7790c46cd2aa3) | | 3º      | [AdminDashboardRestController.java](https://github.com/CodeURJC-DAW-2022-23/webapp8/blob/main/ProjectBackEnd/src/main/java/com/TwitterClone/ProjectBackend/Controller/RestController/AdminDashboardRestController.java)       |
+| 4º  | [Add PUT methods to RestTweetController](https://github.com/CodeURJC-DAW-2022-23/webapp8/commit/19155004768819853760d550ab71021e870618e1) | | 4º      | [Tweet.java](https://github.com/CodeURJC-DAW-2022-23/webapp8/blob/main/ProjectBackEnd/src/main/java/com/TwitterClone/ProjectBackend/Model/Tweet.java)        |
+| 5º  | [Create JsonViews](https://github.com/CodeURJC-DAW-2022-23/webapp8/commit/cbf5175dab165666b5afe1f7629d33d57d9a3a8f) | | 5º      | [TweetController.java](https://github.com/CodeURJC-DAW-2022-23/webapp8/blob/main/ProjectBackEnd/src/main/java/com/TwitterClone/ProjectBackend/Controller/TweetController.java)        |
 
 ***
