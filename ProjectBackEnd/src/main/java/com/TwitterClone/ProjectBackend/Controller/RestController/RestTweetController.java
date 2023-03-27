@@ -84,6 +84,10 @@ public class RestTweetController {
                                                                         @PathParam("size") int size,
                                                                         HttpServletRequest request) {
         User user = this.informationManager.getCurrentUser(request);
+        if (user == null){
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        }
+
         List<Tweet> tweets = this.profileService.getBookmarks(user.getId(), from, size);
         List<TweetInformation> tweetsInformation = this.informationManager.calculateDataOfTweet(tweets, user);
 

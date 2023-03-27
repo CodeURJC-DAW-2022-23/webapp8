@@ -114,6 +114,7 @@ public class RestProfileController {
             @ApiResponse(responseCode = "200", description = "Profile pic updated", content = {
                     @Content(mediaType = "application/json", schema = @Schema(implementation = Object.class))
             }),
+            @ApiResponse(responseCode = "202", description = "Empty profile picture", content = @Content),
             @ApiResponse(responseCode = "404", description = "User not found", content = @Content)
     })
     @PutMapping("/updateProfilePicture/{id}")
@@ -129,6 +130,10 @@ public class RestProfileController {
             }
             this.profileService.updateProfilePic(id, profilePic);
 
+            if (!profilePic.isEmpty()) {
+                return new ResponseEntity<>(HttpStatus.ACCEPTED);
+            }
+
             return new ResponseEntity<>(HttpStatus.OK);
         }
 
@@ -140,6 +145,7 @@ public class RestProfileController {
             @ApiResponse(responseCode = "200", description = "Profile banner updated", content = {
                     @Content(mediaType = "application/json", schema = @Schema(implementation = Object.class))
             }),
+            @ApiResponse(responseCode = "202", description = "Empty profile banner", content = @Content),
             @ApiResponse(responseCode = "404", description = "User not found", content = @Content)
     })
     @PutMapping("/updateProfileBanner/{id}")
@@ -155,6 +161,10 @@ public class RestProfileController {
             }
             this.profileService.updateProfileBanner(id, profileBanner);
 
+            if (!profileBanner.isEmpty()) {
+                return new ResponseEntity<>(HttpStatus.ACCEPTED);
+            }
+
             return new ResponseEntity<>(HttpStatus.OK);
         }
 
@@ -166,6 +176,7 @@ public class RestProfileController {
             @ApiResponse(responseCode = "200", description = "Nickname updated", content = {
                     @Content(mediaType = "application/json", schema = @Schema(implementation = User.Basic.class))
             }),
+            @ApiResponse(responseCode = "202", description = "Empty nickname", content = @Content),
             @ApiResponse(responseCode = "404", description = "User not found", content = @Content)
     })
     @PutMapping("/updateNickname/{id}")
@@ -182,6 +193,10 @@ public class RestProfileController {
             }
             this.profileService.updateNickname(id, nick);
             UserInformation updatedUser = this.informationManager.prepareUserInformation(user.get(), null);
+
+            if (nick.equals("")) {
+                return new ResponseEntity<>(HttpStatus.ACCEPTED);
+            }
 
             return new ResponseEntity<>(updatedUser, HttpStatus.OK);
         }
