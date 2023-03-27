@@ -71,7 +71,7 @@ public class UserSignupController {
      * @param code
      * @return
      */
-    @GetMapping("/verify")
+    @GetMapping("/verification")
     public String verifyUser(@Param("code") String code) {
 
         if (service.verify(code)) {

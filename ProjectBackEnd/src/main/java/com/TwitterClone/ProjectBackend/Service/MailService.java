@@ -77,7 +77,7 @@ public class MailService {
         helper.setSubject(subject);
 
         content = content.replace("[[name]]", user.getUsername());
-        String verifyURL = "https://localhost:8443/verify?code=" + user.getVerificationCode();
+        String verifyURL = "https://localhost:8443/verification?code=" + user.getVerificationCode();
 
         content = content.replace("[[URL]]", verifyURL);
 
