@@ -71,7 +71,7 @@ public class ProfileController {
                               @PathVariable int size,
                               @PathVariable String username) {
         User user = this.profileService.findByUsername(username).get();
-        long countFollowed = this.profileService.countFollowed(user.getId());
+        Long countFollowed = this.profileService.countFollowed(user.getId());
 
         if (countFollowed <= from) {
             return "redirect:/";
@@ -98,7 +98,7 @@ public class ProfileController {
                                @PathVariable int size,
                                @PathVariable String username) {
         User user = this.profileService.findByUsername(username).get();
-        long countFollowers = this.profileService.countFollowers(user.getId());
+        Long countFollowers = this.profileService.countFollowers(user.getId());
 
         if (countFollowers <= from) {
             return "redirect:/";

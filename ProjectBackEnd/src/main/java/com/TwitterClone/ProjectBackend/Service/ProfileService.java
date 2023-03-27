@@ -201,7 +201,11 @@ public class ProfileService {
      * @return
      */
     public long countFollowed(Long id) {
-        return this.userRepository.countFollowed(id);
+        Long numFollowed = this.userRepository.countFollowed(id);
+        if (numFollowed == null){
+            return 0L;
+        }
+        return numFollowed;
     }
 
     /**
@@ -211,7 +215,11 @@ public class ProfileService {
      * @return
      */
     public long countFollowers(Long id) {
-        return this.userRepository.countFollowers(id);
+        Long numFollowers = this.userRepository.countFollowers(id);
+        if (numFollowers == null){
+            return 0L;
+        }
+        return numFollowers;
     }
 
     /**

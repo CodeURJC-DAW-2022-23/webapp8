@@ -80,7 +80,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
      * @return
      */
     @Query(value = "SELECT COUNT(*) FROM users_followed WHERE user_id = ?1 GROUP BY user_id", nativeQuery = true)
-    long countFollowed(long id);
+    Long countFollowed(long id);
 
     /**
      * Count the followers of a user
@@ -89,7 +89,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
      * @return
      */
     @Query(value = "SELECT COUNT(*) FROM users_followers WHERE user_id = ?1 GROUP BY user_id", nativeQuery = true)
-    long countFollowers(Long id);
+    Long countFollowers(Long id);
 
     /**
      * Find all the banned user

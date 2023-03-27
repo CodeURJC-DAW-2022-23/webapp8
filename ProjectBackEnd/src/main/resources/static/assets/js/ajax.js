@@ -216,36 +216,16 @@ async function showFollowers(userId) {
     if (userId) {
         ACTUAL_PROFILE = userId;
     }
+    const container = document.getElementById("follow-container");
 
     const response = await fetch(`/followers/${ACTUAL_PROFILE}/${counterPetitions}/${NUMBER_ELEMENTS_PER_LOAD}`);
-    const newFollowers = DECODER.decode(await response.arrayBuffer());
-
-    const container = document.getElementById("follow-container");
-    container.innerHTML = newFollowers;
-    const load_more = document.getElementById("loadMoreButton");
-    load_more.onclick = loadMoreFollowers;
-    const load_more_mobile = document.getElementById("loadMoreButtonMobile");
-    load_more_mobile.onclick = loadMoreFollowers;
-}
-
-/**
- * Realize an HTTP petition to request more followers with AJAX
- * @returns {Promise<void>}
- */
-async function loadMoreFollowers() {
-    addSpinner()
-    const from = (counterPetitions + 1) * NUMBER_ELEMENTS_PER_LOAD
-
-    const response = await fetch(`/followers/${ACTUAL_PROFILE}/${from}/${NUMBER_ELEMENTS_PER_LOAD}`);
 
     if (response.redirected) {
-        hideButtons();
-        removeSpinner()
+        container.innerHTML = "";
         return;
     }
 
-    addNewElements(response, "follow");
-    removeSpinner()
+    container.innerHTML = DECODER.decode(await response.arrayBuffer());
 }
 
 /**
@@ -254,36 +234,16 @@ async function loadMoreFollowers() {
  */
 async function showFollowed() {
     counterPetitions = 0;
+    const container = document.getElementById("follow-container");
 
     const response = await fetch(`/followed/${ACTUAL_PROFILE}/${counterPetitions}/${NUMBER_ELEMENTS_PER_LOAD}`);
-    const newFollowed = DECODER.decode(await response.arrayBuffer());
-
-    const container = document.getElementById("follow-container");
-    container.innerHTML = newFollowed;
-    const load_more = document.getElementById("loadMoreButton");
-    load_more.onclick = loadMoreFollowed;
-    const load_more_mobile = document.getElementById("loadMoreButtonMobile");
-    load_more_mobile.onclick = loadMoreFollowed;
-}
-
-/**
- * Realize an HTTP petition to request more followed with AJAX
- * @returns {Promise<void>}
- */
-async function loadMoreFollowed() {
-    addSpinner()
-    const from = (counterPetitions + 1) * NUMBER_ELEMENTS_PER_LOAD
-
-    const response = await fetch(`/followed/${ACTUAL_PROFILE}/${from}/${NUMBER_ELEMENTS_PER_LOAD}`);
 
     if (response.redirected) {
-        hideButtons();
-        removeSpinner()
+        container.innerHTML = "";
         return;
     }
 
-    addNewElements(response, "follow");
-    removeSpinner()
+    container.innerHTML = DECODER.decode(await response.arrayBuffer());
 }
 
 /**
