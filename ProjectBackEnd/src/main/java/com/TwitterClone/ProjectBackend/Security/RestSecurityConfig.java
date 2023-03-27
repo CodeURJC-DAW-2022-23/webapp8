@@ -52,13 +52,12 @@ public class RestSecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests().antMatchers(HttpMethod.POST, "/api/tweets/reply-tweet/**").hasAnyRole("USER", "ADMIN");
 
         http.authorizeRequests().antMatchers(HttpMethod.POST, "/api/images/**").hasAnyRole("USER", "ADMIN");
-        http.authorizeRequests().antMatchers(HttpMethod.GET, "/api/images/**").hasAnyRole("USER", "ADMIN");
 
         http.authorizeRequests().antMatchers(HttpMethod.PUT, "/api/profile/**").hasAnyRole("USER", "ADMIN");
         http.authorizeRequests().antMatchers(HttpMethod.GET, "/api/profile/followers/**").hasAnyRole("USER", "ADMIN");
         http.authorizeRequests().antMatchers(HttpMethod.GET, "/api/profile/followed/**").hasAnyRole("USER", "ADMIN");
 
-        http.authorizeRequests().antMatchers(HttpMethod.GET, "/api/bookmark/**").hasAnyRole("USER", "ADMIN");
+        http.authorizeRequests().antMatchers(HttpMethod.GET, "/api/bookmarks/**").hasAnyRole("USER", "ADMIN");
 
         http.authorizeRequests().antMatchers(HttpMethod.POST, "/api/notifications/**").hasAnyRole("USER", "ADMIN");
         http.authorizeRequests().antMatchers(HttpMethod.DELETE, "/api/notifications/**").hasAnyRole("USER", "ADMIN");
