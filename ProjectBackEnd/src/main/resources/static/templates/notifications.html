@@ -32,14 +32,12 @@
         <!-- NAVBAR -->
         <nav id="navBar"
              class="grid items-center justify-center grid-cols-2 text-center dark:text-gray-5 text-gray-4">
-            <button id="notifications-tab" onclick="changeVisualTab('notifications-tab', 'mentions-tab');
-                                                    showNotifications()"
+            <button id="notifications-tab"
                     class="py-4 font-bold border-b-4 cursor-pointer border-primary dark:text-white-0 text-black-0 dark:hover:bg-gray-1 hover:bg-gray-3">
                 All
             </button>
 
-            <button id="mentions-tab" onclick="changeVisualTab('mentions-tab', 'notifications-tab');
-                                               showMentions()"
+            <button id="mentions-tab" onclick="reloadTabs('mentions-tab', 'notifications-tab');"
                     class="py-4 font-semibold border-b-4 border-transparent cursor-pointer border-p-2 dark:hover:bg-gray-1 hover:bg-gray-3 dark:text-gray-5">
                 Mentions
             </button>
@@ -51,7 +49,7 @@
     </div>
 
     <!-- SHOW NOTIFICATIONS BUTTON -->
-    <button id="loadMore" onclick="loadMoreNotifications();"
+    <button id="loadMore" onclick="showNotifications();"
             class="hidden w-full py-4 text-lg font-semibold border-b llg:block border-gray-9 dark:bg-black-0 hover:bg-gray-7 dark:border-black-5 dark:hover:bg-black-6 text-primary">
         Load More
     </button>
@@ -63,7 +61,7 @@
 
     <!-- SHOW NOTIFICATIONS BUTTON - MOBILE -->
     <div class="sticky flex justify-center">
-        <button id="loadMore-mobile" onclick="loadMoreNotifications();"
+        <button id="loadMore-mobile" onclick="showNotifications();"
                 class="fixed px-5 py-3 text-sm font-semibold transition cursor-pointer top-[5.4rem] llg:hidden hover:scale-110 rounded-3xl text-white-0 bg-primary">
             Load More
         </button>

@@ -1,5 +1,6 @@
 const DECODER = new TextDecoder('iso-8859-1');
 const NUMBER_ELEMENTS_PER_LOAD = 10;
+let FIRST_LOAD = false;
 let ACTUAL_HASHTAG;
 let ACTUAL_PROFILE;
 
@@ -85,61 +86,23 @@ async function loadMoreTweetsForProfile(userId) {
 }
 
 /**
- * Realize an HTTP petition to request more notifications with AJAX
+ * Reloads global variable FIRST_LOAD to show only first notifications
  * @returns {Promise<void>}
  */
-async function loadMoreNotifications() {
-    addSpinner()
-    const from = (counterPetitions + 1) * NUMBER_ELEMENTS_PER_LOAD
-
-    const response = await fetch(`/notifications/notification?from=${from}&size=${NUMBER_ELEMENTS_PER_LOAD}`);
-
-    if (response.redirected) {
-        hideButtons();
-        removeSpinner()
-        return;
-    }
-
-    addNewElements(response, "notification");
-    removeSpinner()
-}
-
-/**
- * Realize an HTTP petition to request more mentions with AJAX
- * @returns {Promise<void>}
- */
-async function loadMoreMentions() {
-    addSpinner()
-    const from = (counterPetitions + 1) * NUMBER_ELEMENTS_PER_LOAD
-
-    const response = await fetch(`/mentions/mention?from=${from}&size=${NUMBER_ELEMENTS_PER_LOAD}`);
-
-    if (response.redirected) {
-        removeSpinner()
-        hideButtons();
-        return;
-    }
-
-    addNewElements(response, "notification");
-    removeSpinner()
-}
-
-/**
- * Update the page to show the mentions associated
- * @returns {Promise<void>}
- */
-async function showMentions() {
-    counterPetitions = 0;
-
-    const response = await fetch(`/mentions?from=${counterPetitions}&size=${NUMBER_ELEMENTS_PER_LOAD}`);
-    const newMentions = DECODER.decode(await response.arrayBuffer());
-
+async function reloadTabs(tab1, tab2){
+    changeVisualTab(tab1, tab2);
+    let tab2Button = document.getElementById(tab2);
+    tab2Button.onclick = function() {reloadTabs(tab2, tab1)};
+    let tab1Button = document.getElementById(tab1);
+    tab1Button.onclick = ``;
     const container = document.getElementById("notification-container");
-    container.innerHTML = newMentions;
-    const load_more = document.getElementById("loadMore");
-    load_more.onclick = loadMoreMentions;
-    const load_more_mobile = document.getElementById("loadMore-mobile");
-    load_more_mobile.onclick = loadMoreMentions;
+    container.innerHTML = "";
+    FIRST_LOAD = true;
+    if (tab1 === 'mentions-tab') {
+        await showMentions();
+    } else {
+        await showNotifications()
+    }
 }
 
 /**
@@ -147,17 +110,60 @@ async function showMentions() {
  * @returns {Promise<void>}
  */
 async function showNotifications() {
-    counterPetitions = 0;
+    addSpinner();
+    showButtons();
+    let from = 0;
+    if (FIRST_LOAD) {
+        counterPetitions = 0;
+        FIRST_LOAD = false;
+        const load_more = document.getElementById("loadMore");
+        load_more.onclick = showNotifications;
+        const load_more_mobile = document.getElementById("loadMore-mobile");
+        load_more_mobile.onclick = showNotifications;
+    } else {
+        from = (counterPetitions + 1) * NUMBER_ELEMENTS_PER_LOAD
+    }
 
-    const response = await fetch(`/all-notifications?from=${counterPetitions}&size=${NUMBER_ELEMENTS_PER_LOAD}`);
-    const newNotifications = DECODER.decode(await response.arrayBuffer());
+    const response = await fetch(`/notifications/notification?from=${from}&size=${NUMBER_ELEMENTS_PER_LOAD}`);
 
-    const container = document.getElementById("notification-container");
-    container.innerHTML = newNotifications;
-    const load_more = document.getElementById("loadMore");
-    load_more.onclick = loadMoreNotifications;
-    const load_more_mobile = document.getElementById("loadMore-mobile");
-    load_more_mobile.onclick = loadMoreNotifications;
+    if (response.redirected) {
+        removeSpinner();
+        hideButtons();
+        return;
+    }
+
+    addNewElements(response, "notification");
+    removeSpinner();
+}
+
+/**
+ * Update the page to show the mentions associated
+ * @returns {Promise<void>}
+ */
+async function showMentions() {
+    addSpinner()
+    let from = 0;
+    if (FIRST_LOAD) {
+        counterPetitions = 0;
+        FIRST_LOAD = false;
+        const load_more = document.getElementById("loadMore");
+        load_more.onclick = showMentions;
+        const load_more_mobile = document.getElementById("loadMore-mobile");
+        load_more_mobile.onclick = showMentions;
+    } else {
+        from = (counterPetitions + 1) * NUMBER_ELEMENTS_PER_LOAD
+    }
+
+    const response = await fetch(`/mentions/mention?from=${from}&size=${NUMBER_ELEMENTS_PER_LOAD}`);
+
+    if (response.redirected) {
+        removeSpinner();
+        hideButtons();
+        return;
+    }
+
+    addNewElements(response, "notification");
+    removeSpinner();
 }
 
 /**
@@ -186,7 +192,7 @@ async function loadMoreTweetsAssociated() {
  */
 async function showTweetsAssociated(hashtag) {
     counterPetitions = 0;
-    const response = await fetch(`/explore/${hashtag}`);
+    const response = await fetch(`/explore_more/${hashtag}?from=${counterPetitions}&size=${NUMBER_ELEMENTS_PER_LOAD}`);
     const newTrends = DECODER.decode(await response.arrayBuffer());
 
     const container = document.getElementById("trend-container");
@@ -301,28 +307,45 @@ async function addNewElements(response, container_name) {
 }
 
 /**
+ * Shows the load more buttons
+ */
+function showButtons(){
+    show(document.getElementById("loadMore"));
+    show(document.getElementById("loadMore-mobile"));
+}
+
+/**
+ * Shows the current element
+ * @param {HTMLElement} element
+ */
+function show(element){
+    element.classList.remove('hidden');
+    element.classList.add('llg:block');
+}
+
+/**
  * Hide the load more buttons when is not possible to load more elements
  */
 function hideButtons() {
-    changeVisibility(document.getElementById("loadMore"));
-    changeVisibility(document.getElementById("loadMore-mobile"));
+    hide(document.getElementById("loadMore"));
+    hide(document.getElementById("loadMore-mobile"));
 };
 
 /**
- * Change the current element visibility
+ * Hides the current element
  * @param {HTMLElement} element
  */
-function changeVisibility(element) {
+function hide(element) {
     element.classList.add('hidden');
-    element.classList.remove('llg:block')
-};
+    element.classList.remove('llg:block');
+}
 
 /**
  * Add a spinner animation when the page is loading more elements
  */
 function addSpinner() {
     document.getElementById("spinner").innerHTML = `<div class="flex items-center justify-center">
-                <div class="inline-block h-8 w-8 animate-spin rounded-full border-4 border-primary border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]" role="status">
+                <div class="inline-block h-8 w-8 animate-spin rounded-full border-4 border-primary border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]" role="status">
                     <span class="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]">
                         Loading...
                     </span>
