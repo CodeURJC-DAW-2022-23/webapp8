@@ -3,7 +3,7 @@
 		"_postman_id": "a41554d3-add1-47f7-aadf-05bef1b84495",
 		"name": "Twitter's Clone",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "25857672"
+		"_exporter_id": "25962865"
 	},
 	"item": [
 		{
@@ -1082,7 +1082,7 @@
 								{
 									"key": "files",
 									"type": "file",
-									"src": "Lord Doritos.jpg"
+									"src": []
 								}
 							]
 						},
@@ -1119,7 +1119,7 @@
 								{
 									"key": "files",
 									"type": "file",
-									"src": "Lord Doritos.jpg"
+									"src": []
 								}
 							]
 						},
@@ -1328,7 +1328,7 @@
 								{
 									"key": "file",
 									"type": "file",
-									"src": "Lord Doritos.jpg"
+									"src": []
 								}
 							]
 						},
@@ -1424,7 +1424,7 @@
 								{
 									"key": "file",
 									"type": "file",
-									"src": "Lord Doritos.jpg"
+									"src": []
 								}
 							]
 						},
@@ -1637,7 +1637,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\"username\":\"user\",\r\n\"password\":\"pass\"}",
+							"raw": "",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1694,7 +1694,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "https://localhost:8443/api/verify",
+							"raw": "https://localhost:8443/api/verification?code=",
 							"protocol": "https",
 							"host": [
 								"localhost"
@@ -1702,7 +1702,13 @@
 							"port": "8443",
 							"path": [
 								"api",
-								"verify"
+								"verification"
+							],
+							"query": [
+								{
+									"key": "code",
+									"value": ""
+								}
 							]
 						}
 					},
@@ -1744,7 +1750,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"email\":\"ikablue0185@mail.com\"\r\n}",
+							"raw": "{\r\n    \"email\":\"fake@mail.com\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1781,7 +1787,7 @@
 							}
 						},
 						"url": {
-							"raw": "https://localhost:8443/api/reset-password",
+							"raw": "https://localhost:8443/api/reset-password?passwordToken=",
 							"protocol": "https",
 							"host": [
 								"localhost"
@@ -1790,6 +1796,12 @@
 							"path": [
 								"api",
 								"reset-password"
+							],
+							"query": [
+								{
+									"key": "passwordToken",
+									"value": ""
+								}
 							]
 						}
 					},
@@ -1802,7 +1814,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\"username\":\"user\",\r\n\"password\":\"123\"}",
+							"raw": "{\"username\":\"ika\",\r\n\"password\":\"123\"}",
 							"options": {
 								"raw": {
 									"language": "json"
