@@ -29,7 +29,6 @@ WORKDIR /usr/app
 
 # Copy JAR from compilation container to application container directory
 COPY --from=builder /project/target/*.jar /usr/app
-COPY src/main/resources/example_data /usr/app/example_data
 
 # Start expose port from container
 EXPOSE 8443
