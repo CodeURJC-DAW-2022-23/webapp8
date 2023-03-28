@@ -410,8 +410,40 @@ javac ProjectBackendApplication
 | :--: | :--: | :-----------: | :------------: | 
 
 ### :calling: Dockerized application execution instructions
+1. Clone this repository
+```
+git clone https://github.com/CodeURJC-DAW-2022-23/webapp8.git
+```
+2. Go to docker folder
+```
+cd webapp8/ProjectBackEnd/docker
+```
+3.	Install [Docker](https://docs.docker.com/engine/install/)
+4. Run Docker
+5. Execute [create_image.sh](https://github.com/CodeURJC-DAW-2022-23/webapp8/blob/main/ProjectBackEnd/docker/create_image.sh) file
+```
+./create_image.sh
+```
+6. Open your favorite Internet browser
+7. The application will be at [https://localhost:8443](https://localhost:8443) 👌
 
 ### :whale: Documentation for building the docker image
+1. Create and account on [Dockerhub](https://hub.docker.com/)
+2. Clone this repository
+```
+git clone https://github.com/CodeURJC-DAW-2022-23/webapp8.git
+```
+3. Go to docker folder
+```
+cd webapp8/ProjectBackEnd/docker
+```
+4.	Install [Docker](https://docs.docker.com/engine/install/)
+5. Run Docker
+6. Connect your account to Docker
+7. Execute [build_and_push_image.sh](https://github.com/CodeURJC-DAW-2022-23/webapp8/blob/main/ProjectBackEnd/docker/build_and_push_image.sh) file
+```
+./build_and_push_image.sh accountName/imageName:version
+```
 
 ### :busts_in_silhouette: Members Participation - Phase 3
 
