@@ -453,11 +453,11 @@ cd webapp8/ProjectBackEnd/docker
 
 | #   | Commit      |     | #   | File |
 | :-: | :---------: | :-: | :-: | :--: |
-| 1º  |  | | 1º      |         |
-| 2º  |  | | 2º      |         |
-| 3º  |  | | 3º      |         |
-| 4º  |  | | 4º      |         |
-| 5º  |  | | 5º      |         |
+| 1º  | [Reformat AJAX from notifications and hashtags](https://github.com/CodeURJC-DAW-2022-23/webapp8/commit/af6822bc209a2e933e6db77f5a4ef5a3a1e6a9a0) | | 1º      | [DBInitializer.java](https://github.com/CodeURJC-DAW-2022-23/webapp8/blob/main/ProjectBackEnd/src/main/java/com/TwitterClone/ProjectBackend/Service/DBInitializer.java)        |
+| 2º  | [Fix followers and followed page](https://github.com/CodeURJC-DAW-2022-23/webapp8/commit/c709b565ff8a341d0d59fdc4fe3fca2dc38c52cc) | | 2º      | [Dockerfile](https://github.com/CodeURJC-DAW-2022-23/webapp8/blob/main/ProjectBackEnd/Dockerfile)        |
+| 3º  | [Fix DBInitializer for Docker](https://github.com/CodeURJC-DAW-2022-23/webapp8/commit/5786da6f81ba339e0c194db1adb3fea986f2b969) | | 3º      | [docker-compose.yml](https://github.com/CodeURJC-DAW-2022-23/webapp8/blob/main/ProjectBackEnd/docker/docker-compose.yml)        |
+| 4º  | [Add docker-compose file](https://github.com/CodeURJC-DAW-2022-23/webapp8/commit/a6bd6a11493ce4e4c383405916f350d6500d09ce) | | 4º      | [ajax.js](https://github.com/CodeURJC-DAW-2022-23/webapp8/blob/main/ProjectBackEnd/src/main/resources/static/assets/js/ajax.js)        |
+| 5º  |[Add Dockerfile](https://github.com/CodeURJC-DAW-2022-23/webapp8/commit/d73722fcf38f62386e38caf9dac366f60eb2a0c1) | | 5º      | [ProfileService.java](https://github.com/CodeURJC-DAW-2022-23/webapp8/blob/main/ProjectBackEnd/src/main/java/com/TwitterClone/ProjectBackend/Service/ProfileService.java)
 
 #### Laura María Camino Yuste
 
