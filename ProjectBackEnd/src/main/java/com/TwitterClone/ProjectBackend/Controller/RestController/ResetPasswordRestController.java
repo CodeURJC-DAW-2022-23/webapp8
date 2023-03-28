@@ -45,6 +45,10 @@ public class ResetPasswordRestController {
     public ResponseEntity<Object> processForgotPassword(@RequestBody ForgotPasswordRequest request) throws MessagingException, UnsupportedEncodingException {
         String passwordToken = RandomString.make(30);
 
+        if (this.userService.findByMail(request.getEmail())== null){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
         userService.updateResetPasswordToken(passwordToken, request.getEmail());
         String resetPasswordLink = "https://localhost:8443/reset-password?passwordToken=" + passwordToken;
         mailService.sendResetPasswordMail(request.getEmail(), resetPasswordLink);

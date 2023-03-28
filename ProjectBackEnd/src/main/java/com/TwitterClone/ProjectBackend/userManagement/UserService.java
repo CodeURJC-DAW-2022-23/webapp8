@@ -156,4 +156,8 @@ public class UserService {
     public List<User> findByUsernameContainingIgnoreCase(String keyword) {
         return this.userRepository.findByUsernameContainingIgnoreCase(keyword);
     }
+
+    public User findByMail(String mail){
+        return this.userRepository.findByEmail(mail).orElse(null);
+    }
 }
