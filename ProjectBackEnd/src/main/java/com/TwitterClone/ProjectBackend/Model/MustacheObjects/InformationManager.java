@@ -128,18 +128,21 @@ public class InformationManager {
 
         if (this.tweetService.isRetweeted(currentUser, tweet)) {
             currentTweetInformation.setColorRetweet("green-0");
+            currentTweetInformation.setRetweeted(true);
         } else {
             currentTweetInformation.setColorRetweet("gray-4");
         }
 
         if (this.tweetService.isLiked(currentUser, tweet)) {
             currentTweetInformation.setColorLike("red-0");
+            currentTweetInformation.setLiked(true);
         } else {
             currentTweetInformation.setColorLike("gray-4");
         }
 
         if (this.tweetService.isBookmarked(currentUser, tweet)) {
             currentTweetInformation.setColorBookmark("primary");
+            currentTweetInformation.setBookmarked(true);
         } else {
             currentTweetInformation.setColorBookmark("gray-4");
         }

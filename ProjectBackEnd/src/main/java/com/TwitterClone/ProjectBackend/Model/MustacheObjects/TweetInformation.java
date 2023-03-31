@@ -25,12 +25,6 @@ public class TweetInformation {
     @JsonView(Basic.class)
     private Long numLikes;
     @JsonView(Basic.class)
-    private String colorLike;
-    @JsonView(Basic.class)
-    private String colorRetweet;
-    @JsonView(Basic.class)
-    private String colorBookmark;
-    @JsonView(Basic.class)
     private boolean isAuthorised;
     @JsonView(Basic.class)
     private String urlToProfilePic;
@@ -42,7 +36,19 @@ public class TweetInformation {
     private String urlToMedia3;
     @JsonView(Basic.class)
     private String urlToMedia4;
+
+    @JsonView(Basic.class)
+    private boolean liked = false;
+    @JsonView(Basic.class)
+    private boolean retweeted = false;
+    @JsonView(Basic.class)
+    private boolean bookmarked = false;
+
     @JsonView(Basic.class)
     private Tweet tweet;
+
+    private String colorLike;
+    private String colorRetweet;
+    private String colorBookmark;
 
 }

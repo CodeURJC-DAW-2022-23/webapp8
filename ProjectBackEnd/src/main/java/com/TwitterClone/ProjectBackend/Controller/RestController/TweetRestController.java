@@ -49,8 +49,8 @@ public class TweetRestController {
             @ApiResponse(responseCode = "200", description = "Tweets obtained", content = {
                     @Content(mediaType = "application/json", schema = @Schema(implementation = TweetInformation.class))
             }),
-            @ApiResponse(responseCode = "403", description = "Current User can not do that", content = @Content),
-            @ApiResponse(responseCode = "404", description = "No tweets found for current user", content = @Content)
+            @ApiResponse(responseCode = "204", description = "No tweets found for current user in this range", content = @Content),
+            @ApiResponse(responseCode = "403", description = "Current User can not do that", content = @Content)
     })
     @GetMapping("/tweets")
     @JsonView(Basic.class)
@@ -67,7 +67,7 @@ public class TweetRestController {
         List<TweetInformation> tweetsInformation = this.informationManager.calculateDataOfTweet(tweets, user);
 
         if (tweetsInformation.size() == 0) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
 
         return new ResponseEntity<>(tweetsInformation, HttpStatus.OK);
@@ -78,10 +78,10 @@ public class TweetRestController {
             @ApiResponse(responseCode = "200", description = "Bookmarks obtained", content = {
                     @Content(mediaType = "application/json", schema = @Schema(implementation = TweetInformation.class))
             }),
-            @ApiResponse(responseCode = "403", description = "Current User can not do that", content = @Content),
-            @ApiResponse(responseCode = "404", description = "Bookmarks list empty", content = @Content)
+            @ApiResponse(responseCode = "204", description = "No bookmarks found for current user in this range", content = @Content),
+            @ApiResponse(responseCode = "403", description = "Current User can not do that", content = @Content)
     })
-    @GetMapping("/bookmarks")
+    @GetMapping("tweets/user/bookmarks")
     @JsonView(Basic.class)
     public ResponseEntity<List<TweetInformation>> getTweetsForBookmarks(@PathParam("from") int from,
                                                                         @PathParam("size") int size,
@@ -96,7 +96,7 @@ public class TweetRestController {
         List<TweetInformation> tweetsInformation = this.informationManager.calculateDataOfTweet(tweets, user);
 
         if (tweetsInformation.size() == 0) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
 
         return new ResponseEntity<>(tweetsInformation, HttpStatus.OK);
@@ -107,17 +107,17 @@ public class TweetRestController {
             @ApiResponse(responseCode = "200", description = "Tweets obtained", content = {
                     @Content(mediaType = "application/json", schema = @Schema(implementation = TweetInformation.class))
             }),
-            @ApiResponse(responseCode = "404", description = "Tweets not found", content = @Content),
-            @ApiResponse(responseCode = "202", description = "User not found", content = @Content)
+            @ApiResponse(responseCode = "404", description = "User not found", content = @Content),
+            @ApiResponse(responseCode = "204", description = "Tweets not found", content = @Content)
     })
-    @GetMapping("/profile/{id}/tweets")
+    @GetMapping("user/{id}/tweets")
     @JsonView(Basic.class)
     public ResponseEntity<List<TweetInformation>> getProfileTweets(@PathVariable Long id,
                                                                    @PathParam("from") int from,
                                                                    @PathParam("size") int size,
                                                                    HttpServletRequest request) {
         if (this.profileService.findById(id).orElse(null) == null) {
-            return new ResponseEntity<>(HttpStatus.ACCEPTED);
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
         User user = this.informationManager.getCurrentUser(request);
@@ -125,7 +125,7 @@ public class TweetRestController {
         List<TweetInformation> tweetsInformation = this.informationManager.calculateDataOfTweet(tweets, user);
 
         if (tweetsInformation.size() == 0) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
 
         return new ResponseEntity<>(tweetsInformation, HttpStatus.OK);
@@ -135,17 +135,16 @@ public class TweetRestController {
     @Operation(summary = "Post a new tweet by the current user replying a tweet")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Comment Created", content = {
-                    @Content(mediaType = "application/json", schema = @Schema(implementation = Tweet.class))
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = TweetInformation.class))
             }),
             @ApiResponse(responseCode = "403", description = "Current User can not do that", content = @Content),
             @ApiResponse(responseCode = "404", description = "Tweet Not Found", content = @Content)
     })
-    @PostMapping("/tweets/reply-tweet/{idTweetReplied}")
+    @PostMapping("/tweets/{idTweetReplied}")
     @JsonView(Basic.class)
-    public ResponseEntity<Tweet> postTweet(@RequestParam("text") String tweet_info,
-                                           @RequestParam("files") MultipartFile[] tweet_files,
+    public ResponseEntity<TweetInformation> postComment(@RequestBody String tweet_info,
                                            @PathVariable("idTweetReplied") Long idTweetReplied,
-                                           HttpServletRequest request) throws IOException {
+                                           HttpServletRequest request) {
         Tweet tweetReplied = this.tweetService.findById(idTweetReplied).orElse(null);
         User currentUser = this.informationManager.getCurrentUser(request);
         if(currentUser == null){
@@ -158,9 +157,9 @@ public class TweetRestController {
 
         User user_reply = tweetReplied.getUser();
 
-        Blob[] files = this.informationManager.manageImages(tweet_files);
         Long userId = currentUser.getId();
-        Tweet newTweet = this.tweetService.createTweet(tweet_info, files, userId);
+
+        Tweet newTweet = this.tweetService.createTweet(tweet_info, new Blob[]{}, userId);
         this.informationManager.processTextTweet(tweet_info, newTweet, currentUser);
 
         tweetService.addComment(idTweetReplied, newTweet);
@@ -170,23 +169,25 @@ public class TweetRestController {
                     .createNotification(newTweet.getId(), user_reply, currentUser, "MENTION");
         }
 
-        return new ResponseEntity<>(newTweet, HttpStatus.OK);
+        List<Tweet> tweets = new ArrayList<>();
+        tweets.add(newTweet);
+        List<TweetInformation> tweetProcessed= this.informationManager.calculateDataOfTweet(tweets,currentUser);
+        return new ResponseEntity<>(tweetProcessed.get(0), HttpStatus.OK);
     }
 
 
     @Operation(summary = "Post a new tweet by the current user")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Tweet Created", content = {
-                    @Content(mediaType = "application/json", schema = @Schema(implementation = Tweet.class))
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = TweetInformation.class))
             }),
             @ApiResponse(responseCode = "403", description = "Current User can not do that", content = @Content)
     })
-    @PostMapping("/tweets/new-tweet")
+    @PostMapping("/tweets")
     @JsonView(Basic.class)
-    public ResponseEntity<Tweet> postTweet(@RequestParam("text") String tweet_info,
-                                           @RequestParam("files") MultipartFile[] tweet_files,
-                                           HttpServletRequest request) throws IOException {
-        Blob[] files = this.informationManager.manageImages(tweet_files);
+    public ResponseEntity<TweetInformation> postTweet(@RequestBody String tweet_info,
+                                           HttpServletRequest request) {
+        Blob[] files = new Blob[]{};
         User currentUser = this.informationManager.getCurrentUser(request);
         if (currentUser == null){
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
@@ -195,20 +196,23 @@ public class TweetRestController {
         Tweet newTweet = this.tweetService.createTweet(tweet_info, files, userId);
         this.informationManager.processTextTweet(tweet_info, newTweet, currentUser);
 
-        return new ResponseEntity<>(newTweet, HttpStatus.OK);
+        List<Tweet> tweets = new ArrayList<>();
+        tweets.add(newTweet);
+        List<TweetInformation> tweetProcessed= this.informationManager.calculateDataOfTweet(tweets,currentUser);
+        return new ResponseEntity<>(tweetProcessed.get(0), HttpStatus.OK);
     }
 
     @Operation(summary = "Delete a tweet of the current user")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Tweet Created", content = {
-                    @Content(mediaType = "application/json", schema = @Schema(implementation = Tweet.class))
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = TweetInformation.class))
             }),
             @ApiResponse(responseCode = "403", description = "Current User can not do that", content = @Content),
             @ApiResponse(responseCode = "404", description = "Tweet Not Found", content = @Content),
     })
-    @DeleteMapping("/tweet/delete/{id}")
+    @DeleteMapping("/tweets/{id}")
     @JsonView(Basic.class)
-    public ResponseEntity<Tweet> deleteTweet(@PathVariable("id") Long id,
+    public ResponseEntity<TweetInformation> deleteTweet(@PathVariable("id") Long id,
                                              HttpServletRequest request) {
         Tweet tweet = this.tweetService.findById(id).orElse(null);
 
@@ -224,7 +228,7 @@ public class TweetRestController {
             }
 
             this.tweetService.deleteTweet(tweet);
-            return new ResponseEntity<>(tweet, HttpStatus.OK);
+            return new ResponseEntity<>(tweetInformation.get(0), HttpStatus.OK);
         }
 
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -241,7 +245,7 @@ public class TweetRestController {
             @ApiResponse(responseCode = "403", description = "Current User can not do that", content = @Content),
             @ApiResponse(responseCode = "404", description = "Tweet Not Found", content = @Content),
     })
-    @PutMapping("/tweet/like/{id}")
+    @PutMapping("/tweets/{id}/likes")
     @JsonView(Basic.class)
     public ResponseEntity<TweetInformation> toggleLike(@PathVariable("id") Long id,
                                                        HttpServletRequest request) {
@@ -281,7 +285,7 @@ public class TweetRestController {
             @ApiResponse(responseCode = "403", description = "Current User can not do that", content = @Content),
             @ApiResponse(responseCode = "404", description = "Tweet Not Found", content = @Content)
     })
-    @PutMapping("/tweet/retweet/{id}")
+    @PutMapping("/tweets/{id}/retweets")
     @JsonView(Basic.class)
     public ResponseEntity<TweetInformation> toggleRetweet(@PathVariable("id") Long id,
                                                           HttpServletRequest request) {
@@ -321,7 +325,7 @@ public class TweetRestController {
             @ApiResponse(responseCode = "403", description = "Current User can not do that", content = @Content),
             @ApiResponse(responseCode = "404", description = "Tweet Not Found", content = @Content)
     })
-    @PutMapping("/tweet/bookmark/{id}")
+    @PutMapping("/tweets/{id}/bookmarks")
     @JsonView(Basic.class)
     public ResponseEntity<TweetInformation> toggleBookmark(@PathVariable("id") Long id,
                                                            HttpServletRequest request) {

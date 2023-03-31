@@ -76,10 +76,12 @@ public class Tweet {
         this.comments = new LinkedList<>();
         this.text = text;
         this.user = user;
-        this.media1 = files[0];
-        this.media2 = files[1];
-        this.media3 = files[2];
-        this.media4 = files[3];
+        if (files.length > 0){
+            this.media1 = files[0];
+            this.media2 = files[1];
+            this.media3 = files[2];
+            this.media4 = files[3];
+        }
     }
 
     /*
