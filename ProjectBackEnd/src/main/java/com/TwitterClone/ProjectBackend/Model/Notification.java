@@ -23,7 +23,7 @@ public class Notification {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @JsonView(Basic.class)
-    private final Long id;
+    private Long id;
     @ManyToOne
     @JsonView(Basic.class)
     private Tweet tweetTrigger;
@@ -51,7 +51,6 @@ public class Notification {
      * @param userWhoNotifies
      */
     public Notification(Tweet tweet, User userToNotify, User userWhoNotifies, String type) {
-        id = new Random().nextLong();
         this.userToNotify = userToNotify;
         this.userWhoNotifies = userWhoNotifies;
         this.tweetTrigger = tweet;
@@ -68,7 +67,6 @@ public class Notification {
      * @param date
      */
     public Notification(Tweet tweet, User userToNotify, User userWhoNotifies, LocalDateTime date, String type) {
-        id = new Random().nextLong();
         this.userToNotify = userToNotify;
         this.userWhoNotifies = userWhoNotifies;
         this.tweetTrigger = tweet;

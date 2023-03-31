@@ -108,11 +108,11 @@ public class InformationManager {
     private void createUrlToImages(TweetInformation tweetInformation) {
         Long tweetUserId = tweetInformation.getTweet().getUser().getId();
         Long tweetId = tweetInformation.getTweet().getId();
-        tweetInformation.setUrlToProfilePic("/" + tweetUserId + "/profile-pic");
-        tweetInformation.setUrlToMedia1("/" +  tweetId + "/tweet-image1");
-        tweetInformation.setUrlToMedia2("/" +  tweetId + "/tweet-image2");
-        tweetInformation.setUrlToMedia3("/" +  tweetId + "/tweet-image3");
-        tweetInformation.setUrlToMedia4("/" +  tweetId + "/tweet-image4");
+        tweetInformation.setUrlToProfilePic("/users/" + tweetUserId + "/user-image");
+        tweetInformation.setUrlToMedia1("/tweets/" +  tweetId + "/image1");
+        tweetInformation.setUrlToMedia2("/tweets/" +  tweetId + "/image2");
+        tweetInformation.setUrlToMedia3("/tweets/" +  tweetId + "/image3");
+        tweetInformation.setUrlToMedia4("/tweets/" +  tweetId + "/image4");
     }
 
     /**
@@ -283,8 +283,8 @@ public class InformationManager {
         currentUserInformation.setTweets(tweets);
 
         Long id = profileUser.getId();
-        currentUserInformation.setUrlToProfilePic("/" + id + "/profile-pic");
-        currentUserInformation.setUrlToBannerPic("/" + id + "/banner-pic");
+        currentUserInformation.setUrlToProfilePic("/users/" + id + "/user-image");
+        currentUserInformation.setUrlToBannerPic("/users/" + id + "/banner-image");
 
         return currentUserInformation;
     }

@@ -26,7 +26,7 @@ import java.util.Optional;
  * Manage all the petitions that needs images
  */
 @RestController
-@RequestMapping("/api/images")
+@RequestMapping("/api")
 public class ImageRestController {
 
     @Autowired
@@ -47,9 +47,9 @@ public class ImageRestController {
             @ApiResponse(responseCode = "200", description = "Profile pic obtained", content = {
                     @Content(mediaType = "application/json", schema = @Schema(implementation = Object.class))
             }),
-            @ApiResponse(responseCode = "202", description = "Profile pic not found", content = @Content)
+            @ApiResponse(responseCode = "404", description = "Profile pic not found", content = @Content)
     })
-    @GetMapping("/{id}/profile-pic")
+    @GetMapping("users/{id}/user-image")
     public ResponseEntity<Object> downloadProfilePic(@PathVariable long id) throws SQLException {
         Optional<User> user = profileService.findById(id);
 
@@ -61,7 +61,7 @@ public class ImageRestController {
                     .contentLength(user.get().getProfilePicture().length()).body(file);
         }
 
-        return ResponseEntity.accepted().build();
+        return ResponseEntity.notFound().build();
     }
 
     /**
@@ -76,9 +76,9 @@ public class ImageRestController {
             @ApiResponse(responseCode = "200", description = "Banner pic obtained", content = {
                     @Content(mediaType = "application/json", schema = @Schema(implementation = Object.class))
             }),
-            @ApiResponse(responseCode = "202", description = "Banner pic not found", content = @Content)
+            @ApiResponse(responseCode = "404", description = "Banner pic not found", content = @Content)
     })
-    @GetMapping("/{id}/banner-pic")
+    @GetMapping("users/{id}/banner-image")
     public ResponseEntity<Object> downloadBannerPic(@PathVariable long id) throws SQLException {
         Optional<User> user = profileService.findById(id);
 
@@ -90,7 +90,7 @@ public class ImageRestController {
                     .contentLength(user.get().getProfileBanner().length()).body(file);
         }
 
-        return ResponseEntity.accepted().build();
+        return ResponseEntity.notFound().build();
     }
 
     /**
@@ -107,7 +107,7 @@ public class ImageRestController {
             }),
             @ApiResponse(responseCode = "202", description = "First media not found", content = @Content)
     })
-    @GetMapping("/{id}/tweet-image1")
+    @GetMapping("tweets/{id}/image1")
     public ResponseEntity<Object> downloadTweetImage1(@PathVariable long id) throws SQLException {
         Optional<Tweet> tweet = this.tweetService.findById(id);
 
@@ -135,7 +135,7 @@ public class ImageRestController {
             }),
             @ApiResponse(responseCode = "202", description = "Second media not found", content = @Content)
     })
-    @GetMapping("/{id}/tweet-image2")
+    @GetMapping("tweets/{id}/image2")
     public ResponseEntity<Object> downloadTweetImage2(@PathVariable long id) throws SQLException {
         Optional<Tweet> tweet = this.tweetService.findById(id);
 
@@ -163,7 +163,7 @@ public class ImageRestController {
             }),
             @ApiResponse(responseCode = "202", description = "Third media not found", content = @Content)
     })
-    @GetMapping("/{id}/tweet-image3")
+    @GetMapping("tweets/{id}/image3")
     public ResponseEntity<Object> downloadTweetImage3(@PathVariable long id) throws SQLException {
         Optional<Tweet> tweet = this.tweetService.findById(id);
 
@@ -191,7 +191,7 @@ public class ImageRestController {
             }),
             @ApiResponse(responseCode = "202", description = "Fourth media not found", content = @Content)
     })
-    @GetMapping("/{id}/tweet-image4")
+    @GetMapping("tweets/{id}/image4")
     public ResponseEntity<Object> downloadTweetImage4(@PathVariable long id) throws SQLException {
         Optional<Tweet> tweet = this.tweetService.findById(id);
 

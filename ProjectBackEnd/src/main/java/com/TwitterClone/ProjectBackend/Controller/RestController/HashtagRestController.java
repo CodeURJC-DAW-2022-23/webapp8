@@ -28,7 +28,7 @@ import java.util.List;
  * This REST controller manages all the petitions relation with hashtags
  */
 @RestController
-@RequestMapping("/api/hashtags")
+@RequestMapping("/api")
 public class HashtagRestController {
     @Autowired
     private HashtagService hashtagService;
@@ -36,17 +36,17 @@ public class HashtagRestController {
     private InformationManager informationManager;
 
     /**
-     * Get some trends
+     * Get some trending hashtags
      *
      * @param from
      * @param size
      */
-    @Operation(summary = "Get some of the current trends")
+    @Operation(summary = "Get some of the current trending hashtags")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Trends obtained", content = {
                     @Content(mediaType = "application/json", schema = @Schema(implementation = Trend.class))
             }),
-            @ApiResponse(responseCode = "202", description = "Trends not found", content = @Content)
+            @ApiResponse(responseCode = "204", description = "No more trending hashtags found", content = @Content)
     })
     @GetMapping("/trends")
     public ResponseEntity<List<Trend>> getSomeTrends(@PathParam("from") int from,
@@ -54,7 +54,7 @@ public class HashtagRestController {
         List<Trend> newTrends = this.hashtagService.getCurrentTrends(from, size);
 
         if (newTrends.size() == 0) {
-            return new ResponseEntity<>(HttpStatus.ACCEPTED);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
 
         return new ResponseEntity<>(newTrends, HttpStatus.OK);
@@ -65,34 +65,37 @@ public class HashtagRestController {
      *
      * @param from
      * @param size
-     * @param hashtag
+     * @param id_hashtag
      * @param request
      * @return
      */
     @Operation(summary = "Get some tweets associated to a hashtag")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Tweets obtained", content = {
+            @ApiResponse(responseCode = "200", description = "Associated tweets to hashtag obtained", content = {
                     @Content(mediaType = "application/json", schema = @Schema(implementation = TweetInformation.class))
             }),
-            @ApiResponse(responseCode = "202", description = "Tweets not found", content = @Content)
+            @ApiResponse(responseCode = "204",
+                    description = "No more associated tweets to hashtag found", content = @Content)
     })
-    @GetMapping("/explore/{hashtag}")
+    @GetMapping("/hashtag/{id_hashtag}/tweets")
     @JsonView(TweetRestController.Basic.class)
     public ResponseEntity<List<TweetInformation>> getSomeTweetsAssociatedToAHashtag(
             @PathParam("from") int from,
             @PathParam("size") int size,
-            @PathVariable String hashtag,
+            @PathVariable String id_hashtag,
             HttpServletRequest request) {
+
         User currentUser = this.informationManager.getCurrentUser(request);
+
         List<Tweet> tweetsAssociated =
-                this.hashtagService.getTweetsAssociatedTo(hashtag, from, size);
+                this.hashtagService.getTweetsAssociatedTo(id_hashtag, from, size);
         List<TweetInformation> tweets =
                 this.informationManager.calculateDataOfTweet(tweetsAssociated, currentUser);
 
         if (tweets.size() == 0) {
-            return ResponseEntity.accepted().build();
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
 
-        return ResponseEntity.ok(tweets);
+        return new ResponseEntity<>(tweets, HttpStatus.OK);
     }
 }

@@ -24,7 +24,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/notifications")
+@RequestMapping("/api")
 public class NotificationRestController {
     @Autowired
     private NotificationService notificationService;
@@ -50,9 +50,9 @@ public class NotificationRestController {
             @ApiResponse(responseCode = "200", description = "Notifications obtained", content = {
                     @Content(mediaType = "application/json", schema = @Schema(implementation = Notification.class))
             }),
-            @ApiResponse(responseCode = "202", description = "Notifications not found", content = @Content)
+            @ApiResponse(responseCode = "204", description = "No more notifications not found", content = @Content)
     })
-    @GetMapping("/more-notifications")
+    @GetMapping("/notifications")
     @JsonView(Basic.class)
     public ResponseEntity<List<Notification>> getSomeNotifications(
             @PathParam("from") int from,
@@ -63,7 +63,7 @@ public class NotificationRestController {
         List<Notification> newNotifications = this.notificationService.getSomeNotificationsOfUser(idCurrentUser, from, size);
 
         if (newNotifications.size() == 0) {
-            return new ResponseEntity<>(HttpStatus.ACCEPTED);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
 
         return new ResponseEntity<>(newNotifications, HttpStatus.OK);
@@ -82,9 +82,9 @@ public class NotificationRestController {
             @ApiResponse(responseCode = "200", description = "Mentions obtained", content = {
                     @Content(mediaType = "application/json", schema = @Schema(implementation = Notification.class))
             }),
-            @ApiResponse(responseCode = "202", description = "Mentions not found", content = @Content)
+            @ApiResponse(responseCode = "204", description = "No more mentions not found", content = @Content)
     })
-    @GetMapping("/more-mentions")
+    @GetMapping("/mentions")
     @JsonView(Basic.class)
     public ResponseEntity<List<Notification>> getSomeMentions(
             @PathParam("from") int from,
@@ -95,7 +95,7 @@ public class NotificationRestController {
         List<Notification> newMentions = this.notificationService.getSomeMentionsOfUser(idCurrentUser, from, size);
 
         if (newMentions.size() == 0) {
-            return new ResponseEntity<>(HttpStatus.ACCEPTED);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
 
         return new ResponseEntity<>(newMentions, HttpStatus.OK);
@@ -118,7 +118,7 @@ public class NotificationRestController {
             }),
             @ApiResponse(responseCode = "400", description = "Cannot create the notification", content = @Content)
     })
-    @PostMapping("/new-notification")
+    @PostMapping("/notifications")
     @JsonView(Basic.class)
     public ResponseEntity<Notification> postNotification(@PathParam("idTweet") Long idTweet,
                                                          @PathParam("idOwner") Long idOwner,
@@ -154,7 +154,7 @@ public class NotificationRestController {
             }),
             @ApiResponse(responseCode = "400", description = "Cannot delete the notification", content = @Content)
     })
-    @DeleteMapping("/delete-notification")
+    @DeleteMapping("/notifications")
     @JsonView(Basic.class)
     public ResponseEntity<Notification> deleteNotification(@PathParam("idTweet") Long idTweet,
                                                            @PathParam("notificationType") String notificationType,
