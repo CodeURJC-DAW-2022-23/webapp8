@@ -64,7 +64,7 @@ public class AdminDashboardRestController {
             return ResponseEntity.ok(user);
         }
 
-        return ResponseEntity.badRequest().build();
+        return ResponseEntity.notFound().build();
     }
 
 
@@ -95,7 +95,7 @@ public class AdminDashboardRestController {
             return ResponseEntity.ok(user);
         }
 
-        return ResponseEntity.badRequest().build();
+        return ResponseEntity.notFound().build();
     }
 
     @Operation(summary = "If the user is a admin, he can verify another user according to his ID")
@@ -123,7 +123,7 @@ public class AdminDashboardRestController {
             return ResponseEntity.ok(user);
         }
 
-        return ResponseEntity.badRequest().build();
+        return ResponseEntity.notFound().build();
     }
 
     @Operation(summary = "If the user is a admin, he can unverify another user according to his ID")
@@ -151,7 +151,7 @@ public class AdminDashboardRestController {
             return ResponseEntity.ok(user);
         }
 
-        return ResponseEntity.badRequest().build();
+        return ResponseEntity.notFound().build();
     }
 
     @Operation(summary = "If the user is a admin, he can get the statistics of new accounts created in the last 5 days whit new accounts")

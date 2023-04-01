@@ -114,7 +114,8 @@ public class ProfileRestController {
                     @Content(mediaType = "application/json", schema = @Schema(implementation = Object.class))
             }),
             @ApiResponse(responseCode = "202", description = "Empty profile picture", content = @Content),
-            @ApiResponse(responseCode = "404", description = "User not found", content = @Content)
+            @ApiResponse(responseCode = "404", description = "User not found", content = @Content),
+            @ApiResponse(responseCode = "403", description = "Not allowed", content = @Content)
     })
     @PutMapping("users/{id}/profilepicture")
     @JsonView(Basic.class)
@@ -145,7 +146,8 @@ public class ProfileRestController {
                     @Content(mediaType = "application/json", schema = @Schema(implementation = Object.class))
             }),
             @ApiResponse(responseCode = "202", description = "Empty profile banner", content = @Content),
-            @ApiResponse(responseCode = "404", description = "User not found", content = @Content)
+            @ApiResponse(responseCode = "404", description = "User not found", content = @Content),
+            @ApiResponse(responseCode = "403", description = "Not allowed", content = @Content)
     })
     @PutMapping("users/{id}/profilebanner")
     @JsonView(Basic.class)
@@ -176,7 +178,8 @@ public class ProfileRestController {
                     @Content(mediaType = "application/json", schema = @Schema(implementation = User.Basic.class))
             }),
             @ApiResponse(responseCode = "202", description = "Empty nickname", content = @Content),
-            @ApiResponse(responseCode = "404", description = "User not found", content = @Content)
+            @ApiResponse(responseCode = "404", description = "User not found", content = @Content),
+            @ApiResponse(responseCode = "403", description = "Not allowed", content = @Content)
     })
     @PutMapping("users/{id}/nickname")
     @JsonView(Basic.class)
@@ -208,7 +211,8 @@ public class ProfileRestController {
             @ApiResponse(responseCode = "200", description = "Biography updated", content = {
                     @Content(mediaType = "application/json", schema = @Schema(implementation = User.Profile.class))
             }),
-            @ApiResponse(responseCode = "404", description = "User not found", content = @Content)
+            @ApiResponse(responseCode = "404", description = "User not found", content = @Content),
+            @ApiResponse(responseCode = "403", description = "Not allowed", content = @Content)
     })
     @PutMapping("users/{id}/biography")
     @JsonView(Basic.class)
