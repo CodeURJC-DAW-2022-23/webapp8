@@ -44,7 +44,7 @@ public class AdminDashboardRestController {
             }),
             @ApiResponse(responseCode = "404", description = "User ID not found", content = @Content)
     })
-    @PutMapping("/ban/{id}")
+    @PutMapping("users/{id}/ban")
     @JsonView(Basic.class)
     public ResponseEntity<Object> ban(@PathVariable Long id,
                                       HttpServletRequest request) throws MessagingException, UnsupportedEncodingException {
@@ -75,7 +75,7 @@ public class AdminDashboardRestController {
             }),
             @ApiResponse(responseCode = "404", description = "User ID not found", content = @Content)
     })
-    @PutMapping("/unban/{id}")
+    @PutMapping("users/{id}/unban")
     @JsonView(Basic.class)
     public ResponseEntity<Object> unban(@PathVariable Long id,
                                         HttpServletRequest request) throws MessagingException, UnsupportedEncodingException {
@@ -105,7 +105,7 @@ public class AdminDashboardRestController {
             }),
             @ApiResponse(responseCode = "404", description = "User ID not found", content = @Content)
     })
-    @PutMapping("/verify/{id}")
+    @PutMapping("users/{id}/verify")
     @JsonView(Basic.class)
     public ResponseEntity<Object> verify(@PathVariable Long id,
                                          HttpServletRequest request) {
@@ -133,7 +133,7 @@ public class AdminDashboardRestController {
             }),
             @ApiResponse(responseCode = "404", description = "User ID not found", content = @Content)
     })
-    @PutMapping("/unverify/{id}")
+    @PutMapping("users/{id}/unverify")
     @JsonView(Basic.class)
     public ResponseEntity<Object> unverify(@PathVariable Long id,
                                            HttpServletRequest request) {
@@ -161,7 +161,7 @@ public class AdminDashboardRestController {
             }),
             @ApiResponse(responseCode = "403", description = "No permission", content = @Content)
     })
-    @GetMapping("/statistics")
+    @GetMapping("users/statistics")
     public ResponseEntity<Map<String, String>> getNewAccountStatistics(HttpServletRequest request) {
         User currentUser = this.informationManager.getCurrentUser(request);
         List<Tuple> statics = this.profileService.getStatics();
