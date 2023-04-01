@@ -1,6 +1,7 @@
 package com.TwitterClone.ProjectBackend.controller.restController;
 
 import com.TwitterClone.ProjectBackend.model.mustacheObjects.InformationManager;
+import com.TwitterClone.ProjectBackend.model.mustacheObjects.JSONString;
 import com.TwitterClone.ProjectBackend.model.mustacheObjects.TweetInformation;
 import com.TwitterClone.ProjectBackend.model.Tweet;
 import com.TwitterClone.ProjectBackend.service.NotificationService;
@@ -13,7 +14,6 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
-import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,11 +24,6 @@ import javax.websocket.server.PathParam;
 import java.sql.Blob;
 import java.util.ArrayList;
 import java.util.List;
-
-@Getter
-class JSONString{
-    private String text;
-}
 
 @RestController
 @RequestMapping("/api")

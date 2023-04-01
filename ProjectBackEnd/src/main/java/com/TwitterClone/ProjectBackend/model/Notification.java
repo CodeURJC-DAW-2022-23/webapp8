@@ -32,7 +32,9 @@ public class Notification {
     @ManyToOne
     @JsonView(Basic.class)
     private User userWhoNotifies;
+    @JsonView(Basic.class)
     private LocalDateTime date;
+    @JsonView(Basic.class)
     private String type;
 
     /**
