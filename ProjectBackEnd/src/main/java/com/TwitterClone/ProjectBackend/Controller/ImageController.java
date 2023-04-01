@@ -35,7 +35,7 @@ public class ImageController {
      * @return
      * @throws SQLException
      */
-    @GetMapping("/{id}/profile-pic")
+    @GetMapping("/users/{id}/user-image")
     public ResponseEntity<Object> downloadProfilePic(@PathVariable long id) throws SQLException {
         Optional<User> user = profileService.findById(id);
 
@@ -57,7 +57,7 @@ public class ImageController {
      * @return
      * @throws SQLException
      */
-    @GetMapping("/{id}/banner-pic")
+    @GetMapping("/users/{id}/banner-image")
     public ResponseEntity<Object> downloadBannerPic(@PathVariable long id) throws SQLException {
         Optional<User> user = profileService.findById(id);
 
@@ -79,7 +79,7 @@ public class ImageController {
      * @return
      * @throws SQLException
      */
-    @GetMapping("/{id}/tweet-image1")
+    @GetMapping("tweets/{id}/image1")
     public ResponseEntity<Object> downloadTweetImage1(@PathVariable long id) throws SQLException {
         Optional<Tweet> tweet = this.tweetService.findById(id);
 
@@ -100,7 +100,7 @@ public class ImageController {
      * @return
      * @throws SQLException
      */
-    @GetMapping("/{id}/tweet-image2")
+    @GetMapping("tweets/{id}/image2")
     public ResponseEntity<Object> downloadTweetImage2(@PathVariable long id) throws SQLException {
         Optional<Tweet> tweet = this.tweetService.findById(id);
 
@@ -121,7 +121,7 @@ public class ImageController {
      * @return
      * @throws SQLException
      */
-    @GetMapping("/{id}/tweet-image3")
+    @GetMapping("tweets/{id}/image3")
     public ResponseEntity<Object> downloadTweetImage3(@PathVariable long id) throws SQLException {
         Optional<Tweet> tweet = this.tweetService.findById(id);
 
@@ -142,7 +142,7 @@ public class ImageController {
      * @return
      * @throws SQLException
      */
-    @GetMapping("/{id}/tweet-image4")
+    @GetMapping("tweets/{id}/image4")
     public ResponseEntity<Object> downloadTweetImage4(@PathVariable long id) throws SQLException {
         Optional<Tweet> tweet = this.tweetService.findById(id);
 

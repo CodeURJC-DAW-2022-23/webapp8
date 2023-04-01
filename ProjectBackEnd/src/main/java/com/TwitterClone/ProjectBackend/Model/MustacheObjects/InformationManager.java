@@ -61,6 +61,7 @@ public class InformationManager {
 
         model.addAttribute("isLogged", true);
         model.addAttribute("id", currentUser.getId());
+        model.addAttribute("user-image", "/users/" + currentUser.getId() + "/user-image");
         model.addAttribute("username", currentUser.getUsername());
         model.addAttribute("nickname", currentUser.getNickname());
         model.addAttribute("type", currentUser.getType());

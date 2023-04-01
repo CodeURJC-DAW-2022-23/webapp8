@@ -26,7 +26,7 @@ import java.util.Optional;
  * Manage all the petitions that needs images
  */
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/")
 public class ImageRestController {
 
     @Autowired
