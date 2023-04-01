@@ -1,4 +1,4 @@
-package com.TwitterClone.ProjectBackend.Model.Exceptions;
+package com.TwitterClone.ProjectBackend.model.exceptions;
 
 public class InvalidUsernameException {
 }

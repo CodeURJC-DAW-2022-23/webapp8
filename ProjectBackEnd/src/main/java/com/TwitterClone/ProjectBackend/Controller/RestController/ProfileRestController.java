@@ -1,10 +1,10 @@
-package com.TwitterClone.ProjectBackend.Controller.RestController;
+package com.TwitterClone.ProjectBackend.controller.restController;
 
-import com.TwitterClone.ProjectBackend.Model.MustacheObjects.InformationManager;
-import com.TwitterClone.ProjectBackend.Model.MustacheObjects.UserInformation;
-import com.TwitterClone.ProjectBackend.Service.NotificationService;
-import com.TwitterClone.ProjectBackend.Service.ProfileService;
-import com.TwitterClone.ProjectBackend.Service.TweetService;
+import com.TwitterClone.ProjectBackend.model.mustacheObjects.InformationManager;
+import com.TwitterClone.ProjectBackend.model.mustacheObjects.UserInformation;
+import com.TwitterClone.ProjectBackend.service.NotificationService;
+import com.TwitterClone.ProjectBackend.service.ProfileService;
+import com.TwitterClone.ProjectBackend.service.TweetService;
 import com.TwitterClone.ProjectBackend.userManagement.User;
 import com.fasterxml.jackson.annotation.JsonView;
 import io.swagger.v3.oas.annotations.Operation;

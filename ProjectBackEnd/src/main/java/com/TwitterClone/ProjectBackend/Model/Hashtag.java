@@ -1,13 +1,10 @@
-package com.TwitterClone.ProjectBackend.Model;
+package com.TwitterClone.ProjectBackend.model;
 
 import com.fasterxml.jackson.annotation.JsonView;
 import lombok.*;
-import org.hibernate.validator.constraints.UniqueElements;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 /**

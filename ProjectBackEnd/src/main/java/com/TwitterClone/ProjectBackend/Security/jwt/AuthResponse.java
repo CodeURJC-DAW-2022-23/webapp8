@@ -1,4 +1,4 @@
-package com.TwitterClone.ProjectBackend.Security.jwt;
+package com.TwitterClone.ProjectBackend.security.jwt;
 
 public class AuthResponse {
 

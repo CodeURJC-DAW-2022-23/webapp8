@@ -1,6 +1,6 @@
-package com.TwitterClone.ProjectBackend.Security;
+package com.TwitterClone.ProjectBackend.security;
 
-import com.TwitterClone.ProjectBackend.Security.jwt.JwtRequestFilter;
+import com.TwitterClone.ProjectBackend.security.jwt.JwtRequestFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

@@ -1,10 +1,10 @@
-package com.TwitterClone.ProjectBackend.Controller;
+package com.TwitterClone.ProjectBackend.controller;
 
-import com.TwitterClone.ProjectBackend.Model.MustacheObjects.InformationManager;
-import com.TwitterClone.ProjectBackend.Model.MustacheObjects.TweetInformation;
-import com.TwitterClone.ProjectBackend.Model.Trend;
-import com.TwitterClone.ProjectBackend.Model.Tweet;
-import com.TwitterClone.ProjectBackend.Service.HashtagService;
+import com.TwitterClone.ProjectBackend.model.mustacheObjects.InformationManager;
+import com.TwitterClone.ProjectBackend.model.mustacheObjects.TweetInformation;
+import com.TwitterClone.ProjectBackend.model.Trend;
+import com.TwitterClone.ProjectBackend.model.Tweet;
+import com.TwitterClone.ProjectBackend.service.HashtagService;
 import com.TwitterClone.ProjectBackend.userManagement.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;

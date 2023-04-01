@@ -1,23 +1,19 @@
 package com.TwitterClone.ProjectBackend.userManagement;
 
 import com.TwitterClone.ProjectBackend.DTO.RegisteredRequest;
-import com.TwitterClone.ProjectBackend.Repository.UserRepository;
-import com.TwitterClone.ProjectBackend.Security.EmailValidator;
-import com.TwitterClone.ProjectBackend.Service.MailService;
+import com.TwitterClone.ProjectBackend.repository.UserRepository;
+import com.TwitterClone.ProjectBackend.security.EmailValidator;
+import com.TwitterClone.ProjectBackend.service.MailService;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import net.bytebuddy.utility.RandomString;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.mail.MessagingException;
-import javax.mail.internet.MimeMessage;
 import javax.transaction.Transactional;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 /**

@@ -1,6 +1,6 @@
 package com.TwitterClone.ProjectBackend.userManagement;
 
-import com.TwitterClone.ProjectBackend.Model.Tweet;
+import com.TwitterClone.ProjectBackend.model.Tweet;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.sun.istack.NotNull;
 import lombok.EqualsAndHashCode;

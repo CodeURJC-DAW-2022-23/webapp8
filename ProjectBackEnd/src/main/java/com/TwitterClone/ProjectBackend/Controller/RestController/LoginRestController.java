@@ -1,9 +1,8 @@
-package com.TwitterClone.ProjectBackend.Controller.RestController;
+package com.TwitterClone.ProjectBackend.controller.restController;
 
-import com.TwitterClone.ProjectBackend.Security.jwt.AuthResponse;
-import com.TwitterClone.ProjectBackend.Security.jwt.LoginRequest;
-import com.TwitterClone.ProjectBackend.Security.jwt.UserLoginService;
-import com.TwitterClone.ProjectBackend.Service.MailService;
+import com.TwitterClone.ProjectBackend.security.jwt.AuthResponse;
+import com.TwitterClone.ProjectBackend.security.jwt.LoginRequest;
+import com.TwitterClone.ProjectBackend.security.jwt.UserLoginService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;

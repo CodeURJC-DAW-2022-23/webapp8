@@ -1,17 +1,12 @@
-package com.TwitterClone.ProjectBackend.Repository;
+package com.TwitterClone.ProjectBackend.repository;
 
-import com.TwitterClone.ProjectBackend.Model.Notification;
-import com.TwitterClone.ProjectBackend.Model.Tweet;
-import com.TwitterClone.ProjectBackend.userManagement.User;
-import org.aspectj.weaver.ast.Not;
-import org.springframework.data.domain.Sort;
+import com.TwitterClone.ProjectBackend.model.Notification;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 /**
  * This Repository is the connection to DB for Notification Entity

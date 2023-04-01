@@ -1,11 +1,11 @@
-package com.TwitterClone.ProjectBackend.Controller.RestController;
+package com.TwitterClone.ProjectBackend.controller.restController;
 
-import com.TwitterClone.ProjectBackend.Model.MustacheObjects.InformationManager;
-import com.TwitterClone.ProjectBackend.Model.MustacheObjects.TweetInformation;
-import com.TwitterClone.ProjectBackend.Model.Tweet;
-import com.TwitterClone.ProjectBackend.Service.NotificationService;
-import com.TwitterClone.ProjectBackend.Service.ProfileService;
-import com.TwitterClone.ProjectBackend.Service.TweetService;
+import com.TwitterClone.ProjectBackend.model.mustacheObjects.InformationManager;
+import com.TwitterClone.ProjectBackend.model.mustacheObjects.TweetInformation;
+import com.TwitterClone.ProjectBackend.model.Tweet;
+import com.TwitterClone.ProjectBackend.service.NotificationService;
+import com.TwitterClone.ProjectBackend.service.ProfileService;
+import com.TwitterClone.ProjectBackend.service.TweetService;
 import com.TwitterClone.ProjectBackend.userManagement.User;
 import com.fasterxml.jackson.annotation.JsonView;
 import io.swagger.v3.oas.annotations.Operation;
@@ -17,11 +17,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.websocket.server.PathParam;
-import java.io.IOException;
 import java.sql.Blob;
 import java.util.ArrayList;
 import java.util.List;
@@ -41,8 +39,6 @@ public class TweetRestController {
 
     interface Basic extends Tweet.Basic, TweetInformation.Basic, User.Basic {
     }
-
-    ;
 
     @Operation(summary = "Get some of the tweets owned by the followed users of the current user")
     @ApiResponses(value = {

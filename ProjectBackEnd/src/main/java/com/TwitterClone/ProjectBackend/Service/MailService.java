@@ -1,4 +1,4 @@
-package com.TwitterClone.ProjectBackend.Service;
+package com.TwitterClone.ProjectBackend.service;
 
 import com.TwitterClone.ProjectBackend.userManagement.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import java.io.UnsupportedEncodingException;
-import java.util.Calendar;
 
 @Service
 public class MailService {

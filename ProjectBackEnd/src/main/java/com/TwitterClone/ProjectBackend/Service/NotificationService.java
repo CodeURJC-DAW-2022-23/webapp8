@@ -1,9 +1,9 @@
-package com.TwitterClone.ProjectBackend.Service;
+package com.TwitterClone.ProjectBackend.service;
 
-import com.TwitterClone.ProjectBackend.Model.Notification;
-import com.TwitterClone.ProjectBackend.Model.Tweet;
-import com.TwitterClone.ProjectBackend.Repository.NotificationRepository;
-import com.TwitterClone.ProjectBackend.Repository.TweetRepository;
+import com.TwitterClone.ProjectBackend.model.Notification;
+import com.TwitterClone.ProjectBackend.model.Tweet;
+import com.TwitterClone.ProjectBackend.repository.NotificationRepository;
+import com.TwitterClone.ProjectBackend.repository.TweetRepository;
 import com.TwitterClone.ProjectBackend.userManagement.User;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;

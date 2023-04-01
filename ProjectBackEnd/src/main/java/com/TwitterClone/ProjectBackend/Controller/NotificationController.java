@@ -1,9 +1,9 @@
-package com.TwitterClone.ProjectBackend.Controller;
+package com.TwitterClone.ProjectBackend.controller;
 
-import com.TwitterClone.ProjectBackend.Model.MustacheObjects.InformationManager;
-import com.TwitterClone.ProjectBackend.Model.Notification;
-import com.TwitterClone.ProjectBackend.Service.NotificationService;
-import com.TwitterClone.ProjectBackend.Service.ProfileService;
+import com.TwitterClone.ProjectBackend.model.mustacheObjects.InformationManager;
+import com.TwitterClone.ProjectBackend.model.Notification;
+import com.TwitterClone.ProjectBackend.service.NotificationService;
+import com.TwitterClone.ProjectBackend.service.ProfileService;
 import com.TwitterClone.ProjectBackend.userManagement.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;

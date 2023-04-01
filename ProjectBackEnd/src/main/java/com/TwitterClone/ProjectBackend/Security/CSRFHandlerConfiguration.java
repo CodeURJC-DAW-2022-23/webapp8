@@ -1,4 +1,4 @@
-package com.TwitterClone.ProjectBackend.Security;
+package com.TwitterClone.ProjectBackend.security;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

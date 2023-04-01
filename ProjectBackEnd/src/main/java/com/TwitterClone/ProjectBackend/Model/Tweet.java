@@ -1,7 +1,6 @@
-package com.TwitterClone.ProjectBackend.Model;
+package com.TwitterClone.ProjectBackend.model;
 
 import com.TwitterClone.ProjectBackend.userManagement.User;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonView;
 import lombok.Getter;
 import lombok.Setter;

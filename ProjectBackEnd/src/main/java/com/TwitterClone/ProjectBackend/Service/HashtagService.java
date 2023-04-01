@@ -1,11 +1,10 @@
-package com.TwitterClone.ProjectBackend.Service;
+package com.TwitterClone.ProjectBackend.service;
 
-import com.TwitterClone.ProjectBackend.Model.Hashtag;
-import com.TwitterClone.ProjectBackend.Model.Trend;
-import com.TwitterClone.ProjectBackend.Model.Tweet;
-import com.TwitterClone.ProjectBackend.Repository.HashtagRepository;
-import com.TwitterClone.ProjectBackend.Repository.TweetRepository;
-import com.TwitterClone.ProjectBackend.Repository.UserRepository;
+import com.TwitterClone.ProjectBackend.model.Hashtag;
+import com.TwitterClone.ProjectBackend.model.Trend;
+import com.TwitterClone.ProjectBackend.model.Tweet;
+import com.TwitterClone.ProjectBackend.repository.HashtagRepository;
+import com.TwitterClone.ProjectBackend.repository.TweetRepository;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;

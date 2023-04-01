@@ -1,4 +1,4 @@
-package com.TwitterClone.ProjectBackend.Security.jwt;
+package com.TwitterClone.ProjectBackend.security.jwt;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;

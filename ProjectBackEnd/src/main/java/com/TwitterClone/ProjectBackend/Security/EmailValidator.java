@@ -1,9 +1,8 @@
-package com.TwitterClone.ProjectBackend.Security;
+package com.TwitterClone.ProjectBackend.security;
 
 import org.springframework.stereotype.Service;
 
 import java.util.function.Predicate;
-import java.util.regex.Pattern;
 
 @Service
 public class EmailValidator implements Predicate<String> {

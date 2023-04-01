@@ -1,9 +1,8 @@
-package com.TwitterClone.ProjectBackend.Service;
+package com.TwitterClone.ProjectBackend.service;
 
-import com.TwitterClone.ProjectBackend.Model.MustacheObjects.InformationManager;
-import com.TwitterClone.ProjectBackend.Model.Tweet;
-import com.TwitterClone.ProjectBackend.Repository.TweetRepository;
-import com.TwitterClone.ProjectBackend.Repository.UserRepository;
+import com.TwitterClone.ProjectBackend.model.Tweet;
+import com.TwitterClone.ProjectBackend.repository.TweetRepository;
+import com.TwitterClone.ProjectBackend.repository.UserRepository;
 import com.TwitterClone.ProjectBackend.userManagement.User;
 import org.hibernate.engine.jdbc.BlobProxy;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +13,6 @@ import javax.persistence.Tuple;
 import java.io.IOException;
 import java.sql.Blob;
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 
 /**

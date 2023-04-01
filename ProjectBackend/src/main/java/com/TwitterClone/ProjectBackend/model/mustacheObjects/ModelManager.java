@@ -1,8 +1,8 @@
-package com.TwitterClone.ProjectBackend.Model.MustacheObjects;
+package com.TwitterClone.ProjectBackend.model.mustacheObjects;
 
-import com.TwitterClone.ProjectBackend.Model.Trend;
-import com.TwitterClone.ProjectBackend.Service.HashtagService;
-import com.TwitterClone.ProjectBackend.Service.ProfileService;
+import com.TwitterClone.ProjectBackend.model.Trend;
+import com.TwitterClone.ProjectBackend.service.HashtagService;
+import com.TwitterClone.ProjectBackend.service.ProfileService;
 import com.TwitterClone.ProjectBackend.userManagement.User;
 import com.TwitterClone.ProjectBackend.userManagement.UserService;
 import org.springframework.beans.factory.annotation.Autowired;

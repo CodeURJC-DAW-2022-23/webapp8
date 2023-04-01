@@ -1,6 +1,6 @@
-package com.TwitterClone.ProjectBackend.Controller;
+package com.TwitterClone.ProjectBackend.controller;
 
-import com.TwitterClone.ProjectBackend.Service.MailService;
+import com.TwitterClone.ProjectBackend.service.MailService;
 import com.TwitterClone.ProjectBackend.userManagement.User;
 import com.TwitterClone.ProjectBackend.userManagement.UserService;
 import net.bytebuddy.utility.RandomString;

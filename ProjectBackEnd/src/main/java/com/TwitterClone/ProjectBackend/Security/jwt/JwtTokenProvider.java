@@ -1,4 +1,4 @@
-package com.TwitterClone.ProjectBackend.Security.jwt;
+package com.TwitterClone.ProjectBackend.security.jwt;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;

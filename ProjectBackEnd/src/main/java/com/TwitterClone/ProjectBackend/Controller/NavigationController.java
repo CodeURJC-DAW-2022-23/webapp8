@@ -1,15 +1,15 @@
-package com.TwitterClone.ProjectBackend.Controller;
+package com.TwitterClone.ProjectBackend.controller;
 
-import com.TwitterClone.ProjectBackend.Model.*;
-import com.TwitterClone.ProjectBackend.Model.MustacheObjects.InformationManager;
-import com.TwitterClone.ProjectBackend.Model.MustacheObjects.ModelManager;
-import com.TwitterClone.ProjectBackend.Model.MustacheObjects.TweetInformation;
-import com.TwitterClone.ProjectBackend.Model.MustacheObjects.UserInformation;
-import com.TwitterClone.ProjectBackend.Service.HashtagService;
-import com.TwitterClone.ProjectBackend.Service.NotificationService;
-import com.TwitterClone.ProjectBackend.Service.TweetService;
+import com.TwitterClone.ProjectBackend.model.*;
+import com.TwitterClone.ProjectBackend.model.mustacheObjects.InformationManager;
+import com.TwitterClone.ProjectBackend.model.mustacheObjects.ModelManager;
+import com.TwitterClone.ProjectBackend.model.mustacheObjects.TweetInformation;
+import com.TwitterClone.ProjectBackend.model.mustacheObjects.UserInformation;
+import com.TwitterClone.ProjectBackend.service.HashtagService;
+import com.TwitterClone.ProjectBackend.service.NotificationService;
+import com.TwitterClone.ProjectBackend.service.TweetService;
 import com.TwitterClone.ProjectBackend.userManagement.UserRoles;
-import com.TwitterClone.ProjectBackend.Service.ProfileService;
+import com.TwitterClone.ProjectBackend.service.ProfileService;
 import com.TwitterClone.ProjectBackend.userManagement.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.web.csrf.CsrfToken;

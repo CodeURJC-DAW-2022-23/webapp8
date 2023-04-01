@@ -1,7 +1,7 @@
-package com.TwitterClone.ProjectBackend.Repository;
+package com.TwitterClone.ProjectBackend.repository;
 
-import com.TwitterClone.ProjectBackend.Model.Hashtag;
-import com.TwitterClone.ProjectBackend.Model.Tweet;
+import com.TwitterClone.ProjectBackend.model.Hashtag;
+import com.TwitterClone.ProjectBackend.model.Tweet;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;

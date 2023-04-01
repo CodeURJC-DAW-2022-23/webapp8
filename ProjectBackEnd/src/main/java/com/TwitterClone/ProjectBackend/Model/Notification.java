@@ -1,4 +1,4 @@
-package com.TwitterClone.ProjectBackend.Model;
+package com.TwitterClone.ProjectBackend.model;
 
 import com.TwitterClone.ProjectBackend.userManagement.User;
 import com.fasterxml.jackson.annotation.JsonView;
@@ -7,7 +7,6 @@ import lombok.Getter;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.Random;
-import java.util.UUID;
 
 /**
  * This is Notification Entity. When a user interacts with either your profile or your tweets, a notification will be

@@ -1,4 +1,4 @@
-package com.TwitterClone.ProjectBackend.Controller;
+package com.TwitterClone.ProjectBackend.controller;
 
 import com.TwitterClone.ProjectBackend.DTO.RegisteredRequest;
 import com.TwitterClone.ProjectBackend.userManagement.UserService;
@@ -10,12 +10,10 @@ import org.springframework.security.web.csrf.CsrfToken;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 
 import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 
 /**
  * This class is on charge of managing all the petitions from the view to the model in the signUp process.

@@ -1,9 +1,9 @@
-package com.TwitterClone.ProjectBackend.Controller.RestController;
+package com.TwitterClone.ProjectBackend.controller.restController;
 
 import com.TwitterClone.ProjectBackend.DTO.ForgotPasswordRequest;
 import com.TwitterClone.ProjectBackend.DTO.ResetPasswordRequest;
-import com.TwitterClone.ProjectBackend.Model.MustacheObjects.TweetInformation;
-import com.TwitterClone.ProjectBackend.Service.MailService;
+import com.TwitterClone.ProjectBackend.model.mustacheObjects.TweetInformation;
+import com.TwitterClone.ProjectBackend.service.MailService;
 import com.TwitterClone.ProjectBackend.userManagement.User;
 import com.TwitterClone.ProjectBackend.userManagement.UserService;
 import io.swagger.v3.oas.annotations.Operation;

@@ -1,6 +1,6 @@
-package com.TwitterClone.ProjectBackend.Model.MustacheObjects;
+package com.TwitterClone.ProjectBackend.model.mustacheObjects;
 
-import com.TwitterClone.ProjectBackend.Model.Tweet;
+import com.TwitterClone.ProjectBackend.model.Tweet;
 import com.fasterxml.jackson.annotation.JsonView;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

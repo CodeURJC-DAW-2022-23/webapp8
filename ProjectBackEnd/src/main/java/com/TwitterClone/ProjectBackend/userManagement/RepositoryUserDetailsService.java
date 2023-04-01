@@ -1,7 +1,6 @@
 package com.TwitterClone.ProjectBackend.userManagement;
 
-import com.TwitterClone.ProjectBackend.Repository.UserRepository;
-import com.TwitterClone.ProjectBackend.Service.MailService;
+import com.TwitterClone.ProjectBackend.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
@@ -11,8 +10,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import javax.mail.MessagingException;
-import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 

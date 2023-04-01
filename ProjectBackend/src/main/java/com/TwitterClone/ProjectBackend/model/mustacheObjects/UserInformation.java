@@ -1,9 +1,7 @@
-package com.TwitterClone.ProjectBackend.Model.MustacheObjects;
+package com.TwitterClone.ProjectBackend.model.mustacheObjects;
 
 import com.TwitterClone.ProjectBackend.userManagement.User;
 import com.fasterxml.jackson.annotation.JsonView;
-import com.fasterxml.jackson.databind.JsonSerializable;
-import com.fasterxml.jackson.databind.ser.Serializers;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
