@@ -27,7 +27,7 @@ import java.util.Optional;
 
 
 @RestController
-@RequestMapping("/api/profile")
+@RequestMapping("/api")
 public class ProfileRestController {
     @Autowired
     private TweetService tweetService;
@@ -48,7 +48,7 @@ public class ProfileRestController {
             }),
             @ApiResponse(responseCode = "404", description = "User not found", content = @Content)
     })
-    @GetMapping("/{username}")
+    @GetMapping("/users/{username}")
     @JsonView(Basic.class)
     public ResponseEntity<UserInformation> getUserByUsername(@PathVariable String username) {
         Optional<User> user = this.profileService.findByUsername(username);
@@ -69,7 +69,7 @@ public class ProfileRestController {
             }),
             @ApiResponse(responseCode = "404", description = "User not found", content = @Content)
     })
-    @GetMapping("/followed/{username}")
+    @GetMapping("users/{username}/followed")
     @JsonView(Basic.class)
     public ResponseEntity<List<UserInformation>> getFollowed(@PathParam("from") int from,
                                                   @PathParam("size") int size,
@@ -92,7 +92,7 @@ public class ProfileRestController {
             }),
             @ApiResponse(responseCode = "404", description = "User not found", content = @Content)
     })
-    @GetMapping("/followers/{username}")
+    @GetMapping("users/{username}/followers")
     @JsonView(Basic.class)
     public ResponseEntity<List<UserInformation>> getFollowers(@PathParam("from") int from,
                                                    @PathParam("size") int size,
@@ -116,7 +116,7 @@ public class ProfileRestController {
             @ApiResponse(responseCode = "202", description = "Empty profile picture", content = @Content),
             @ApiResponse(responseCode = "404", description = "User not found", content = @Content)
     })
-    @PutMapping("/updateProfilePicture/{id}")
+    @PutMapping("users/{id}/profilepicture")
     @JsonView(Basic.class)
     public ResponseEntity<Object> updateProfilePic(@PathVariable long id,
                                                    @RequestParam("file") MultipartFile profilePic,
@@ -147,7 +147,7 @@ public class ProfileRestController {
             @ApiResponse(responseCode = "202", description = "Empty profile banner", content = @Content),
             @ApiResponse(responseCode = "404", description = "User not found", content = @Content)
     })
-    @PutMapping("/updateProfileBanner/{id}")
+    @PutMapping("users/{id}/profilebanner")
     @JsonView(Basic.class)
     public ResponseEntity<Object> updateProfileBanner(@PathVariable long id,
                                                       @RequestParam("file") MultipartFile profileBanner,
@@ -178,7 +178,7 @@ public class ProfileRestController {
             @ApiResponse(responseCode = "202", description = "Empty nickname", content = @Content),
             @ApiResponse(responseCode = "404", description = "User not found", content = @Content)
     })
-    @PutMapping("/updateNickname/{id}")
+    @PutMapping("users/{id}/nickname")
     @JsonView(Basic.class)
     public ResponseEntity<UserInformation> updateNickname(@PathVariable long id,
                                                @RequestParam("nickname") String nick,
@@ -210,7 +210,7 @@ public class ProfileRestController {
             }),
             @ApiResponse(responseCode = "404", description = "User not found", content = @Content)
     })
-    @PutMapping("/updateBiography/{id}")
+    @PutMapping("users/{id}/biography")
     @JsonView(Basic.class)
     public ResponseEntity<UserInformation> updateBiography(@PathVariable long id,
                                                 @RequestParam("biography") String bio,
@@ -241,7 +241,7 @@ public class ProfileRestController {
             }),
             @ApiResponse(responseCode = "404", description = "User not found", content = @Content)
     })
-    @PutMapping("/toggleFollow/{id}")
+    @PutMapping("users/follow/{id}")
     @JsonView(Basic.class)
     public ResponseEntity<List<UserInformation>> toggleFollow(@PathVariable Long id,
                                                    HttpServletRequest request) {
