@@ -77,7 +77,7 @@ public class TweetRestController {
             @ApiResponse(responseCode = "204", description = "No bookmarks found for current user in this range", content = @Content),
             @ApiResponse(responseCode = "403", description = "Current User can not do that", content = @Content)
     })
-    @GetMapping("tweets/user/bookmarks")
+    @GetMapping("/bookmarks")
     @JsonView(Basic.class)
     public ResponseEntity<List<TweetInformation>> getTweetsForBookmarks(@PathParam("from") int from,
                                                                         @PathParam("size") int size,
@@ -103,10 +103,10 @@ public class TweetRestController {
             @ApiResponse(responseCode = "200", description = "Tweets obtained", content = {
                     @Content(mediaType = "application/json", schema = @Schema(implementation = TweetInformation.class))
             }),
-            @ApiResponse(responseCode = "404", description = "User not found", content = @Content),
-            @ApiResponse(responseCode = "204", description = "Tweets not found", content = @Content)
+            @ApiResponse(responseCode = "204", description = "Tweets not found", content = @Content),
+            @ApiResponse(responseCode = "404", description = "User not found", content = @Content)
     })
-    @GetMapping("user/{id}/tweets")
+    @GetMapping("users/{id}/tweets")
     @JsonView(Basic.class)
     public ResponseEntity<List<TweetInformation>> getProfileTweets(@PathVariable Long id,
                                                                    @PathParam("from") int from,
@@ -136,13 +136,14 @@ public class TweetRestController {
             @ApiResponse(responseCode = "403", description = "Current User can not do that", content = @Content),
             @ApiResponse(responseCode = "404", description = "Tweet Not Found", content = @Content)
     })
-    @PostMapping("/tweets/{idTweetReplied}")
+    @PostMapping("/tweets/{idTweetReplied}/tweets")
     @JsonView(Basic.class)
     public ResponseEntity<TweetInformation> postComment(@RequestBody String tweet_info,
                                            @PathVariable("idTweetReplied") Long idTweetReplied,
                                            HttpServletRequest request) {
         Tweet tweetReplied = this.tweetService.findById(idTweetReplied).orElse(null);
         User currentUser = this.informationManager.getCurrentUser(request);
+
         if(currentUser == null){
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
@@ -152,12 +153,9 @@ public class TweetRestController {
         }
 
         User user_reply = tweetReplied.getUser();
-
         Long userId = currentUser.getId();
-
         Tweet newTweet = this.tweetService.createTweet(tweet_info, new Blob[]{}, userId);
         this.informationManager.processTextTweet(tweet_info, newTweet, currentUser);
-
         tweetService.addComment(idTweetReplied, newTweet);
 
         if (!userId.equals(user_reply.getId())) {
@@ -185,9 +183,11 @@ public class TweetRestController {
                                            HttpServletRequest request) {
         Blob[] files = new Blob[]{};
         User currentUser = this.informationManager.getCurrentUser(request);
+
         if (currentUser == null){
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
+
         Long userId = currentUser.getId();
         Tweet newTweet = this.tweetService.createTweet(tweet_info, files, userId);
         this.informationManager.processTextTweet(tweet_info, newTweet, currentUser);
@@ -212,22 +212,21 @@ public class TweetRestController {
                                              HttpServletRequest request) {
         Tweet tweet = this.tweetService.findById(id).orElse(null);
 
-        if ((tweet != null)) {
-
-            List<Tweet> tweets = new ArrayList<>();
-            tweets.add(tweet);
-            User currentUser = this.informationManager.getCurrentUser(request);
-            List<TweetInformation> tweetInformation = this.informationManager.calculateDataOfTweet(tweets, currentUser);
-
-            if (!tweetInformation.get(0).isAuthorised()) {
-                return new ResponseEntity<>(HttpStatus.FORBIDDEN);
-            }
-
-            this.tweetService.deleteTweet(tweet);
-            return new ResponseEntity<>(tweetInformation.get(0), HttpStatus.OK);
+        if (tweet == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        List<Tweet> tweets = new ArrayList<>();
+        tweets.add(tweet);
+        User currentUser = this.informationManager.getCurrentUser(request);
+        List<TweetInformation> tweetInformation = this.informationManager.calculateDataOfTweet(tweets, currentUser);
+
+        if (!tweetInformation.get(0).isAuthorised()) {
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        }
+
+        this.tweetService.deleteTweet(tweet);
+        return new ResponseEntity<>(tweetInformation.get(0), HttpStatus.OK);
     }
 
     @Operation(summary = "Give or remove like of a tweet")
@@ -245,16 +244,16 @@ public class TweetRestController {
     @JsonView(Basic.class)
     public ResponseEntity<TweetInformation> toggleLike(@PathVariable("id") Long id,
                                                        HttpServletRequest request) {
-        Tweet tweet = this.tweetService.findById(id).orElse(null);
-
-        if (tweet == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-
         User currentUser = this.informationManager.getCurrentUser(request);
 
         if(currentUser == null){
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        }
+
+        Tweet tweet = this.tweetService.findById(id).orElse(null);
+
+        if (tweet == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
         boolean hasLiked = tweetService.toggleLike(currentUser, tweet);
@@ -285,16 +284,16 @@ public class TweetRestController {
     @JsonView(Basic.class)
     public ResponseEntity<TweetInformation> toggleRetweet(@PathVariable("id") Long id,
                                                           HttpServletRequest request) {
-        Tweet tweet = this.tweetService.findById(id).orElse(null);
-
-        if (tweet == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-
         User currentUser = this.informationManager.getCurrentUser(request);
 
         if(currentUser == null){
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        }
+
+        Tweet tweet = this.tweetService.findById(id).orElse(null);
+
+        if (tweet == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
         boolean hasRetweeted = this.tweetService.toggleRetweet(currentUser, tweet);
@@ -325,16 +324,16 @@ public class TweetRestController {
     @JsonView(Basic.class)
     public ResponseEntity<TweetInformation> toggleBookmark(@PathVariable("id") Long id,
                                                            HttpServletRequest request) {
-        Tweet tweet = this.tweetService.findById(id).orElse(null);
-
-        if (tweet == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-
         User currentUser = this.informationManager.getCurrentUser(request);
 
         if(currentUser == null){
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        }
+
+        Tweet tweet = this.tweetService.findById(id).orElse(null);
+
+        if (tweet == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
         boolean hasBookmarked = this.tweetService.toggleBookmark(currentUser, tweet);
