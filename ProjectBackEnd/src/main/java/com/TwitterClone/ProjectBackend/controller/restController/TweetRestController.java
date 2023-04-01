@@ -13,6 +13,7 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,6 +25,10 @@ import java.sql.Blob;
 import java.util.ArrayList;
 import java.util.List;
 
+@Getter
+class JSONString{
+    private String text;
+}
 
 @RestController
 @RequestMapping("/api")
@@ -138,7 +143,7 @@ public class TweetRestController {
     })
     @PostMapping("/tweets/{idTweetReplied}/tweets")
     @JsonView(Basic.class)
-    public ResponseEntity<TweetInformation> postComment(@RequestBody String tweet_info,
+    public ResponseEntity<TweetInformation> postComment(@RequestBody JSONString tweet_info,
                                            @PathVariable("idTweetReplied") Long idTweetReplied,
                                            HttpServletRequest request) {
         Tweet tweetReplied = this.tweetService.findById(idTweetReplied).orElse(null);
@@ -154,8 +159,8 @@ public class TweetRestController {
 
         User user_reply = tweetReplied.getUser();
         Long userId = currentUser.getId();
-        Tweet newTweet = this.tweetService.createTweet(tweet_info, new Blob[]{}, userId);
-        this.informationManager.processTextTweet(tweet_info, newTweet, currentUser);
+        Tweet newTweet = this.tweetService.createTweet(tweet_info.getText(), new Blob[]{}, userId);
+        this.informationManager.processTextTweet(tweet_info.getText(), newTweet, currentUser);
         tweetService.addComment(idTweetReplied, newTweet);
 
         if (!userId.equals(user_reply.getId())) {
@@ -179,7 +184,7 @@ public class TweetRestController {
     })
     @PostMapping("/tweets")
     @JsonView(Basic.class)
-    public ResponseEntity<TweetInformation> postTweet(@RequestBody String tweet_info,
+    public ResponseEntity<TweetInformation> postTweet(@RequestBody JSONString tweet_info,
                                            HttpServletRequest request) {
         Blob[] files = new Blob[]{};
         User currentUser = this.informationManager.getCurrentUser(request);
@@ -189,8 +194,8 @@ public class TweetRestController {
         }
 
         Long userId = currentUser.getId();
-        Tweet newTweet = this.tweetService.createTweet(tweet_info, files, userId);
-        this.informationManager.processTextTweet(tweet_info, newTweet, currentUser);
+        Tweet newTweet = this.tweetService.createTweet(tweet_info.getText(), files, userId);
+        this.informationManager.processTextTweet(tweet_info.getText(), newTweet, currentUser);
 
         List<Tweet> tweets = new ArrayList<>();
         tweets.add(newTweet);
