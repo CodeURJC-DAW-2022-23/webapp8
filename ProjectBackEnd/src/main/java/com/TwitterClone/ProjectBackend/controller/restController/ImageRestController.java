@@ -1,6 +1,8 @@
 package com.TwitterClone.ProjectBackend.controller.restController;
 
 import com.TwitterClone.ProjectBackend.model.Tweet;
+import com.TwitterClone.ProjectBackend.model.mustacheObjects.InformationManager;
+import com.TwitterClone.ProjectBackend.model.mustacheObjects.TweetInformation;
 import com.TwitterClone.ProjectBackend.service.ProfileService;
 import com.TwitterClone.ProjectBackend.service.TweetService;
 import com.TwitterClone.ProjectBackend.userManagement.User;
@@ -13,13 +15,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 /**
@@ -34,6 +39,8 @@ public class ImageRestController {
 
     @Autowired
     private TweetService tweetService;
+    @Autowired
+    private InformationManager informationManager;
 
     /**
      * Load the profile pic of a user
@@ -203,5 +210,42 @@ public class ImageRestController {
         }
 
         return ResponseEntity.accepted().build();
+    }
+
+    @Operation(summary = "Put some images to a tweet")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Images saved", content = {
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = Object.class))
+            }),
+            @ApiResponse(responseCode = "403", description = "User not authorized", content = @Content),
+            @ApiResponse(responseCode = "404", description = "Tweet not found", content = @Content)
+    })
+    @PutMapping("tweets/{id}/images")
+    public ResponseEntity<TweetInformation> uploadImages(@PathVariable Long id,
+                                                         @RequestParam("image1") MultipartFile image1,
+                                                         @RequestParam("image2") MultipartFile image2,
+                                                         @RequestParam("image3") MultipartFile image3,
+                                                         @RequestParam("image4") MultipartFile image4,
+                                                         HttpServletRequest request){
+        User currentUser = this.informationManager.getCurrentUser(request);
+
+        if (currentUser == null){
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        }
+
+        Optional<Tweet> tweet = this.tweetService.findById(id);
+
+        if (tweet.isEmpty()){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        User userOwnerOfTweet = tweet.get().getUser();
+
+        if (!Objects.equals(currentUser.getId(), userOwnerOfTweet.getId())) {
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        }
+
+        this.tweetService.addImages(tweet.get(), image1, image2, image3, image4);
+        return new ResponseEntity<>( HttpStatus.OK);
     }
 }

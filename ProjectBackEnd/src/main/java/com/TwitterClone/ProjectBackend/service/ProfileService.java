@@ -1,17 +1,16 @@
 package com.TwitterClone.ProjectBackend.service;
 
 import com.TwitterClone.ProjectBackend.model.Tweet;
+import com.TwitterClone.ProjectBackend.model.mustacheObjects.ImageManager;
 import com.TwitterClone.ProjectBackend.repository.TweetRepository;
 import com.TwitterClone.ProjectBackend.repository.UserRepository;
 import com.TwitterClone.ProjectBackend.userManagement.User;
-import org.hibernate.engine.jdbc.BlobProxy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.Tuple;
 import java.io.IOException;
-import java.sql.Blob;
 import java.util.List;
 import java.util.Optional;
 
@@ -24,6 +23,8 @@ public class ProfileService {
     private UserRepository userRepository;
     @Autowired
     private TweetRepository tweetRepository;
+    @Autowired
+    private ImageManager imageManager;
 
     /**
      * Obtain a user using an id
@@ -121,28 +122,14 @@ public class ProfileService {
         userToChange.setBiography(biography);
 
         if (!profile.isEmpty()) {
-            userToChange.setProfilePicture(this.prepareImageFile(profile));
+            userToChange.setProfilePicture(this.imageManager.prepareImageFile(profile));
         }
 
         if (!banner.isEmpty()) {
-            userToChange.setProfileBanner(this.prepareImageFile(banner));
+            userToChange.setProfileBanner(this.imageManager.prepareImageFile(banner));
         }
 
         this.userRepository.save(userToChange);
-    }
-
-    /**
-     * Prepare the new image to be save it in the database
-     *
-     * @param file
-     * @return
-     * @throws IOException
-     */
-    private Blob prepareImageFile(MultipartFile file) throws IOException {
-        return BlobProxy
-                .generateProxy(file
-                        .getInputStream(), file
-                        .getSize());
     }
 
     /**
@@ -269,7 +256,7 @@ public class ProfileService {
         User userToChange = this.userRepository.findById(id).get();
 
         if (!picture.isEmpty()) {
-            userToChange.setProfilePicture(this.prepareImageFile(picture));
+            userToChange.setProfilePicture(this.imageManager.prepareImageFile(picture));
         }
 
         this.userRepository.save(userToChange);
@@ -279,7 +266,7 @@ public class ProfileService {
         User userToChange = this.userRepository.findById(id).get();
 
         if (!picture.isEmpty()) {
-            userToChange.setProfileBanner(this.prepareImageFile(picture));
+            userToChange.setProfileBanner(this.imageManager.prepareImageFile(picture));
         }
 
         this.userRepository.save(userToChange);

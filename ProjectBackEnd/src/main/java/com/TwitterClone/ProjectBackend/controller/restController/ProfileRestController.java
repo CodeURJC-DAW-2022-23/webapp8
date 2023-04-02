@@ -175,11 +175,11 @@ public class ProfileRestController {
                 return new ResponseEntity<>(HttpStatus.FORBIDDEN);
             }
 
-            this.profileService.updateProfileBanner(id, profileBanner);
-
             if (profileBanner.isEmpty()) {
                 return new ResponseEntity<>(HttpStatus.ACCEPTED);
             }
+
+            this.profileService.updateProfileBanner(id, profileBanner);
 
             return new ResponseEntity<>(HttpStatus.OK);
         }

@@ -18,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.websocket.server.PathParam;
@@ -180,7 +181,7 @@ public class TweetRestController {
     @PostMapping("/tweets")
     @JsonView(Basic.class)
     public ResponseEntity<TweetInformation> postTweet(@RequestBody JSONString tweet_info,
-                                           HttpServletRequest request) {
+                                                      HttpServletRequest request) {
         Blob[] files = new Blob[]{};
         User currentUser = this.informationManager.getCurrentUser(request);
 
@@ -194,7 +195,7 @@ public class TweetRestController {
 
         List<Tweet> tweets = new ArrayList<>();
         tweets.add(newTweet);
-        List<TweetInformation> tweetProcessed= this.informationManager.calculateDataOfTweet(tweets,currentUser);
+        List<TweetInformation> tweetProcessed = this.informationManager.calculateDataOfTweet(tweets,currentUser);
         return new ResponseEntity<>(tweetProcessed.get(0), HttpStatus.OK);
     }
 

@@ -1,12 +1,15 @@
 package com.TwitterClone.ProjectBackend.service;
 
 import com.TwitterClone.ProjectBackend.model.Tweet;
+import com.TwitterClone.ProjectBackend.model.mustacheObjects.ImageManager;
 import com.TwitterClone.ProjectBackend.repository.TweetRepository;
 import com.TwitterClone.ProjectBackend.repository.UserRepository;
 import com.TwitterClone.ProjectBackend.userManagement.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.sql.Blob;
 import java.util.List;
 import java.util.Optional;
@@ -21,7 +24,10 @@ public class TweetService {
     private TweetRepository tweetRepository;
 
     @Autowired
-    UserRepository userRepository;
+    private UserRepository userRepository;
+
+    @Autowired
+    private ImageManager imageManager;
 
     /**
      * Obtain some tweets associated to a user
@@ -272,5 +278,31 @@ public class TweetService {
      */
     public List<Tweet> getComments(Long id, int offset, int size) {
         return this.tweetRepository.findCommentsById(id, offset, size);
+    }
+
+    public void addImages(Tweet tweet, MultipartFile image1, MultipartFile image2, MultipartFile image3, MultipartFile image4) {
+        Blob preparedImage;
+
+        if (image1 != null) {
+            preparedImage = this.imageManager.prepareImageFile(image1);
+            tweet.setMedia1(preparedImage);
+        }
+
+        if (image2 != null) {
+            preparedImage = this.imageManager.prepareImageFile(image2);
+            tweet.setMedia2(preparedImage);
+        }
+
+        if (image3 != null) {
+            preparedImage = this.imageManager.prepareImageFile(image3);
+            tweet.setMedia3(preparedImage);
+        }
+
+        if (image4 != null) {
+            preparedImage = this.imageManager.prepareImageFile(image4);
+            tweet.setMedia4(preparedImage);
+        }
+
+        this.tweetRepository.save(tweet);
     }
 }
