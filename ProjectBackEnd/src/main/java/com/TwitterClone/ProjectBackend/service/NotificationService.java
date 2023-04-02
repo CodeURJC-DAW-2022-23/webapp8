@@ -61,8 +61,17 @@ public class NotificationService {
      */
     public Optional<Notification> createNotification(Long idTweet, User owner, User currentUser, String notificationType) {
         Tweet tweetTrigger = null;
+
+        if (!this.validTypeNotification(notificationType)) {
+            return Optional.empty();
+        }
+
         if (idTweet != null) {
             tweetTrigger = this.tweetRepository.findById(idTweet).orElse(null);
+
+            if (tweetTrigger == null && !notificationType.equals("FOLLOW")) {
+                return Optional.empty();
+            }
         }
 
         if (owner == null) {
@@ -83,13 +92,11 @@ public class NotificationService {
      * @param idUserToNotify
      */
     public Optional<Notification> deleteNotification(Long idTweet, Long idCurrentUser, String notificationType, Long idUserToNotify) {
-        Notification notification;
-
-        if (idTweet != null) {
-            notification = this.notificationRepository.findSpecificNotification(idCurrentUser, idTweet, notificationType).orElse(null);
-        } else {
-            notification = this.notificationRepository.findFollowNotification(idCurrentUser, idUserToNotify).orElse(null);
+        if (!this.validTypeNotification(notificationType)) {
+            return Optional.empty();
         }
+
+        Notification notification = this.findNotification(idCurrentUser, idUserToNotify, idTweet, notificationType);
 
         if (notification == null) {
             return Optional.empty();
@@ -117,5 +124,31 @@ public class NotificationService {
      */
     public int countMentions(Long idCurrentUser) {
         return this.notificationRepository.countMentions(idCurrentUser);
+    }
+
+    /**
+     * Check if the inserted type of notification exists
+     * @param notificationType
+     * @return
+     */
+    private boolean validTypeNotification(String notificationType) {
+        return notificationType.equals("LIKE") ||
+                notificationType.equals("RETWEET") ||
+                notificationType.equals("FOLLOW") ||
+                notificationType.equals("MENTION");
+    }
+
+    public Notification findNotification(Long idCurrentUser, Long idUserToNotify, Long idTweet, String notificationType) {
+        Notification notification;
+
+        if (idTweet != null) {
+            notification = this.notificationRepository
+                    .findSpecificNotification(idCurrentUser, idTweet, notificationType).orElse(null);
+        } else {
+            notification = this.notificationRepository
+                    .findFollowNotification(idCurrentUser, idUserToNotify).orElse(null);
+        }
+
+        return notification;
     }
 }

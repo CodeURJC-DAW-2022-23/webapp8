@@ -189,6 +189,7 @@ public class ProfileRestController {
         User currentUser = this.informationManager.getCurrentUser(request);
 
         if (user.isPresent()) {
+            
             if (!user.get().getId().equals(currentUser.getId())){
                 return new ResponseEntity<>(HttpStatus.FORBIDDEN);
             }
@@ -219,9 +220,10 @@ public class ProfileRestController {
                                                            @PathVariable long id,
                                                            HttpServletRequest request) {
         Optional<User> user = profileService.findById(id);
-
         User currentUser = this.informationManager.getCurrentUser(request);
+
         if (user.isPresent()) {
+
             if (!user.get().getId().equals(currentUser.getId())){
                 return new ResponseEntity<>(HttpStatus.FORBIDDEN);
             }
@@ -249,6 +251,7 @@ public class ProfileRestController {
     public ResponseEntity<List<UserInformation>> toggleFollow(@PathVariable Long id,
                                                    HttpServletRequest request) {
         Optional<User> profileUser = this.profileService.findById(id);
+
         if (profileUser.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }

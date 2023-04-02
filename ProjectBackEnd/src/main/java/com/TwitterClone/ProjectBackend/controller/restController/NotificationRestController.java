@@ -112,27 +112,49 @@ public class NotificationRestController {
      */
     @Operation(summary = "Post a new notification to a user")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "202", description = "The user notifies himself", content = @Content),
             @ApiResponse(responseCode = "201", description = "Notification Created", content = {
                     @Content(mediaType = "application/json", schema = @Schema(implementation = Notification.class))
             }),
-            @ApiResponse(responseCode = "400", description = "Cannot create the notification", content = @Content)
+            @ApiResponse(responseCode = "202", description = "The user notifies himself or duplicated", content = @Content),
+            @ApiResponse(responseCode = "208", description = "Notification duplicated", content = @Content),
+            @ApiResponse(responseCode = "400", description = "Cannot create the notification", content = @Content),
+            @ApiResponse(responseCode = "403", description = "Not login", content = @Content),
+            @ApiResponse(responseCode = "404", description = "User to notify not found", content = @Content)
+
     })
     @PostMapping("/notifications")
     @JsonView(Basic.class)
-    public ResponseEntity<Notification> postNotification(@PathParam("idTweet") Long idTweet,
+    public ResponseEntity<Notification> createNotification(@PathParam("idTweet") Long idTweet,
                                                          @PathParam("idOwner") Long idOwner,
                                                          @PathParam("notificationType") String notificationType,
                                                          HttpServletRequest request) {
         User currentUser = this.informationManager.getCurrentUser(request);
-        User owner = this.profileService.findById(idOwner).get();
+
+        if (currentUser == null) {
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        }
+
+        Optional<User> owner = this.profileService.findById(idOwner);
+
+        if (owner.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
         Long currentUserId = currentUser.getId();
 
         if (currentUserId.equals(idOwner)) {
             return new ResponseEntity<>(HttpStatus.ACCEPTED);
         }
 
-        Optional<Notification> notificationOptional = this.notificationService.createNotification(idTweet, owner, currentUser, notificationType);
+        Notification duplicatedNotification =
+                this.notificationService.findNotification(currentUserId, idOwner, idTweet, notificationType);
+
+        if (duplicatedNotification != null) {
+            return new ResponseEntity<>(duplicatedNotification, HttpStatus.ALREADY_REPORTED);
+        }
+
+        Optional<Notification> notificationOptional =
+                this.notificationService.createNotification(idTweet, owner.get(), currentUser, notificationType);
 
         return notificationOptional
                 .map(notification -> new ResponseEntity<>(notification, HttpStatus.CREATED))
@@ -152,20 +174,23 @@ public class NotificationRestController {
             @ApiResponse(responseCode = "200", description = "Notification Deleted", content = {
                     @Content(mediaType = "application/json", schema = @Schema(implementation = Notification.class))
             }),
-            @ApiResponse(responseCode = "400", description = "Cannot delete the notification", content = @Content)
+            @ApiResponse(responseCode = "404", description = "Notification to delete not found", content = @Content)
     })
     @DeleteMapping("/notifications")
     @JsonView(Basic.class)
     public ResponseEntity<Notification> deleteNotification(@PathParam("idTweet") Long idTweet,
                                                            @PathParam("notificationType") String notificationType,
+                                                           @PathParam("idUserToNotify") Long idUserToNotify,
                                                            HttpServletRequest request) {
         User currentUser = this.informationManager.getCurrentUser(request);
         Long currentUserId = currentUser.getId();
-        Optional<Notification> notificationOptional = this.notificationService.deleteNotification(idTweet, currentUserId, notificationType, 0L);
+
+        Optional<Notification> notificationOptional =
+                this.notificationService.deleteNotification(idTweet, currentUserId, notificationType, idUserToNotify);
 
         return notificationOptional
                 .map(notification -> new ResponseEntity<>(notification, HttpStatus.OK))
-                .orElseGet(() -> new ResponseEntity<>(HttpStatus.BAD_REQUEST));
+                .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
 }

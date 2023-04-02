@@ -1,16 +1,21 @@
 package com.TwitterClone.ProjectBackend.controller.restController;
 
 import com.TwitterClone.ProjectBackend.model.Hashtag;
+import com.TwitterClone.ProjectBackend.model.Trend;
 import com.TwitterClone.ProjectBackend.model.Tweet;
+import com.TwitterClone.ProjectBackend.model.mustacheObjects.TweetInformation;
+import com.TwitterClone.ProjectBackend.model.mustacheObjects.UserInformation;
 import com.TwitterClone.ProjectBackend.service.HashtagService;
 import com.TwitterClone.ProjectBackend.userManagement.User;
 import com.TwitterClone.ProjectBackend.userManagement.UserService;
 import com.fasterxml.jackson.annotation.JsonView;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -36,39 +41,39 @@ public class SearchRestController {
     @Operation(summary = "Find profiles which contains the keyword in their username")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Profiles Found", content = {
-                    @Content(mediaType = "application/json")
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = UserInformation.class))
             }),
             @ApiResponse(responseCode = "404", description = "No profiles found that match the keyword", content = @Content)
     })
     @GetMapping("/users/{keyword}/found-users")
     @JsonView(Basic.class)
-    public ResponseEntity<Object> SearchProfiles(@PathVariable String keyword) {
-        List<User> list = userService.findByUsernameContainingIgnoreCase(keyword);
+    public ResponseEntity<Object> searchProfiles(@PathVariable String keyword) {
+        List<User> usersList = userService.findByUsernameContainingIgnoreCase(keyword);
 
-        if (list.size() == 0) {
-            return ResponseEntity.notFound().build();
+        if (usersList.size() == 0) {
+            return new ResponseEntity<>(usersList, HttpStatus.NOT_FOUND);
         }
 
-        return ResponseEntity.ok(list);
+        return ResponseEntity.ok(usersList);
     }
 
     @Operation(summary = "Find Hashtags which contains the keyword in their username")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Profiles Found", content = {
-                    @Content(mediaType = "application/json")
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = Trend.class))
             }),
             @ApiResponse(responseCode = "404", description = "No hashtags found that match the keyword", content = @Content)
     })
     @GetMapping("/hashtags/{keyword}/found-hashtags")
     @JsonView(Basic.class)
-    public ResponseEntity<Object> SearchHashtags(@PathVariable String keyword) {
-        List<Hashtag> list = hashtagService.findByHashtagIsContainingIgnoreCase(keyword);
+    public ResponseEntity<Object> searchHashtags(@PathVariable String keyword) {
+        List<Hashtag> hashtagsList = hashtagService.findByHashtagIsContainingIgnoreCase(keyword);
 
-        if (list.size() == 0) {
-            return ResponseEntity.notFound().build();
+        if (hashtagsList.size() == 0) {
+            return new ResponseEntity<>(hashtagsList, HttpStatus.NOT_FOUND);
         }
 
-        return ResponseEntity.ok(list);
+        return ResponseEntity.ok(hashtagsList);
     }
 
 }
