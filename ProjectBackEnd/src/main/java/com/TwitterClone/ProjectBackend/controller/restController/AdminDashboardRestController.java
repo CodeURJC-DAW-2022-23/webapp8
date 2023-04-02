@@ -44,7 +44,7 @@ public class AdminDashboardRestController {
             }),
             @ApiResponse(responseCode = "404", description = "User ID not found", content = @Content)
     })
-    @PutMapping("users/{id}/ban")
+    @PutMapping("users/{id}/banned-users")
     @JsonView(Basic.class)
     public ResponseEntity<Object> ban(@PathVariable Long id,
                                       HttpServletRequest request) throws MessagingException, UnsupportedEncodingException {
@@ -75,7 +75,7 @@ public class AdminDashboardRestController {
             }),
             @ApiResponse(responseCode = "404", description = "User ID not found", content = @Content)
     })
-    @PutMapping("users/{id}/unban")
+    @PutMapping("users/{id}/unbanned-users")
     @JsonView(Basic.class)
     public ResponseEntity<Object> unban(@PathVariable Long id,
                                         HttpServletRequest request) throws MessagingException, UnsupportedEncodingException {
@@ -105,7 +105,7 @@ public class AdminDashboardRestController {
             }),
             @ApiResponse(responseCode = "404", description = "User ID not found", content = @Content)
     })
-    @PutMapping("users/{id}/verify")
+    @PutMapping("users/{id}/verified-users")
     @JsonView(Basic.class)
     public ResponseEntity<Object> verify(@PathVariable Long id,
                                          HttpServletRequest request) {
@@ -133,7 +133,7 @@ public class AdminDashboardRestController {
             }),
             @ApiResponse(responseCode = "404", description = "User ID not found", content = @Content)
     })
-    @PutMapping("users/{id}/unverify")
+    @PutMapping("users/{id}/unverified-users")
     @JsonView(Basic.class)
     public ResponseEntity<Object> unverify(@PathVariable Long id,
                                            HttpServletRequest request) {

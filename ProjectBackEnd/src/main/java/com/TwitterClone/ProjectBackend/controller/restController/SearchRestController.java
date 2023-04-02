@@ -40,7 +40,7 @@ public class SearchRestController {
             }),
             @ApiResponse(responseCode = "404", description = "No profiles found that match the keyword", content = @Content)
     })
-    @GetMapping("/users/{keyword}/users")
+    @GetMapping("/users/{keyword}/found-users")
     @JsonView(Basic.class)
     public ResponseEntity<Object> SearchProfiles(@PathVariable String keyword) {
         List<User> list = userService.findByUsernameContainingIgnoreCase(keyword);
@@ -59,7 +59,7 @@ public class SearchRestController {
             }),
             @ApiResponse(responseCode = "404", description = "No hashtags found that match the keyword", content = @Content)
     })
-    @GetMapping("/hashtags/{keyword}/hashtags")
+    @GetMapping("/hashtags/{keyword}/found-hashtags")
     @JsonView(Basic.class)
     public ResponseEntity<Object> SearchHashtags(@PathVariable String keyword) {
         List<Hashtag> list = hashtagService.findByHashtagIsContainingIgnoreCase(keyword);

@@ -1,6 +1,7 @@
 package com.TwitterClone.ProjectBackend.controller.restController;
 
 import com.TwitterClone.ProjectBackend.model.mustacheObjects.InformationManager;
+import com.TwitterClone.ProjectBackend.model.mustacheObjects.JSONString;
 import com.TwitterClone.ProjectBackend.model.mustacheObjects.UserInformation;
 import com.TwitterClone.ProjectBackend.service.NotificationService;
 import com.TwitterClone.ProjectBackend.service.ProfileService;
@@ -29,8 +30,6 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/api")
 public class ProfileRestController {
-    @Autowired
-    private TweetService tweetService;
     @Autowired
     private ProfileService profileService;
     @Autowired
@@ -117,7 +116,7 @@ public class ProfileRestController {
             @ApiResponse(responseCode = "404", description = "User not found", content = @Content),
             @ApiResponse(responseCode = "403", description = "Not allowed", content = @Content)
     })
-    @PutMapping("users/{id}/profilepicture")
+    @PutMapping("users/{id}/profile-picture")
     @JsonView(Basic.class)
     public ResponseEntity<Object> updateProfilePic(@PathVariable long id,
                                                    @RequestParam("file") MultipartFile profilePic,
@@ -149,7 +148,7 @@ public class ProfileRestController {
             @ApiResponse(responseCode = "404", description = "User not found", content = @Content),
             @ApiResponse(responseCode = "403", description = "Not allowed", content = @Content)
     })
-    @PutMapping("users/{id}/profilebanner")
+    @PutMapping("users/{id}/profile-banner")
     @JsonView(Basic.class)
     public ResponseEntity<Object> updateProfileBanner(@PathVariable long id,
                                                       @RequestParam("file") MultipartFile profileBanner,
@@ -184,7 +183,7 @@ public class ProfileRestController {
     @PutMapping("users/{id}/nickname")
     @JsonView(Basic.class)
     public ResponseEntity<UserInformation> updateNickname(@PathVariable long id,
-                                               @RequestParam("nickname") String nick,
+                                                          @RequestBody JSONString nick,
                                                HttpServletRequest request) {
         Optional<User> user = profileService.findById(id);
         User currentUser = this.informationManager.getCurrentUser(request);
@@ -193,10 +192,10 @@ public class ProfileRestController {
             if (!user.get().getId().equals(currentUser.getId())){
                 return new ResponseEntity<>(HttpStatus.FORBIDDEN);
             }
-            this.profileService.updateNickname(id, nick);
+            this.profileService.updateNickname(id, nick.getText());
             UserInformation updatedUser = this.informationManager.prepareUserInformation(user.get(), null);
 
-            if (nick.equals("")) {
+            if (nick.getText().equals("")) {
                 return new ResponseEntity<>(HttpStatus.ACCEPTED);
             }
 
@@ -216,8 +215,8 @@ public class ProfileRestController {
     })
     @PutMapping("users/{id}/biography")
     @JsonView(Basic.class)
-    public ResponseEntity<UserInformation> updateBiography(@PathVariable long id,
-                                                @RequestParam("biography") String bio,
+    public ResponseEntity<UserInformation> updateBiography(@RequestBody JSONString bio,
+                                                           @PathVariable long id,
                                                            HttpServletRequest request) {
         Optional<User> user = profileService.findById(id);
 
@@ -226,7 +225,7 @@ public class ProfileRestController {
             if (!user.get().getId().equals(currentUser.getId())){
                 return new ResponseEntity<>(HttpStatus.FORBIDDEN);
             }
-            this.profileService.updateBio(id, bio);
+            this.profileService.updateBio(id, bio.getText());
             UserInformation updatedUser = this.informationManager.prepareUserInformation(user.get(), null);
 
             return new ResponseEntity<>(updatedUser, HttpStatus.OK);
@@ -245,7 +244,7 @@ public class ProfileRestController {
             }),
             @ApiResponse(responseCode = "404", description = "User not found", content = @Content)
     })
-    @PutMapping("users/follow/{id}")
+    @PutMapping("users/{id}/followed_users")
     @JsonView(Basic.class)
     public ResponseEntity<List<UserInformation>> toggleFollow(@PathVariable Long id,
                                                    HttpServletRequest request) {
