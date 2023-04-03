@@ -180,4 +180,49 @@ public class AdminDashboardRestController {
         return new ResponseEntity<>(HttpStatus.FORBIDDEN);
     }
 
+    @Operation(summary = "If the user is a admin, he can update user type user according to his ID")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "User type updated", content = {
+                    @Content(mediaType = "application/json")
+            }),
+            @ApiResponse(responseCode = "400", description = "Type not valid", content = @Content),
+            @ApiResponse(responseCode = "403", description = "User can not do that", content = @Content),
+            @ApiResponse(responseCode = "404", description = "User ID not found", content = @Content)
+    })
+    @PutMapping("users/{id}")
+    @JsonView(Basic.class)
+    public ResponseEntity<Object> toggleType(@PathVariable Long id,
+                                           @RequestParam("type") String type,
+                                           HttpServletRequest request) {
+        User currentUser = this.informationManager.getCurrentUser(request);
+
+        if (currentUser == null){
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        }
+
+        if (profileService.findById(id).isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+
+        User user = this.profileService.findById(id).get();
+
+        if (currentUser.getRole().toString().equals("ADMIN")) {
+            switch (type){
+                case "VERIFY": user.setType("VERIFIED"); break;
+                case "UNVERIFY": user.setType("PUBLIC"); break;
+                case "BAN": user.setType("BANNED");
+                            user.setEnabled(false);
+                            break;
+                case "UNBAN": user.setType("PUBLIC");
+                              user.setEnabled(true);
+                              break;
+                default: return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            }
+            this.profileService.updateUserBan(user);
+            return ResponseEntity.ok(user);
+        }
+
+        return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+    }
+
 }
