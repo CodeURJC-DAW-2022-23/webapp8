@@ -7,8 +7,9 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'ProjectFrontEnd';
-  typeImg = 'PHOTO-NOTIFICATION';
-  srcImg = "../../assets/profile0.jpg";
+
+  username = "antonioalanxs";
+  nickname = "Alanis"
 
   svgType = "LIKE-ICON";
   svgId = "svg"

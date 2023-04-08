@@ -1,0 +1,13 @@
+<div
+  class="flex items-center gap-5 px-4 py-3 transition rounded-full w-fit group-hover:scale-110 group-hover:bg-gray-3 dark:group-hover:bg-gray-13 group-focus-within:bg-gray-3 dark:group-focus-within:bg-gray-13 group-focus-within:scale-110">
+  <app-user-image [typeImg]="typeImg" [urlImg]="srcImg"></app-user-image>
+
+  <article class="flex flex-col items-start justify-between">
+    <section class="flex items-center gap-2">
+      <h2 class="text-xl font-semibold dark:text-white-0">{{nickname}}</h2>
+    </section>
+
+    <h3 class="text-sm font-semibold dark:font-normal text-gray-2">
+      @{{username}}</h3>
+  </article>
+</div>

@@ -6,13 +6,15 @@ import { AppComponent } from './app.component';
 import { UserImageComponent } from './user-image/user-image.component';
 import { SvgComponent } from './svg/svg.component';
 import { BannerImageComponent } from './banner-image/banner-image.component';
+import { ProfileButtonComponent } from './profile-button/profile-button.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     UserImageComponent,
     SvgComponent,
-    BannerImageComponent
+    BannerImageComponent,
+    ProfileButtonComponent
   ],
   imports: [
     BrowserModule,
