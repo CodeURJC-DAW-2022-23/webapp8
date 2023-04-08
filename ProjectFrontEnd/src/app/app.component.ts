@@ -20,4 +20,6 @@ export class AppComponent {
   typeElement = "TWEETS-OF-A-USER";
   userId = 5;
   hashtagId = "DAW";
+
+  typeButton = "SEE-TWITTER"
 }
