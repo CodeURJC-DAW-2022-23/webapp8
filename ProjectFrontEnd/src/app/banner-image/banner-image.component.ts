@@ -1,5 +1,12 @@
 import { Component, Input } from '@angular/core';
 
+/**
+ *  TO USE THIS COMPONENT:
+ *
+ *  <app-banner-image [bannerType]="bannerType" [bannerSrc]="bannerSrc"></app-banner-image>
+ *
+ *  Being bannerType the type of the banner, and the bannerSrc, the url to the image
+ */
 @Component({
   selector: 'app-banner-image',
   templateUrl: './banner-image.component.html',

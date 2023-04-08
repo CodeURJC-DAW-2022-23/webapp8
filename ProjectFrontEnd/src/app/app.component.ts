@@ -11,9 +11,13 @@ export class AppComponent {
   username = "antonioalanxs";
   nickname = "Alanis"
 
-  svgType = "LIKE-ICON";
+  svgType = "BRAND-ICON";
   svgId = "svg"
 
-  bannerType = "EDIT-BANNER"
-  bannerSrc = "../assets/600x200.jpeg"
+  bannerType = "EDIT-BANNER";
+  bannerSrc = "../assets/600x200.jpeg";
+
+  typeElement = "TWEETS-OF-A-USER";
+  userId = 5;
+  hashtagId = "DAW";
 }

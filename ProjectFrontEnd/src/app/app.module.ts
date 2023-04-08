@@ -7,6 +7,7 @@ import { UserImageComponent } from './user-image/user-image.component';
 import { SvgComponent } from './svg/svg.component';
 import { BannerImageComponent } from './banner-image/banner-image.component';
 import { ProfileButtonComponent } from './profile-button/profile-button.component';
+import { ShowMoreButtonComponent } from './show-more-button/show-more-button.component';
 
 @NgModule({
   declarations: [
@@ -14,7 +15,8 @@ import { ProfileButtonComponent } from './profile-button/profile-button.componen
     UserImageComponent,
     SvgComponent,
     BannerImageComponent,
-    ProfileButtonComponent
+    ProfileButtonComponent,
+    ShowMoreButtonComponent
   ],
   imports: [
     BrowserModule,
