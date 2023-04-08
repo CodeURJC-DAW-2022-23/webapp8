@@ -19,30 +19,30 @@ import { Component, Input } from '@angular/core';
 export class UserImageComponent {
 
   @Input()
-  type_img: string;
+  typeImg: string;
   @Input()
-  url_img: string;
+  urlImg: string;
 
-  class_figure_map = {
+  classFigureMap = {
     'PHOTO-PROFILE': 'transition border-[6px] rounded-full cursor-pointer hover:scale-110 w-28 lmd:w-36 dark:border-black-0 border-white-0',
     'PHOTO-LEFT-BAR': 'w-9',
     'PHOTO-TWEET': 'mt-2 rounded-full h-11 w-11 hover:bg-black-0',
     'PHOTO-NOTIFICATION': 'w-8 duration-200 rounded-full hover:opacity-80 hover:bg-black-1'
   };
 
-  class_img_map = {
+  classImgMap = {
     'PHOTO-PROFILE': 'object-fill w-full h-full rounded-full',
     'PHOTO-LEFT-BAR': 'rounded-full',
     'PHOTO-TWEET': 'w-full h-full rounded-full hover:opacity-80',
     'PHOTO-NOTIFICATION': 'object-contain w-full h-full rounded-full'
   };
 
-  class_figure: string;
-  class_img: string;
+  classFigure: string;
+  classImg: string;
 
   loadClasses(type:string){
-    this.class_figure = this.class_figure_map[type];
-    this.class_img = this.class_img_map[type];
+    this.classFigure = this.classFigureMap[type];
+    this.classImg = this.classImgMap[type];
   }
 }
 
