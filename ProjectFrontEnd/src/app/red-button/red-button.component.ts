@@ -15,7 +15,8 @@ export class RedButtonComponent {
     "Unfollow":" px-4 py-2 font-bold",
     "Ban user":" px-4 py-2 font-bold",
     "Unban":" px-3 py-2 text-sm font-medium",
-    "Unverify":" px-3 py-2 text-sm font-medium"
+    "Unverify":" px-3 py-2 text-sm font-medium",
+    "Log out": " px-10 py-3 text-lg font-bold"
   };
 
   red_button:string = "text-center transition rounded-full cursor-pointer text-white-0 bg-red-3 hover:scale-110";
