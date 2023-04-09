@@ -1,5 +1,12 @@
 import { Component, Input } from '@angular/core';
 
+/**
+ *  TO USE THIS COMPONENT:
+ *
+ *  <app-red-button [text]="text" [href]="href"></app-red-button>
+ *
+ *  Being text the text shown in the button and href the page to go when button is clicked
+ */
 @Component({
   selector: 'app-red-button',
   templateUrl: './red-button.component.html',

@@ -15,4 +15,6 @@ export class AppComponent {
   isInput = false
 
   text = "Ban user"
+
+  text2 = "Cancel"
 }

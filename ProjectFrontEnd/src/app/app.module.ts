@@ -19,6 +19,7 @@ import { LeftBarButtonComponent } from './left-bar-button/left-bar-button.compon
 import { BrandButtonComponent } from './brand-button/brand-button.component';
 import { BlueButtonComponent } from './blue-button/blue-button.component';
 import { RedButtonComponent } from './red-button/red-button.component';
+import { ButtonWithoutBackgroundWhiteBorderAndTextComponent } from './button-without-background-white-border-and-text/button-without-background-white-border-and-text.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import { RedButtonComponent } from './red-button/red-button.component';
     //LeftBarComponent,
     BrandButtonComponent,
     BlueButtonComponent,
-    RedButtonComponent
+    RedButtonComponent,
+    ButtonWithoutBackgroundWhiteBorderAndTextComponent
   ],
   imports: [
     BrowserModule,

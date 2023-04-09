@@ -5,7 +5,7 @@ import { Component, Input } from '@angular/core';
  *
  *  <app-blue-button [blueButtonType]="blueButtonType" [href]="href" [isInput]="isInput"></app-blue-button>
  *
- *  Being blueButtonType the type of the blueButton, href the page to go when button is clicked and isInput for the page we are
+ *  Being blueButtonType the type of the blueButton, href the page to go when button is clicked and isInput if is inout for the page we are
  */
 @Component({
   selector: 'app-blue-button',
