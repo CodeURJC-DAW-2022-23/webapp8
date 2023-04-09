@@ -42,7 +42,7 @@
                 <!-- PROFILE IMAGE -->
                 <a href="/profile/{{tweet.user.id}}">
                     <figure class="mt-2 rounded-full h-11 w-11 hover:bg-black-0">
-                        <img src="/{{tweet.user.id}}/profile-pic" alt="Profile photo"
+                        <img src="{{urlToProfilePic}}" alt="Profile photo"
                              class="w-full h-full rounded-full hover:opacity-80"
                              onload="loadUserSVG('{{tweet.id}}', '{{tweet.user.type}}')">
                     </figure>
