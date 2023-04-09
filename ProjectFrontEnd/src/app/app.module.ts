@@ -10,6 +10,7 @@ import { ProfileButtonComponent } from './profile-button/profile-button.componen
 import { ShowMoreButtonComponent } from './show-more-button/show-more-button.component';
 import { WhiteButtonBlueBorderAndTextComponent } from './white-button-blue-border-and-text/white-button-blue-border-and-text.component';
 import { WhiteButtonBlackBorderAndTextComponent } from './white-button-black-border-and-text/white-button-black-border-and-text.component';
+import { LogOutButtonComponent } from './log-out-button/log-out-button.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { WhiteButtonBlackBorderAndTextComponent } from './white-button-black-bor
     ProfileButtonComponent,
     ShowMoreButtonComponent,
     WhiteButtonBlueBorderAndTextComponent,
-    WhiteButtonBlackBorderAndTextComponent
+    WhiteButtonBlackBorderAndTextComponent,
+    LogOutButtonComponent
   ],
   imports: [
     BrowserModule,
