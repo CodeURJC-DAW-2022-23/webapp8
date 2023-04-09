@@ -1,14 +1,16 @@
 import { Component } from '@angular/core';
 
+/**
+ *  HOW TO USE THIS COMPONENT:
+ *
+ * <app-theme-switcher-button></app-theme-switcher-button>
+ */
 @Component({
   selector: 'app-theme-switcher-button',
   templateUrl: './theme-switcher-button.component.html',
   styleUrls: ['./theme-switcher-button.component.css']
 })
 export class ThemeSwitcherButtonComponent {
-
-
-
   loadThemePage() {
     var themeToggleDarkIcon = document.getElementById("theme-toggle-dark-icon");
     var themeToggleLightIcon = document.getElementById("theme-toggle-light-icon");

@@ -12,6 +12,7 @@ import { WhiteButtonBlueBorderAndTextComponent } from './white-button-blue-borde
 import { WhiteButtonBlackBorderAndTextComponent } from './white-button-black-border-and-text/white-button-black-border-and-text.component';
 import { LogOutButtonComponent } from './log-out-button/log-out-button.component';
 import { ThemeSwitcherButtonComponent } from './theme-switcher-button/theme-switcher-button.component';
+import { CanButtonComponent } from './can-button/can-button.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { ThemeSwitcherButtonComponent } from './theme-switcher-button/theme-swit
     WhiteButtonBlueBorderAndTextComponent,
     WhiteButtonBlackBorderAndTextComponent,
     LogOutButtonComponent,
-    ThemeSwitcherButtonComponent
+    ThemeSwitcherButtonComponent,
+    CanButtonComponent
   ],
   imports: [
     BrowserModule,
