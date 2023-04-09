@@ -15,6 +15,8 @@ import { ThemeSwitcherButtonComponent } from './theme-switcher-button/theme-swit
 import { CanButtonComponent } from './can-button/can-button.component';
 import { GoBackButtonComponent } from './go-back-button/go-back-button.component';
 import { LeftBarButtonComponent } from './left-bar-button/left-bar-button.component';
+import { LeftBarComponent } from './left-bar/left-bar.component';
+import { BrandButtonComponent } from './brand-button/brand-button.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +32,9 @@ import { LeftBarButtonComponent } from './left-bar-button/left-bar-button.compon
     ThemeSwitcherButtonComponent,
     CanButtonComponent,
     GoBackButtonComponent,
-    LeftBarButtonComponent
+    LeftBarButtonComponent,
+    LeftBarComponent,
+    BrandButtonComponent
   ],
   imports: [
     BrowserModule,

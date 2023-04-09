@@ -8,21 +8,6 @@ import { Component } from '@angular/core';
 export class AppComponent {
   title = 'ProjectFrontEnd';
 
-  username = "antonioalanxs";
-  nickname = "Alanis"
-
-  svgType = "BRAND-ICON";
-  svgId = "svg"
-
-  bannerType = "EDIT-BANNER";
-  bannerSrc = "../assets/600x200.jpeg";
-
-  typeElement = "TWEETS-OF-A-USER";
-  userId = 5;
-  hashtagId = "DAW";
-
-  typeButton = "HOME"
-
-  text = "Next"
+  type = "LEFT-BAR"
   src = "#nada"
 }
