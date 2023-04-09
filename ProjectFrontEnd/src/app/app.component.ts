@@ -10,4 +10,7 @@ export class AppComponent {
 
   type = "LEFT-BAR"
   src = "#nada"
+
+  blueButtonType = "VERIFY"
+  isInput = false
 }
