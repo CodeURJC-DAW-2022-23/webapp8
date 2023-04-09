@@ -9,6 +9,7 @@ import { BannerImageComponent } from './banner-image/banner-image.component';
 import { ProfileButtonComponent } from './profile-button/profile-button.component';
 import { ShowMoreButtonComponent } from './show-more-button/show-more-button.component';
 import { WhiteButtonBlueBorderAndTextComponent } from './white-button-blue-border-and-text/white-button-blue-border-and-text.component';
+import { WhiteButtonBlackBorderAndTextComponent } from './white-button-black-border-and-text/white-button-black-border-and-text.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { WhiteButtonBlueBorderAndTextComponent } from './white-button-blue-borde
     BannerImageComponent,
     ProfileButtonComponent,
     ShowMoreButtonComponent,
-    WhiteButtonBlueBorderAndTextComponent
+    WhiteButtonBlueBorderAndTextComponent,
+    WhiteButtonBlackBorderAndTextComponent
   ],
   imports: [
     BrowserModule,
