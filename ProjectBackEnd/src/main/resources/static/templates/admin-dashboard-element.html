@@ -5,7 +5,7 @@
       <div class="flex items-center gap-4 transition rounded-full w-fit group-hover:scale-110 group-hover:bg-gray-3 dark:group-hover:bg-gray-13 group-focus-within:bg-gray-3 dark:group-focus-within:bg-gray-13 group-focus-within:scale-110">
 
           <figure class="w-11" onclick="window.location.href='/profile/{{id}}'">
-            <img class="w-full h-full rounded-full" src="/{{id}}/profile-pic" alt="Profile photo" onload="loadUserSVG('{{id}}', '{{type}}'); changeText('{{type}}','{{-index}}','{{id}}');">
+            <img class="w-full h-full rounded-full" src="users/{{id}}/user-image" alt="Profile photo" onload="loadUserSVG('{{id}}', '{{type}}'); changeText('{{type}}','{{-index}}','{{id}}');">
           </figure>
 
           <section class="grid items-center grid-flow-col gap-2 auto-cols-min">
