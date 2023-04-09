@@ -31,8 +31,11 @@ export class BlueButtonComponent {
     "GO-TO-PROFILE": " px-3 py-2 rounded-full font-semibold text-sm scale-90 xlsm:scale-100",
     "PUBLISH-TWEET":" px-5 py-3 rounded-full font-bold w-full text-xl",
     "GO-TO-DASHBOARD":" px-4 py-2 rounded-full font-semibold scale-90 xlsm:scale-100 xlsm:hover:scale-110",
-    "VERIFY":" px-3 py-2 rounded-full font-medium text-sm"
+    "VERIFY":" px-3 py-2 rounded-full font-medium text-sm",
+    "UNFOLLOW": "px-4 py-2 rounded-full font-bold"
   };
+
+  blue_button: string = "text-center transition cursor-pointer text-white-0 bg-primary hover:scale-110";
 
   blueButtonTextMap = {
     "INDEX": "Sing up",
@@ -43,14 +46,13 @@ export class BlueButtonComponent {
     "GO-TO-PROFILE":"Go To Profile",
     "PUBLISH-TWEET":"Tweet",
     "GO-TO-DASHBOARD":"Go To Dashboard",
-    "VERIFY":"Verify"
+    "VERIFY":"Verify",
+    "UNFOLLOW":"Unfollow"
   };
 
   goTo() {
     window.location.href = this.href
   }
-
-  blue_button: string = "text-center transition cursor-pointer text-white-0 bg-primary hover:scale-110";
 
   ngOnInit(){
     this.blue_button += this.blueButtonClassMap[this.blueButtonType];

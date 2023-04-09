@@ -13,4 +13,6 @@ export class AppComponent {
 
   blueButtonType = "VERIFY"
   isInput = false
+
+  text = "Ban user"
 }

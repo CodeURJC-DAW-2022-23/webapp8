@@ -18,6 +18,7 @@ import { LeftBarButtonComponent } from './left-bar-button/left-bar-button.compon
 //import { LeftBarComponent } from './left-bar/left-bar.component';
 import { BrandButtonComponent } from './brand-button/brand-button.component';
 import { BlueButtonComponent } from './blue-button/blue-button.component';
+import { RedButtonComponent } from './red-button/red-button.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import { BlueButtonComponent } from './blue-button/blue-button.component';
     LeftBarButtonComponent,
     //LeftBarComponent,
     BrandButtonComponent,
-    BlueButtonComponent
+    BlueButtonComponent,
+    RedButtonComponent
   ],
   imports: [
     BrowserModule,
