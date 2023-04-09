@@ -13,6 +13,7 @@ import { WhiteButtonBlackBorderAndTextComponent } from './white-button-black-bor
 import { LogOutButtonComponent } from './log-out-button/log-out-button.component';
 import { ThemeSwitcherButtonComponent } from './theme-switcher-button/theme-switcher-button.component';
 import { CanButtonComponent } from './can-button/can-button.component';
+import { GoBackButtonComponent } from './go-back-button/go-back-button.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { CanButtonComponent } from './can-button/can-button.component';
     WhiteButtonBlackBorderAndTextComponent,
     LogOutButtonComponent,
     ThemeSwitcherButtonComponent,
-    CanButtonComponent
+    CanButtonComponent,
+    GoBackButtonComponent
   ],
   imports: [
     BrowserModule,
