@@ -20,6 +20,7 @@ import { BrandButtonComponent } from './brand-button/brand-button.component';
 import { BlueButtonComponent } from './blue-button/blue-button.component';
 import { RedButtonComponent } from './red-button/red-button.component';
 import { ButtonWithoutBackgroundWhiteBorderAndTextComponent } from './button-without-background-white-border-and-text/button-without-background-white-border-and-text.component';
+import { FloatingInputComponent } from './floating-input/floating-input.component';
 
 @NgModule({
   declarations: [
@@ -40,7 +41,8 @@ import { ButtonWithoutBackgroundWhiteBorderAndTextComponent } from './button-wit
     BrandButtonComponent,
     BlueButtonComponent,
     RedButtonComponent,
-    ButtonWithoutBackgroundWhiteBorderAndTextComponent
+    ButtonWithoutBackgroundWhiteBorderAndTextComponent,
+    FloatingInputComponent
   ],
   imports: [
     BrowserModule,

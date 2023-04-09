@@ -17,4 +17,6 @@ export class AppComponent {
   text = "Ban user"
 
   text2 = "Cancel"
+
+  text3 = "Username"
 }
