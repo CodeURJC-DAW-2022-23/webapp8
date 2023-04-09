@@ -14,6 +14,7 @@ import { LogOutButtonComponent } from './log-out-button/log-out-button.component
 import { ThemeSwitcherButtonComponent } from './theme-switcher-button/theme-switcher-button.component';
 import { CanButtonComponent } from './can-button/can-button.component';
 import { GoBackButtonComponent } from './go-back-button/go-back-button.component';
+import { LeftBarButtonComponent } from './left-bar-button/left-bar-button.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { GoBackButtonComponent } from './go-back-button/go-back-button.component
     LogOutButtonComponent,
     ThemeSwitcherButtonComponent,
     CanButtonComponent,
-    GoBackButtonComponent
+    GoBackButtonComponent,
+    LeftBarButtonComponent
   ],
   imports: [
     BrowserModule,

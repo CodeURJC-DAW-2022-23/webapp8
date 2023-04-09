@@ -21,7 +21,7 @@ export class AppComponent {
   userId = 5;
   hashtagId = "DAW";
 
-  typeButton = "SEE-TWITTER"
+  typeButton = "HOME"
 
   text = "Next"
   src = "#nada"
