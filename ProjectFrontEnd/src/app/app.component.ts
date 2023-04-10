@@ -19,4 +19,9 @@ export class AppComponent {
   text2 = "Cancel"
 
   text3 = "Username"
+
+  text4 = "Mentions"
+
+  selected1 = true
+  selected2 = false
 }
