@@ -22,6 +22,7 @@ import { RedButtonComponent } from './red-button/red-button.component';
 import { ButtonWithoutBackgroundWhiteBorderAndTextComponent } from './button-without-background-white-border-and-text/button-without-background-white-border-and-text.component';
 import { FloatingInputComponent } from './floating-input/floating-input.component';
 import { NavBarButtonComponent } from './nav-bar-button/nav-bar-button.component';
+import { SearcherComponent } from './searcher/searcher.component';
 
 @NgModule({
   declarations: [
@@ -44,7 +45,8 @@ import { NavBarButtonComponent } from './nav-bar-button/nav-bar-button.component
     RedButtonComponent,
     ButtonWithoutBackgroundWhiteBorderAndTextComponent,
     FloatingInputComponent,
-    NavBarButtonComponent
+    NavBarButtonComponent,
+    SearcherComponent
   ],
   imports: [
     BrowserModule,

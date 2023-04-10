@@ -24,4 +24,7 @@ export class AppComponent {
 
   selected1 = true
   selected2 = false
+
+  searcherAction = "/search"
+  searcherPlaceholder = "Search on Twitter"
 }
