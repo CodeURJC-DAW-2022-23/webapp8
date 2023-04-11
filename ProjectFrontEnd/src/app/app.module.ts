@@ -24,6 +24,9 @@ import { FloatingInputComponent } from './others/floating-input/floating-input.c
 import { NavBarButtonComponent } from './others/nav-bar-button/nav-bar-button.component';
 import { SearcherComponent } from './others/searcher/searcher.component';
 import { TweetComponent } from './entities/tweet/tweet.component';
+import { explorer } from './entities/hashtag/explorer.component';
+import { hashtagComponent } from './entities/hashtag/hashtag.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -48,11 +51,14 @@ import { TweetComponent } from './entities/tweet/tweet.component';
     FloatingInputComponent,
     NavBarButtonComponent,
     SearcherComponent,
-    TweetComponent
+    TweetComponent,
+    explorer,
+    hashtagComponent
   ],
   imports: [
     BrowserModule,
-    FormsModule
+    FormsModule,
+    HttpClientModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

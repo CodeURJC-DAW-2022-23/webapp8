@@ -1,0 +1,7 @@
+<a class="flex flex-col gap-1 px-5 py-3 border-b cursor-pointer border-gray-9 dark:border-black-5 hover:bg-gray-7 dark:hover:bg-black-6" 
+    (click)="showTweetsAssociated()">
+    <h4 class="text-sm font-medium dark:font-semibold text-gray-5">0 - Trending</h4> <!--Should do the count-->
+
+    <h3 class="font-bold break-all dark:text-gray-3">{{ hashtag.hashtag }}</h3> <!--Should be join with thje name of an specific hashtag-->
+    <h5 class="text-sm font-medium dark:font-semibold text-gray-5">{{totalNumberOfTweets}} <!--Should be the result of the lenght of the tweets list!--> Tweets</h5>
+</a>
