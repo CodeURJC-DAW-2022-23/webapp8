@@ -4,7 +4,7 @@
                 <!-- PROFILE IMAGE - TODO: hacer link a perfil y perfil -->
                 <a href="#">
                     <figure class="w-12 h-12 rounded-full hover:bg-black-0">
-                        <img src="users/{{user.id}}/user-image" alt="Profile photo"
+                        <img src="{{urlToProfilePic}}" alt="Profile photo"
                             class="w-full h-full rounded-full hover:opacity-80" />
                     </figure>
                 </a>
@@ -16,15 +16,15 @@
                         <a class="flex gap-2" href="#">
                             <span
                                 class="overflow-hidden font-bold text-ellipsis whitespace-nowrap hover:underline dark:text-white-0">
-                                {{user.username}}</span>
+                                {{tweet.user.username}}</span>
                             <span class="overflow-hidden text-ellipsis whitespace-nowrap text-gray-4 hover:underline">
-                                @{{user.nickname}}
+                                @{{tweet.user.nickname}}
                             </span>
                         </a>
 
                         <!-- TWEET TEXT -->
                         <p class="overflow-hidden text-sm text-ellipsis text-twitter-dark-gray dark:text-white-0">
-                            {{text}}
+                            {{tweet.text}}
                         </p>
                     </div>
                 </div>
