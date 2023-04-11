@@ -1,6 +1,6 @@
 import { TweetComponent } from "../tweet/tweet.component";
 
-export interface Hahstag{
+export interface Hashtag{
     hashtag: string;
     tweets: TweetComponent[]; 
 }

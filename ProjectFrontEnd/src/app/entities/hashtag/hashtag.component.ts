@@ -3,7 +3,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 
 
 import { HashtagService } from "src/app/servicies/hashtag-service";
-import { Hahstag } from "./hashtag.interface";
+import { Hashtag } from "./hashtag.interface";
 
 @Component({
     selector: 'app-hashtagComponent',
@@ -14,9 +14,9 @@ import { Hahstag } from "./hashtag.interface";
   export class hashtagComponent implements OnInit{
     
     @Input()
-    hashtag: Hahstag;
-    
-    totalNumberOfTweets: number;
+    hashtag: Hashtag;
+
+    totalNumberOfTweets: number = 0;
 
     constructor( private service: HashtagService, private router:Router) {}
     

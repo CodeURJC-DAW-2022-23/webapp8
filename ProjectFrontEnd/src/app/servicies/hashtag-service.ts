@@ -1,10 +1,8 @@
 
 import { Injectable } from '@angular/core';
-import { environment } from 'src/enviroment/enviroment';
 import { throwError, Observable } from 'rxjs';
-import { catchError, map } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
-import { Hahstag } from '../entities/hashtag/hashtag.interface';
 import { hashtagComponent } from '../entities/hashtag/hashtag.component';
 
 @Injectable({
@@ -16,7 +14,7 @@ export class HashtagService{
     ){}
 
     getSomeTrends(): Observable<hashtagComponent[]> {
-        let url = "https://localhost:8443/trends?from=0&size=10"
+        let url = "/api/trends?from=0&size=10"
         return this.http.get(url).pipe(
             map(response => this.extractHashtag(response as any))
         );
