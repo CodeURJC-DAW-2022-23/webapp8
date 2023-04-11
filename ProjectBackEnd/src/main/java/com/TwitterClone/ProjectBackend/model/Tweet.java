@@ -36,6 +36,7 @@ public class Tweet {
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonView(Basic.class)
     private User user;
+    @JsonView(Basic.class)
     private final LocalDateTime publishDate;
     @ManyToMany
     @LazyCollection(LazyCollectionOption.FALSE)

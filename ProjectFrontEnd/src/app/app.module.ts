@@ -23,6 +23,7 @@ import { ButtonWithoutBackgroundWhiteBorderAndTextComponent } from './others/but
 import { FloatingInputComponent } from './others/floating-input/floating-input.component';
 import { NavBarButtonComponent } from './others/nav-bar-button/nav-bar-button.component';
 import { SearcherComponent } from './others/searcher/searcher.component';
+import { TweetComponent } from './entities/tweet/tweet.component';
 
 @NgModule({
   declarations: [
@@ -46,7 +47,8 @@ import { SearcherComponent } from './others/searcher/searcher.component';
     ButtonWithoutBackgroundWhiteBorderAndTextComponent,
     FloatingInputComponent,
     NavBarButtonComponent,
-    SearcherComponent
+    SearcherComponent,
+    TweetComponent
   ],
   imports: [
     BrowserModule,
