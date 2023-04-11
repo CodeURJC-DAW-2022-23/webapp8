@@ -19,6 +19,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import javax.servlet.http.HttpServletRequest;
+import java.sql.Array;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
@@ -256,10 +258,14 @@ public class NavigationController {
      */
     @GetMapping("/write-tweet/comment/{id}")
     public String toReplyTweet(Model model,
-                               @PathVariable("id") Long id)  {
+                               @PathVariable("id") Long id,
+                               HttpServletRequest request)  {
         Optional<Tweet> tweet = this.tweetService.findById(id);
         Tweet tweetToReply = tweet.get();
-        model.addAttribute("tweet", tweetToReply);
+        List<Tweet> t= (new ArrayList<>());
+        t.add(tweetToReply);
+        TweetInformation tweetInformation = this.informationManager.calculateDataOfTweet(t, this.informationManager.getCurrentUser(request)).get(0);
+        model.addAttribute("tweet", tweetInformation);
         model.addAttribute("type", "reply");
 
         return "write-tweet";
