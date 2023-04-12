@@ -45,11 +45,15 @@
 
     <!-- TRENDS -->
     <div id="trend-container">
-        <!-- <li *ngFor="let hashtagComponent of hashtags"> -->
-            <app-hashtagComponent></app-hashtagComponent>
-        <!-- </li> -->
-        <!-- {{> explore_element}} -->
-    </div>
+        <li *ngFor="let hashtag of hashtags; let i = index">
+            <app-hashtagComponent [hashtag]="hashtag.hashtag" [numTweets]="hashtag.numTweets">
+                <h4 class="text-sm font-medium dark:font-semibold text-gray-5">{{i + 1}} - Trending</h4>
+              </app-hashtagComponent>
+              
+        </li>
+      </div>
+      
+
 <!-- 
     <!-- MORE TRENDS BUTTON -->
     <button onclick="loadMoreTrends();" id="loadMore"
