@@ -28,6 +28,7 @@ import { explorer } from './entities/hashtag/explorer.component';
 import { hashtagComponent } from './entities/hashtag/hashtag.component';
 import { HttpClientModule } from '@angular/common/http';
 import { NotificationComponent } from './entities/notification/notification.component';
+import { TweetListComponent } from './entities/tweet/tweet-list/tweet-list.component';
 
 @NgModule({
   declarations: [
@@ -55,7 +56,8 @@ import { NotificationComponent } from './entities/notification/notification.comp
     TweetComponent,
     explorer,
     hashtagComponent,
-    NotificationComponent
+    NotificationComponent,
+    TweetListComponent
   ],
   imports: [
     BrowserModule,

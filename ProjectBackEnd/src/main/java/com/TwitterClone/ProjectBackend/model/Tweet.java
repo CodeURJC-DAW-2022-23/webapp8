@@ -53,16 +53,12 @@ public class Tweet {
     @JsonView(Basic.class)
     private String text;
     @Lob
-    @JsonView(Basic.class)
     private Blob media1;
     @Lob
-    @JsonView(Basic.class)
     private Blob media2;
     @Lob
-    @JsonView(Basic.class)
     private Blob media3;
     @Lob
-    @JsonView(Basic.class)
     private Blob media4;
 
     public Tweet() {

@@ -57,10 +57,8 @@ public class User {
     @JsonView(Profile.class)
     private String biography = "";
     private String password;
-    @JsonView(Basic.class)
     @Lob
     private Blob profilePicture;
-    @JsonView(Profile.class)
     @Lob
     private Blob profileBanner;
     @Enumerated(EnumType.STRING)

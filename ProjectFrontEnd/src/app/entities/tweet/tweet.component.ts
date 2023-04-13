@@ -1,4 +1,8 @@
 import { Component, Input } from '@angular/core';
+import { Tweet } from './tweet.model';
+import { ActivatedRoute, Router } from '@angular/router';
+import { TweetService } from 'src/app/servicies/tweet-service';
+import { waitForAsync } from '@angular/core/testing';
 
 @Component({
   selector: 'app-tweet',
@@ -7,43 +11,11 @@ import { Component, Input } from '@angular/core';
 })
 export class TweetComponent {
   @Input()
-  id: number;
-  @Input()
-  profileId:number;
-  @Input()
-  urlToProfilePic:string;
-  @Input()
-  nick:string;
-  @Input()
-  username:string;
-  @Input()
-  publishDate:Date;
-  @Input()
-  text:string;
-  @Input()
-  numComments:number;
-  @Input()
-  numLikes:number;
-  @Input()
-  numRetweets:number;
-  @Input()
-  isRetweeted:boolean;
-  @Input()
-  isLiked:boolean;
-  @Input()
-  isBookmarked:boolean;
+  tweet:Tweet;
   @Input()
   isLogged:boolean;
-  @Input()
-  urlToMedia1:string;
-  @Input()
-  urlToMedia2:string;
-  @Input()
-  urlToMedia3:string;
-  @Input()
-  urlToMedia4:string;
-  @Input()
-  isAuthorised:boolean;
+  constructor(private router: Router, private service: TweetService) {
+}
 
   urlToComment:string;
   profileIdURL:string;
@@ -60,33 +32,38 @@ export class TweetComponent {
   bookmarkClass:string = "w-8 p-[0.375rem] transition rounded-full group-hover:bg-blue-1 group-hover:fill-primary fill-";
 
   goToTweet(){
-    window.location.href = "/tweet/" + this.id
+    window.location.href = "/tweet/" + this.tweet.tweet.id
   }
 
-  ngOnInit(){
-    this.urlToComment = "/write-tweet/comment/" + this.id;
-    this.profileIdURL = "/profile/" + this.profileId;
-
-    if (this.isRetweeted){
+  
+  ngOnInit(): void{
+    this.urlToComment = "/write-tweet/comment/" + this.tweet.tweet.id;
+    this.profileIdURL = "/api/profile/" + this.tweet.tweet.user.id;
+    this.tweet.urlToProfilePic = "/api/" + this.tweet.urlToProfilePic
+    if (this.tweet.retweeted){
       this.retweetClass += "green-0";
     }else{
       this.retweetClass += "gray-4";
     }
-    if (this.isLiked){
+    if (this.tweet.liked){
       this.likedClass += "red-0";
     }else{
       this.likedClass += "gray-4";
     }
-    if (this.isBookmarked){
+    if (this.tweet.bookmarked){
       this.bookmarkClass += "primary";
     }else{
       this.bookmarkClass += "gray-4";
     }
 
-    this.isMedia1 = !(this.urlToMedia1 === "");
-    this.isMedia2 = !(this.urlToMedia2 === "");
-    this.isMedia3 = !(this.urlToMedia3 === "");
-    this.isMedia4 = !(this.urlToMedia4 === "");
+    this.isMedia1 = !(this.tweet.urlToMedia1 === "");
+    this.isMedia2 = !(this.tweet.urlToMedia2 === "");
+    this.isMedia3 = !(this.tweet.urlToMedia3 === "");
+    this.isMedia4 = !(this.tweet.urlToMedia4 === "");
+    this.tweet.urlToMedia1 = "/api/" + this.tweet.urlToMedia1
+    this.tweet.urlToMedia2 = "/api/" + this.tweet.urlToMedia2
+    this.tweet.urlToMedia3 = "/api/" + this.tweet.urlToMedia3
+    this.tweet.urlToMedia4 = "/api/" + this.tweet.urlToMedia4
     this.threeImages = this.isMedia3 && !this.isMedia4;
     if (this.isMedia2){
       this.imageClass += "grid grid-cols-2"; 

@@ -1,11 +1,11 @@
 <!-- SIMPLE TWEET -->
-<div class="border-b cursor-pointer border-gray-9 dark:bg-black-0 dark:border-black-5" [id]="id">
+<div class="border-b cursor-pointer border-gray-9 dark:bg-black-0 dark:border-black-5" [id]="tweet.tweet.id">
     <!-- TWEET -->
     <div class="flex w-full gap-4 px-5 pt-3 hover:bg-gray-7 dark:hover:bg-black-6">
         <!-- PROFILE IMAGE -->
         <a [href]="profileIdURL">
             <figure class="mt-2 rounded-full h-11 w-11 hover:bg-black-0">
-                <img [src]="urlToProfilePic" alt="Profile photo" class="w-full h-full rounded-full hover:opacity-80">
+                <img [src]="tweet.urlToProfilePic" alt="Profile photo" class="w-full h-full rounded-full hover:opacity-80">
             </figure>
         </a>
         <!-- CONTENT -->
@@ -16,19 +16,19 @@
                     <a class="flex gap-2" [href]="profileIdURL">
                         <div
                             class="flex items-center gap-1 overflow-hidden font-bold dark:text-white-0 hover:underline decoration-1 text-ellipsis whitespace-nowrap">
-                            {{nick}}
+                            {{tweet.tweet.user.nickname}}
                             <!--SVG-->
                         </div>
                         <span class="overflow-hidden text-ellipsis whitespace-nowrap text-gray-4 hover:underline">
-                            @{{username}}
+                            @{{tweet.tweet.user.username}}
                         </span>
                     </a>
                     <!-- TIME SINCE PUBLICATION -->
                     <span class="text-gray-4 whitespace-nowrap">
-                        {{ publishDate | date:"MM/dd/yy" }}
+                        {{ tweet.tweet.publishDate | date:"MM/dd/yy" }}
                     </span>
 
-                    <button *ngIf="isAuthorised;" class="ml-auto justify-self-end" (click)="deleteElement()">
+                    <button *ngIf="tweet.isAuthorised;" class="ml-auto justify-self-end" (click)="deleteElement()">
                         <svg class="w-8 p-[0.375rem] transition rounded-full fill-gray-4 hover:fill-red-3 hover:bg-red-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true">
                             <g>
                                 <path
@@ -42,35 +42,35 @@
                 <!-- TWEET TEXT -->
                 <p (click)="goToTweet()"
                     class="overflow-hidden text-sm break-all text-ellipsis text-twitter-dark-gray dark:text-white-0">
-                    {{text}}
+                    {{tweet.tweet.text}}
                 </p>
 
                 <!-- TWEET IMAGES-->
                 <div *ngIf="isMedia1" [class]="imageClass">
                     <figure *ngIf="isMedia1">
-                        <img role="button" class="object-cover w-full h-full" src="{{urlToMedia1}}" alt="image1" />
+                        <img role="button" class="object-cover w-full h-full" src="{{tweet.urlToMedia1}}" alt="image1" />
                     </figure>
 
                     <figure *ngIf="isMedia2 && !threeImages">
-                        <img role="button" class="object-cover w-full h-full" src="{{urlToMedia2}}" alt="image2" />
+                        <img role="button" class="object-cover w-full h-full" src="{{tweet.urlToMedia2}}" alt="image2" />
                     </figure>
 
                     <figure *ngIf="isMedia3 && !threeImages">
-                        <img role="button" class="object-cover w-full h-full" src="{{urlToMedia3}}" alt="image3" />
+                        <img role="button" class="object-cover w-full h-full" src="{{tweet.urlToMedia3}}" alt="image3" />
                     </figure>
 
                     <figure *ngIf="isMedia4">
-                        <img role="button" class="object-cover w-full h-full" src="{{urlToMedia4}}" alt="image4" />
+                        <img role="button" class="object-cover w-full h-full" src="{{tweet.urlToMedia4}}" alt="image4" />
                     </figure>
 
                     <div *ngIf="threeImages"
                         class="grid grid-rows-2 max-h-[500px] gap-[1px] bg-gray-4 dark:bg-twitter-dark-gray border-gray-4">
                         <figure>
-                            <img role="button" class="object-cover w-full h-full" src="{{urlToMedia2}}" alt="image2" />
+                            <img role="button" class="object-cover w-full h-full" src="{{tweet.urlToMedia2}}" alt="image2" />
                         </figure>
 
                         <figure>
-                            <img role="button" class="object-cover w-full h-full" src="{{urlToMedia3}}" alt="image3" />
+                            <img role="button" class="object-cover w-full h-full" src="{{tweet.urlToMedia3}}" alt="image3" />
                         </figure>
                     </div>
                 </div>
@@ -90,7 +90,7 @@
                         </svg>
 
                         <div class="transition text-gray-4 group-hover:text-primary">
-                            {{numComments}}
+                            {{tweet.numComments}}
                         </div>
                     </a>
 
@@ -105,7 +105,7 @@
                         </svg>
 
                         <span class="transition text-gray-4 group-hover:text-green-0">
-                            {{numRetweets}}
+                            {{tweet.numRetweets}}
                         </span>
                     </button>
 
@@ -120,7 +120,7 @@
                         </svg>
 
                         <span class="transition text-gray-4 group-hover:text-red-0">
-                            {{numLikes}}
+                            {{tweet.numLikes}}
                         </span>
                     </button>
 

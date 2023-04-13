@@ -29,13 +29,13 @@ public class TweetInformation {
     @JsonView(Basic.class)
     private String urlToProfilePic;
     @JsonView(Basic.class)
-    private String urlToMedia1;
+    private String urlToMedia1 = "";
     @JsonView(Basic.class)
-    private String urlToMedia2;
+    private String urlToMedia2 = "";
     @JsonView(Basic.class)
-    private String urlToMedia3;
+    private String urlToMedia3 = "";
     @JsonView(Basic.class)
-    private String urlToMedia4;
+    private String urlToMedia4 = "";
 
     @JsonView(Basic.class)
     private boolean liked = false;

@@ -109,10 +109,18 @@ public class InformationManager {
         Long tweetUserId = tweetInformation.getTweet().getUser().getId();
         Long tweetId = tweetInformation.getTweet().getId();
         tweetInformation.setUrlToProfilePic("/users/" + tweetUserId + "/user-image");
-        tweetInformation.setUrlToMedia1("/tweets/" +  tweetId + "/image1");
-        tweetInformation.setUrlToMedia2("/tweets/" +  tweetId + "/image2");
-        tweetInformation.setUrlToMedia3("/tweets/" +  tweetId + "/image3");
-        tweetInformation.setUrlToMedia4("/tweets/" +  tweetId + "/image4");
+        if (tweetInformation.getTweet().getMedia1()!=null){
+            tweetInformation.setUrlToMedia1("/tweets/" +  tweetId + "/image1");
+        }
+        if (tweetInformation.getTweet().getMedia2()!=null){
+            tweetInformation.setUrlToMedia2("/tweets/" +  tweetId + "/image2");
+        }
+        if (tweetInformation.getTweet().getMedia3()!=null){
+            tweetInformation.setUrlToMedia3("/tweets/" +  tweetId + "/image3");
+        }
+        if (tweetInformation.getTweet().getMedia4()!=null){
+            tweetInformation.setUrlToMedia4("/tweets/" +  tweetId + "/image4");
+        }
     }
 
     /**
