@@ -23,7 +23,7 @@ import { FloatingInputComponent } from './others/floating-input/floating-input.c
 import { NavBarButtonComponent } from './others/nav-bar-button/nav-bar-button.component';
 import { SearcherComponent } from './others/searcher/searcher.component';
 import { TweetComponent } from './entities/tweet/tweet.component';
-import { explorer } from './entities/hashtag/explorer.component';
+import { explorer } from './screens/explorer/explorer.component';
 import { hashtagComponent } from './entities/hashtag/hashtag.component';
 import { HttpClientModule } from '@angular/common/http';
 import { NotificationComponent } from './entities/notification/notification.component';
