@@ -15,17 +15,28 @@ export interface Tweet{
     authorised:boolean;
 }
 
-interface TweetInformation{
+export interface TweetInformation{
     id: number;
-    user: Profile;
+    user: User;
     publishDate:Date;
     text:string;
 }
 
-interface Profile{
+interface User{
     id:number;
     username:string;
     nickname:string;
     type:string;
-    enable:boolean
+    enable:boolean;
+    biography: string;
+    joinDate: string;
+}
+
+export interface UserInformation{
+  user: User;
+  urlToProfilePic: string;
+  urlToBannerPic: string;
+  followersNumber: number;
+  followedNumber: number;
+  tweets: Array<TweetInformation>;
 }

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { TweetService } from 'src/app/servicies/tweet-service';
+import { TweetService } from 'src/app/services/tweet-service';
 import { Tweet } from '../tweet.model';
 
 @Component({

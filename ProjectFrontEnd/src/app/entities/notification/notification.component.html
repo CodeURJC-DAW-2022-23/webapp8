@@ -9,7 +9,7 @@
     <article class="flex flex-col gap-3">
         <!-- USER LOGOS -->
         <div class="flex gap-2">
-            <app-user-image [type_img]="typeImage" [url_img]="urlImage"></app-user-image>
+            <app-user-image [typeImg]="typeImage" [urlImg]="urlImage"></app-user-image>
         </div>
 
         <!-- USERNAMES - it has display flex because we have to mix up anchor and svg tags -->
@@ -24,7 +24,7 @@
         <!-- TWEET -->
         <section *ngIf="hasText">
             <h4 (click)="showTweet();" class="text-sm font-normal dark:text-gray-5 dark:font-semibold text-gray-4">
-                {{tweetTrigger.text}}
+                {{tweetTrigger.tweet}}
             </h4>
         </section>
 

@@ -40,9 +40,9 @@ export class UserImageComponent {
   classFigure: string;
   classImg: string;
 
-  loadClasses(type:string){
-    this.classFigure = this.classFigureMap[type];
-    this.classImg = this.classImgMap[type];
+  ngOnInit(){
+    this.classFigure = this.classFigureMap[this.typeImg];
+    this.classImg = this.classImgMap[this.typeImg];
   }
 }
 

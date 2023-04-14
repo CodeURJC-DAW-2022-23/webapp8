@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { Tweet } from './tweet.model';
 import { ActivatedRoute, Router } from '@angular/router';
-import { TweetService } from 'src/app/servicies/tweet-service';
+import { TweetService } from 'src/app/services/tweet-service';
 import { waitForAsync } from '@angular/core/testing';
 
 @Component({
@@ -35,7 +35,7 @@ export class TweetComponent {
     window.location.href = "/tweet/" + this.tweet.tweet.id
   }
 
-  
+
   ngOnInit(): void{
     this.urlToComment = "/write-tweet/comment/" + this.tweet.tweet.id;
     this.profileIdURL = "/api/profile/" + this.tweet.tweet.user.id;
@@ -66,10 +66,10 @@ export class TweetComponent {
     this.tweet.urlToMedia4 = "/api/" + this.tweet.urlToMedia4
     this.threeImages = this.isMedia3 && !this.isMedia4;
     if (this.isMedia2){
-      this.imageClass += "grid grid-cols-2"; 
+      this.imageClass += "grid grid-cols-2";
     }
     if (this.isMedia4){
-      this.imageClass += "grid grid-rows-2"; 
+      this.imageClass += "grid grid-rows-2";
     }
 
   }

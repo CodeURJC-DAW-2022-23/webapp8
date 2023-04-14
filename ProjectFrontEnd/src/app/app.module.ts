@@ -6,7 +6,6 @@ import { AppComponent } from './app.component';
 import { UserImageComponent } from './others/user-image/user-image.component';
 import { SvgComponent } from './svg/svg.component';
 import { BannerImageComponent } from './others/banner-image/banner-image.component';
-import { ProfileButtonComponent } from './others/profile-button/profile-button.component';
 import { ShowMoreButtonComponent } from './others/show-more-button/show-more-button.component';
 import { WhiteButtonBlueBorderAndTextComponent } from './others/white-button-blue-border-and-text/white-button-blue-border-and-text.component';
 import { WhiteButtonBlackBorderAndTextComponent } from './others/white-button-black-border-and-text/white-button-black-border-and-text.component';
@@ -29,6 +28,8 @@ import { hashtagComponent } from './entities/hashtag/hashtag.component';
 import { HttpClientModule } from '@angular/common/http';
 import { NotificationComponent } from './entities/notification/notification.component';
 import { TweetListComponent } from './entities/tweet/tweet-list/tweet-list.component';
+import { UserComponent } from './entities/user/user.component';
+import { ProfileComponent } from './screens/profile/profile.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,6 @@ import { TweetListComponent } from './entities/tweet/tweet-list/tweet-list.compo
     UserImageComponent,
     SvgComponent,
     BannerImageComponent,
-    ProfileButtonComponent,
     ShowMoreButtonComponent,
     WhiteButtonBlueBorderAndTextComponent,
     WhiteButtonBlackBorderAndTextComponent,
@@ -57,7 +57,9 @@ import { TweetListComponent } from './entities/tweet/tweet-list/tweet-list.compo
     explorer,
     hashtagComponent,
     NotificationComponent,
-    TweetListComponent
+    TweetListComponent,
+    UserComponent,
+    ProfileComponent
   ],
   imports: [
     BrowserModule,
