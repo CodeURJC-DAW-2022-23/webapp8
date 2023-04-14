@@ -3,6 +3,7 @@ import { Router, ActivatedRoute } from '@angular/router'; // To route the page w
 import { HashtagService } from "src/app/services/hashtag-service";
 import { hashtagComponent } from "./hashtag.component";
 import { of, map } from "rxjs";
+import { TweetService } from "src/app/services/tweet-service";
 
 @Component({
     selector: 'app-explorer',
@@ -14,13 +15,13 @@ export class explorer implements OnInit{
 
     hashtags: hashtagComponent[] = [];
 
-    constructor(private router:Router, private service: HashtagService) {}
+    constructor(private router:Router, private service: HashtagService, private tweetService:TweetService) {}
 
     ngOnInit(): void {
         this.service.getSomeTrends().subscribe(
           (response: any[]) => {
             this.hashtags = response.map((obj: any) => {
-              const hashtagComp = new hashtagComponent(this.service, this.router);
+              const hashtagComp = new hashtagComponent(this.service, this.router, this.tweetService);
               hashtagComp.hashtag = obj.hashtag;
               hashtagComp.numTweets = obj.numTweets;
               return hashtagComp;
