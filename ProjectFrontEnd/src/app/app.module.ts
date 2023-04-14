@@ -30,6 +30,8 @@ import { NotificationComponent } from './entities/notification/notification.comp
 import { TweetListComponent } from './entities/tweet/tweet-list/tweet-list.component';
 import { UserComponent } from './entities/user/user.component';
 import { ProfileComponent } from './screens/profile/profile.component';
+import { LoginComponent } from './screens/form/login/login.component';
+import { routing } from './app.roting';
 
 @NgModule({
   declarations: [
@@ -59,12 +61,14 @@ import { ProfileComponent } from './screens/profile/profile.component';
     NotificationComponent,
     TweetListComponent,
     UserComponent,
-    ProfileComponent
+    ProfileComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
     HttpClientModule,
+    routing
   ],
   providers: [],
   bootstrap: [AppComponent]
