@@ -1,13 +1,12 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { throwError, Observable, catchError } from 'rxjs';
-import { UserInformation } from '../entities/user/user.model';
+import { User, UserInformation } from '../entities/user/user.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
-
   constructor(private http: HttpClient) { }
 
   getUser (username: string): Observable<UserInformation> {
