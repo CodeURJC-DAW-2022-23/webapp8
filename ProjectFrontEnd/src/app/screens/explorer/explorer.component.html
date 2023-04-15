@@ -45,8 +45,8 @@
 
     <!-- TRENDS -->
     <div id="trend-container">
-        <li *ngFor="let hashtag of hashtags; let i = index">
-            <app-hashtagComponent [hashtag]="hashtag.hashtag" [numTweets]="hashtag.numTweets">
+        <li *ngFor="let hashtagComponent of hashtagComponentsList; let i = index">
+            <app-hashtagComponent [hashtagInfo]="hashtagComponent.hashtagInfo">
                 <h4 class="text-sm font-medium dark:font-semibold text-gray-5">{{i + 1}} - Trending</h4>
               </app-hashtagComponent>
               

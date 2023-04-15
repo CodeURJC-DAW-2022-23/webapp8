@@ -2,10 +2,11 @@ import { Component, Input, OnInit } from "@angular/core";
 import { Router, ActivatedRoute } from '@angular/router';
 
 
-import { HashtagService } from "src/app/services/hashtag-service";
+import { HashtagService } from "src/app/services/hashtag.service";
 import { Tweet } from "../tweet/tweet.model";
 import { TweetService } from "src/app/services/tweet-service";
 import { TweetComponent } from "../tweet/tweet.component";
+import { Hashtag } from "./hashtag.model";
 
 @Component({
     selector: 'app-hashtagComponent',
@@ -16,13 +17,10 @@ import { TweetComponent } from "../tweet/tweet.component";
   export class hashtagComponent implements OnInit{
 
     @Input()
-    hashtag: string = "";
+    hashtagInfo: Hashtag;
 
     @Input()
-    numTweets: number = 0;
-
-    @Input()
-    tweets: TweetComponent[] = [];
+    tweets : Tweet[];
 
     constructor( private service: HashtagService, private router:Router, private tweetService:TweetService) {}
 
@@ -31,16 +29,9 @@ import { TweetComponent } from "../tweet/tweet.component";
     }
 
     showTweetsAssociated(){
-      this.service.getTweetsAssociatedToAHashtag(this.hashtag).subscribe(
-        (response => {
-          this.tweets = response.map((obj:TweetComponent) => {
-            let tweetComp = new TweetComponent(this.router,this.tweetService);
-            tweetComp = obj;
-            console.log(tweetComp); // Temporal, just for local testing
-            return tweetComp;
-          })
-        }
-      )
+      this.service.getTweetsAssociatedToAHashtag(this.hashtagInfo.hashtag).subscribe(
+        tweet => this.tweets = tweet,
+        error => console.log(error) // Change to redirectioning to the error screen!  
     )}
 
   }

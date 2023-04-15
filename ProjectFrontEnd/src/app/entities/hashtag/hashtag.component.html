@@ -1,6 +1,6 @@
 <a class="flex flex-col gap-1 px-5 py-3 border-b cursor-pointer border-gray-9 dark:border-black-5 hover:bg-gray-7 dark:hover:bg-black-6" (click)="showTweetsAssociated()">
     <ng-content></ng-content>
-    <h3 class="font-bold break-all dark:text-gray-3">{{ hashtag }}</h3>
-    <h5 class="text-sm font-medium dark:font-semibold text-gray-5">{{numTweets}} Tweets</h5>
+    <h3 class="font-bold break-all dark:text-gray-3">{{hashtagInfo.hashtag}}</h3>
+    <h5 class="text-sm font-medium dark:font-semibold text-gray-5">{{hashtagInfo.numTweets}} Tweets</h5>
   </a>
   

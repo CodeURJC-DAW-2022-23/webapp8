@@ -6,6 +6,7 @@ import { HttpClient } from '@angular/common/http';
 import { hashtagComponent } from '../entities/hashtag/hashtag.component';
 import { Tweet } from '../entities/tweet/tweet.model';
 import { TweetComponent } from '../entities/tweet/tweet.component';
+import { Hashtag } from '../entities/hashtag/hashtag.model';
 
 @Injectable({
     providedIn: 'root'
@@ -18,21 +19,17 @@ export class HashtagService{
     getSomeTrends(): Observable<any[]> {
         let url = "/api/trends?from=0&size=10";
         return this.http.get(url).pipe(
-          map(response => this.extractHashtag(response as any))
-        );
+          catchError(error => this.handleError(error)
+        )) as Observable<Hashtag[]>
       }
 
-      getTweetsAssociatedToAHashtag(hashtag:String): Observable <TweetComponent[]>{
+      getTweetsAssociatedToAHashtag(hashtag:String): Observable <Tweet[]>{
         let url = "api/hashtag/" + hashtag + "/tweets?from=0&size=10";
         return this.http.get(url).pipe(
           catchError(error => this.handleError(error)
-        )) as Observable<TweetComponent[]>
+        )) as Observable<Tweet[]>
       }
     
-      private extractHashtag(response: any) {
-        console.log(response);
-        return response;
-      }
       
 
     private handleError(error: any) {
