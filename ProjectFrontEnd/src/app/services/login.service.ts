@@ -31,7 +31,7 @@ export class LoginService {
 
     }
 
-    logIn(user: string, pass: String){
+    logIn(user: string, pass: string){
         let url = "api/login"
         this.http.post(url, {username: user, password: pass}, {withCredentials: true})
             .subscribe(

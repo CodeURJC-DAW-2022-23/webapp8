@@ -18,7 +18,7 @@ export class LoginComponent{
     constructor(private router:Router, private service: LoginService) {}
 
     login(event: any, username:string, password: string){
-        //event.preventDefault();
+        event.preventDefault();
 
         this.service.logIn(username,password);
     }

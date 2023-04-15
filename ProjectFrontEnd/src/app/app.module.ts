@@ -32,6 +32,7 @@ import { UserComponent } from './entities/user/user.component';
 import { ProfileComponent } from './screens/profile/profile.component';
 import { LoginComponent } from './screens/form/login/login.component';
 import { routing } from './app.roting';
+import { SignUpComponent } from './screens/form/signup/signup.component';
 
 @NgModule({
   declarations: [
@@ -62,7 +63,8 @@ import { routing } from './app.roting';
     TweetListComponent,
     UserComponent,
     ProfileComponent,
-    LoginComponent
+    LoginComponent,
+    SignUpComponent
   ],
   imports: [
     BrowserModule,
