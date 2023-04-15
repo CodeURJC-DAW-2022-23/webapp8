@@ -137,7 +137,7 @@ public class TweetRestController {
             @ApiResponse(responseCode = "403", description = "Current User can not do that", content = @Content),
             @ApiResponse(responseCode = "404", description = "Tweet Not Found", content = @Content)
     })
-    @PostMapping("/tweets/{idTweetReplied}/tweets")
+    @PostMapping("/tweets/{idTweetReplied}/comments")
     @JsonView(Basic.class)
     public ResponseEntity<TweetInformation> postComment(@RequestBody JSONString tweet_info,
                                            @PathVariable("idTweetReplied") Long idTweetReplied,

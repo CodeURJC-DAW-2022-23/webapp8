@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { UserInformation } from '../tweet/tweet.model';
+import { UserInformation } from '../user/user.model';
 
 @Component({
   selector: 'app-user',

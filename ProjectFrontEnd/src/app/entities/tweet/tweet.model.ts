@@ -1,3 +1,5 @@
+import { User } from "../user/user.model";
+
 export interface Tweet{
     numComments:number;
     numLikes:number;
@@ -22,21 +24,4 @@ export interface TweetInformation{
     text:string;
 }
 
-interface User{
-    id:number;
-    username:string;
-    nickname:string;
-    type:string;
-    enable:boolean;
-    biography: string;
-    joinDate: string;
-}
 
-export interface UserInformation{
-  user: User;
-  urlToProfilePic: string;
-  urlToBannerPic: string;
-  followersNumber: number;
-  followedNumber: number;
-  tweets: Array<TweetInformation>;
-}

@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { throwError, Observable, catchError } from 'rxjs';
-import { UserInformation } from '../entities/tweet/tweet.model';
+import { UserInformation } from '../entities/user/user.model';
 
 @Injectable({
   providedIn: 'root'
