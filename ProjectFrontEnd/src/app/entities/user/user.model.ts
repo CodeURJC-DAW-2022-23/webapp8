@@ -1,21 +1,21 @@
 import { TweetInformation } from "../tweet/tweet.model";
 
-export interface User{
-        id:number;
-        username:string;
-        nickname:string;
-        type:string;
-        enable:boolean;
-        biography: string;
-        joinDate: string;
-    }
-    
-    export interface UserInformation{
-      user: User;
-      urlToProfilePic: string;
-      urlToBannerPic: string;
-      followersNumber: number;
-      followedNumber: number;
-      tweets: Array<TweetInformation>;
-    }
+export interface User {
+  id: number;
+  username: string;
+  nickname: string;
+  type: string;
+  enable: boolean;
+  biography: string;
+  joinDate: string;
+}
+
+export interface UserInformation {
+  user: User;
+  urlToProfilePic: string;
+  urlToBannerPic: string;
+  followersNumber: number;
+  followedNumber: number;
+  tweets: Array<TweetInformation>;
+}
 

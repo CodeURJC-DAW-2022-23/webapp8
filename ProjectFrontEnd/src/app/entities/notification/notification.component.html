@@ -9,22 +9,27 @@
     <article class="flex flex-col gap-3">
         <!-- USER LOGOS -->
         <div class="flex gap-2">
-            <app-user-image [typeImg]="typeImage" [urlImg]="urlImage"></app-user-image>
+            <figure class="w-8 duration-200 rounded-full hover:opacity-80 hover:bg-black-1">
+                <img class="object-contain w-full h-full rounded-full"
+                    [src]="profileImgSrc" alt="User profile photo" [routerLink]="['/profile', notification.userWhoNotifies.user.username]">
+            </figure>
         </div>
 
         <!-- USERNAMES - it has display flex because we have to mix up anchor and svg tags -->
         <h2 class="flex flex-wrap items-center gap-1 text-sm dark:text-gray-3">
             <a class="flex items-center gap-1 overflow-hidden font-bold hover:underline decoration-1 text-ellipsis whitespace-nowrap"
-                href="/profile/{{userWhoNotifies}}">
-                {{userWhoNotifies.nickname}}
-                {{userWhoNotifies}}
+            [routerLink]="['/profile', notification.userWhoNotifies.user.username]">
+                {{notification.userWhoNotifies.user.nickname}}
+                <div class="w-5">
+                    {{userTypeSVG}}
+                </div>
             </a>
             {{notificationTypeText}}
         </h2>
         <!-- TWEET -->
         <section *ngIf="hasText">
-            <h4 (click)="showTweet();" class="text-sm font-normal dark:text-gray-5 dark:font-semibold text-gray-4">
-                {{tweetTrigger.tweet}}
+            <h4 [routerLink]="['/tweet/', notification.tweetTrigger.id]" class="text-sm font-normal dark:text-gray-5 dark:font-semibold text-gray-4">
+                {{notification.tweetTrigger}}
             </h4>
         </section>
 
