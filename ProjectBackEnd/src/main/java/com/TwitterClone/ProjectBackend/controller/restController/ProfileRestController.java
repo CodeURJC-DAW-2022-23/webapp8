@@ -1,7 +1,9 @@
 package com.TwitterClone.ProjectBackend.controller.restController;
 
+import com.TwitterClone.ProjectBackend.model.Tweet;
 import com.TwitterClone.ProjectBackend.model.mustacheObjects.InformationManager;
 import com.TwitterClone.ProjectBackend.model.mustacheObjects.JSONString;
+import com.TwitterClone.ProjectBackend.model.mustacheObjects.TweetInformation;
 import com.TwitterClone.ProjectBackend.model.mustacheObjects.UserInformation;
 import com.TwitterClone.ProjectBackend.service.NotificationService;
 import com.TwitterClone.ProjectBackend.service.ProfileService;
@@ -35,7 +37,7 @@ public class ProfileRestController {
     @Autowired
     private NotificationService notificationService;
 
-    interface Basic extends User.Profile, UserInformation.Basic {
+    interface Basic extends User.Profile, UserInformation.Basic, TweetInformation.Basic, Tweet.Basic {
     }
 
     @Operation(summary = "Get a User")
@@ -55,6 +57,27 @@ public class ProfileRestController {
         }
 
         UserInformation currentUser = this.informationManager.prepareUserInformation(user.get(), null);
+
+        return new ResponseEntity<>(currentUser, HttpStatus.OK);
+    }
+
+    @Operation(summary = "Get teh current user")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "User Found", content = {
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = UserInformation.class))
+            }),
+            @ApiResponse(responseCode = "404", description = "User not active", content = @Content)
+    })
+    @GetMapping("/users/me")
+    @JsonView(Basic.class)
+    public ResponseEntity<UserInformation> getCurrentUser(HttpServletRequest request) {
+        User user = this.informationManager.getCurrentUser(request);
+
+        if (user == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        UserInformation currentUser = this.informationManager.prepareUserInformation(user, null);
 
         return new ResponseEntity<>(currentUser, HttpStatus.OK);
     }
@@ -287,5 +310,7 @@ public class ProfileRestController {
                 currentUser.getId(), "FOLLOW", profileUser.get().getId());
         return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
+
+
 }
 

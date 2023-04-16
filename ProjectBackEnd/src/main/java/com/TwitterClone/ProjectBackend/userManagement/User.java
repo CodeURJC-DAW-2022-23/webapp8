@@ -70,6 +70,7 @@ public class User {
     @ManyToMany
     @LazyCollection(LazyCollectionOption.FALSE)
     private List<Tweet> bookmarks = new ArrayList<>();
+    @JsonView(Basic.class)
     private final LocalDate joinDate;
     @JsonView(Basic.class)
     private String type;
