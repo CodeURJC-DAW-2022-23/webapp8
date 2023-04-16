@@ -81,7 +81,7 @@
                 type="submit" value="Next" (click)="login($event, username.value, password.value)">Next</button>        
 
                 <a class="px-10 py-2 text-sm font-bold text-center transition bg-transparent border-2 cursor-pointer border-black-0 rounded-3xl dark:border-white-0 dark:text-white-0 text-black-0 hover:scale-110"
-                   href="/forgot-password">
+                [routerLink]="['/forgot-password']">
                     Have you forgotten your password?
                 </a>
             </form>

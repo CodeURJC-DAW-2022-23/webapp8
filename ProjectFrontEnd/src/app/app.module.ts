@@ -35,6 +35,8 @@ import { routing } from './app.roting';
 import { SignUpComponent } from './screens/form/signup/signup.component';
 import { Verification } from './screens/form/signup/verification/verification.component';
 import { Error } from './screens/error/error.component';
+import { confirmation } from './screens/form/forgot-password/forgot-password-confirmation/forgot-password-confirmation.component';
+import { ForgotPassword } from './screens/form/forgot-password/forgot-password.component';
 
 
 @NgModule({
@@ -69,7 +71,9 @@ import { Error } from './screens/error/error.component';
     LoginComponent,
     SignUpComponent,
     Verification,
-    Error
+    Error,
+    confirmation,
+    ForgotPassword
   ],
   imports: [
     BrowserModule,
