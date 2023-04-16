@@ -33,6 +33,9 @@ import { ProfileComponent } from './screens/profile/profile.component';
 import { LoginComponent } from './screens/form/login/login.component';
 import { routing } from './app.roting';
 import { SignUpComponent } from './screens/form/signup/signup.component';
+import { Verification } from './screens/form/signup/verification/verification.component';
+import { Error } from './screens/error/error.component';
+
 
 @NgModule({
   declarations: [
@@ -64,7 +67,9 @@ import { SignUpComponent } from './screens/form/signup/signup.component';
     UserComponent,
     ProfileComponent,
     LoginComponent,
-    SignUpComponent
+    SignUpComponent,
+    Verification,
+    Error
   ],
   imports: [
     BrowserModule,
