@@ -7,12 +7,12 @@ export class Signup {
 
     constructor(private http: HttpClient, private service: UserService) {}
 
-    signUp(user:string, pass: string, mail:string){
+    signUp(user:string, pass: string, mail:string):any{
         let url = "api/signup"
         this.http.post(url, {username: user, password: pass, email: mail}, {withCredentials: true})
         .subscribe(
-            (response) => console.log("signUpDone!"), // Change it later
-            (error) => alert("Wrong credentials")
+            (response) => {return true}, // Change it later
+            (error) => {return false}
         );
     }
 }

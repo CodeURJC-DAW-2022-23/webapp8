@@ -16,7 +16,12 @@ export class SignUpComponent{
        
         signUpUser(event: any, username:string, password: string, email:string){
             event.preventDefault();
-    
-            this.service.signUp(username,password, email);
+            let done: Boolean;
+            done = this.service.signUp(username,password, email);
+            if (done){
+                this.router.navigate(['/verification']);
+            }else{
+                
+            }
         }
     }
