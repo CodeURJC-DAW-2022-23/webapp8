@@ -31,7 +31,7 @@ import { Hashtag } from "./hashtag.model";
     showTweetsAssociated(){
       this.service.getTweetsAssociatedToAHashtag(this.hashtagInfo.hashtag).subscribe(
         tweet => this.tweets = tweet,
-        error => console.log(error) // Change to redirectioning to the error screen!  
+        error => this.router.navigate(['/error']) 
     )}
 
   }

@@ -11,17 +11,20 @@ import { UserService } from "src/app/services/user.service";
 
 export class SignUpComponent{
 
+    private res: number;
 
     constructor(private router:Router,activatedRoute: ActivatedRoute, private service: Signup) {}
        
         signUpUser(event: any, username:string, password: string, email:string){
             event.preventDefault();
-            let done: Boolean;
-            done = this.service.signUp(username,password, email);
-            if (done){
-                this.router.navigate(['/verification']);
-            }else{
-                
-            }
+            
+            this.service.signUp(username,password, email).subscribe(
+                response => {this.res = response.status; 
+                    if (this.res == 200){
+                        this.router.navigate(['/verification'])
+                    }
+                },
+                error =>  this.router.navigate(['/error'])
+            )
         }
     }

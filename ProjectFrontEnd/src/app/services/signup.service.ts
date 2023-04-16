@@ -1,18 +1,23 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { UserService } from "./user.service";
+import { Observable, catchError, throwError } from "rxjs";
 
 @Injectable({ providedIn: 'root' })
 export class Signup {
 
     constructor(private http: HttpClient, private service: UserService) {}
 
-    signUp(user:string, pass: string, mail:string):any{
+    signUp(user:string, pass: string, mail:string): Observable<Response>{
         let url = "api/signup"
-        this.http.post(url, {username: user, password: pass, email: mail}, {withCredentials: true})
-        .subscribe(
-            (response) => {return true}, // Change it later
-            (error) => {return false}
-        );
+        return this.http.post(url, {username: user, password: pass, email: mail}, {observe: 'response'})
+        .pipe(
+            catchError(error => this.handleError(error)
+          )) as Observable<Response>
+    }
+
+    private handleError(error: any) {
+		console.error(error);
+		return throwError("Server error (" + error.status + "): " + error.text())
     }
 }
