@@ -87,11 +87,11 @@ export class NotificationComponent implements OnInit {
     this.notificationTypeText = this.notificationTypeTextMap[this.notificationType];
     this.svgTypeNotification = this.svgTypeNotificationMap[this.notificationType];
     this.typeImage = "PHOTO-NOTIFICATION";
-    this.urlImage = "/users/" + this.userWhoNotifies.id + "/user-image";
+    this.urlImage = "/users/" + this.userWhoNotifies + "/user-image";
   }
 
   showTweet() {
-    window.location.href='/tweet/' + this.tweetTrigger.id;
+    window.location.href='/tweet/' + this.tweetTrigger;
   }
 
 }

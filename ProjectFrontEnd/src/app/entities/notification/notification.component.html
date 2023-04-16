@@ -15,9 +15,9 @@
         <!-- USERNAMES - it has display flex because we have to mix up anchor and svg tags -->
         <h2 class="flex flex-wrap items-center gap-1 text-sm dark:text-gray-3">
             <a class="flex items-center gap-1 overflow-hidden font-bold hover:underline decoration-1 text-ellipsis whitespace-nowrap"
-                href="/profile/{{userWhoNotifies.id}}">
+                href="/profile/{{userWhoNotifies}}">
                 {{userWhoNotifies.nickname}}
-                {{userWhoNotifies.svg}}
+                {{userWhoNotifies}}
             </a>
             {{notificationTypeText}}
         </h2>

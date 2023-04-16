@@ -14,6 +14,13 @@ export class UserService {
     return this.http.get(url).pipe(
       catchError(error => this.handleError(error))
     ) as Observable<UserInformation>;
+  };
+
+  getCurrentUser (): Observable<UserInformation> {
+    let url = "/api/users/me"
+    return this.http.get(url).pipe(
+      catchError(error => this.handleError(error))
+    ) as Observable<UserInformation>;
   }
 
   handleError(error: any): any {

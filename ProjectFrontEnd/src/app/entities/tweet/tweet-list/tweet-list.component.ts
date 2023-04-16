@@ -11,7 +11,9 @@ import { Tweet, TweetInformation } from '../tweet.model';
 export class TweetListComponent {
   isLogged:boolean;
   tweets: TweetInformation[];
+
   constructor(private router:Router, private service: TweetService) {}
+
   ngOnInit(){
     this.isLogged = true
     let id = 3

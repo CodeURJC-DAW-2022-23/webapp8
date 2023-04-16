@@ -3,7 +3,7 @@ import { Component, Input } from '@angular/core';
 /**
  * How to use this component:
  *
- * <app-user-image [type_img]="name_variable" [url_img]="src_variable"></app-user-image>
+ * <app-user-image [typeImg]="name_variable" [urlImg]="src_variable"></app-user-image>
  *
  * The 'name_variable' can be:
  *        'PHOTO-PROFILE', 'PHOTO-LEFT-BAR', 'PHOTO-TWEET', 'PHOTO-NOTIFICATION'
@@ -43,6 +43,10 @@ export class UserImageComponent {
   ngOnInit(){
     this.classFigure = this.classFigureMap[this.typeImg];
     this.classImg = this.classImgMap[this.typeImg];
+  }
+
+  loadImage() {
+    return this.urlImg;
   }
 }
 

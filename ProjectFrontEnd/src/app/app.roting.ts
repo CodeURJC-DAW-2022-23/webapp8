@@ -8,6 +8,7 @@ import { Verification } from './screens/form/signup/verification/verification.co
 import { Error } from './screens/error/error.component';
 import { confirmation } from './screens/form/forgot-password/forgot-password-confirmation/forgot-password-confirmation.component';
 import { ForgotPassword } from './screens/form/forgot-password/forgot-password.component';
+import { ProfileComponent } from './screens/profile/profile.component';
 
 const appRoutes = [
     { path: 'explorer', component: explorer },
@@ -16,8 +17,9 @@ const appRoutes = [
     { path: 'verification', component: Verification},
     { path: 'error', component: Error},
     { path: 'forgot-password-confirmation', component: confirmation },
-    { path: 'forgot-password', component: ForgotPassword}
-    
+    { path: 'forgot-password', component: ForgotPassword},
+    { path: 'profile/:id', component: ProfileComponent}
+
 ]
 
 export const routing = RouterModule.forRoot(appRoutes);
