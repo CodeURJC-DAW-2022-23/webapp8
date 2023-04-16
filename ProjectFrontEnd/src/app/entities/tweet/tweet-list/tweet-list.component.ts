@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { TweetService } from 'src/app/services/tweet-service';
-import { Tweet } from '../tweet.model';
+import { Tweet, TweetInformation } from '../tweet.model';
 
 @Component({
   selector: 'app-tweet-list',
@@ -10,7 +10,7 @@ import { Tweet } from '../tweet.model';
 })
 export class TweetListComponent {
   isLogged:boolean;
-  tweets: Tweet[];
+  tweets: TweetInformation[];
   constructor(private router:Router, private service: TweetService) {}
   ngOnInit(){
     this.isLogged = true

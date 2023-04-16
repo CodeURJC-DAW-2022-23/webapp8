@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { Tweet } from './tweet.model';
+import { Tweet, TweetInformation } from './tweet.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TweetService } from 'src/app/services/tweet-service';
 import { waitForAsync } from '@angular/core/testing';
@@ -11,7 +11,7 @@ import { waitForAsync } from '@angular/core/testing';
 })
 export class TweetComponent {
   @Input()
-  tweet:Tweet;
+  tweet:TweetInformation;
   @Input()
   isLogged:boolean;
   constructor(private router: Router, private service: TweetService) {

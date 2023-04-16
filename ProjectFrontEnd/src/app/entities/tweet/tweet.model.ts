@@ -1,6 +1,6 @@
 import { User } from "../user/user.model";
 
-export interface Tweet{
+export interface TweetInformation{
     numComments:number;
     numLikes:number;
     numRetweets:number;
@@ -13,11 +13,11 @@ export interface Tweet{
     urlToMedia3:string;
     urlToMedia4:string;
     isAuthorised:boolean;
-    tweet:TweetInformation;
+    tweet:Tweet;
     authorised:boolean;
 }
 
-export interface TweetInformation{
+export interface Tweet{
     id: number;
     user: User;
     publishDate:Date;
