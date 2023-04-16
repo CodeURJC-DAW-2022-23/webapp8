@@ -3,7 +3,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 
 
 import { HashtagService } from "src/app/services/hashtag.service";
-import { Tweet } from "../tweet/tweet.model";
+import { Tweet, TweetInformation } from "../tweet/tweet.model";
 import { TweetService } from "src/app/services/tweet-service";
 import { TweetComponent } from "../tweet/tweet.component";
 import { Hashtag } from "./hashtag.model";
@@ -20,7 +20,7 @@ import { Hashtag } from "./hashtag.model";
     hashtagInfo: Hashtag;
 
     @Input()
-    tweets : Tweet[];
+    tweets : TweetInformation[];
 
     constructor( private service: HashtagService, private router:Router, private tweetService:TweetService) {}
 
