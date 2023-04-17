@@ -15,6 +15,14 @@ export default class ResetPasswordService {
           )) as Observable<Response>
     }
 
+    processResetPassword(passwordToken: String, newPassword: String):Observable<Response>{
+      let url = "api/reset-password"
+      return this.http.put(url, {password:newPassword}, {observe: 'response'})
+        .pipe(
+          catchError(error => this.handleError(error))
+        ) as Observable<Response>
+    }
+
     private handleError(error: any) {
 		console.error(error);
 		return throwError("Server error (" + error.status + "): " + error.text())

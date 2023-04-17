@@ -9,6 +9,8 @@ import { Error } from './screens/error/error.component';
 import { confirmation } from './screens/form/forgot-password/forgot-password-confirmation/forgot-password-confirmation.component';
 import { ForgotPassword } from './screens/form/forgot-password/forgot-password.component';
 import { ProfileComponent } from './screens/profile/profile.component';
+import { ResetPassword } from './screens/form/reset-password/reset-password.component';
+import { ResetPasswordConfirmation } from './screens/form/reset-password/reset-password-confirmation/reset-password-confirmation.component';
 
 const appRoutes = [
     { path: 'explorer', component: explorer },
@@ -18,6 +20,8 @@ const appRoutes = [
     { path: 'error', component: Error},
     { path: 'forgot-password-confirmation', component: confirmation },
     { path: 'forgot-password', component: ForgotPassword},
+    { path: 'reset-password', component: ResetPassword },
+    { path: 'reset-password-confirmation', component: ResetPasswordConfirmation },
     { path: 'profile/:id', component: ProfileComponent}
 
 ]

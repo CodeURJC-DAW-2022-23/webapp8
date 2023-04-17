@@ -37,6 +37,8 @@ import { Verification } from './screens/form/signup/verification/verification.co
 import { Error } from './screens/error/error.component';
 import { confirmation } from './screens/form/forgot-password/forgot-password-confirmation/forgot-password-confirmation.component';
 import { ForgotPassword } from './screens/form/forgot-password/forgot-password.component';
+import { ResetPassword } from './screens/form/reset-password/reset-password.component';
+import { ResetPasswordConfirmation } from './screens/form/reset-password/reset-password-confirmation/reset-password-confirmation.component';
 
 
 @NgModule({
@@ -73,7 +75,9 @@ import { ForgotPassword } from './screens/form/forgot-password/forgot-password.c
     Verification,
     Error,
     confirmation,
-    ForgotPassword
+    ForgotPassword,
+    ResetPassword,
+    ResetPasswordConfirmation
   ],
   imports: [
     BrowserModule,
