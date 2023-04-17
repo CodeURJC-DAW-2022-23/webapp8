@@ -11,6 +11,7 @@ import { ForgotPassword } from './screens/form/forgot-password/forgot-password.c
 import { ProfileComponent } from './screens/profile/profile.component';
 import { ResetPassword } from './screens/form/reset-password/reset-password.component';
 import { ResetPasswordConfirmation } from './screens/form/reset-password/reset-password-confirmation/reset-password-confirmation.component';
+import { DashboardComponent } from './screens/dashboard/dashboard.component';
 
 const appRoutes = [
     { path: 'explorer', component: explorer },
@@ -22,7 +23,8 @@ const appRoutes = [
     { path: 'forgot-password', component: ForgotPassword},
     { path: 'reset-password', component: ResetPassword },
     { path: 'reset-password-confirmation', component: ResetPasswordConfirmation },
-    { path: 'profile/:id', component: ProfileComponent}
+    { path: 'profile/:id', component: ProfileComponent},
+    { path: 'dashboard', component: DashboardComponent}
 
 ]
 
