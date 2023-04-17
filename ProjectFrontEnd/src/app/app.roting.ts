@@ -20,7 +20,7 @@ import { IndexComponent } from "./screens/index/index.component";
 import { BookmarksComponent } from './screens/bookmarks/bookmarks.component';
 
 const appRoutes = [
-    { path: 'index', component: IndexComponent },
+    { path: 'index', component: IndexComponent }, // provisional path
     { path: 'bookmarks', component: BookmarksComponent },
     { path: 'explorer', component: explorer },
     { path: 'login', component: LoginComponent },

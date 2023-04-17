@@ -17,9 +17,9 @@
                 </button>
 
                 <!-- TITLE -->
-                <button class="text-xl font-bold dark:text-gray-3 text-black-1" [routerLink]="['/bookmarks']">
+                <h1 class="text-xl font-bold dark:text-gray-3 text-black-1">
                     Bookmarks
-                </button>
+                </h1>
             </div>
 
             <!-- THEME SWITCHER -->
@@ -30,6 +30,25 @@
     <!-- TWEETS -->
     <div *ngFor="let tweet of tweets">
         <app-tweet [tweet]="tweet" [isLogged]="false"></app-tweet>
+    </div>
+
+    <!-- SHOW TWEETS BUTTON -->
+    <button id="loadMore"
+        class="hidden w-full py-4 text-lg font-semibold border-b llg:block border-gray-9 dark:bg-black-0 hover:bg-gray-7 dark:border-black-5 dark:hover:bg-black-6 text-primary">
+        Load More
+    </button>
+
+    <!-- SPINNER -->
+    <div id="spinner">
+
+    </div>
+
+    <!-- SHOW TWEETS BUTTON - MOBILE -->
+    <div class="sticky flex justify-center">
+        <button id="loadMore-mobile"
+            class="fixed px-5 py-3 text-sm font-semibold transition cursor-pointer top-[5.4rem] llg:hidden hover:scale-110 rounded-3xl text-white-0 bg-primary">
+            Load More
+        </button>
     </div>
 
     <!-- SPACE -->
