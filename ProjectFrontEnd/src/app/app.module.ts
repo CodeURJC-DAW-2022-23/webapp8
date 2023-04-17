@@ -1,10 +1,12 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms'
-
 import { AppComponent } from './app.component';
+import { HttpClientModule } from '@angular/common/http';
+
+import { routing } from './app.roting';
+
 import { UserImageComponent } from './others/user-image/user-image.component';
-import { SvgComponent } from './svg/svg.component';
 import { BannerImageComponent } from './others/banner-image/banner-image.component';
 import { ShowMoreButtonComponent } from './others/show-more-button/show-more-button.component';
 import { WhiteButtonBlueBorderAndTextComponent } from './others/white-button-blue-border-and-text/white-button-blue-border-and-text.component';
@@ -14,7 +16,6 @@ import { ThemeSwitcherButtonComponent } from './others/theme-switcher-button/the
 import { CanButtonComponent } from './others/can-button/can-button.component';
 import { GoBackButtonComponent } from './others/go-back-button/go-back-button.component';
 import { LeftBarButtonComponent } from './others/left-bar-button/left-bar-button.component';
-//import { LeftBarComponent } from './left-bar/left-bar.component';
 import { BrandButtonComponent } from './others/brand-button/brand-button.component';
 import { BlueButtonComponent } from './others/blue-button/blue-button.component';
 import { RedButtonComponent } from './others/red-button/red-button.component';
@@ -25,13 +26,11 @@ import { SearcherComponent } from './others/searcher/searcher.component';
 import { TweetComponent } from './entities/tweet/tweet.component';
 import { explorer } from './screens/explorer/explorer.component';
 import { hashtagComponent } from './entities/hashtag/hashtag.component';
-import { HttpClientModule } from '@angular/common/http';
 import { NotificationComponent } from './entities/notification/notification.component';
 import { TweetListComponent } from './entities/tweet/tweet-list/tweet-list.component';
 import { UserComponent } from './entities/user/user.component';
 import { ProfileComponent } from './screens/profile/profile.component';
 import { LoginComponent } from './screens/form/login/login.component';
-import { routing } from './app.roting';
 import { SignUpComponent } from './screens/form/signup/signup.component';
 import { Verification } from './screens/form/signup/verification/verification.component';
 import { Error } from './screens/error/error.component';
@@ -42,12 +41,12 @@ import { ResetPasswordConfirmation } from './screens/form/reset-password/reset-p
 import { Search } from './screens/search/search.component';
 import { DashboardComponent } from './screens/dashboard/dashboard.component';
 
+import { IndexComponent } from './screens/index/index.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     UserImageComponent,
-    SvgComponent,
     BannerImageComponent,
     ShowMoreButtonComponent,
     WhiteButtonBlueBorderAndTextComponent,
@@ -57,7 +56,6 @@ import { DashboardComponent } from './screens/dashboard/dashboard.component';
     CanButtonComponent,
     GoBackButtonComponent,
     LeftBarButtonComponent,
-    //LeftBarComponent,
     BrandButtonComponent,
     BlueButtonComponent,
     RedButtonComponent,
@@ -81,7 +79,8 @@ import { DashboardComponent } from './screens/dashboard/dashboard.component';
     ResetPassword,
     ResetPasswordConfirmation,
     Search,
-    DashboardComponent
+    DashboardComponent,
+    IndexComponent
   ],
   imports: [
     BrowserModule,
@@ -92,4 +91,5 @@ import { DashboardComponent } from './screens/dashboard/dashboard.component';
   providers: [],
   bootstrap: [AppComponent]
 })
+
 export class AppModule { }

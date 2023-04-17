@@ -15,7 +15,10 @@ import { DashboardComponent } from './screens/dashboard/dashboard.component';
 import { SearcherComponent } from './others/searcher/searcher.component';
 import { Search } from './screens/search/search.component';
 
+import { IndexComponent } from "./screens/index/index.component";
+
 const appRoutes = [
+    { path: 'index', component: IndexComponent },
     { path: 'explorer', component: explorer },
     { path: 'login', component: LoginComponent },
     { path: 'signup', component: SignUpComponent},
@@ -27,8 +30,7 @@ const appRoutes = [
     { path: 'reset-password-confirmation', component: ResetPasswordConfirmation },
     { path: 'profile/:id', component: ProfileComponent},
     { path: 'dashboard', component: DashboardComponent},
-    { path: 'search/:keyword', component: Search } //check
-
+    { path: 'search/:keyword', component: Search }, //check
 ]
 
 export const routing = RouterModule.forRoot(appRoutes);
