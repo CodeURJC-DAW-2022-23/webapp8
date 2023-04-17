@@ -12,6 +12,8 @@ import { ProfileComponent } from './screens/profile/profile.component';
 import { ResetPassword } from './screens/form/reset-password/reset-password.component';
 import { ResetPasswordConfirmation } from './screens/form/reset-password/reset-password-confirmation/reset-password-confirmation.component';
 import { DashboardComponent } from './screens/dashboard/dashboard.component';
+import { SearcherComponent } from './others/searcher/searcher.component';
+import { Search } from './screens/search/search.component';
 
 const appRoutes = [
     { path: 'explorer', component: explorer },
@@ -24,7 +26,8 @@ const appRoutes = [
     { path: 'reset-password', component: ResetPassword },
     { path: 'reset-password-confirmation', component: ResetPasswordConfirmation },
     { path: 'profile/:id', component: ProfileComponent},
-    { path: 'dashboard', component: DashboardComponent}
+    { path: 'dashboard', component: DashboardComponent},
+    { path: 'search', component: Search } //check
 
 ]
 

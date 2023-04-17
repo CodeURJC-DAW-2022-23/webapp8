@@ -16,7 +16,7 @@ export class HashtagService{
         private http: HttpClient,
     ){}
     
-    getSomeTrends(): Observable<any[]> {
+    getSomeTrends(): Observable<Hashtag[]> {
         let url = "/api/trends?from=0&size=10";
         return this.http.get(url).pipe(
           catchError(error => this.handleError(error)

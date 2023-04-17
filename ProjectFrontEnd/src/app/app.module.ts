@@ -39,6 +39,7 @@ import { confirmation } from './screens/form/forgot-password/forgot-password-con
 import { ForgotPassword } from './screens/form/forgot-password/forgot-password.component';
 import { ResetPassword } from './screens/form/reset-password/reset-password.component';
 import { ResetPasswordConfirmation } from './screens/form/reset-password/reset-password-confirmation/reset-password-confirmation.component';
+import { Search } from './screens/search/search.component';
 import { DashboardComponent } from './screens/dashboard/dashboard.component';
 
 
@@ -79,6 +80,7 @@ import { DashboardComponent } from './screens/dashboard/dashboard.component';
     ForgotPassword,
     ResetPassword,
     ResetPasswordConfirmation,
+    Search,
     DashboardComponent
   ],
   imports: [

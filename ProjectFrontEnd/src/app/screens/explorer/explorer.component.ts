@@ -4,6 +4,7 @@ import { HashtagService } from "src/app/services/hashtag.service";
 import { hashtagComponent } from "src/app/entities/hashtag/hashtag.component"; 
 import { of, map } from "rxjs";
 import { TweetService } from "src/app/services/tweet-service";
+import { Hashtag } from "src/app/entities/hashtag/hashtag.model";
 
 @Component({
     selector: 'app-explorer',
@@ -13,21 +14,14 @@ import { TweetService } from "src/app/services/tweet-service";
 
 export class explorer implements OnInit{
 
-    hashtagComponentsList: hashtagComponent[] = [];
+    hashtagList: Hashtag[] = [];
 
     constructor(private router:Router, private service: HashtagService, private tweetService:TweetService) {}
 
     ngOnInit(): void {
         this.service.getSomeTrends().subscribe(
-          (response: any[]) => {
-            this.hashtagComponentsList = response.map((obj: any) => {
-              const hashtagComp = new hashtagComponent(this.service, this.router, this.tweetService);
-              hashtagComp.hashtagInfo = obj;
-              return hashtagComp;
-            });
-          },
-          error => console.log(error)
-        );
-
+        response => this.hashtagList = response,
+        error => this.hashtagList = []
+          )
       }
 }
