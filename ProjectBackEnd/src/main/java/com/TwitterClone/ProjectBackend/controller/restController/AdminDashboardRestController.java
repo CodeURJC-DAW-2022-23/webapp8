@@ -2,6 +2,7 @@ package com.TwitterClone.ProjectBackend.controller.restController;
 
 
 import com.TwitterClone.ProjectBackend.model.mustacheObjects.InformationManager;
+import com.TwitterClone.ProjectBackend.model.mustacheObjects.UserInformation;
 import com.TwitterClone.ProjectBackend.service.MailService;
 import com.TwitterClone.ProjectBackend.service.ProfileService;
 import com.TwitterClone.ProjectBackend.userManagement.User;
@@ -35,7 +36,7 @@ public class AdminDashboardRestController {
     @Autowired
     private MailService mailService;
 
-    interface Basic extends User.Basic{}
+    interface Basic extends User.Basic, UserInformation.Basic{}
 
     @Operation(summary = "If the user is a admin, he can ban another user according to his ID")
     @ApiResponses(value = {
@@ -223,6 +224,48 @@ public class AdminDashboardRestController {
         }
 
         return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+    }
+
+    @Operation(summary = "Get all the users that can be verified")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Users obtained", content = {
+                    @Content(mediaType = "application/json")
+            })})
+    @GetMapping("users-to-verify")
+    @JsonView(Basic.class)
+    public ResponseEntity<List<UserInformation>> getUsersToVerify() {
+        List<User> userToVerify = this.profileService.getToVerified();
+        List<UserInformation> users = this.informationManager.prepareListUser(userToVerify);
+
+        return new ResponseEntity<>(users, HttpStatus.OK);
+    }
+
+    @Operation(summary = "Get all the verificated users")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Users obtained", content = {
+                    @Content(mediaType = "application/json")
+            })})
+    @GetMapping("verificated-users")
+    @JsonView(Basic.class)
+    public ResponseEntity<List<UserInformation>> getVerificatedUsers() {
+        List<User> userToVerify = this.profileService.getVerified();
+        List<UserInformation> users = this.informationManager.prepareListUser(userToVerify);
+
+        return new ResponseEntity<>(users, HttpStatus.OK);
+    }
+
+    @Operation(summary = "Get all the banned users")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Users obtained", content = {
+                    @Content(mediaType = "application/json")
+            })})
+    @GetMapping("banned-users")
+    @JsonView(Basic.class)
+    public ResponseEntity<List<UserInformation>> getBannedUsers() {
+        List<User> userToVerify = this.profileService.getBanned();
+        List<UserInformation> users = this.informationManager.prepareListUser(userToVerify);
+
+        return new ResponseEntity<>(users, HttpStatus.OK);
     }
 
 }

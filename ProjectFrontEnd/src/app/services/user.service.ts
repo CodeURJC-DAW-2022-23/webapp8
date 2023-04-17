@@ -7,6 +7,7 @@ import { User, UserInformation } from '../entities/user/user.model';
   providedIn: 'root'
 })
 export class UserService {
+
   constructor(private http: HttpClient) { }
 
   getUser (username: string): Observable<UserInformation> {
@@ -21,6 +22,27 @@ export class UserService {
     return this.http.get(url).pipe(
       catchError(error => this.handleError(error))
     ) as Observable<UserInformation>;
+  }
+
+  getUsersToVerify(): Observable<UserInformation[]> {
+    let url = "/api/users-to-verify";
+    return this.http.get(url).pipe(
+      catchError(error => this.handleError(error))
+    ) as Observable<UserInformation[]>;
+  }
+
+  getVerificatedUsers(): Observable<UserInformation[]> {
+    let url = "/api/verificated-users";
+    return this.http.get(url).pipe(
+      catchError(error => this.handleError(error))
+    ) as Observable<UserInformation[]>;
+  }
+
+  getBannedUsers(): Observable<UserInformation[]> {
+    let url = "/api/banned-users"
+    return this.http.get(url).pipe(
+      catchError(error => this.handleError(error))
+    ) as Observable<UserInformation[]>;
   }
 
   handleError(error: any): any {

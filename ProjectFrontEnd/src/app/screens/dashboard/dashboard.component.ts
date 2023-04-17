@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { UserInformation } from 'src/app/entities/user/user.model';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -13,6 +14,12 @@ export class DashboardComponent {
   verfiedClass: string;
   bannedClass: string;
   stadisticsClass: string;
+
+  constructor(private userService: UserService){
+    this.userService.getUsersToVerify().subscribe(
+      users => this.users = users
+    );
+  }
 
 
   showPage(tabToShow, tabsToHide, isStadistics) {
@@ -45,6 +52,32 @@ export class DashboardComponent {
       );
     }
 
+    if (this.isStadistics) {
+      return;
+    }
 
+    this.loadUsers(tabToShow);
+  }
+
+  private loadUsers(tabToShow: string) {
+    if ('requests-tab' === tabToShow ) {
+      this.userService.getUsersToVerify().subscribe(
+        users => this.users = users
+      );
+      return;
+    }
+
+    if ('verificated-tab' === tabToShow ) {
+      this.userService.getVerificatedUsers().subscribe(
+        users => this.users = users
+      );
+      return;
+    }
+
+    if ('banned-tab' === tabToShow ) {
+      this.userService.getBannedUsers().subscribe(
+        users => this.users = users
+      );
+    }
   }
 }

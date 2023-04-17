@@ -2,15 +2,15 @@
   <div
     class="flex items-center gap-5 px-4 py-3 transition rounded-full w-fit group-hover:scale-110 group-hover:bg-gray-3 dark:group-hover:bg-gray-13 group-focus-within:bg-gray-3 dark:group-focus-within:bg-gray-13 group-focus-within:scale-110">
     <figure class="w-9">
-      <img class="rounded-full" [src]="srcImg" alt="profile-pic">
+      <img class="rounded-full" [src]="srcImg" alt="profile-pic" (load)="loadSVG()">
     </figure>
 
 
     <article class="flex flex-col items-start justify-between">
       <section class="flex items-center gap-2">
         <h2 class="text-xl font-semibold dark:text-white-0">{{nickname}}</h2>
-        <div class="w-5">
-          {{userTypeSVG}}
+        <div class="w-5" [id]="idSVG">
+
         </div>
       </section>
 

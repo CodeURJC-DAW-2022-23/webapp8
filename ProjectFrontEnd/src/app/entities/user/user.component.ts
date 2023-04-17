@@ -14,7 +14,7 @@ export class UserComponent{
   srcImg: string;
   nickname: string;
   username: string;
-  userTypeSVG: string;
+  idSVG: string;
 
   userTypeSVGMap = {
     "VERIFIED": `
@@ -33,15 +33,22 @@ export class UserComponent{
         </g>
 
     </svg>
-    `
+    `,
+    "PUBLIC": ""
 }
 
 
   ngOnInit() {
-    this.srcImg = this.userInformation.urlToProfilePic;
+    this.srcImg = "api/" + this.userInformation.urlToProfilePic;
     this.nickname = this.userInformation.user.nickname;
     this.username = this.userInformation.user.username;
-    this.userTypeSVG = this.userTypeSVGMap[this.userInformation.user.type];
+    this.idSVG = this.username + "-SVG";
+  }
+
+  loadSVG() {
+    let containerSVG = document.getElementById(this.idSVG);
+    containerSVG.innerHTML = this.userTypeSVGMap[this.userInformation.user.type];
+
   }
 
 }
