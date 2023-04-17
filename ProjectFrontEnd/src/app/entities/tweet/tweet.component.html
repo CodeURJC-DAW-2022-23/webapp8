@@ -3,7 +3,7 @@
     <!-- TWEET -->
     <div class="flex w-full gap-4 px-5 pt-3 hover:bg-gray-7 dark:hover:bg-black-6">
         <!-- PROFILE IMAGE -->
-        <a [routerLink]="['/profile/', tweet.tweet.user.id]">
+        <a [routerLink]="['/profile/', tweet.tweet.user.username]">
             <figure class="mt-2 rounded-full h-11 w-11 hover:bg-black-0">
                 <img [src]="tweet.urlToProfilePic" alt="Profile photo" class="w-full h-full rounded-full hover:opacity-80">
             </figure>
@@ -13,7 +13,7 @@
             <div class="flex flex-col gap-1">
                 <!-- PROFILE -->
                 <div class="flex items-center gap-2 space-between auto-cols-auto-auto-1fr">
-                    <a class="flex gap-2" [routerLink]="['/profile/', tweet.tweet.user.id]">
+                    <a class="flex gap-2" [routerLink]="['/profile/', tweet.tweet.user.username]">
                         <div
                             class="flex items-center gap-1 overflow-hidden font-bold dark:text-white-0 hover:underline decoration-1 text-ellipsis whitespace-nowrap">
                             {{tweet.tweet.user.nickname}}
