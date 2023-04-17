@@ -42,6 +42,7 @@ import { Search } from './screens/search/search.component';
 import { DashboardComponent } from './screens/dashboard/dashboard.component';
 
 import { IndexComponent } from './screens/index/index.component';
+import { BookmarksComponent } from './screens/bookmarks/bookmarks.component';
 
 @NgModule({
   declarations: [
@@ -80,7 +81,8 @@ import { IndexComponent } from './screens/index/index.component';
     ResetPasswordConfirmation,
     Search,
     DashboardComponent,
-    IndexComponent
+    IndexComponent,
+    BookmarksComponent
   ],
   imports: [
     BrowserModule,

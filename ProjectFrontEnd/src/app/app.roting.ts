@@ -16,9 +16,11 @@ import { SearcherComponent } from './others/searcher/searcher.component';
 import { Search } from './screens/search/search.component';
 
 import { IndexComponent } from "./screens/index/index.component";
+import { BookmarksComponent } from './screens/bookmarks/bookmarks.component';
 
 const appRoutes = [
     { path: 'index', component: IndexComponent },
+    { path: 'bookmarks', component: BookmarksComponent },
     { path: 'explorer', component: explorer },
     { path: 'login', component: LoginComponent },
     { path: 'signup', component: SignUpComponent},
