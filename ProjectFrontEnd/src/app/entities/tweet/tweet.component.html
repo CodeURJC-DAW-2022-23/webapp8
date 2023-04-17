@@ -3,7 +3,7 @@
     <!-- TWEET -->
     <div class="flex w-full gap-4 px-5 pt-3 hover:bg-gray-7 dark:hover:bg-black-6">
         <!-- PROFILE IMAGE -->
-        <a [href]="profileIdURL">
+        <a [routerLink]="['/profile/' + tweet.tweet.user.id]">
             <figure class="mt-2 rounded-full h-11 w-11 hover:bg-black-0">
                 <img [src]="tweet.urlToProfilePic" alt="Profile photo" class="w-full h-full rounded-full hover:opacity-80">
             </figure>
@@ -13,7 +13,7 @@
             <div class="flex flex-col gap-1">
                 <!-- PROFILE -->
                 <div class="flex items-center gap-2 space-between auto-cols-auto-auto-1fr">
-                    <a class="flex gap-2" [href]="profileIdURL">
+                    <a class="flex gap-2" [routerLink]="['/profile/' + tweet.tweet.user.id]">
                         <div
                             class="flex items-center gap-1 overflow-hidden font-bold dark:text-white-0 hover:underline decoration-1 text-ellipsis whitespace-nowrap">
                             {{tweet.tweet.user.nickname}}
@@ -40,7 +40,7 @@
                 </div>
 
                 <!-- TWEET TEXT -->
-                <p (click)="goToTweet()"
+                <p [routerLink]="['/tweet/' + this.tweet.tweet.id]"
                     class="overflow-hidden text-sm break-all text-ellipsis text-twitter-dark-gray dark:text-white-0">
                     {{tweet.tweet.text}}
                 </p>
@@ -79,7 +79,7 @@
 
                 <div class="flex gap-4 pb-3">
                     <!-- COMMENT -->
-                    <a *ngIf="isLogged" class="flex items-center group" [href]="urlToComment">
+                    <a *ngIf="isLogged" class="flex items-center group" [routerLink]="['/write-tweet/comment/' + this.tweet.tweet.id]">
                         <svg viewBox="0 0 24 24" aria-hidden="true"
                             class="w-8 p-[0.375rem] transition rounded-full fill-gray-4 group-hover:fill-primary group-hover:bg-blue-1 group-dark:hover:bg-blue-0">
                             <g>

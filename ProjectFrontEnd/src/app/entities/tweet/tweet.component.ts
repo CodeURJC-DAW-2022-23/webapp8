@@ -1,8 +1,7 @@
 import { Component, Input } from '@angular/core';
-import { Tweet, TweetInformation } from './tweet.model';
-import { ActivatedRoute, Router } from '@angular/router';
+import { TweetInformation } from './tweet.model';
+import { Router } from '@angular/router';
 import { TweetService } from 'src/app/services/tweet-service';
-import { waitForAsync } from '@angular/core/testing';
 
 @Component({
   selector: 'app-tweet',
@@ -31,14 +30,7 @@ export class TweetComponent {
   likedClass:string = "w-8 p-[0.375rem] transition group-hover:bg-red-2 group-hover:fill-red-0 rounded-full fill-"
   bookmarkClass:string = "w-8 p-[0.375rem] transition rounded-full group-hover:bg-blue-1 group-hover:fill-primary fill-";
 
-  goToTweet(){
-    window.location.href = "/tweet/" + this.tweet.tweet.id
-  }
-
-
   ngOnInit(): void{
-    this.urlToComment = "/write-tweet/comment/" + this.tweet.tweet.id;
-    this.profileIdURL = "/api/profile/" + this.tweet.tweet.user.id;
     this.tweet.urlToProfilePic = "/api/" + this.tweet.urlToProfilePic
     if (this.tweet.retweeted){
       this.retweetClass += "green-0";
@@ -71,25 +63,53 @@ export class TweetComponent {
     if (this.isMedia4){
       this.imageClass += "grid grid-rows-2";
     }
-
   }
   giveRetweet(){
     if (! this.isLogged){
       return
     }
+    this.service.toggleRetweet(this.tweet.tweet.id).subscribe(
+      tweet => this.tweet = tweet,
+      error => console.error(error)
+    );
+    if (this.tweet.retweeted){
+      this.retweetClass.replace("fill-gray-4", "fill-green-0");
+    }else{
+      this.retweetClass.replace("fill-green-0", "fill-gray-4");
+    }
+
   }
   giveLike(){
     if (! this.isLogged){
       return
+    }
+    this.service.toggleLike(this.tweet.tweet.id).subscribe(
+      tweet => this.tweet = tweet,
+      error => console.error(error)
+    );
+    if (this.tweet.retweeted){
+      this.retweetClass.replace("fill-gray-4", "fill-red-0");
+    }else{
+      this.retweetClass.replace("fill-red-0", "fill-gray-4");
     }
   }
   giveBookmark(){
     if (! this.isLogged){
       return
     }
+    this.service.toggleBookmark(this.tweet.tweet.id).subscribe(
+      tweet => this.tweet = tweet,
+      error => console.error(error)
+    );
+    if (this.tweet.retweeted){
+      this.retweetClass.replace("fill-gray-4", "fill-primary");
+    }else{
+      this.retweetClass.replace("fill-primary", "fill-gray-4");
+    }
   }
 
   deleteElement() {
-
+    this.service.deleteTweet(this.tweet.tweet.id);
+    //TODO
   }
 }
