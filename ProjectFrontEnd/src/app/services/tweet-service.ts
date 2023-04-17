@@ -43,28 +43,28 @@ export class TweetService{
 
 	toggleBookmark(id){
 		let url = "/api/tweets/" + id + "/bookmarks"
-		return this.httpClient.get(url).pipe(
+		return this.httpClient.put(url,"").pipe(
 			catchError(error => this.handleError(error))
 		) as Observable<TweetInformation>;
 	}
 
 	toggleLike(id){
 		let url = "/api/tweets/" + id + "/likes"
-		return this.httpClient.get(url).pipe(
+		return this.httpClient.put(url,"").pipe(
 			catchError(error => this.handleError(error))
 		) as Observable<TweetInformation>;
 	}
 
 	toggleRetweet(id){
 		let url = "/api/tweets/" + id + "/retweets"
-		return this.httpClient.get(url).pipe(
+		return this.httpClient.put(url,"").pipe(
 			catchError(error => this.handleError(error))
 		) as Observable<TweetInformation>;
 	}
 
 	deleteTweet(id){
 		let url = "/api/tweets/" + id
-		return this.httpClient.get(url).pipe(
+		return this.httpClient.delete(url).pipe(
 			catchError(error => this.handleError(error))
 		) as Observable<TweetInformation>;
 	}

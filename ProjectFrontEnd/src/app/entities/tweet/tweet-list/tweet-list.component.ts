@@ -118,6 +118,12 @@ export class TweetListComponent {
         );
         break;
     }
-
+  }
+  deleteElement(item){
+    let index = this.tweets.indexOf(item);
+    if (index > -1) { 
+      this.tweets.splice(index, 1);
+      this.offset -= 1;
+    }
   }
 }

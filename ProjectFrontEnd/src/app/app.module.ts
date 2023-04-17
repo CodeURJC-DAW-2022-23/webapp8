@@ -44,6 +44,7 @@ import { HomeComponent } from './screens/home/home.component';
 
 import { IndexComponent } from './screens/index/index.component';
 import { BookmarksComponent } from './screens/bookmarks/bookmarks.component';
+import { WriteTweetComponent } from './screens/write-tweet/write-tweet.component';
 
 @NgModule({
   declarations: [
@@ -84,7 +85,8 @@ import { BookmarksComponent } from './screens/bookmarks/bookmarks.component';
     DashboardComponent,
     IndexComponent,
     BookmarksComponent,
-    HomeComponent
+    HomeComponent,
+    WriteTweetComponent
   ],
   imports: [
     BrowserModule,

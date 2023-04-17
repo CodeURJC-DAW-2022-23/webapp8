@@ -3,7 +3,7 @@
     <!-- TWEET -->
     <div class="flex w-full gap-4 px-5 pt-3 hover:bg-gray-7 dark:hover:bg-black-6">
         <!-- PROFILE IMAGE -->
-        <a [routerLink]="['/profile/' + tweet.tweet.user.id]">
+        <a [routerLink]="['/profile/', tweet.tweet.user.id]">
             <figure class="mt-2 rounded-full h-11 w-11 hover:bg-black-0">
                 <img [src]="tweet.urlToProfilePic" alt="Profile photo" class="w-full h-full rounded-full hover:opacity-80">
             </figure>
@@ -13,7 +13,7 @@
             <div class="flex flex-col gap-1">
                 <!-- PROFILE -->
                 <div class="flex items-center gap-2 space-between auto-cols-auto-auto-1fr">
-                    <a class="flex gap-2" [routerLink]="['/profile/' + tweet.tweet.user.id]">
+                    <a class="flex gap-2" [routerLink]="['/profile/', tweet.tweet.user.id]">
                         <div
                             class="flex items-center gap-1 overflow-hidden font-bold dark:text-white-0 hover:underline decoration-1 text-ellipsis whitespace-nowrap">
                             {{tweet.tweet.user.nickname}}
@@ -40,7 +40,7 @@
                 </div>
 
                 <!-- TWEET TEXT -->
-                <p [routerLink]="['/tweet/' + this.tweet.tweet.id]"
+                <p [routerLink]="['/tweet/', this.tweet.tweet.id]"
                     class="overflow-hidden text-sm break-all text-ellipsis text-twitter-dark-gray dark:text-white-0">
                     {{tweet.tweet.text}}
                 </p>
@@ -79,7 +79,7 @@
 
                 <div class="flex gap-4 pb-3">
                     <!-- COMMENT -->
-                    <a *ngIf="isLogged" class="flex items-center group" [routerLink]="['/write-tweet/comment/' + this.tweet.tweet.id]">
+                    <a *ngIf="isLogged" class="flex items-center group" [routerLink]="['/write-tweet/comment/', this.tweet.tweet.id]">
                         <svg viewBox="0 0 24 24" aria-hidden="true"
                             class="w-8 p-[0.375rem] transition rounded-full fill-gray-4 group-hover:fill-primary group-hover:bg-blue-1 group-dark:hover:bg-blue-0">
                             <g>
@@ -96,7 +96,7 @@
 
                     <!-- RETWEET -->
                     <button type="button" class="flex items-center gap-1 group" (click)="giveRetweet();">
-                        <svg viewBox="0 0 24 24" aria-hidden="true" [class]="retweetClass">
+                        <svg viewBox="0 0 24 24" aria-hidden="true" [ngClass]="{'fill-green-0':tweet.retweeted,'fill-gray-4':!tweet.retweeted}" class="w-8 p-[0.375rem] transition rounded-full group-hover:fill-green-0 group-hover:bg-green-2 ">
                             <g>
                                 <path
                                     d="M4.5 3.88l4.432 4.14-1.364 1.46L5.5 7.55V16c0 1.1.896 2 2 2H13v2H7.5c-2.209 0-4-1.79-4-4V7.55L1.432 9.48.068 8.02 4.5 3.88zM16.5 6H11V4h5.5c2.209 0 4 1.79 4 4v8.45l2.068-1.93 1.364 1.46-4.432 4.14-4.432-4.14 1.364-1.46 2.068 1.93V8c0-1.1-.896-2-2-2z">
@@ -104,14 +104,14 @@
                             </g>
                         </svg>
 
-                        <span class="transition text-gray-4 group-hover:text-green-0">
+                        <span [ngClass]="{'text-green-0':tweet.retweeted,'text-gray-4':!tweet.retweeted}" class="transition group-hover:text-green-0">
                             {{tweet.numRetweets}}
                         </span>
                     </button>
 
                     <!-- LIKE -->
                     <button class="flex items-center gap-1 group" (click)='giveLike();'>
-                        <svg viewBox="0 0 24 24" aria-hidden="true" [class]="likedClass">
+                        <svg viewBox="0 0 24 24" aria-hidden="true" [ngClass]="{'fill-red-0':tweet.liked,'fill-gray-4':!tweet.liked}" class="w-8 p-[0.375rem] transition group-hover:bg-red-2 group-hover:fill-red-0 rounded-full">
                             <g>
                                 <path
                                     d="M20.884 13.19c-1.351 2.48-4.001 5.12-8.379 7.67l-.503.3-.504-.3c-4.379-2.55-7.029-5.19-8.382-7.67-1.36-2.5-1.41-4.86-.514-6.67.887-1.79 2.647-2.91 4.601-3.01 1.651-.09 3.368.56 4.798 2.01 1.429-1.45 3.146-2.1 4.796-2.01 1.954.1 3.714 1.22 4.601 3.01.896 1.81.846 4.17-.514 6.67z">
@@ -119,14 +119,14 @@
                             </g>
                         </svg>
 
-                        <span class="transition text-gray-4 group-hover:text-red-0">
+                        <span [ngClass]="{'text-red-0':tweet.liked,'text-gray-4':!tweet.liked}" class="transition group-hover:text-red-0">
                             {{tweet.numLikes}}
                         </span>
                     </button>
 
                     <!-- BOOKMARKS -->
                     <button *ngIf="isLogged" class="flex items-center gap-1 group" (click)="giveBookmark();">
-                        <svg viewBox="0 0 24 24" aria-hidden="true" [class]="bookmarkClass">
+                        <svg viewBox="0 0 24 24" aria-hidden="true" [ngClass]="{'fill-primary':tweet.bookmarked,'fill-gray-4':!tweet.bookmarked}" class="w-8 p-[0.375rem] transition rounded-full group-hover:bg-blue-1 group-hover:fill-primary ">
                             <g>
                                 <path
                                     d="M4 4.5C4 3.12 5.119 2 6.5 2h11C18.881 2 20 3.12 20 4.5v18.44l-8-5.71-8 5.71V4.5z">
