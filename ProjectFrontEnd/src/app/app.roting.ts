@@ -14,6 +14,7 @@ import { ResetPasswordConfirmation } from './screens/form/reset-password/reset-p
 import { DashboardComponent } from './screens/dashboard/dashboard.component';
 import { SearcherComponent } from './others/searcher/searcher.component';
 import { Search } from './screens/search/search.component';
+import { HomeComponent } from './screens/home/home.component';
 
 import { IndexComponent } from "./screens/index/index.component";
 import { BookmarksComponent } from './screens/bookmarks/bookmarks.component';
@@ -33,6 +34,8 @@ const appRoutes = [
     { path: 'profile/:id', component: ProfileComponent},
     { path: 'dashboard', component: DashboardComponent},
     { path: 'search/:keyword', component: Search }, //check
+    { path: 'home', component: HomeComponent } 
+
 ]
 
 export const routing = RouterModule.forRoot(appRoutes);

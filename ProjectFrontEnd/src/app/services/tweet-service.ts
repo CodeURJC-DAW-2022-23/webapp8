@@ -28,7 +28,7 @@ export class TweetService{
 	}
 
     getTweetsOfAHashtag(hashtag, from, size): Observable<TweetInformation[]> {
-		let url = "/api/hashtag/DAW/tweets?from=" + from + "&size=" + size
+		let url = "/api/hashtag/" + hashtag + "/tweets?from=" + from + "&size=" + size
 		return this.httpClient.get(url).pipe(
 			catchError(error => this.handleError(error))
 		) as Observable<TweetInformation[]>;
@@ -39,6 +39,34 @@ export class TweetService{
 		return this.httpClient.get(url).pipe(
 			catchError(error => this.handleError(error))
 		) as Observable<TweetInformation[]>;
+	}
+
+	toggleBookmark(id){
+		let url = "/api/tweets/" + id + "/bookmarks"
+		return this.httpClient.get(url).pipe(
+			catchError(error => this.handleError(error))
+		) as Observable<TweetInformation>;
+	}
+
+	toggleLike(id){
+		let url = "/api/tweets/" + id + "/likes"
+		return this.httpClient.get(url).pipe(
+			catchError(error => this.handleError(error))
+		) as Observable<TweetInformation>;
+	}
+
+	toggleRetweet(id){
+		let url = "/api/tweets/" + id + "/retweets"
+		return this.httpClient.get(url).pipe(
+			catchError(error => this.handleError(error))
+		) as Observable<TweetInformation>;
+	}
+
+	deleteTweet(id){
+		let url = "/api/tweets/" + id
+		return this.httpClient.get(url).pipe(
+			catchError(error => this.handleError(error))
+		) as Observable<TweetInformation>;
 	}
 
     private handleError(error: any) {

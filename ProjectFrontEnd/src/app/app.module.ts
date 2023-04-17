@@ -40,6 +40,7 @@ import { ResetPassword } from './screens/form/reset-password/reset-password.comp
 import { ResetPasswordConfirmation } from './screens/form/reset-password/reset-password-confirmation/reset-password-confirmation.component';
 import { Search } from './screens/search/search.component';
 import { DashboardComponent } from './screens/dashboard/dashboard.component';
+import { HomeComponent } from './screens/home/home.component';
 
 import { IndexComponent } from './screens/index/index.component';
 import { BookmarksComponent } from './screens/bookmarks/bookmarks.component';
@@ -82,7 +83,8 @@ import { BookmarksComponent } from './screens/bookmarks/bookmarks.component';
     Search,
     DashboardComponent,
     IndexComponent,
-    BookmarksComponent
+    BookmarksComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,
