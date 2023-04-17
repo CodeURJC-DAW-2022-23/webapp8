@@ -21,9 +21,9 @@
                     </svg>
                 </div>
 
-                <input type="text" id="keyword" name="keyword"
+                <input #keyword type="text" id="keyword" name="keyword"
                     class="w-full py-3 text-lg rounded-full pl-14 text-black-0 dark:text-gray-4 dark:bg-black-2 bg-gray-6 dark:placeholder-gray-5 placeholder-text-lg"
-                    placeholder="Search on Twitter" required>
+                    placeholder="Search on Twitter" required (keyup.enter)="search(keyword.value)">
             </form>
 
             <!-- THEME SWITCHER -->

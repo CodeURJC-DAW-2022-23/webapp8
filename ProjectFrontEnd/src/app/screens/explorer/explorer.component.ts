@@ -24,4 +24,8 @@ export class explorer implements OnInit{
         error => this.hashtagList = []
           )
       }
+
+      search(keyword:string){
+        this.router.navigate(['/search/'+keyword])
+      }
 }

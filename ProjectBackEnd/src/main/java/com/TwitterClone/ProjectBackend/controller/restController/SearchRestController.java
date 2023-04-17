@@ -3,6 +3,7 @@ package com.TwitterClone.ProjectBackend.controller.restController;
 import com.TwitterClone.ProjectBackend.model.Hashtag;
 import com.TwitterClone.ProjectBackend.model.Trend;
 import com.TwitterClone.ProjectBackend.model.Tweet;
+import com.TwitterClone.ProjectBackend.model.mustacheObjects.InformationManager;
 import com.TwitterClone.ProjectBackend.model.mustacheObjects.TweetInformation;
 import com.TwitterClone.ProjectBackend.model.mustacheObjects.UserInformation;
 import com.TwitterClone.ProjectBackend.service.HashtagService;
@@ -34,7 +35,10 @@ public class SearchRestController {
     @Autowired
     private HashtagService hashtagService;
 
-    interface Basic extends User.Basic,Tweet.Basic,Hashtag.Basic{}
+    @Autowired
+    private InformationManager informationManager;
+
+    interface Basic extends User.Basic,Tweet.Basic,UserInformation.Basic,Hashtag.Basic{}
 
     ;
 
@@ -47,14 +51,15 @@ public class SearchRestController {
     })
     @GetMapping("/users/{keyword}/found-users")
     @JsonView(Basic.class)
-    public ResponseEntity<Object> searchProfiles(@PathVariable String keyword) {
+    public ResponseEntity<List<UserInformation>> searchProfiles(@PathVariable String keyword) {
         List<User> usersList = userService.findByUsernameContainingIgnoreCase(keyword);
 
         if (usersList.size() == 0) {
-            return new ResponseEntity<>(usersList, HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
-        return ResponseEntity.ok(usersList);
+        List<UserInformation> userInformationList = this.informationManager.prepareListUser(usersList);
+        return new ResponseEntity<>(userInformationList, HttpStatus.OK);
     }
 
     @Operation(summary = "Find Hashtags which contains the keyword in their username")

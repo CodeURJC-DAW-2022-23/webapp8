@@ -27,7 +27,7 @@ const appRoutes = [
     { path: 'reset-password-confirmation', component: ResetPasswordConfirmation },
     { path: 'profile/:id', component: ProfileComponent},
     { path: 'dashboard', component: DashboardComponent},
-    { path: 'search', component: Search } //check
+    { path: 'search/:keyword', component: Search } //check
 
 ]
 
