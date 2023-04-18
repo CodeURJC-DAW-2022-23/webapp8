@@ -8,6 +8,7 @@ import com.TwitterClone.ProjectBackend.model.mustacheObjects.UserInformation;
 import com.TwitterClone.ProjectBackend.service.NotificationService;
 import com.TwitterClone.ProjectBackend.service.ProfileService;
 import com.TwitterClone.ProjectBackend.userManagement.User;
+import com.TwitterClone.ProjectBackend.userManagement.UserService;
 import com.fasterxml.jackson.annotation.JsonView;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -36,6 +37,8 @@ public class ProfileRestController {
     private InformationManager informationManager;
     @Autowired
     private NotificationService notificationService;
+    @Autowired
+    private UserService userService;
 
     interface Basic extends User.Profile, UserInformation.Basic, TweetInformation.Basic, Tweet.Basic {
     }
@@ -61,7 +64,7 @@ public class ProfileRestController {
         return new ResponseEntity<>(currentUser, HttpStatus.OK);
     }
 
-    @Operation(summary = "Get teh current user")
+    @Operation(summary = "Get the current user")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "User Found", content = {
                     @Content(mediaType = "application/json", schema = @Schema(implementation = UserInformation.class))
@@ -138,6 +141,30 @@ public class ProfileRestController {
         }
 
         return new ResponseEntity<>(listFollowers, HttpStatus.OK);
+    }
+
+    @Operation(summary = "Get recommended users for the current user")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Recommended Users Found", content = {
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = UserInformation.class))
+            }),
+            @ApiResponse(responseCode = "204", description = "No recommended users found", content = @Content),
+            @ApiResponse(responseCode = "403", description = "Not allowed", content = @Content)
+    })
+    @GetMapping("/recommended-users")
+    @JsonView(Basic.class)
+    public ResponseEntity<List<UserInformation>> getRecommendedUsers(HttpServletRequest request) {
+        User currenUser = this.informationManager.getCurrentUser(request);
+        if (currenUser == null) {
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        }
+        Long currentUserId = currenUser.getId();
+        List<User> recommendedUsers = this.userService.getRecommendedUsers(currentUserId);
+        if (recommendedUsers.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        List<UserInformation> recommendedUsersInfo = this.informationManager.prepareListUser(recommendedUsers);
+        return new ResponseEntity<>(recommendedUsersInfo, HttpStatus.OK);
     }
 
     @Operation(summary = "Update the profile pic associated to a user")
