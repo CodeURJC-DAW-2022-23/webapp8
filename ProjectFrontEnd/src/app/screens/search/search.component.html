@@ -44,7 +44,7 @@
   </header>
 
   <!-- USERS -->
-  <div id="user-container">
+  <div *ngIf="showProfiles" id="user-container">
     <div  *ngFor="let user of userInformationList;">
       <app-user [userInformation]="user">
       </app-user>
@@ -52,7 +52,7 @@
   </div>
 
   <div id="trend-container">
-    <app-hashtagComponent [hashtags]="hashtagList">            
+    <app-hashtagComponent [hashtags]="hashtagList" (whatToShow)="setShowProfiles($event)">            
     </app-hashtagComponent>
   </div>
 

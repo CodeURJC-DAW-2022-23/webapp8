@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit,  Output, EventEmitter } from "@angular/core";
 import { Router, ActivatedRoute } from '@angular/router'; // To route the page when needed
 import { HashtagService } from "src/app/services/hashtag.service";
 import { hashtagComponent } from "src/app/entities/hashtag/hashtag.component"; 
@@ -19,9 +19,11 @@ export class Search implements OnInit{
     hashtagList: Hashtag[] = [];
     userInformationList: UserInformation[] = [];
     keyword:string;
+    showProfiles:boolean;
 
     constructor(private router:Router,activatedRoute: ActivatedRoute, private service: SearchService, private tweetService:TweetService) {       
         this.keyword = activatedRoute.snapshot.params['keyword'];
+        this.showProfiles = true;
     }
     
     ngOnInit(): void {
@@ -40,6 +42,14 @@ export class Search implements OnInit{
         )
 
         //Show results part!
+    }
+
+    setShowProfiles(show){
+        if (show === "tweet"){           
+            this.showProfiles = false;
+            }else{
+              this.showProfiles = true;
+            }
     }
 
 }
