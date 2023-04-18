@@ -16,10 +16,11 @@ import { Hashtag } from "./hashtag.model";
 
   export class hashtagComponent implements OnInit{
 
+
     @Input()
     hashtags: Hashtag[];
     tweets : TweetInformation[];
-    
+    hashtagName: string;
     show: String = "hashtag"
 
     constructor( private service: HashtagService, private router:Router, private tweetService:TweetService) {}
@@ -29,10 +30,10 @@ import { Hashtag } from "./hashtag.model";
     }
 
     showTweetsAssociated(hashtag: string){
-      this.show = "tweet"
+      this.show = "tweet";
+      this.hashtagName = hashtag;
       this.service.getTweetsAssociatedToAHashtag(hashtag).subscribe(
         tweet => this.tweets = tweet,
         error => this.router.navigate(['/error']) 
     )}
-
   }

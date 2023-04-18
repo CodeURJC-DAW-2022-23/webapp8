@@ -10,9 +10,5 @@
 
 
 <div *ngIf="show == 'tweet'">
-  <a class="flex flex-col gap-1 px-5 py-3 border-b cursor-pointer border-gray-9 dark:border-black-5 hover:bg-gray-7 dark:hover:bg-black-6">
-    <div *ngFor="let tweet of tweets">
-      <app-tweet [tweet] = "tweet"></app-tweet>
-    </div>
-  </a>
+  <app-tweet-list typeElement="Hashtag" [hashtag]="hashtagName"></app-tweet-list>
 </div>

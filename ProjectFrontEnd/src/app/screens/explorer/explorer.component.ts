@@ -15,17 +15,45 @@ import { Hashtag } from "src/app/entities/hashtag/hashtag.model";
 export class explorer implements OnInit{
 
     hashtagList: Hashtag[] = [];
+    offset:number = 0;
+    size:number = 10;
+    
 
     constructor(private router:Router, private service: HashtagService, private tweetService:TweetService) {}
 
     ngOnInit(): void {
-        this.service.getSomeTrends().subscribe(
-        response => this.hashtagList = response,
-        error => this.hashtagList = []
-          )
+        this.getTrends();
       }
+
+      getTrends() {
+        this.service.getSomeTrends(this.offset, this.size).subscribe(
+          response => response.forEach(h => this.hashtagList.push(h)),
+          error => this.hashtagList = []
+        );
+      }  
 
       search(keyword:string){
         this.router.navigate(['/search/'+keyword])
+      }
+
+      loadMoreTrends() {
+        this.addSpinner();
+        this.offset += 10;
+        this.getTrends();
+        this.removeSpinner();
+      }
+  
+      addSpinner() {
+        document.getElementById("spinner").innerHTML = `<div class="flex items-center justify-center sticky">
+                    <div class="inline-block h-8 w-8 animate-spin rounded-full border-4 border-primary border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]" role="status">
+                        <span class="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]">
+                            Loading...
+                        </span>
+                    </div>
+                </div>`
+      }
+    
+      removeSpinner() {
+        document.getElementById("spinner").innerHTML = ``
       }
 }
