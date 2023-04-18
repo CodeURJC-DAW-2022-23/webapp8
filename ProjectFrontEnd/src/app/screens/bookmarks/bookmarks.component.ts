@@ -11,5 +11,9 @@ import { TweetService } from 'src/app/services/tweet-service';
 export class BookmarksComponent {
   tweets: TweetInformation[]
 
-  constructor(private tweetService: TweetService, activatedRoute: ActivatedRoute) {}
+  constructor(private tweetService: TweetService, activatedRoute: ActivatedRoute) {
+    this.tweetService.getBookmarksOfCurrentUser(0, 10).subscribe(
+      tweets => this.tweets,
+      error => console.log(error))
+  }
 }
