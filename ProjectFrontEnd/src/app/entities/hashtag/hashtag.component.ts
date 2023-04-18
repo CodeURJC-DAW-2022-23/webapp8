@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from "@angular/core";
+import { Component, Input, OnInit, Output, EventEmitter } from "@angular/core";
 import { Router, ActivatedRoute } from '@angular/router';
 
 
@@ -22,6 +22,9 @@ import { Hashtag } from "./hashtag.model";
     tweets : TweetInformation[];
     hashtagName: string;
     show: String = "hashtag"
+    @Output() 
+    whatToShow = new EventEmitter<String>();
+    
 
     constructor( private service: HashtagService, private router:Router, private tweetService:TweetService) {}
 
@@ -36,4 +39,9 @@ import { Hashtag } from "./hashtag.model";
         tweet => this.tweets = tweet,
         error => this.router.navigate(['/error']) 
     )}
+
+    sendShowHashtag(){
+      this.whatToShow.emit(this.show);
+    }    
+
   }

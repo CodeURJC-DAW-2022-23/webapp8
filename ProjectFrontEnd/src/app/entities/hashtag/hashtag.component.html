@@ -1,6 +1,6 @@
 <div *ngIf="show == 'hashtag'">
   <div *ngFor="let Component of hashtags; let i = index">
-    <a class="flex flex-col gap-1 px-5 py-3 border-b cursor-pointer border-gray-9 dark:border-black-5 hover:bg-gray-7 dark:hover:bg-black-6" (click)="showTweetsAssociated(Component.hashtag)">
+    <a class="flex flex-col gap-1 px-5 py-3 border-b cursor-pointer border-gray-9 dark:border-black-5 hover:bg-gray-7 dark:hover:bg-black-6" (click)="showTweetsAssociated(Component.hashtag);sendShowHashtag()">
       <h4 class="text-sm font-medium dark:font-semibold text-gray-5">{{i + 1}} - Trending</h4>  
       <h3 class="font-bold break-all dark:text-gray-3">{{Component.hashtag}}</h3>
       <h5 class="text-sm font-medium dark:font-semibold text-gray-5">{{Component.numTweets}} Tweets</h5>

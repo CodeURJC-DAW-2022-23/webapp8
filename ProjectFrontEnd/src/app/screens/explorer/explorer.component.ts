@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, Output, EventEmitter } from "@angular/core";
 import { Router, ActivatedRoute } from '@angular/router'; // To route the page when needed
 import { HashtagService } from "src/app/services/hashtag.service";
 import { hashtagComponent } from "src/app/entities/hashtag/hashtag.component"; 
@@ -18,10 +18,12 @@ export class explorer implements OnInit{
     offset:number = 0;
     size:number = 10;
     
+    showHashtag: boolean;
 
     constructor(private router:Router, private service: HashtagService, private tweetService:TweetService) {}
 
     ngOnInit(): void {
+        this.showHashtag = true;
         this.getTrends();
       }
 
@@ -55,5 +57,13 @@ export class explorer implements OnInit{
     
       removeSpinner() {
         document.getElementById("spinner").innerHTML = ``
+      }
+
+      setShowHashtags(show){
+        if (show === "tweet"){           
+        this.showHashtag = false;
+        }else{
+          this.showHashtag = true;
+        }
       }
 }
