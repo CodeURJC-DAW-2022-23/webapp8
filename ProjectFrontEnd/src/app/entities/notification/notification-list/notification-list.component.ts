@@ -36,6 +36,7 @@ export class NotificationListComponent {
   }
 
   loadNotifications(){
+    this.addSpinner();
     if (this.tab === "all") {
       this.service.getSomeNotifications(this.from, this.offset).subscribe(
         notifications => {
@@ -44,6 +45,7 @@ export class NotificationListComponent {
           } else {
             this.showButtons = false;
           }
+          this.removeSpinner()
         },
         error => console.log(error)
       );
@@ -55,11 +57,25 @@ export class NotificationListComponent {
           } else {
             this.showButtons = false;
           }
+          this.removeSpinner()
         },
         error => console.log(error)
       );
     }
-
     this.from += this.offset;
+  }
+
+  addSpinner() {
+    document.getElementById("spinner").innerHTML = `<div class="flex items-center justify-center sticky pt-5">
+                <div class="fixed inline-block h-8 w-8 animate-spin rounded-full border-4 border-primary border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]" role="status">
+                    <span class="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]">
+                        Loading...
+                    </span>
+                </div>
+            </div>`
+  }
+
+  removeSpinner() {
+    document.getElementById("spinner").innerHTML = ``
   }
 }
