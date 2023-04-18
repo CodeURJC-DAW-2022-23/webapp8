@@ -349,4 +349,22 @@ public class TweetRestController {
 
         return new ResponseEntity<>(tweetInformation.get(0), HttpStatus.ACCEPTED);
     }
+
+    @Operation(summary = "Get a tweet by its id")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Tweet got", content = {
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = Tweet.class))
+            }),
+            @ApiResponse(responseCode = "404", description = "Tweet Not Found", content = @Content)
+    })
+    @GetMapping("/tweets/{id}")
+    @JsonView(Basic.class)
+    public ResponseEntity<Tweet> getTweet(@PathVariable("id") Long id) {
+        Tweet tweet = this.tweetService.findById(id).orElse(null);
+
+        if (tweet == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(tweet, HttpStatus.OK);
+    }
 }
