@@ -29,7 +29,7 @@ const appRoutes = [
     { path: 'error', component: Error},
     { path: 'forgot-password-confirmation', component: confirmation },
     { path: 'forgot-password', component: ForgotPassword},
-    { path: 'reset-password', component: ResetPassword },
+    { path: 'reset-password/:passwordToken', component: ResetPassword },
     { path: 'reset-password-confirmation', component: ResetPasswordConfirmation },
     { path: 'profile/:id', component: ProfileComponent},
     { path: 'dashboard', component: DashboardComponent},

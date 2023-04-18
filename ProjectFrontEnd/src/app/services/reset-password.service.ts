@@ -16,7 +16,7 @@ export default class ResetPasswordService {
     }
 
     processResetPassword(passwordToken: String, newPassword: String):Observable<Response>{
-      let url = "api/reset-password"
+      let url = "api/reset-password?passwordToken="+passwordToken;
       return this.http.put(url, {password:newPassword}, {observe: 'response'})
         .pipe(
           catchError(error => this.handleError(error))

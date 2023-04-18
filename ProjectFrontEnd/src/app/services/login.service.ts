@@ -13,10 +13,11 @@ export class LoginService {
 
     constructor(private http: HttpClient, private service: UserService) {
         this.logged = false;
+        this.reqIsLogged();
     }
 
-    reqIsLogged(username: string) {
-        let url = '/api/users/'+ username;
+    reqIsLogged() {
+        let url = '/api/users/me';
         this.http.get(url, { withCredentials: true }).subscribe(
             response => {
                 this.currentUser = response as UserInformation;
@@ -35,7 +36,7 @@ export class LoginService {
         let url = "api/login"
         this.http.post(url, {username: user, password: pass}, {withCredentials: true})
             .subscribe(
-                (response) => this.reqIsLogged(user),
+                (response) => this.reqIsLogged(),
                 (error) => alert("Wrong credentials")
             );
     }

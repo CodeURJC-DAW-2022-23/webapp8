@@ -9,9 +9,11 @@ import ResetPasswordService from "src/app/services/reset-password.service";
   })
 export class ResetPassword {
     
-    constructor(private router:Router,activatedRoute: ActivatedRoute, private service: ResetPasswordService) {}
+    constructor(private router:Router,activatedRoute: ActivatedRoute, private service: ResetPasswordService) {
+        this.passwordToken = activatedRoute.snapshot.params['passwordToken'];
+    }
     private res: number;
-    private passwordToken: string; // To check
+    private passwordToken: string; 
 
     resetPasswordForm(event: any, newPassword:String){
         event.preventDefault();

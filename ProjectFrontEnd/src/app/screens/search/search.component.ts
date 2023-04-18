@@ -31,7 +31,7 @@ export class Search implements OnInit{
     getAndLoadData(keyword:string){
         
         this.service.searchProfiles(keyword).subscribe(
-            profileList => {this.userInformationList = profileList;},
+            profileList => this.userInformationList = profileList,
             error => this.userInformationList = []
         )
         this.service.searchHashtags(keyword).subscribe(
