@@ -10,7 +10,6 @@ import { UserService } from 'src/app/services/user.service';
   styleUrls: ['./tweet-list.component.css']
 })
 export class TweetListComponent {
-  @Input()
   isLogged: boolean;
   tweets: TweetInformation[] = [];
   id: number;
@@ -22,6 +21,7 @@ export class TweetListComponent {
   hashtag: string;
   @Input()
   userId: number;
+  canMore: boolean = true;
 
   constructor(private router: Router, private service: TweetService, private userService: UserService) { }
 
@@ -58,9 +58,7 @@ export class TweetListComponent {
   }
 
   hideButtons() {
-    document.getElementById("LoadMore").classList.add("hidden");
-    document.getElementById("LoadMoreMobile").classList.add("hidden");
-    document.getElementById("LoadMore").classList.remove('llg:block');
+    this.canMore = false;
   }
 
   getTweetsForCurrentPage() {
@@ -119,6 +117,7 @@ export class TweetListComponent {
         break;
     }
   }
+
   deleteElement(item){
     let index = this.tweets.indexOf(item);
     if (index > -1) { 
