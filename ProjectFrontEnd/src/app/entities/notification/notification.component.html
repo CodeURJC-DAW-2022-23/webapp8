@@ -1,7 +1,7 @@
 <div
     class="flex gap-2 px-3 py-4 border-b cursor-pointer sm:px-6 sm:gap-5 dark:hover:bg-black-6 border-gray-9 dark:border-black-5 hover:bg-gray-7">
     <!-- EMOJI IDENTIFIER -->
-    <figure class="flex items-start justify-end pl-4">
+    <figure [id]="emojiId" class="flex items-start justify-end pl-4">
         {{svgTypeNotification}}
     </figure>
 
@@ -11,15 +11,15 @@
         <div class="flex gap-2">
             <figure class="w-8 duration-200 rounded-full hover:opacity-80 hover:bg-black-1">
                 <img class="object-contain w-full h-full rounded-full"
-                    [src]="profileImgSrc" alt="User profile photo" [routerLink]="['/profile', notification.userWhoNotifies.user.username]">
+                    [src]="profileImgSrc" alt="User profile photo" [routerLink]="['/profile', notification.userWhoNotifies.username]">
             </figure>
         </div>
 
         <!-- USERNAMES - it has display flex because we have to mix up anchor and svg tags -->
         <h2 class="flex flex-wrap items-center gap-1 text-sm dark:text-gray-3">
             <a class="flex items-center gap-1 overflow-hidden font-bold hover:underline decoration-1 text-ellipsis whitespace-nowrap"
-            [routerLink]="['/profile', notification.userWhoNotifies.user.username]">
-                {{notification.userWhoNotifies.user.nickname}}
+            [routerLink]="['/profile', notification.userWhoNotifies.username]">
+                {{notification.userWhoNotifies.nickname}}
                 <div class="w-5">
                     {{userTypeSVG}}
                 </div>

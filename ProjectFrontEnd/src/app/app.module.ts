@@ -38,12 +38,14 @@ import { ForgotPassword } from './screens/form/forgot-password/forgot-password.c
 import { ResetPassword } from './screens/form/reset-password/reset-password.component';
 import { ResetPasswordConfirmation } from './screens/form/reset-password/reset-password-confirmation/reset-password-confirmation.component';
 import { Search } from './screens/search/search.component';
+import { NotificationsComponent } from './screens/notifications/notifications.component';
 import { DashboardComponent } from './screens/dashboard/dashboard.component';
 import { HomeComponent } from './screens/home/home.component';
 import { IndexComponent } from './screens/index/index.component';
 import { BookmarksComponent } from './screens/bookmarks/bookmarks.component';
 //import { WriteTweetComponent } from './screens/write-tweet/write-tweet.component';
 import { LeftBarComponent } from './commons/left-bar/left-bar.component';
+import { NotificationListComponent } from './entities/notification/notification-list/notification-list.component';
 
 @NgModule({
   declarations: [
@@ -81,11 +83,13 @@ import { LeftBarComponent } from './commons/left-bar/left-bar.component';
     ResetPasswordConfirmation,
     Search,
     DashboardComponent,
+    NotificationsComponent,
     IndexComponent,
     BookmarksComponent,
     HomeComponent,
     //WriteTweetComponent,
-    LeftBarComponent
+    LeftBarComponent,
+    NotificationListComponent,
   ],
   imports: [
     BrowserModule,

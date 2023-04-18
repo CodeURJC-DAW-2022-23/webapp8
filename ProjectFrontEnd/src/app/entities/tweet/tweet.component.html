@@ -17,7 +17,14 @@
                         <div
                             class="flex items-center gap-1 overflow-hidden font-bold dark:text-white-0 hover:underline decoration-1 text-ellipsis whitespace-nowrap">
                             {{tweet.tweet.user.nickname}}
-                            <!--SVG-->
+                            <div *ngIf="!(tweet.tweet.user.type === 'PUBLIC')" class="w-5">
+                                <svg attr.viewBox="{{viewBox}}" [ngClass]="{'fill-red-3':tweet.tweet.user.type === 'BANNED','fill-primary':tweet.tweet.user.type === 'VERIFIED'}">
+                                    <g>
+                                        <path attr.d="{{svg}}"/>
+                                    </g>
+                                
+                                </svg>
+                            </div>
                         </div>
                         <span class="overflow-hidden text-ellipsis whitespace-nowrap text-gray-4 hover:underline">
                             @{{tweet.tweet.user.username}}
@@ -63,8 +70,7 @@
                         <img role="button" class="object-cover w-full h-full" src="{{tweet.urlToMedia4}}" alt="image4" />
                     </figure>
 
-                    <div *ngIf="threeImages"
-                        class="grid grid-rows-2 max-h-[500px] gap-[1px] bg-gray-4 dark:bg-twitter-dark-gray border-gray-4">
+                    <div *ngIf="threeImages" class="grid grid-rows-2 max-h-[500px] gap-[1px] bg-gray-4 dark:bg-twitter-dark-gray border-gray-4">
                         <figure>
                             <img role="button" class="object-cover w-full h-full" src="{{tweet.urlToMedia2}}" alt="image2" />
                         </figure>

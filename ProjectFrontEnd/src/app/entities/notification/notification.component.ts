@@ -7,22 +7,32 @@ import { Notification } from './notification.model';
  * <app-notification [notification]='notification'></app-notification>
  */
 @Component({
-  selector: 'app-notification',
-  templateUrl: './notification.component.html',
-  styleUrls: ['./notification.component.css']
+    selector: 'app-notification',
+    templateUrl: './notification.component.html',
+    styleUrls: ['./notification.component.css']
 })
 export class NotificationComponent implements OnInit {
 
-  @Input()
-  notification: Notification;
+    @Input()
+    notification: Notification;
 
-  hasText: boolean;
-  svgTypeNotification: string;
-  notificationTypeText: string;
-  userTypeSVG: string;
-  profileImgSrc: string;
-  svgTypeNotificationMap: {
-    "LIKE": `
+    emojiId: string;
+    hasText: boolean;
+    svgTypeNotification: string;
+    notificationTypeText: string;
+    userTypeSVG: string;
+    profileImgSrc: string;
+    
+    ngOnInit(): void {
+        this.hasText = this.notification.type == "MENTION";
+        this.notificationTypeText = this.notificationTypeTextMap[this.notification.type];
+        this.svgTypeNotification = this.svgTypeNotificationMap[this.notification.type];
+        this.userTypeSVG = this.userTypeSVGMap[this.notification.userWhoNotifies.type];
+        this.profileImgSrc = "/api/users/" + this.notification.userWhoNotifies.id + "/user-image";
+    }
+
+    svgTypeNotificationMap = {
+        "LIKE": `
     <svg viewBox="0 0 24 24" aria-hidden="true" class="w-8 fill-red-0">
                             <g>
                                 <path
@@ -31,7 +41,7 @@ export class NotificationComponent implements OnInit {
                             </g>
                         </svg>
     `,
-    "RETWEET": `
+        "RETWEET": `
     <svg viewBox="0 0 24 24" aria-hidden="true" class="w-8 fill-green-0">
                             <g>
                                 <path
@@ -40,7 +50,7 @@ export class NotificationComponent implements OnInit {
                             </g>
                         </svg>
     `,
-    "FOLLOW": `
+        "FOLLOW": `
     <svg viewBox="0 0 24 24" aria-hidden="true" class="w-8 fill-primary">
                             <g>
                                 <path
@@ -49,7 +59,7 @@ export class NotificationComponent implements OnInit {
                             </g>
                         </svg>
     `,
-    "MENTION": `
+        "MENTION": `
     <svg viewBox="0 0 24 24" aria-hidden="true" class="w-8 fill-violet-0">
                             <g>
                                 <path
@@ -58,17 +68,17 @@ export class NotificationComponent implements OnInit {
                             </g>
                         </svg>
     `
-  };
+    };
 
-  notificationTypeTextMap: {
-    "LIKE": "liked your Tweet",
-    "RETWEET": "Retweeted your tweet",
-    "FOLLOW": "followed you",
-    "MENTION": "mentioned you in a Tweet"
-  };
+    notificationTypeTextMap = {
+        "LIKE": "liked your Tweet",
+        "RETWEET": "Retweeted your tweet",
+        "FOLLOW": "followed you",
+        "MENTION": "mentioned you in a Tweet"
+    };
 
-  userTypeSVGMap = {
-    "VERIFIED": `
+    userTypeSVGMap = {
+        "VERIFIED": `
     <svg viewBox="0 0 24 24" class="fill-primary">
                                     <g>
                                         <path
@@ -77,7 +87,7 @@ export class NotificationComponent implements OnInit {
                                     </g>
                                 </svg>
     `,
-    "BANNED": `
+        "BANNED": `
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="fill-red-3">
         <g>
             <path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zm0-384c13.3 0 24 10.7 24 24V264c0 13.3-10.7 24-24 24s-24-10.7-24-24V152c0-13.3 10.7-24 24-24zM224 352a32 32 0 1 1 64 0 32 32 0 1 1 -64 0z"/>
@@ -85,14 +95,6 @@ export class NotificationComponent implements OnInit {
     
     </svg>
     `
-};
-
-  ngOnInit(): void {
-    this.hasText = this.notification.notificationType !== "MENTION";
-    this.notificationTypeText = this.notificationTypeTextMap[this.notification.notificationType];
-    this.svgTypeNotification = this.svgTypeNotificationMap[this.notification.notificationType];
-    this.userTypeSVG = this.userTypeSVGMap[this.notification.userWhoNotifies.user.type];
-    this.profileImgSrc = this.notification.userWhoNotifies.urlToProfilePic;
-  }
+    };
 
 }
