@@ -13,9 +13,9 @@ export class ProfileComponent {
 
   constructor(private userService: UserService,
     activatedRoute: ActivatedRoute) {
-    this.userId = activatedRoute.snapshot.params['id'];
+    this.username= activatedRoute.snapshot.params['id'];
 
-    this.userService.getUser(this.userId).subscribe(
+    this.userService.getUser(this.username).subscribe(
       user => {
         this.userInformation = user;
         this.nickname = this.userInformation.user.nickname;

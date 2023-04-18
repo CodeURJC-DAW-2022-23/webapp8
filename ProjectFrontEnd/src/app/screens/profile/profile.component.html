@@ -140,25 +140,9 @@
       </div>
     </div>
 
+    <div class="relative bottom-9">
+      <app-tweet-list typeElement="Profile" [userId]="userInformation.user.id"></app-tweet-list>
+    </div>
   </div>
-
-  <!-- TWEETS -->
-  <div *ngFor="let tweet of tweets">
-    <app-tweet [tweet]="tweet" [isLogged]="isLogged"></app-tweet>
-  </div>
-
-  <button
-    class="hidden w-full py-4 text-lg font-semibold border-b llg:block border-gray-9 dark:bg-black-0 hover:bg-gray-7 dark:border-black-5 dark:hover:bg-black-6 text-primary">
-    Show More
-  </button>
-
-  <div class="sticky flex justify-center llg:hidden">
-    <button
-      class="fixed px-5 py-3 text-sm font-semibold transition cursor-pointer top-[5.4rem] llg:hidden hover:scale-110 rounded-3xl text-white-0 bg-primary">
-      Show More
-    </button>
-  </div>
-
-
 
 </main>
