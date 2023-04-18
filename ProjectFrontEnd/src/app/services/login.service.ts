@@ -32,9 +32,9 @@ export class LoginService {
 
     }
 
-    logIn(user: string, pass: string){
+    logIn(user: string, pass: string) {
         let url = "api/login"
-        this.http.post(url, {username: user, password: pass}, {withCredentials: true})
+        this.http.post(url, { username: user, password: pass }, { withCredentials: true })
             .subscribe(
                 (response) => this.reqIsLogged(),
                 (error) => alert("Wrong credentials")
@@ -56,9 +56,9 @@ export class LoginService {
     }
 
     isAdmin() {
-        return ; //TODO fix roles Bug!!!
+        return; //TODO fix roles Bug!!!
     }
 
-    
+
 
 }

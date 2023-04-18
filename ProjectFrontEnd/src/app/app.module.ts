@@ -15,7 +15,6 @@ import { LogOutButtonComponent } from './others/log-out-button/log-out-button.co
 import { ThemeSwitcherButtonComponent } from './others/theme-switcher-button/theme-switcher-button.component';
 import { CanButtonComponent } from './others/can-button/can-button.component';
 import { GoBackButtonComponent } from './others/go-back-button/go-back-button.component';
-import { LeftBarButtonComponent } from './others/left-bar-button/left-bar-button.component';
 import { BrandButtonComponent } from './others/brand-button/brand-button.component';
 import { BlueButtonComponent } from './others/blue-button/blue-button.component';
 import { RedButtonComponent } from './others/red-button/red-button.component';
@@ -43,6 +42,8 @@ import { DashboardComponent } from './screens/dashboard/dashboard.component';
 import { HomeComponent } from './screens/home/home.component';
 import { IndexComponent } from './screens/index/index.component';
 import { BookmarksComponent } from './screens/bookmarks/bookmarks.component';
+//import { WriteTweetComponent } from './screens/write-tweet/write-tweet.component';
+import { LeftBarComponent } from './commons/left-bar/left-bar.component';
 
 @NgModule({
   declarations: [
@@ -56,7 +57,6 @@ import { BookmarksComponent } from './screens/bookmarks/bookmarks.component';
     ThemeSwitcherButtonComponent,
     CanButtonComponent,
     GoBackButtonComponent,
-    LeftBarButtonComponent,
     BrandButtonComponent,
     BlueButtonComponent,
     RedButtonComponent,
@@ -84,6 +84,8 @@ import { BookmarksComponent } from './screens/bookmarks/bookmarks.component';
     IndexComponent,
     BookmarksComponent,
     HomeComponent,
+    //WriteTweetComponent,
+    LeftBarComponent
   ],
   imports: [
     BrowserModule,
