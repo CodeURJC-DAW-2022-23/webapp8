@@ -1,5 +1,5 @@
 <!-- SPINNER -->
-<div id="spinner"></div>
+<div class="absolute pt-24 left-1/2 llg:pt-5" id="spinner"></div>
 
 <div *ngFor="let tweet of tweets">
     <app-tweet [tweet] = "tweet" [isLogged]="isLogged" (delete)="deleteElement(tweet)"></app-tweet>
