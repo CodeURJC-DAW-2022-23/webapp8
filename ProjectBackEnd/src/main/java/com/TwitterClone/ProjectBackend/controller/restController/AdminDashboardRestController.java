@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.mail.MessagingException;
 import javax.persistence.Tuple;
 import javax.servlet.http.HttpServletRequest;
+import javax.websocket.server.PathParam;
 import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.List;
@@ -37,123 +38,6 @@ public class AdminDashboardRestController {
     private MailService mailService;
 
     interface Basic extends User.Basic, UserInformation.Basic{}
-
-    @Operation(summary = "If the user is a admin, he can ban another user according to his ID")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "User Banned", content = {
-                    @Content(mediaType = "application/json")
-            }),
-            @ApiResponse(responseCode = "404", description = "User ID not found", content = @Content)
-    })
-    @PutMapping("users/{id}/banned-users")
-    @JsonView(Basic.class)
-    public ResponseEntity<Object> ban(@PathVariable Long id,
-                                      HttpServletRequest request) throws MessagingException, UnsupportedEncodingException {
-        User currentUser = this.informationManager.getCurrentUser(request);
-
-        if (profileService.findById(id).isEmpty()) {
-            return ResponseEntity.notFound().build();
-        }
-
-        User user = this.profileService.findById(id).get();
-
-        if (currentUser.getRole().toString().equals("ADMIN")) {
-            user.setType("BANNED");
-            user.setEnabled(false);
-            this.profileService.updateUserBan(user);
-            mailService.sendBanMail(user.getEmail());
-            return ResponseEntity.ok(user);
-        }
-
-        return ResponseEntity.notFound().build();
-    }
-
-
-    @Operation(summary = "If the user is a admin, he can unban another user according to his ID")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "User Banned", content = {
-                    @Content(mediaType = "application/json")
-            }),
-            @ApiResponse(responseCode = "404", description = "User ID not found", content = @Content)
-    })
-    @PutMapping("users/{id}/unbanned-users")
-    @JsonView(Basic.class)
-    public ResponseEntity<Object> unban(@PathVariable Long id,
-                                        HttpServletRequest request) throws MessagingException, UnsupportedEncodingException {
-        User currentUser = this.informationManager.getCurrentUser(request);
-
-        if (profileService.findById(id).isEmpty()) {
-            return ResponseEntity.notFound().build();
-        }
-
-        User user = this.profileService.findById(id).get();
-
-        if (currentUser.getRole().toString().equals("ADMIN")) {
-            user.setType("PUBLIC");
-            user.setEnabled(true);
-            this.profileService.updateUserBan(user);
-            mailService.sendUnBanMail(user.getEmail());
-            return ResponseEntity.ok(user);
-        }
-
-        return ResponseEntity.notFound().build();
-    }
-
-    @Operation(summary = "If the user is a admin, he can verify another user according to his ID")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "User Banned", content = {
-                    @Content(mediaType = "application/json")
-            }),
-            @ApiResponse(responseCode = "404", description = "User ID not found", content = @Content)
-    })
-    @PutMapping("users/{id}/verified-users")
-    @JsonView(Basic.class)
-    public ResponseEntity<Object> verify(@PathVariable Long id,
-                                         HttpServletRequest request) {
-        User currentUser = this.informationManager.getCurrentUser(request);
-
-        if (profileService.findById(id).isEmpty()) {
-            return ResponseEntity.notFound().build();
-        }
-
-        User user = this.profileService.findById(id).get();
-
-        if (currentUser.getRole().toString().equals("ADMIN")) {
-            user.setType("VERIFIED");
-            this.profileService.updateUserBan(user);
-            return ResponseEntity.ok(user);
-        }
-
-        return ResponseEntity.notFound().build();
-    }
-
-    @Operation(summary = "If the user is a admin, he can unverify another user according to his ID")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "User Banned", content = {
-                    @Content(mediaType = "application/json")
-            }),
-            @ApiResponse(responseCode = "404", description = "User ID not found", content = @Content)
-    })
-    @PutMapping("users/{id}/unverified-users")
-    @JsonView(Basic.class)
-    public ResponseEntity<Object> unverify(@PathVariable Long id,
-                                           HttpServletRequest request) {
-        User currentUser = this.informationManager.getCurrentUser(request);
-
-        if (profileService.findById(id).isEmpty()) {
-            return ResponseEntity.notFound().build();
-        }
-
-        User user = this.profileService.findById(id).get();
-
-        if (currentUser.getRole().toString().equals("ADMIN")) {
-            user.setType("PUBLIC");
-            this.profileService.updateUserBan(user);
-            return ResponseEntity.ok(user);
-        }
-
-        return ResponseEntity.notFound().build();
-    }
 
     @Operation(summary = "If the user is a admin, he can get the statistics of new accounts created in the last 5 days whit new accounts")
     @ApiResponses(value = {
@@ -194,7 +78,8 @@ public class AdminDashboardRestController {
     @JsonView(Basic.class)
     public ResponseEntity<Object> toggleType(@PathVariable Long id,
                                            @RequestParam("type") String type,
-                                           HttpServletRequest request) {
+                                           HttpServletRequest request)
+            throws MessagingException, UnsupportedEncodingException {
         User currentUser = this.informationManager.getCurrentUser(request);
 
         if (currentUser == null){
@@ -207,23 +92,30 @@ public class AdminDashboardRestController {
 
         User user = this.profileService.findById(id).get();
 
-        if (currentUser.getRole().toString().equals("ADMIN")) {
-            switch (type){
-                case "VERIFY": user.setType("VERIFIED"); break;
-                case "UNVERIFY": user.setType("PUBLIC"); break;
-                case "BAN": user.setType("BANNED");
-                            user.setEnabled(false);
-                            break;
-                case "UNBAN": user.setType("PUBLIC");
-                              user.setEnabled(true);
-                              break;
-                default: return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-            }
-            this.profileService.updateUserBan(user);
-            return ResponseEntity.ok(user);
+        if (!currentUser.getRole().toString().equals("ADMIN")) {
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
 
-        return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        switch (type) {
+            case "VERIFY" -> user.setType("VERIFIED");
+            case "UNVERIFY" -> user.setType("PUBLIC");
+            case "BAN" -> {
+                user.setType("BANNED");
+                user.setEnabled(false);
+                mailService.sendBanMail(user.getEmail());
+            }
+            case "UNBAN" -> {
+                user.setType("PUBLIC");
+                user.setEnabled(true);
+                mailService.sendUnBanMail(user.getEmail());
+            }
+            default -> {
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            }
+        }
+
+        this.profileService.updateUserBan(user);
+        return ResponseEntity.ok(user);
     }
 
     @Operation(summary = "Get all the users that can be verified")

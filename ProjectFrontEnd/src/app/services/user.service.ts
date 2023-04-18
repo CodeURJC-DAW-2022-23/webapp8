@@ -45,6 +45,27 @@ export class UserService {
     ) as Observable<UserInformation[]>;
   }
 
+  verifyUser(id: number) {
+    let url = '/api/users/' + id + '?type=VERIFY';
+    return this.http.put(url, null).pipe(
+      catchError(error => this.handleError(error))
+    )
+  }
+
+  unverifyUser(id: number) {
+    let url = '/api/users/' + id + '?type=UNVERIFY';
+    return this.http.put(url, null).pipe(
+      catchError(error => this.handleError(error))
+    )
+  }
+
+  unbannedUser(id: number) {
+    let url = '/api/users/' + id + '?type=UNBAN';
+    return this.http.put(url, null).pipe(
+      catchError(error => this.handleError(error))
+    )
+  }
+
   handleError(error: any): any {
     throw new Error('Method not implemented.');
   }

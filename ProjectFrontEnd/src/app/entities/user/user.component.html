@@ -5,7 +5,6 @@
       <img class="rounded-full" [src]="srcImg" alt="profile-pic" (load)="loadSVG()">
     </figure>
 
-
     <article class="flex flex-col items-start justify-between">
       <section class="flex items-center gap-2">
         <h2 class="text-xl font-semibold dark:text-white-0">{{nickname}}</h2>
@@ -20,8 +19,17 @@
 
   </div>
 
-  <a [routerLink] = "['/profile', username]"
-  class="px-3 py-2 text-sm font-semibold text-center transition scale-90 rounded-full cursor-pointer xlsm:scale-100 text-white-0 bg-primary hover:scale-110">
-    Go To Profile
-  </a>
+  <div *ngIf="typeButton; else goToProfile">
+    <button (click)="doAction(typeButton)"
+      [ngClass]="buttonClassMap">
+      {{typeButton}}
+    </button>
+  </div>
+  <ng-template #goToProfile>
+    <a [routerLink]="['/profile', username]"
+      class="px-3 py-2 text-sm font-semibold text-center transition scale-90 rounded-full cursor-pointer xlsm:scale-100 text-white-0 bg-primary hover:scale-110">
+      Go To Profile
+    </a>
+  </ng-template>
 </div>
+

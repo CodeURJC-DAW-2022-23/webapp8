@@ -1,20 +1,25 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { UserInformation } from '../user/user.model';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-user',
   templateUrl: './user.component.html',
   styleUrls: ['./user.component.css']
 })
-export class UserComponent{
+export class UserComponent {
   @Input()
   userInformation: UserInformation;
-
+  @Input()
+  typeButton: string | "Verify";
+  @Output()
+  delete = new EventEmitter<boolean>();
 
   srcImg: string;
   nickname: string;
   username: string;
   idSVG: string;
+  buttonClass: boolean;
 
   userTypeSVGMap = {
     "VERIFIED": `
@@ -35,20 +40,54 @@ export class UserComponent{
     </svg>
     `,
     "PUBLIC": ""
-}
+  }
 
+  buttonClassMap = {
+    "px-3 py-2 text-sm font-semibold text-center transition scale-90 rounded-full cursor-pointer xlsm:scale-100 text-white-0 hover:scale-110": true,
+    "bg-primary": true,
+    "bg-red-0": false,
+  }
+
+  constructor(private userService: UserService) { }
 
   ngOnInit() {
     this.srcImg = "api/" + this.userInformation.urlToProfilePic;
     this.nickname = this.userInformation.user.nickname;
     this.username = this.userInformation.user.username;
     this.idSVG = this.username + "-SVG";
+    this.buttonClass = this.typeButton === "Verify"
   }
 
   loadSVG() {
     let containerSVG = document.getElementById(this.idSVG);
     containerSVG.innerHTML = this.userTypeSVGMap[this.userInformation.user.type];
+  }
 
+  doAction(type: string) {
+    let idUser = this.userInformation.user.id;
+    this.delete.emit(true);
+
+    if ("Verify" === type) {
+      this.userService.verifyUser(idUser).subscribe(
+        error => console.log(error)
+      );
+      this.buttonClassMap['bg-primary'] = true;
+      this.buttonClassMap['bg-red-0'] = false;
+      return;
+    }
+
+    if ("Unverify" === type) {
+      this.userService.unverifyUser(idUser).subscribe(
+        error => console.log(error)
+      );
+      this.buttonClassMap['bg-primary'] = false;
+      this.buttonClassMap['bg-red-0'] = true;
+      return;
+    }
+
+    this.buttonClassMap['bg-primary'] = false;
+    this.buttonClassMap['bg-red-0'] = true;
+    this.userService.unbannedUser(idUser)
   }
 
 }

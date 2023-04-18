@@ -67,7 +67,7 @@
     </div>
     <ng-template #showUsers>
       <div *ngFor="let user of users">
-        <app-user [userInformation]="user"></app-user>
+        <app-user [userInformation]="user" [typeButton]="typeButton" (delete)="deleteElement(user)"></app-user>
       </div>
     </ng-template>
 

@@ -2,6 +2,7 @@ import { Component, Input } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { TweetInformation } from 'src/app/entities/tweet/tweet.model';
 import { UserInformation } from 'src/app/entities/user/user.model';
+import { LoginService } from 'src/app/services/login.service';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
@@ -10,6 +11,24 @@ import { UserService } from 'src/app/services/user.service';
   styleUrls: ['./profile.component.css']
 })
 export class ProfileComponent {
+
+  userId: string;
+  userInformation: UserInformation;
+  nickname: string;
+  username: string;
+  biography: string;
+  joinDate: string;
+  followedNumber: number;
+  followersNumber: number;
+  urlToProfilePic: string;
+  urlToBannerPic: string;
+  tweets: TweetInformation[];
+
+  isLogged: boolean;
+  isYourProfile: boolean;
+  isAdmin: boolean;
+  isBanned: boolean;
+  isFollowed: boolean;
 
   constructor(private userService: UserService,
     activatedRoute: ActivatedRoute) {
@@ -43,25 +62,5 @@ export class ProfileComponent {
   ngOnInit() {
     console.log()
   }
-
-  userId: string;
-  userInformation: UserInformation;
-  nickname: string;
-  username: string;
-  biography: string;
-  joinDate: string;
-  followedNumber: number;
-  followersNumber: number;
-  urlToProfilePic: string;
-  urlToBannerPic: string;
-  tweets: TweetInformation[];
-
-  isLogged: boolean;
-  isYourProfile: boolean;
-  isAdmin: boolean;
-  isBanned: boolean;
-  isFollowed: boolean;
-
-
 
 }

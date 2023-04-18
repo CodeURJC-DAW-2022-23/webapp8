@@ -14,6 +14,7 @@ export class DashboardComponent {
   verfiedClass: string;
   bannedClass: string;
   stadisticsClass: string;
+  typeButton: string = "Verify";
 
   constructor(private userService: UserService){
     this.userService.getUsersToVerify().subscribe(
@@ -64,6 +65,7 @@ export class DashboardComponent {
       this.userService.getUsersToVerify().subscribe(
         users => this.users = users
       );
+      this.typeButton = "Verify";
       return;
     }
 
@@ -71,6 +73,7 @@ export class DashboardComponent {
       this.userService.getVerificatedUsers().subscribe(
         users => this.users = users
       );
+      this.typeButton = "Unverify";
       return;
     }
 
@@ -78,6 +81,14 @@ export class DashboardComponent {
       this.userService.getBannedUsers().subscribe(
         users => this.users = users
       );
+      this.typeButton = "Unban";
+    }
+  }
+
+  deleteElement(user: UserInformation){
+    let index = this.users.indexOf(user);
+    if (index > -1) {
+      this.users.splice(index, 1);
     }
   }
 }
