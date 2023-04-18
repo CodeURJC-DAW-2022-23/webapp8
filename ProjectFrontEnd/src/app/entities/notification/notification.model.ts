@@ -1,10 +1,11 @@
 import { Tweet } from "../tweet/tweet.model";
-import { UserInformation } from "../user/user.model";
+import { User } from "../user/user.model";
 
 export interface Notification {
 
     id: number;
     tweetTrigger: Tweet;
-    userWhoNotifies: UserInformation;
-    notificationType: string;
+    userToNotify: User;
+    userWhoNotifies: User;
+    type: string;
 }

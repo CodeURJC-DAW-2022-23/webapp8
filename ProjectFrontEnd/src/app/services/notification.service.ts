@@ -1,6 +1,7 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable, catchError, throwError } from "rxjs";
+import { Notification } from "../entities/notification/notification.model";
 
 @Injectable({
     providedIn: 'root'

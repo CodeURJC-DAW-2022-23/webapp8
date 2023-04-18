@@ -4,6 +4,7 @@ import com.TwitterClone.ProjectBackend.model.mustacheObjects.InformationManager;
 import com.TwitterClone.ProjectBackend.model.mustacheObjects.TweetInformation;
 import com.TwitterClone.ProjectBackend.model.Notification;
 import com.TwitterClone.ProjectBackend.model.Tweet;
+import com.TwitterClone.ProjectBackend.model.mustacheObjects.UserInformation;
 import com.TwitterClone.ProjectBackend.service.NotificationService;
 import com.TwitterClone.ProjectBackend.service.ProfileService;
 import com.TwitterClone.ProjectBackend.userManagement.User;
@@ -33,7 +34,7 @@ public class NotificationRestController {
     @Autowired
     private ProfileService profileService;
 
-    interface Basic extends Tweet.Basic, TweetInformation.Basic, User.Basic, Notification.Basic {
+    interface Basic extends Tweet.Basic, TweetInformation.Basic, User.Basic, Notification.Basic, UserInformation.Basic {
     }
 
 
