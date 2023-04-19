@@ -17,8 +17,8 @@
         <!-- NAV BAR -->
         <nav class="flex flex-col items-start gap-3">
             <button class="w-full group" [routerLink]="['/home']">
-                <div
-                    class="flex items-center gap-5 px-4 py-3 transition rounded-full w-fit group-hover:scale-110 group-hover:bg-gray-3 dark:group-hover:bg-gray-13 group-focus-within:bg-gray-3 dark:group-focus-within:bg-gray-13 group-focus-within:scale-110">
+                <div [routerLinkActive]="['bg-gray-3', 'dark:bg-gray-13', 'scale-110', 'font-semibold']"
+                    class="flex items-center gap-5 px-4 py-3 transition rounded-full w-fit group-hover:scale-110 group-hover:bg-gray-3 dark:group-hover:bg-gray-13">
                     <figure>
                         <svg class="w-8 dark:fill-white-0 fill-black-0" xmlns="http://www.w3.org/2000/svg"
                             viewBox="0 0 24 24" aria-hidden="true">
@@ -29,13 +29,13 @@
                             </g>
                         </svg>
                     </figure>
-                    <div class="text-2xl text-black-0 dark:text-white-0 group-focus-within:font-semibold">Home</div>
+                    <div class="text-2xl text-black-0 dark:text-white-0">Home</div>
                 </div>
             </button>
 
             <button class="w-full group" [routerLink]="['/explorer']">
-                <div
-                    class="flex items-center gap-5 px-4 py-3 transition rounded-full w-fit group-hover:scale-110 group-hover:bg-gray-3 dark:group-hover:bg-gray-13 group-focus-within:bg-gray-3 dark:group-focus-within:bg-gray-13 group-focus-within:scale-110">
+                <div [routerLinkActive]="['bg-gray-3', 'dark:bg-gray-13', 'scale-110', 'font-semibold']"
+                    class="flex items-center gap-5 px-4 py-3 transition rounded-full w-fit group-hover:scale-110 group-hover:bg-gray-3 dark:group-hover:bg-gray-13">
                     <figure>
                         <svg class="w-8 dark:fill-white-0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
                             aria-hidden="true">
@@ -46,14 +46,14 @@
                             </g>
                         </svg>
                     </figure>
-                    <div class="text-2xl text-black-0 dark:text-white-0 group-focus-within:font-semibold">Explore
+                    <div class="text-2xl text-black-0 dark:text-white-0">Explore
                     </div>
                 </div>
             </button>
 
             <button class="w-full group" [routerLink]="['/notifications']">
-                <div
-                    class="flex items-center gap-5 px-4 py-3 transition rounded-full w-fit group-hover:scale-110 group-hover:bg-gray-3 dark:group-hover:bg-gray-13 group-focus-within:bg-gray-3 dark:group-focus-within:bg-gray-13 group-focus-within:scale-110">
+                <div [routerLinkActive]="['bg-gray-3', 'dark:bg-gray-13', 'scale-110', 'font-semibold']"
+                    class="flex items-center gap-5 px-4 py-3 transition rounded-full w-fit group-hover:scale-110 group-hover:bg-gray-3 dark:group-hover:bg-gray-13">
                     <figure>
                         <svg class="w-8 dark:fill-white-0 fill-black-0" xmlns="http://www.w3.org/2000/svg"
                             viewBox="0 0 24 24" aria-hidden="true">
@@ -64,15 +64,15 @@
                             </g>
                         </svg>
                     </figure>
-                    <div class="text-2xl text-black-0 dark:text-white-0 group-focus-within:font-semibold">
+                    <div class="text-2xl text-black-0 dark:text-white-0">
                         Notifications
                     </div>
                 </div>
             </button>
 
             <button class="w-full group" [routerLink]="['/bookmarks']">
-                <div
-                    class="flex items-center gap-5 px-4 py-3 transition rounded-full w-fit group-hover:scale-110 group-hover:bg-gray-3 dark:group-hover:bg-gray-13 group-focus-within:bg-gray-3 dark:group-focus-within:bg-gray-13 group-focus-within:scale-110">
+                <div [routerLinkActive]="['bg-gray-3', 'dark:bg-gray-13', 'scale-110', 'font-semibold']"
+                    class="flex items-center gap-5 px-4 py-3 transition rounded-full w-fit group-hover:scale-110 group-hover:bg-gray-3 dark:group-hover:bg-gray-13">
                     <figure>
                         <svg class="w-8 fill-black-0 dark:fill-white-0" xmlns="http://www.w3.org/2000/svg"
                             viewBox="0 0 24 24" aria-hidden="true">
@@ -83,15 +83,15 @@
                             </g>
                         </svg>
                     </figure>
-                    <div class="text-2xl text-black-0 dark:text-white-0 group-focus-within:font-semibold">Bookmarks
+                    <div class="text-2xl text-black-0 dark:text-white-0">Bookmarks
                     </div>
                 </div>
             </button>
 
             <!-- PROFILE -->
-            <button class="w-full group" [routerLink]="['/profile/user']">
-                <div
-                    class="flex items-center gap-5 px-4 py-3 transition rounded-full w-fit group-hover:scale-110 group-hover:bg-gray-3 dark:group-hover:bg-gray-13 group-focus-within:bg-gray-3 dark:group-focus-within:bg-gray-13 group-focus-within:scale-110">
+            <button class="w-full group" [routerLink]="['/profile/' + username]">
+                <div [routerLinkActive]="['bg-gray-3', 'dark:bg-gray-13', 'scale-110']"
+                    class="flex items-center gap-5 px-4 py-3 transition rounded-full w-fit group-hover:scale-110 group-hover:bg-gray-3 dark:group-hover:bg-gray-13">
                     <figure class="w-9">
                         <img class="rounded-full" src={{urlToProfilePicture}} alt="Profile picture">
                     </figure>
@@ -114,9 +114,9 @@
             <!-- LOG OUT -->
             <a class="w-full group" [routerLink]="['/index']" (click)="logOut()">
                 <div
-                    class="flex items-center gap-6 px-4 py-3 transition rounded-full w-fit group-hover:scale-110 group-focus-within:scale-110 group-hover:bg-red-3 group-focus-within:bg-red-3">
+                    class="flex items-center gap-6 px-4 py-3 transition rounded-full w-fit group-hover:scale-110 group-hover:bg-red-3 group-focus-within:bg-red-3">
                     <div class="w-7">
-                        <svg class="dark:fill-white-0 fill-black-0 group-focus-within:fill-white-0 group-hover:fill-white-0"
+                        <svg class="dark:fill-white-0 fill-black-0 group-hover:fill-white-0"
                             xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
                             viewBox="0 0 320.002 320.002" xml:space="preserve">
                             <g>
@@ -128,7 +128,7 @@
                         </svg>
                     </div>
                     <div
-                        class="text-2xl text-black-0 dark:text-white-0 group-focus-within:font-semibold group-focus-within:text-white group-hover:text-white-0">
+                        class="text-2xl text-black-0 dark:text-white-0 group-focus-within:text-white group-hover:text-white-0">
                         Log out</div>
                 </div>
             </a>
