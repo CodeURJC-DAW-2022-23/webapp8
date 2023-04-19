@@ -1,6 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, NgModule } from '@angular/core';
 import { UserInformation } from 'src/app/entities/user/user.model';
 import { UserService } from 'src/app/services/user.service';
+import { BrowserModule } from '@angular/platform-browser';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
 
 @Component({
   selector: 'app-dashboard',
@@ -16,12 +18,21 @@ export class DashboardComponent {
   stadisticsClass: string;
   typeButton: string = "Verify";
 
+  view: any = undefined;
+  results: object;
+  showXAxis = true;
+  showYAxis = true;
+  gradient = false;
+  showXAxisLabel = true;
+  xAxisLabel = 'Time';
+  showYAxisLabel = true;
+  yAxisLabel = 'Users';
+
   constructor(private userService: UserService){
     this.userService.getUsersToVerify().subscribe(
       users => this.users = users
     );
   }
-
 
   showPage(tabToShow, tabsToHide, isStadistics) {
     this.isStadistics = isStadistics;
@@ -54,6 +65,9 @@ export class DashboardComponent {
     }
 
     if (this.isStadistics) {
+      this.userService.getStatistics().subscribe(
+        statistics => this.results = statistics
+      );
       return;
     }
 

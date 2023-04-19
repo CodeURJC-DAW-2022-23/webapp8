@@ -1,6 +1,7 @@
 package com.TwitterClone.ProjectBackend.controller.restController;
 
 
+import com.TwitterClone.ProjectBackend.DTO.StatisticRequest;
 import com.TwitterClone.ProjectBackend.model.mustacheObjects.InformationManager;
 import com.TwitterClone.ProjectBackend.model.mustacheObjects.UserInformation;
 import com.TwitterClone.ProjectBackend.service.MailService;
@@ -21,6 +22,7 @@ import javax.persistence.Tuple;
 import javax.servlet.http.HttpServletRequest;
 import javax.websocket.server.PathParam;
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -47,15 +49,16 @@ public class AdminDashboardRestController {
             @ApiResponse(responseCode = "403", description = "No permission", content = @Content)
     })
     @GetMapping("users/statistics")
-    public ResponseEntity<Map<String, String>> getNewAccountStatistics(HttpServletRequest request) {
+    public ResponseEntity<List<StatisticRequest>> getNewAccountStatistics(HttpServletRequest request) {
         User currentUser = this.informationManager.getCurrentUser(request);
         List<Tuple> statics = this.profileService.getStatics();
-        Map<String, String> statistics = new HashMap<>();
+        List<StatisticRequest> statistics = new ArrayList<>();
 
         for (Tuple aStatic : statics) {
-            String key = aStatic.get("join_date").toString();
-            String value = aStatic.get("new_people").toString();
-            statistics.put(key, value);
+            String name = aStatic.get("join_date").toString();
+            int value = Integer.parseInt(aStatic.get("new_people").toString());
+
+            statistics.add(new StatisticRequest(name, value));
         }
 
         if (currentUser.getRole().toString().equals("ADMIN")) {

@@ -31,8 +31,11 @@ export class ProfileComponent {
   isFollowed: boolean;
 
   constructor(private userService: UserService,
+    loginService: LoginService,
     activatedRoute: ActivatedRoute) {
-    this.username= activatedRoute.snapshot.params['id'];
+    this.username = activatedRoute.snapshot.params['id'];
+    this.isLogged = loginService.isLogged();
+    let currentUser = loginService.currentUser;
 
     this.userService.getUser(this.username).subscribe(
       user => {
@@ -46,6 +49,11 @@ export class ProfileComponent {
         this.tweets = this.userInformation.tweets;
         this.urlToProfilePic = "/api/" + this.userInformation.urlToProfilePic;
         this.urlToBannerPic = "/api/" + this.userInformation.urlToBannerPic;
+
+        this.isYourProfile = currentUser.user.id === user.user.id;
+        this.isAdmin = currentUser.user.type === "ADMIN";
+        this.isBanned = user.user.enable;
+        this.isFollowed = false;
       },
       error => console.log(error)
     );

@@ -24,6 +24,13 @@ export class UserService {
     ) as Observable<UserInformation>;
   }
 
+  getStatistics(): Observable<object> {
+    let url = "/api/users/statistics";
+    return this.http.get(url).pipe(
+      catchError(error => this.handleError(error))
+    ) as Observable<object>;
+  }
+
   getUsersToVerify(): Observable<UserInformation[]> {
     let url = "/api/users-to-verify";
     return this.http.get(url).pipe(
@@ -60,7 +67,7 @@ export class UserService {
   }
 
   unbannedUser(id: number) {
-    let url = '/api/users/' + id + '?type=UNBAN';
+    let url = '/users/' + id + '?type=UNBAN';
     return this.http.put(url, null).pipe(
       catchError(error => this.handleError(error))
     )

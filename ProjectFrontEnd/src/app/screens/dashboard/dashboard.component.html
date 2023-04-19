@@ -61,6 +61,18 @@
     <div *ngIf="isStadistics; else showUsers">
       <!-- STATS -->
       <div id="stats">
+        <ngx-charts-bar-vertical
+          [view]="view"
+          [results]="results"
+          [gradient]="gradient"
+          [xAxis]="showXAxis"
+          [yAxis]="showYAxis"
+          [showXAxisLabel]="showXAxisLabel"
+          [xAxisLabel]="xAxisLabel"
+          [showYAxisLabel]="showYAxisLabel"
+          [yAxisLabel]="yAxisLabel"
+          class="fill-black dark:fill-white"
+        ></ngx-charts-bar-vertical>
 
       </div>
 
