@@ -133,7 +133,7 @@ export class UserService {
   }
 
   unbannedUser(id: number) {
-    let url = '/users/' + id + '?type=UNBAN';
+    let url = '/api/users/' + id + '?type=UNBAN';
     return this.http.put(url, null).pipe(
       catchError(error => this.handleError(error))
     )
