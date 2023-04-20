@@ -14,6 +14,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -223,9 +224,9 @@ public class ImageRestController {
     @PutMapping("tweets/{id}/images")
     public ResponseEntity<TweetInformation> uploadImages(@PathVariable Long id,
                                                          @RequestParam("image1") MultipartFile image1,
-                                                         @RequestParam("image2") MultipartFile image2,
-                                                         @RequestParam("image3") MultipartFile image3,
-                                                         @RequestParam("image4") MultipartFile image4,
+                                                         @Param("image2") MultipartFile image2,
+                                                         @Param("image3") MultipartFile image3,
+                                                         @Param("image4") MultipartFile image4,
                                                          HttpServletRequest request){
         User currentUser = this.informationManager.getCurrentUser(request);
 
