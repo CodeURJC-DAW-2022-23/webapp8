@@ -62,6 +62,7 @@ public class User {
     @Lob
     private Blob profileBanner;
     @Enumerated(EnumType.STRING)
+    @JsonView(Profile.class)
     private UserRoles role;
     @ManyToMany
     private List<User> followers = new ArrayList<>();

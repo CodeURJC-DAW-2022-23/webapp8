@@ -8,6 +8,7 @@ export interface User {
   enable: boolean;
   biography: string;
   joinDate: string;
+  role: string;
 }
 
 export interface UserInformation {

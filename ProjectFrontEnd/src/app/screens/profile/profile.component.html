@@ -80,13 +80,13 @@
 
       <!-- FOLLOWING AND FOLLOWERS -->
       <div class="flex flex-row gap-3">
-        <a [routerLink]="['/profile', userId , '/followed' ]">
+        <a [routerLink]="['/profile', username, 'followed']">
           <div class="flex items-center gap-1">
             <span class="font-semibold text-md dark:text-white-0 hover:underline">{{followedNumber}}</span>
             <span class="font-semibold text-md dark:font-normal text-gray-2 hover:underline">Following</span>
           </div>
         </a>
-        <a [routerLink]="['/profile', userId , '/followers' ]">
+        <a [routerLink]="['/profile', username, 'followers' ]">
           <div class="flex items-center gap-1">
             <span class="font-semibold text-md dark:text-white-0 hover:underline">{{followersNumber}}</span>
             <span class="font-semibold text-md dark:font-normal text-gray-2 hover:underline">Followers</span>
@@ -100,7 +100,7 @@
           <div class="xlsm:absolute xlsm:right-8 xlsm:top-[62px]">
             <div class="flex items-center gap-1 xlsm:gap-4">
               <a class="px-4 py-2 text-sm font-bold text-center transition bg-transparent border-2 cursor-pointer w-fit border-black-0 rounded-3xl dark:border-white-0 dark:text-white-0 text-black-0 hover:scale-110"
-                [routerLink]="['/profile', userId, '/edit-profile']">
+                [routerLink]="['/profile', username, 'edit-profile']">
                 Edit profile
               </a>
               <div *ngIf="isAdmin">
@@ -115,8 +115,8 @@
         <ng-template #otherCont>
           <div class="absolute right-8 top-[62px] flex gap-5">
             <div *ngIf="isAdmin">
-              <div *ngIf="isBanned">
-                <button
+              <div *ngIf="isNotBanned">
+                <button (click)="banUser();"
                   class="px-4 py-2 font-bold text-center transition rounded-full cursor-pointer text-white-0 bg-red-3 hover:scale-110">
                   Ban user
                 </button>
@@ -124,13 +124,13 @@
             </div>
 
             <div *ngIf="isFollowed; else notFollowed">
-              <button id="unfollow-button"
+              <button id="unfollow-button" (click)="toggleFollowUser();"
                 class="px-4 py-2 font-bold text-center transition rounded-full cursor-pointer text-white-0 bg-red-3 hover:scale-110">
                 Unfollow
               </button>
             </div>
             <ng-template #notFollowed>
-              <button id="follow-button"
+              <button id="follow-button" (click)="toggleFollowUser();"
                 class="px-4 py-2 font-bold text-center transition rounded-full cursor-pointer text-white-0 bg-primary hover:scale-110">
                 Follow
               </button>

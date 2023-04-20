@@ -49,6 +49,8 @@ import { WriteTweetComponent } from './screens/write-tweet/write-tweet.component
 import { LeftBarComponent } from './commons/left-bar/left-bar.component';
 import { NotificationListComponent } from './entities/notification/notification-list/notification-list.component';
 import { ShowTweetComponent } from './screens/show-tweet/show-tweet.component';
+import { FollowersComponent } from './screens/followers/followers.component';
+import { EditProfileComponent } from './screens/profile/edit-profile/edit-profile.component';
 
 @NgModule({
   declarations: [
@@ -94,9 +96,10 @@ import { ShowTweetComponent } from './screens/show-tweet/show-tweet.component';
     LeftBarComponent,
     NotificationListComponent,
     ShowTweetComponent,
+    EditProfileComponent,
+    FollowersComponent,
   ],
   imports: [
-    BrowserModule,
     FormsModule,
     HttpClientModule,
     NgxChartsModule,

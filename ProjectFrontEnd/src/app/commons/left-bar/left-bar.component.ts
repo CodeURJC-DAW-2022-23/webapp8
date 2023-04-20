@@ -17,9 +17,9 @@ export class LeftBarComponent {
   public username: string;
   public urlToProfilePicture: string;
 
-  constructor(private _userService: UserService, 
+  constructor(private _userService: UserService,
     private _loginService: LoginService) {
-    this._userService.getCurrentUser().subscribe(userInformation => {
+      this._userService.getCurrentUser().subscribe(userInformation => {
       this.urlToProfilePicture = "/api/" + userInformation.urlToProfilePic
 
       let user: User;
