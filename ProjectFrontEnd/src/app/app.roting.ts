@@ -19,6 +19,7 @@ import { BookmarksComponent } from './screens/bookmarks/bookmarks.component';
 import { NotificationsComponent } from './screens/notifications/notifications.component';
 import { WriteTweetComponent } from './screens/write-tweet/write-tweet.component';
 import { FollowersComponent } from './screens/followers/followers.component';
+import { EditProfileComponent } from './screens/profile/edit-profile/edit-profile.component';
 
 const appRoutes = [
     { path: 'index', component: IndexComponent }, // provisional path
@@ -33,6 +34,7 @@ const appRoutes = [
     { path: 'reset-password/:passwordToken', component: ResetPassword },
     { path: 'reset-password-confirmation', component: ResetPasswordConfirmation },
     { path: 'profile/:id', component: ProfileComponent},
+    { path: 'profile/:id/edit-profile', component: EditProfileComponent},
     { path: 'profile/:id/:users-list', component: FollowersComponent},
     { path: 'dashboard', component: DashboardComponent},
     { path: 'search/:keyword', component: Search }, //check

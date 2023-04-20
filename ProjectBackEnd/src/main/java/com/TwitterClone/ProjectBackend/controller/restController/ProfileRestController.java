@@ -25,6 +25,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.websocket.server.PathParam;
 import java.io.IOException;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 
@@ -208,22 +209,24 @@ public class ProfileRestController {
         Optional<User> user = profileService.findById(id);
         User currentUser = this.informationManager.getCurrentUser(request);
 
-        if (user.isPresent()) {
-
-            if (!user.get().getId().equals(currentUser.getId())){
-                return new ResponseEntity<>(HttpStatus.FORBIDDEN);
-            }
-
-            this.profileService.updateProfilePic(id, profilePic);
-
-            if (profilePic.isEmpty()) {
-                return new ResponseEntity<>(HttpStatus.ACCEPTED);
-            }
-
-            return new ResponseEntity<>(HttpStatus.OK);
+        if (currentUser == null) {
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
 
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        if (user.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        if (!user.get().getId().equals(currentUser.getId())){
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        }
+
+        if (profilePic.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.ACCEPTED);
+        }
+
+        this.profileService.updateProfilePic(id, profilePic);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @Operation(summary = "Update the profile banner associated to a user")
