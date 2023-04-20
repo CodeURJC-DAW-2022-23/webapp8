@@ -24,6 +24,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.websocket.server.PathParam;
 import java.sql.Blob;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 @RestController
@@ -353,18 +354,52 @@ public class TweetRestController {
     @Operation(summary = "Get a tweet by its id")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Tweet got", content = {
-                    @Content(mediaType = "application/json", schema = @Schema(implementation = Tweet.class))
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = TweetInformation.class))
             }),
             @ApiResponse(responseCode = "404", description = "Tweet Not Found", content = @Content)
     })
     @GetMapping("/tweets/{id}")
     @JsonView(Basic.class)
-    public ResponseEntity<Tweet> getTweet(@PathVariable("id") Long id) {
+    public ResponseEntity<TweetInformation> getTweet(@PathVariable("id") Long id, HttpServletRequest request) {
         Tweet tweet = this.tweetService.findById(id).orElse(null);
+        User currentUser = this.informationManager.getCurrentUser(request);
 
         if (tweet == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<>(tweet, HttpStatus.OK);
+        List<Tweet> tList = new LinkedList<>();
+        tList.add(tweet);
+        List<TweetInformation> tweetInformationList = this.informationManager.calculateDataOfTweet(tList, currentUser);
+        return new ResponseEntity<>(tweetInformationList.get(0), HttpStatus.OK);
+    }
+
+    @Operation(summary = "Get some of the tweets that are comments of the specified tweet")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Tweets obtained", content = {
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = TweetInformation.class))
+            }),
+            @ApiResponse(responseCode = "204", description = "No tweets found for current user in this range", content = @Content),
+            @ApiResponse(responseCode = "403", description = "Current User can not do that", content = @Content)
+    })
+    @GetMapping("/tweets/{id}/comments")
+    @JsonView(Basic.class)
+    public ResponseEntity<List<TweetInformation>> getRepliesOfATweet(@PathVariable("id") Long id,
+                                                                     @PathParam("from") int from,
+                                                                     @PathParam("size") int size,
+                                                                     HttpServletRequest request) {
+        User user = this.informationManager.getCurrentUser(request);
+
+        if(user == null){
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        }
+
+        List<Tweet> tweets = this.tweetService.getComments(id, from, size);
+        List<TweetInformation> tweetsInformation = this.informationManager.calculateDataOfTweet(tweets, user);
+
+        if (tweetsInformation.size() == 0) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+
+        return new ResponseEntity<>(tweetsInformation, HttpStatus.OK);
     }
 }

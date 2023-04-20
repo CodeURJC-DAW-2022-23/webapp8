@@ -15,13 +15,13 @@ export class WriteTweetComponent {
   urlToProfilePic:string;
   tweetId: string;
 
-  constructor(private router: Router, private activatedRoute: ActivatedRoute, private service: TweetService, private service2: TweetService) {
+  constructor(private router: Router, private activatedRoute: ActivatedRoute, private service: TweetService) {
     this.tweetId= this.activatedRoute.snapshot.params['id'];
     if (this.tweetId){
       this.service.getTweet(this.tweetId).subscribe(
         tweet => {
-          this.tweet = tweet;
-          this.urlToProfilePic = "/api/users/" + this.tweet.user.id + "/user-image";
+          this.tweet = tweet.tweet;
+          this.urlToProfilePic = "/api/" + tweet.urlToProfilePic;
         },
         error => console.error(error)
       );
@@ -55,7 +55,7 @@ export class WriteTweetComponent {
           tweet => {
             let newTweet = tweet;
             if (validFiles.length > 0){
-              this.service2.postImages(tweetFiles, newTweet.tweet.id).subscribe()
+              this.service.postImages(tweetFiles, newTweet.tweet.id).subscribe()
             }
           },
           error => console.error(error)

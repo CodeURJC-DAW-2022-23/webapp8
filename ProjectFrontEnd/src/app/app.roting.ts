@@ -18,6 +18,7 @@ import { IndexComponent } from "./screens/index/index.component";
 import { BookmarksComponent } from './screens/bookmarks/bookmarks.component';
 import { NotificationsComponent } from './screens/notifications/notifications.component';
 import { WriteTweetComponent } from './screens/write-tweet/write-tweet.component';
+import { ShowTweetComponent } from './screens/show-tweet/show-tweet.component';
 
 const appRoutes = [
     { path: 'index', component: IndexComponent }, // provisional path
@@ -37,7 +38,8 @@ const appRoutes = [
     { path: 'home', component: HomeComponent },
     { path: 'notifications', component: NotificationsComponent},
     { path: 'write-tweet', component: WriteTweetComponent},
-    { path: 'write-tweet/comment/:id', component: WriteTweetComponent}
+    { path: 'write-tweet/comment/:id', component: WriteTweetComponent},
+    { path: 'tweet/:id', component: ShowTweetComponent},
 
 ]
 

@@ -21,6 +21,8 @@ export class TweetListComponent {
   hashtag: string;
   @Input()
   userId: number;
+  @Input()
+  tweetId: number;
   canMore: boolean = true;
 
   constructor(private router: Router, private service: TweetService, private userService: UserService) { }
@@ -103,6 +105,19 @@ export class TweetListComponent {
         break;
       case "Hashtag":
         this.service.getTweetsOfAHashtag(this.hashtag, this.offset, this.size).subscribe(
+          tweet => {
+            if (tweet !== null) {
+              tweet.forEach(t => this.tweets.push(t))
+            } else {
+              this.hideButtons()
+            }
+            this.removeSpinner()
+          },
+          error => console.error(error)
+        );
+        break;
+        case "Replies":
+        this.service.getRepliesOfATweet(this.tweetId, this.offset, this.size).subscribe(
           tweet => {
             if (tweet !== null) {
               tweet.forEach(t => this.tweets.push(t))

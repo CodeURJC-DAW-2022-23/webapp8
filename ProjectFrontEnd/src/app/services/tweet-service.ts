@@ -13,6 +13,13 @@ export class TweetService{
         private httpClient: HttpClient,
     ){}
 
+	getRepliesOfATweet(tweetId: number, from: number, size: number) {
+		let url = "/api/tweets/" + tweetId + "/comments?from=" + from + "&size=" + size
+			return this.httpClient.get(url).pipe(
+				catchError(error => this.handleError(error))
+			) as Observable<TweetInformation[]>;
+		}
+
     getTweetsOfAUser(userId, from, size): Observable<TweetInformation[]> {
 		let url = "/api/users/" + userId + "/tweets?from=" + from + "&size=" + size
 		return this.httpClient.get(url).pipe(
@@ -73,7 +80,7 @@ export class TweetService{
 		let url = "/api/tweets/" + id
 		return this.httpClient.get(url).pipe(
 			catchError(error => this.handleError(error))
-		) as Observable<Tweet>;
+		) as Observable<TweetInformation>;
 	}
 
 	postTweet(text){
