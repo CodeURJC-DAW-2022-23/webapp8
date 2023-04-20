@@ -12,7 +12,7 @@ import { UserService } from 'src/app/services/user.service';
 })
 export class ProfileComponent {
 
-  userId: string;
+  userId: number;
   userInformation: UserInformation;
   nickname: string;
   username: string;
@@ -27,43 +27,73 @@ export class ProfileComponent {
   isLogged: boolean;
   isYourProfile: boolean;
   isAdmin: boolean;
-  isBanned: boolean;
+  isNotBanned: boolean;
   isFollowed: boolean;
 
   constructor(private userService: UserService,
     loginService: LoginService,
     activatedRoute: ActivatedRoute) {
-    this.username = activatedRoute.snapshot.params['id'];
-    this.isLogged = loginService.isLogged();
-    let currentUser = loginService.currentUser;
 
-    this.userService.getUser(this.username).subscribe(
-      user => {
-        this.userInformation = user;
-        this.nickname = this.userInformation.user.nickname;
-        this.username = this.userInformation.user.username;
-        this.biography = this.userInformation.user.biography;
-        this.joinDate = this.userInformation.user.joinDate;
-        this.followedNumber = this.userInformation.followedNumber;
-        this.followersNumber = this.userInformation.followersNumber;
-        this.tweets = this.userInformation.tweets;
-        this.urlToProfilePic = "/api/" + this.userInformation.urlToProfilePic;
-        this.urlToBannerPic = "/api/" + this.userInformation.urlToBannerPic;
+    activatedRoute.params.subscribe(params => {
+      const id = params['id'];
+      this.userService.getUser(id).subscribe(
+        user => {
+          this.userInformation = user;
+          this.userId = user.user.id;
+          this.nickname = this.userInformation.user.nickname;
+          this.username = this.userInformation.user.username;
+          this.biography = this.userInformation.user.biography;
+          this.joinDate = this.userInformation.user.joinDate;
+          this.followedNumber = this.userInformation.followedNumber;
+          this.followersNumber = this.userInformation.followersNumber;
+          this.tweets = this.userInformation.tweets;
+          this.urlToProfilePic = "/api/" + this.userInformation.urlToProfilePic;
+          this.urlToBannerPic = "/api/" + this.userInformation.urlToBannerPic;
 
-        this.isYourProfile = currentUser.user.id === user.user.id;
-        this.isAdmin = currentUser.user.type === "ADMIN";
-        this.isBanned = user.user.enable;
-        this.isFollowed = false;
-      },
-      error => console.log(error)
-    );
+          userService.getCurrentUser().subscribe(
+            user => {
+              this.isLogged = user != null;
+              let currentUser = user;
 
-    this.userService.getCurrentUser().subscribe(
-      user => {
-        this.isLogged = user === null;
-        this.isAdmin = user.user.type === "ADMIN";
-      },
-      error => console.log(error)
-    );
+              this.userService.getUser(this.username).subscribe(
+                user => {
+                  this.isYourProfile = currentUser.user.id === user.user.id;
+                  this.isAdmin = currentUser.user.role === "ADMIN";
+                  this.isNotBanned = !user.user.enable;
+
+
+                  this.userService.getFollowedUser(currentUser.user.username, this.username).subscribe(
+                    find => this.isFollowed = find,
+                    error => console.log(error)
+                  )
+                },
+                error => console.log(error)
+              );
+            }
+          );
+        }
+      );
+    });
   }
+
+  banUser() {
+    this.userService.banUser(this.userId).subscribe(
+      error => console.log(error)
+    )
+  };
+
+  toggleFollowUser() {
+    this.userService.toggleFollow(this.userId).subscribe(
+      error => console.log(error)
+    );
+    this.isFollowed = !this.isFollowed;
+
+    if (this.isFollowed) {
+      this.followersNumber += 1;
+      return;
+    }
+
+    this.followersNumber -= 1;
+  };
+
 }

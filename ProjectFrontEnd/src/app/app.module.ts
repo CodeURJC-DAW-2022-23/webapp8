@@ -48,6 +48,7 @@ import { BookmarksComponent } from './screens/bookmarks/bookmarks.component';
 import { WriteTweetComponent } from './screens/write-tweet/write-tweet.component';
 import { LeftBarComponent } from './commons/left-bar/left-bar.component';
 import { NotificationListComponent } from './entities/notification/notification-list/notification-list.component';
+import { FollowersComponent } from './screens/followers/followers.component';
 
 @NgModule({
   declarations: [
@@ -92,6 +93,7 @@ import { NotificationListComponent } from './entities/notification/notification-
     WriteTweetComponent,
     LeftBarComponent,
     NotificationListComponent,
+    FollowersComponent,
   ],
   imports: [
     BrowserModule,

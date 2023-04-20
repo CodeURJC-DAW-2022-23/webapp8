@@ -287,4 +287,12 @@ public class ProfileService {
         userToChange.setBiography(bio);
         this.userRepository.save(userToChange);
     }
+
+    public boolean getFollowedUser(String username1, String username2) {
+        Optional<User> user = this.userRepository.findByUsername(username1);
+        Long userId = user.get().getId();
+        Optional<User> userToFind = this.userRepository.getUserFollowed(userId, username2);
+
+        return userToFind.isPresent();
+    }
 }

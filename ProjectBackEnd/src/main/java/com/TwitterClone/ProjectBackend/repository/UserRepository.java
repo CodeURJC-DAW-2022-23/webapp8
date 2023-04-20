@@ -147,5 +147,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Query("SELECT DISTINCT u FROM User u JOIN u.followers f JOIN f.followers f2 WHERE f2.id = :userId AND u.id NOT IN (SELECT f2.id FROM User u2 JOIN u2.followed f2 WHERE u2.id = :userId) AND u.id <> :userId")
     List<User> findRecommendedUsers(@Param("userId") Long userId);
 
+    @Query(value = "SELECT users.* FROM users_followed JOIN users ON followed_id = id WHERE user_id = ?1 AND username = ?2 ", nativeQuery = true)
+    Optional<User> getUserFollowed(Long username1, String username2);
 }
 

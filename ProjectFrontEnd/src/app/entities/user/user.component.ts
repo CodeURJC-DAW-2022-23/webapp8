@@ -87,7 +87,9 @@ export class UserComponent {
 
     this.buttonClassMap['bg-primary'] = false;
     this.buttonClassMap['bg-red-0'] = true;
-    this.userService.unbannedUser(idUser)
+    this.userService.unbannedUser(idUser).subscribe(
+      error => console.log(error)
+    );
   }
 
 }

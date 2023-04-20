@@ -114,6 +114,30 @@ public class ProfileRestController {
         return new ResponseEntity<>(listFollowed, HttpStatus.OK);
     }
 
+    @Operation(summary = "Get some followed users of a User")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Followed Found", content = {
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = UserInformation.class))
+            }),
+            @ApiResponse(responseCode = "204", description = "No more followed users found", content = @Content),
+            @ApiResponse(responseCode = "404", description = "User not found", content = @Content)
+    })
+    @GetMapping("/users/{username1}/followed/{username2}")
+    @JsonView(Basic.class)
+    public ResponseEntity<Boolean> thisUserFollowThisOne(@PathVariable String username1,
+                                                                       @PathVariable String username2) {
+        Optional<User> user = this.profileService.findByUsername(username1);
+
+        if (user.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        boolean isFollowed = this.profileService.getFollowedUser(username1, username2);
+
+        return new ResponseEntity<>(isFollowed, HttpStatus.OK);
+    }
+
+
     @Operation(summary = "Get some followers users of a User")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Followed Found", content = {

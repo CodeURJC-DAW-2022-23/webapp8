@@ -22,6 +22,27 @@ export class UserService {
     return this.http.get(url).pipe(
       catchError(error => this.handleError(error))
     ) as Observable<UserInformation>;
+  };
+
+  getFollowedUser(username1: string, username2: string): Observable<boolean> {
+    let url = "/api/users/" + username1 + '/followed/' + username2
+    return this.http.get(url).pipe(
+      catchError(error => this.handleError(error))
+    ) as Observable<boolean>;
+  };
+
+  getFollowed(username: string): Observable<UserInformation[]> {
+    let url = '/api/users/' + username + '/followed?from=0&size=10';
+    return this.http.get(url).pipe(
+      catchError(error => this.handleError(error))
+    ) as Observable<UserInformation[]>;
+  }
+
+  getFollowers(username: string): Observable<UserInformation[]> {
+    let url = '/api/users/' + username + '/followers?from=0&size=10';
+    return this.http.get(url).pipe(
+      catchError(error => this.handleError(error))
+    ) as Observable<UserInformation[]>;
   }
 
   getStatistics(): Observable<object> {
@@ -66,8 +87,22 @@ export class UserService {
     )
   }
 
+  banUser(id: number) {
+    let url = '/api/users/' + id + '?type=BAN';
+    return this.http.put(url, null).pipe(
+      catchError(error => this.handleError(error))
+    )
+  }
+
   unbannedUser(id: number) {
     let url = '/users/' + id + '?type=UNBAN';
+    return this.http.put(url, null).pipe(
+      catchError(error => this.handleError(error))
+    )
+  }
+
+  toggleFollow(id: number) {
+    let url = '/api/users/' + id + '/followers';
     return this.http.put(url, null).pipe(
       catchError(error => this.handleError(error))
     )
