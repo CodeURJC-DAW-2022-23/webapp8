@@ -45,7 +45,7 @@ import { DashboardComponent } from './screens/dashboard/dashboard.component';
 import { HomeComponent } from './screens/home/home.component';
 import { IndexComponent } from './screens/index/index.component';
 import { BookmarksComponent } from './screens/bookmarks/bookmarks.component';
-//import { WriteTweetComponent } from './screens/write-tweet/write-tweet.component';
+import { WriteTweetComponent } from './screens/write-tweet/write-tweet.component';
 import { LeftBarComponent } from './commons/left-bar/left-bar.component';
 import { NotificationListComponent } from './entities/notification/notification-list/notification-list.component';
 
@@ -89,7 +89,7 @@ import { NotificationListComponent } from './entities/notification/notification-
     IndexComponent,
     BookmarksComponent,
     HomeComponent,
-    //WriteTweetComponent,
+    WriteTweetComponent,
     LeftBarComponent,
     NotificationListComponent,
   ],

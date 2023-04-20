@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { TweetInformation } from 'src/app/entities/tweet/tweet.model';
 import { UserInformation } from 'src/app/entities/user/user.model';
@@ -66,9 +66,4 @@ export class ProfileComponent {
       error => console.log(error)
     );
   }
-
-  ngOnInit() {
-    console.log()
-  }
-
 }

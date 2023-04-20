@@ -15,8 +15,7 @@ export class TweetComponent {
   isLogged:boolean;
   @Output()
   delete = new EventEmitter<boolean>();
-  constructor(private router: Router, private service: TweetService) {
-}
+  constructor(private router: Router, private service: TweetService) {}
 
   urlToComment:string;
   profileIdURL:string;
