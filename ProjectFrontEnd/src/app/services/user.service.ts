@@ -105,7 +105,7 @@ export class UserService {
   }
 
   getBannedUsers(): Observable<UserInformation[]> {
-    let url = "/api/banned-users"
+    let url = "/api/banned-users";
     return this.http.get(url).pipe(
       catchError(error => this.handleError(error))
     ) as Observable<UserInformation[]>;
@@ -146,8 +146,16 @@ export class UserService {
     )
   }
 
-  handleError(error: any): any {
-    throw new Error('Method not implemented.');
+  getRecommendedUsers(): Observable<UserInformation[]> {
+    let url = "/api/recommended-users";
+    return this.http.get(url).pipe(
+      catchError(error => this.handleError(error))
+    ) as Observable<UserInformation[]>;
   }
+
+  private handleError(error: any) {
+		console.error(error);
+		return throwError("Server error (" + error.status + "): " + error.text())
+	}
 
 }
