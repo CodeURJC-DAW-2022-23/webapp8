@@ -4,6 +4,7 @@ import { UserService } from 'src/app/services/user.service';
 import { LoginService } from 'src/app/services/login.service';
 
 import { User } from 'src/app/entities/user/user.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-left-bar',
@@ -18,7 +19,8 @@ export class LeftBarComponent {
   public urlToProfilePicture: string;
 
   constructor(private _userService: UserService,
-    private _loginService: LoginService) {
+    private _loginService: LoginService,
+    private router: Router) {
       this._userService.getCurrentUser().subscribe(userInformation => {
       this.urlToProfilePicture = "/api/" + userInformation.urlToProfilePic
 
@@ -32,5 +34,6 @@ export class LeftBarComponent {
 
   logOut() {
     this._loginService.logOut();
+    this.router.navigateByUrl("/")
   }
 }
