@@ -16,6 +16,13 @@ export class Signup {
           )) as Observable<Response>
     }
 
+    verify(code:string):Observable<Response>{
+      let url = "api/verification?code=" + code
+      return this.http.get(url, {observe: 'response'}).pipe(
+        catchError(error => this.handleError(error))
+      )as Observable<Response>
+    }
+
     private handleError(error: any) {
 		console.error(error);
 		return throwError("Server error (" + error.status + "): " + error.text())
