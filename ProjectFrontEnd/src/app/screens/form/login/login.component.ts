@@ -1,7 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { Router, ActivatedRoute } from '@angular/router'; // To route the page when needed
 import { HashtagService } from "src/app/services/hashtag.service";
-import { hashtagComponent } from "src/app/entities/hashtag/hashtag.component"; 
+import { hashtagComponent } from "src/app/entities/hashtag/hashtag.component";
 import { of, map } from "rxjs";
 import { TweetService } from "src/app/services/tweet-service";
 import { LoginService } from "src/app/services/login.service";
@@ -10,17 +10,17 @@ import { LoginService } from "src/app/services/login.service";
     selector: 'app-login',
     templateUrl: './login.component.html',
     styleUrls: ['./login.component.css']
-  })
+})
 
-export class LoginComponent{
+export class LoginComponent {
 
 
-    constructor(private router:Router, private service: LoginService) {}
+    constructor(private router: Router, private service: LoginService) { }
 
-    login(event: any, username:string, password: string){
+    login(event: any, username: string, password: string) {
         event.preventDefault();
 
-        this.service.logIn(username,password).subscribe(
+        this.service.logIn(username, password).subscribe(
             (response) => {
                 this.service.reqIsLogged();
                 this.router.navigateByUrl('/home');
@@ -29,5 +29,5 @@ export class LoginComponent{
         );
     }
 
-    
+
 }

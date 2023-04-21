@@ -8,7 +8,7 @@ import { User, UserInformation } from '../entities/user/user.model';
 @Injectable({ providedIn: 'root' })
 export class LoginService {
 
-    logged: boolean;
+    logged: boolean = false;
     currentUser: UserInformation;
 
     getCurrentUser(){
@@ -16,7 +16,6 @@ export class LoginService {
     }
 
     constructor(private http: HttpClient, private service: UserService) {
-        this.logged = false;
         this.reqIsLogged();
     }
 
@@ -29,7 +28,7 @@ export class LoginService {
             },
             error => {
                 if (error.status != 404) {
-                    console.error('Error when asking if logged: ' + JSON.stringify(error));
+                    this.logged = false;
                 }
             }
         );

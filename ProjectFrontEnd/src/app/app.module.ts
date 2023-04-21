@@ -51,6 +51,7 @@ import { NotificationListComponent } from './entities/notification/notification-
 import { ShowTweetComponent } from './screens/show-tweet/show-tweet.component';
 import { FollowersComponent } from './screens/followers/followers.component';
 import { EditProfileComponent } from './screens/profile/edit-profile/edit-profile.component';
+import { RightBarComponent } from './commons/right-bar/right-bar.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -95,9 +96,9 @@ import { EditProfileComponent } from './screens/profile/edit-profile/edit-profil
     LeftBarComponent,
     NotificationListComponent,
     ShowTweetComponent,
-    EditProfileComponent,
     FollowersComponent,
     EditProfileComponent,
+    RightBarComponent
   ],
   imports: [
     FormsModule,
