@@ -139,4 +139,10 @@ export class TweetListComponent {
       this.offset -= 1;
     }
   }
+
+  removeElement(item){
+    if (this.typeElement === 'Bookmarks'){
+        this.deleteElement(item);
+    }
+  }
 }

@@ -15,6 +15,8 @@ export class TweetComponent {
   isLogged:boolean;
   @Output()
   delete = new EventEmitter<boolean>();
+  @Output()
+  bookmark = new EventEmitter<boolean>();
   constructor(private router: Router, private service: TweetService) {}
 
   urlToComment:string;
@@ -97,6 +99,7 @@ export class TweetComponent {
     this.service.toggleBookmark(this.tweet.tweet.id).subscribe(
       tweet => {
         this.tweet.bookmarked = tweet.bookmarked;
+        this.bookmark.emit(true)
       },
       error => console.error(error)
     );

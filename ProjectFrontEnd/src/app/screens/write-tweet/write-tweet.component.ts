@@ -9,7 +9,6 @@ import { TweetService } from 'src/app/services/tweet-service';
   styleUrls: ['./write-tweet.component.css']
 })
 export class WriteTweetComponent {
-  //Servis pa algo?
   tweet: Tweet;
   isLogged: boolean;
   urlToProfilePic:string;
