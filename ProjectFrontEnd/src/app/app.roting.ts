@@ -23,7 +23,7 @@ import { FollowersComponent } from './screens/followers/followers.component';
 import { EditProfileComponent } from './screens/profile/edit-profile/edit-profile.component';
 
 const appRoutes = [
-    { path: 'index', component: IndexComponent }, // provisional path
+    { path: '', component: IndexComponent }, // provisional path
     { path: 'bookmarks', component: BookmarksComponent },
     { path: 'explorer', component: explorer },
     { path: 'login', component: LoginComponent },

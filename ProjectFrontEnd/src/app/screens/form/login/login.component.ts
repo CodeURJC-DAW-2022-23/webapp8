@@ -20,7 +20,13 @@ export class LoginComponent{
     login(event: any, username:string, password: string){
         event.preventDefault();
 
-        this.service.logIn(username,password);
+        this.service.logIn(username,password).subscribe(
+            (response) => {
+                this.service.reqIsLogged();
+                this.router.navigateByUrl('/home');
+            },
+            (error) => alert("Wrong credentials")
+        );
     }
 
     
