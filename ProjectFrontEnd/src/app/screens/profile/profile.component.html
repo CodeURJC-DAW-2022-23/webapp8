@@ -20,7 +20,13 @@
           <h2 class="text-xl font-semibold dark:text-white-0">{{nickname}}</h2>
 
           <div class="w-6">
-            <!-- SVG -->
+            <div *ngIf="!(userInformation.user.type === 'PUBLIC')" class="w-5">
+              <svg attr.viewBox="{{viewBox}}" [ngClass]="{'fill-red-3':userInformation.user.type === 'BANNED','fill-primary':userInformation.user.type === 'VERIFIED'}">
+                  <g>
+                      <path attr.d="{{svg}}"/>
+                  </g>
+              </svg>
+            </div>
           </div>
         </section>
       </div>
@@ -50,7 +56,13 @@
           <h2 class="text-2xl font-semibold dark:text-white-0">{{nickname}}</h2>
 
           <div class="w-6">
-            <!-- SVG -->
+            <div *ngIf="!(userInformation.user.type === 'PUBLIC')" class="w-5">
+              <svg attr.viewBox="{{viewBox}}" [ngClass]="{'fill-red-3':userInformation.user.type === 'BANNED','fill-primary':userInformation.user.type === 'VERIFIED'}">
+                  <g>
+                      <path attr.d="{{svg}}"/>
+                  </g>
+              </svg>
+            </div>
           </div>
         </section>
 
@@ -86,7 +98,7 @@
             <span class="font-semibold text-md dark:font-normal text-gray-2 hover:underline">Following</span>
           </div>
         </a>
-        <a [routerLink]="['/profile', username, 'followers' ]">
+        <a [routerLink]="['/profile', username, 'followers']">
           <div class="flex items-center gap-1">
             <span class="font-semibold text-md dark:text-white-0 hover:underline">{{followersNumber}}</span>
             <span class="font-semibold text-md dark:font-normal text-gray-2 hover:underline">Followers</span>

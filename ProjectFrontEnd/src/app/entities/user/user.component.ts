@@ -47,6 +47,7 @@ export class UserComponent {
     this.idSVG = this.username + "-SVG";
     this.blue = this.typeButton === "Verify";
     this.isExplorePage = this.router.url.includes("explore");
+    this.loadSVG();
   }
 
   loadSVG() {

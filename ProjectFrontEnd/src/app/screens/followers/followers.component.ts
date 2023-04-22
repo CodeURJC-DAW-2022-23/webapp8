@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UserInformation } from 'src/app/entities/user/user.model';
 import { UserService } from 'src/app/services/user.service';
@@ -8,22 +8,24 @@ import { UserService } from 'src/app/services/user.service';
   templateUrl: './followers.component.html',
   styleUrls: ['./followers.component.css']
 })
-export class FollowersComponent {
+export class FollowersComponent implements OnInit{
 
   users: UserInformation[];
   username: string;
 
   constructor(private userService: UserService,
-    activatedRoute: ActivatedRoute,
+    private activatedRoute: ActivatedRoute,
     private router: Router) {
     const userId = activatedRoute.snapshot.params['id'];
     this.username = userId;
+  }
 
-    activatedRoute.params.subscribe(params => {
+  ngOnInit():void{
+    this.activatedRoute.params.subscribe(params => {
       const typeList = params['users-list'];
 
       if (typeList === 'followers') {
-        this.userService.getFollowers(userId).subscribe(
+        this.userService.getFollowers(this.username).subscribe(
           users => this.users = users,
           error => console.log(error)
         );
@@ -32,7 +34,7 @@ export class FollowersComponent {
       }
 
       if (typeList === 'followed') {
-        this.userService.getFollowed(userId).subscribe(
+        this.userService.getFollowed(this.username).subscribe(
           users => this.users = users,
           error => console.log(error)
         );
