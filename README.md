@@ -508,3 +508,77 @@ cd webapp8/ProjectBackEnd/docker
 | 5º  | [Create JsonViews](https://github.com/CodeURJC-DAW-2022-23/webapp8/commit/cbf5175dab165666b5afe1f7629d33d57d9a3a8f) | | 5º      | [TweetController.java](https://github.com/CodeURJC-DAW-2022-23/webapp8/blob/main/ProjectBackEnd/src/main/java/com/TwitterClone/ProjectBackend/Controller/TweetController.java)        |
 
 ***
+
+## :city_sunset: Phase 4 - Implementation of the web with SPA architecture
+
+### :factory: Start-up of the application with Angular
+
+### :bridge_at_night: Angular component diagrams and templates
+
+![SPA_diagram](./files-to-README/phase4/SPA_diagram.svg)
+
+### :vhs: Video representation
+
+### :busts_in_silhouette: Members Participation - Phase 4
+
+#### Sergio De Oro Fernández
+
+* One of those in charge of Dockerizar, has standardized and formatted the documents associated with the practice thanks to his temperance, allowing to have a uniform work.
+
+| #   | Commit      |     | #   | File |
+| :-: | :---------: | :-: | :-: | :--: |
+| 1º  | []() | | 1º      | []()        |
+| 2º  | []() | | 2º      | []()        |
+| 3º  | []() | | 3º      | []()        |
+| 4º  | []() | | 4º      | []()        |
+| 5º  |[]() | | 5º      | []()         |
+
+#### Laura María Camino Yuste
+
+* User protector and member of the REST API creation team, her security management has allowed our future clients not to suffer any data leakage.
+
+| #   | Commit      |     | #   | File |
+| :-: | :---------: | :-: | :-: | :--: |
+| 1º  | []() | | 1º      | []()        |
+| 2º  | []() | | 2º      | []()        |
+| 3º  | []() | | 3º      | []()        |
+| 4º  | []() | | 4º      | []()        |
+| 5º  |[]() | | 5º      | []()         |
+
+#### Antonio José Alanís Bernal
+
+* Member of the application dockerization team, he has refactored the code to adapt it and allow the permanence of our database.
+
+| #   | Commit      |     | #   | File |
+| :-: | :---------: | :-: | :-: | :--: |
+| 1º  | []() | | 1º      | []()        |
+| 2º  | []() | | 2º      | []()        |
+| 3º  | []() | | 3º      | []()        |
+| 4º  | []() | | 4º      | []()        |
+| 5º  |[]() | | 5º      | []()         |
+
+#### Ikár Vladislav Martínez de Lizarduy Kostornichenko
+
+* Phase leader and documenter, and member of the REST API team. The extensive knowledge of him has allowed a calm phase and without unforeseen events.
+
+| #   | Commit      |     | #   | File |
+| :-: | :---------: | :-: | :-: | :--: |
+| 1º  | []() | | 1º      | []()        |
+| 2º  | []() | | 2º      | []()        |
+| 3º  | []() | | 3º      | []()        |
+| 4º  | []() | | 4º      | []()        |
+| 5º  |[]() | | 5º      | []()         |
+
+#### Miguel Ángel Sánchez Miranda
+
+* Database analyst and one of the creators of the Twitter clone REST API, his extensive knowledge in information management has allowed there to be no problems when creating the files that are sent by the API.
+
+| #   | Commit      |     | #   | File |
+| :-: | :---------: | :-: | :-: | :--: |
+| 1º  | [Create write-tweet page](https://github.com/CodeURJC-DAW-2022-23/webapp8/commit/9698ef6d7c5a1fd6ecdc2bedab5c9663bfe17834) | | 1º      | []()        |
+| 2º  | [Update tweet-list component](https://github.com/CodeURJC-DAW-2022-23/webapp8/commit/819b404bae51eb7f720e61f2480570280e0aa196) | | 2º      | []()        |
+| 3º  | [Make interactions work in tweet component](https://github.com/CodeURJC-DAW-2022-23/webapp8/commit/578f8452a5199cb2968f7d84f64973c34595c1d0) | | 3º      | []()        |
+| 4º  | [4 Add show-tweet page](https://github.com/CodeURJC-DAW-2022-23/webapp8/commit/e7664ffb59859188544a002b6ad96047810edcf1) | | 4º      | []()        |
+| 5º  |[Create tweet service](https://github.com/CodeURJC-DAW-2022-23/webapp8/commit/03088b9a017ce7b6eceeec5cdb71ae76abc33a8c) | | 5º      | []()         |
+
+***
