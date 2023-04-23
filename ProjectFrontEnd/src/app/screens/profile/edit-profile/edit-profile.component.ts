@@ -46,11 +46,16 @@ export class EditProfileComponent {
       }
     }
 
-    this.userService.putNickname(nickname, this.user.id).subscribe();
+    this.userService.putNickname(nickname, this.user.id).subscribe(
+      response => {
+        this.userService.putBiography(biography, this.user.id).subscribe(
+          response => {
+            this.router.navigate(['/profile', this.user.username])
+          }
+        )
+      }
 
-    this.userService.putBiography(biography, this.user.id).subscribe();
-
-    this.router.navigate(['/profile', this.user.username]);
+    );
   }
 
   private isValidFile(element: any): boolean {

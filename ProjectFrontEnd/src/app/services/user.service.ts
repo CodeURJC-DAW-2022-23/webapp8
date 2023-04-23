@@ -48,7 +48,7 @@ export class UserService {
   putBannerPic(file: any, id: number) {
     let url = '/api/users/' + id + '/banner-image';
     let formData = new FormData();
-    formData.append("banner", file, file.name);
+    formData.append("file", file, file.name);
     let headers = new HttpHeaders();
     headers.append('Content-Type', 'multipart/form-data');
 
@@ -60,7 +60,7 @@ export class UserService {
   putProfilePic(file: any, id: number) {
     let url = '/api/users/' + id + '/user-image';
     let formData = new FormData();
-    formData.append("profile", file, file.name);
+    formData.append("file", file, file.name);
     let headers = new HttpHeaders();
     headers.append('Content-Type', 'multipart/form-data');
 
