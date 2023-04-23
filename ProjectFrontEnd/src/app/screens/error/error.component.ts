@@ -9,12 +9,13 @@ import { LoginService } from "src/app/services/login.service";
   })
 export class ErrorComponent {
 
-    constructor(private router:Router, private service: LoginService) {}
+    constructor(private _router:Router, private _service: LoginService) {}
     refresh(): void {
         window.location.reload();
     }
 
     logOut(){
-        this.service.logOut();
+        this._service.logOut();
+        this._router.navigateByUrl('/')
     }
 }
