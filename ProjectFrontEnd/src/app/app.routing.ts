@@ -22,27 +22,111 @@ import { FollowersComponent } from './screens/followers/followers.component';
 import { EditProfileComponent } from './screens/profile/edit-profile/edit-profile.component';
 
 const appRoutes = [
-    { path: '', component: IndexComponent },
-    { path: 'bookmarks', component: BookmarksComponent },
-    { path: 'explore', component: ExplorerComponent },
-    { path: 'login', component: LoginComponent },
-    { path: 'signup', component: SignUpComponent },
-    { path: 'verification', component: VerificationComponent },
-    { path: 'error', component: ErrorComponent },
-    { path: 'forgot-password-confirmation', component: ConfirmationComponent },
-    { path: 'forgot-password', component: ForgotPassword },
-    { path: 'reset-password/:passwordToken', component: ResetPassword },
-    { path: 'reset-password-confirmation', component: ResetPasswordConfirmation },
-    { path: 'profile/:id', component: ProfileComponent },
-    { path: 'profile/:id/edit-profile', component: EditProfileComponent },
-    { path: 'profile/:id/:users-list', component: FollowersComponent },
-    { path: 'dashboard', component: DashboardComponent },
-    { path: 'search/:keyword', component: SearchComponent },
-    { path: 'home', component: HomeComponent },
-    { path: 'notifications', component: NotificationsComponent },
-    { path: 'write-tweet', component: WriteTweetComponent },
-    { path: 'write-tweet/comment/:id', component: WriteTweetComponent },
-    { path: 'tweet/:id', component: ShowTweetComponent },
+    {
+      path: '',
+      component: IndexComponent,
+      title: 'Twitter'
+    },
+    {
+      path: 'bookmarks',
+      component: BookmarksComponent,
+      title: 'Bookmarks / Twitter'
+    },
+    {
+      path: 'explore',
+      component: ExplorerComponent,
+      title: 'Explore / Twitter'
+    },
+    {
+      path: 'login',
+      component: LoginComponent,
+      title: 'Login / Twitter'
+    },
+    {
+      path: 'signup',
+      component: SignUpComponent,
+      title: 'Signup / Twitter'
+    },
+    {
+      path: 'verification',
+      component: VerificationComponent,
+      title: 'Verification / Twitter'
+    },
+    {
+      path: 'error',
+      component: ErrorComponent,
+      title: 'Error / Twitter'
+    },
+    {
+      path: 'forgot-password-confirmation',
+      component: ConfirmationComponent,
+      title: 'Forgot password confirmation / Twitter'
+    },
+    {
+      path: 'forgot-password',
+      component: ForgotPassword,
+      title: 'Forgot password / Twitter'
+    },
+    {
+      path: 'reset-password/:passwordToken',
+      component: ResetPassword,
+      title: 'Reset your password / Twitter'
+    },
+    {
+      path: 'reset-password-confirmation',
+      component: ResetPasswordConfirmation,
+      title: 'Reset password confirmation / Twitter'
+    },
+    {
+      path: 'profile/:id',
+      component: ProfileComponent,
+      title: 'Profile / Twitter'
+    },
+    {
+      path: 'profile/:id/edit-profile',
+      component: EditProfileComponent,
+      title: 'Edit profile / Twitter'
+    },
+    {
+      path: 'profile/:id/:users-list',
+      component: FollowersComponent,
+      title: 'People related / Twitter'
+    },
+    {
+      path: 'dashboard',
+      component: DashboardComponent,
+      title: 'Dashboard / Twitter'
+    },
+    {
+      path: 'search/:keyword',
+      component: SearchComponent,
+      title: 'Explore / Twitter'
+    },
+    {
+      path: 'home',
+      component: HomeComponent,
+      title: 'Home / Twitter'
+    },
+    {
+      path: 'notifications',
+      component: NotificationsComponent,
+      title: 'Notifications / Twitter'
+    },
+    {
+      path: 'write-tweet',
+      component: WriteTweetComponent,
+      title: 'Write a tweet / Twitter'
+    },
+    {
+      path: 'write-tweet/comment/:id',
+      component: WriteTweetComponent,
+      title: 'Comment a tweet / Twitter'
+    },
+    {
+      path: 'tweet/:id',
+      component: ShowTweetComponent,
+      title: 'Tweet / Twitter'
+    },
 ]
 
 export const AppRoutingModule = RouterModule.forRoot(appRoutes);
