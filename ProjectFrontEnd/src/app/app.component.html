@@ -1,9 +1,9 @@
-<!-- 
-    Provisional parent div for centering the main page. 
-    
+<!--
+    Provisional parent div for centering the main page.
+
     In the future will be as router-outlet components as different type of pages. -->
 <div [ngClass]="{'relative flex justify-center llg:px-7 gap-7':show}" class="bg-white-0 dark:bg-black-0">
-    <app-left-bar *ngIf="show"></app-left-bar>
+    <app-left-bar *ngIf="show" class="self-start sticky right-0 top-0"></app-left-bar>
     <router-outlet (activate)="changePage()"></router-outlet>
-    <app-right-bar *ngIf="show"></app-right-bar>
+    <app-right-bar *ngIf="show" class="self-start sticky right-0 top-0"></app-right-bar>
 </div>
