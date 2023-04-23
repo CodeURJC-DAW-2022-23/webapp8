@@ -265,9 +265,10 @@ public class TweetRestController {
         List<TweetInformation> tweetInformation = this.informationManager.calculateDataOfTweet(list, currentUser);
 
         if (hasLiked) {
+            this.notificationService.createNotification(id,tweet.getUser(), currentUser, "LIKE");
             return new ResponseEntity<>(tweetInformation.get(0), HttpStatus.OK);
         }
-
+        this.notificationService.deleteNotification(id, currentUser.getId(), "LIKE", tweet.getUser().getId());
         return new ResponseEntity<>(tweetInformation.get(0), HttpStatus.ACCEPTED);
     }
 
@@ -305,9 +306,10 @@ public class TweetRestController {
         List<TweetInformation> tweetInformation = this.informationManager.calculateDataOfTweet(list, currentUser);
 
         if (hasRetweeted) {
+            this.notificationService.createNotification(id,tweet.getUser(), currentUser, "RETWEET");
             return new ResponseEntity<>(tweetInformation.get(0), HttpStatus.OK);
         }
-
+        this.notificationService.deleteNotification(id, currentUser.getId(), "RETWEET", tweet.getUser().getId());
         return new ResponseEntity<>(tweetInformation.get(0), HttpStatus.ACCEPTED);
     }
 
