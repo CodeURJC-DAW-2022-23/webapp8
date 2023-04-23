@@ -100,8 +100,12 @@
                         <section class="flex items-center gap-2">
                             <h2 class="text-xl font-semibold dark:text-white-0">{{nickname}}</h2>
 
-                            <div class="w-5">
-                                <!-- svg in the future -->
+                            <div *ngIf="!(type === 'PUBLIC')" class="w-5">
+                              <svg attr.viewBox="{{viewBox}}" [ngClass]="{'fill-red-3':type === 'BANNED','fill-primary':type === 'VERIFIED'}">
+                                <g>
+                                  <path attr.d="{{svg}}"/>
+                                </g>
+                              </svg>
                             </div>
                         </section>
 
@@ -145,7 +149,7 @@
         </a>
 
         <a *ngIf="isLogged" class="py-4 text-xl font-bold text-center transition rounded-full cursor-pointer text-white-0 hover:scale-110 bg-primary"
-            [routerLink]="['/write-tweet']"> <!-- write tweet in the future -->
+            [routerLink]="['/write-tweet']">
             Tweet
         </a>
     </div>

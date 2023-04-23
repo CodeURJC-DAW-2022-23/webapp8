@@ -4,7 +4,7 @@ import { UserService } from "./user.service";
 import { Observable, catchError, throwError } from "rxjs";
 import { TweetService } from "./tweet-service";
 import { UserInformation } from "../entities/user/user.model";
-import { Trend } from "../entities/hashtag/trend.model";
+import { Trend } from "../entities/trend/trend.model";
 
 @Injectable({ providedIn: 'root' })
 export default class SearchService {

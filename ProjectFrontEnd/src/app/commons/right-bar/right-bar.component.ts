@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
-import { Trend } from 'src/app/entities/hashtag/trend.model';
+import { Trend } from 'src/app/entities/trend/trend.model';
 import { UserInformation } from 'src/app/entities/user/user.model';
 import { HashtagService } from 'src/app/services/hashtag.service';
 import { LoginService } from 'src/app/services/login.service';

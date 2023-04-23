@@ -35,7 +35,7 @@ export class TweetService {
   }
 
   getTweetsOfAHashtag(hashtag, from, size): Observable<TweetInformation[]> {
-    let url = "/api/hashtag/" + hashtag + "/tweets?from=" + from + "&size=" + size
+    let url = "/api/trend/" + hashtag + "/tweets?from=" + from + "&size=" + size
     return this.httpClient.get(url).pipe(
       catchError(error => this.handleError(error))
     ) as Observable<TweetInformation[]>;
