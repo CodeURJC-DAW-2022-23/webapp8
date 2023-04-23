@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Hashtag } from 'src/app/entities/hashtag/hashtag.model';
+import { Trend } from 'src/app/entities/hashtag/trend.model';
 import { UserInformation } from 'src/app/entities/user/user.model';
 import { HashtagService } from 'src/app/services/hashtag.service';
 import { LoginService } from 'src/app/services/login.service';
@@ -14,7 +14,7 @@ import { UserService } from 'src/app/services/user.service';
 export class RightBarComponent implements OnInit {
 
   recommendedUsers: UserInformation[] = [];
-  hashtagList:Hashtag[] = [];
+  trends:Trend[] = [];
 
   offset:number = 0;
   size:number = 5;
@@ -35,8 +35,8 @@ export class RightBarComponent implements OnInit {
   }
   getTrends() {
     this.hashtagService.getSomeTrends(this.offset, this.size).subscribe(
-      response => response.forEach(h => this.hashtagList.push(h)),
-      error => this.hashtagList = []
+      response => response.forEach(h => this.trends.push(h)),
+      error => this.trends = []
     );
   }
   getRecommendedUsers() {

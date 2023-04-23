@@ -4,8 +4,7 @@ import { UserService } from "./user.service";
 import { Observable, catchError, throwError } from "rxjs";
 import { TweetService } from "./tweet-service";
 import { UserInformation } from "../entities/user/user.model";
-import { hashtagComponent } from "../entities/hashtag/hashtag.component";
-import { Hashtag } from "../entities/hashtag/hashtag.model";
+import { Trend } from "../entities/hashtag/trend.model";
 
 @Injectable({ providedIn: 'root' })
 export default class SearchService {
@@ -18,11 +17,11 @@ export default class SearchService {
             )) as Observable<UserInformation[]>
     }
 
-    searchHashtags(keyword:string):Observable<Hashtag[]>{
+    searchHashtags(keyword:string):Observable<Trend[]>{
         let url = "api/hashtags/" + keyword + "/found-hashtags"
         return this.http.get(url).pipe(
             catchError(error => this.handleError(error)
-            )) as Observable<Hashtag[]>
+            )) as Observable<Trend[]>
     }
 
     private handleError(error: any) {

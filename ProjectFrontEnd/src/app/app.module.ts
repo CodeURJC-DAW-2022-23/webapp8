@@ -26,7 +26,7 @@ import { NavBarButtonComponent } from './others/nav-bar-button/nav-bar-button.co
 import { SearcherComponent } from './others/searcher/searcher.component';
 import { TweetComponent } from './entities/tweet/tweet.component';
 import { explorer } from './screens/explorer/explorer.component';
-import { hashtagComponent } from './entities/hashtag/hashtag.component';
+import { TrendComponent } from './entities/hashtag/trend.component';
 import { NotificationComponent } from './entities/notification/notification.component';
 import { TweetListComponent } from './entities/tweet/tweet-list/tweet-list.component';
 import { UserComponent } from './entities/user/user.component';
@@ -52,6 +52,7 @@ import { ShowTweetComponent } from './screens/show-tweet/show-tweet.component';
 import { FollowersComponent } from './screens/followers/followers.component';
 import { EditProfileComponent } from './screens/profile/edit-profile/edit-profile.component';
 import { RightBarComponent } from './commons/right-bar/right-bar.component';
+import { TrendListComponent } from './entities/hashtag/trend-list/trend-list.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -73,7 +74,7 @@ import { RightBarComponent } from './commons/right-bar/right-bar.component';
     SearcherComponent,
     TweetComponent,
     explorer,
-    hashtagComponent,
+    TrendComponent,
     NotificationComponent,
     TweetListComponent,
     UserComponent,
@@ -98,7 +99,8 @@ import { RightBarComponent } from './commons/right-bar/right-bar.component';
     ShowTweetComponent,
     FollowersComponent,
     EditProfileComponent,
-    RightBarComponent
+    RightBarComponent,
+    TrendListComponent,
   ],
   imports: [
     FormsModule,

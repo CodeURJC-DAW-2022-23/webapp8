@@ -33,16 +33,21 @@
   </header>
 
   <!-- USERS -->
-  <div *ngIf="showProfiles" id="user-container">
+  <div *ngIf="!showTweets" id="user-container">
     <div  *ngFor="let user of userInformationList;">
       <app-user [userInformation]="user">
       </app-user>
     </div>
   </div>
 
-  <div id="trend-container">
-    <app-hashtagComponent [hashtags]="hashtagList" (whatToShow)="setShowProfiles($event)">
-    </app-hashtagComponent>
+  <div *ngIf="!showTweets" id="trend-container">
+    <div *ngFor="let trend of trends; let i = index">
+      <app-trend [index]="i" [trend]="trend" (showHashtag)="showHashtag($event)"></app-trend>
+    </div>
+  </div>
+
+  <div *ngIf="showTweets">
+    <app-tweet-list [typeElement]="'Hashtag'" [hashtag]="hashtag"></app-tweet-list>
   </div>
 
 

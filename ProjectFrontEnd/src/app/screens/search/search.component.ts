@@ -1,12 +1,9 @@
-import { Component, OnInit,  Output, EventEmitter } from "@angular/core";
-import { Router, ActivatedRoute } from '@angular/router'; // To route the page when needed
-import { HashtagService } from "src/app/services/hashtag.service";
-import { hashtagComponent } from "src/app/entities/hashtag/hashtag.component"; 
-import { of, map } from "rxjs";
+import { Component, OnInit } from "@angular/core";
+import { Router, ActivatedRoute } from '@angular/router';
 import { TweetService } from "src/app/services/tweet-service";
 import { UserInformation } from "src/app/entities/user/user.model";
 import SearchService from "src/app/services/search.service";
-import { Hashtag } from "src/app/entities/hashtag/hashtag.model";
+import { Trend } from "src/app/entities/hashtag/trend.model";
 
 @Component({
     selector: 'app-search',
@@ -16,40 +13,34 @@ import { Hashtag } from "src/app/entities/hashtag/hashtag.model";
 
 export class Search implements OnInit{
 
-    hashtagList: Hashtag[] = [];
+    trends: Trend[] = [];
+    hashtag: string;
     userInformationList: UserInformation[] = [];
     keyword:string;
-    showProfiles:boolean;
+    showTweets:boolean = false;
 
     constructor(private router:Router,activatedRoute: ActivatedRoute, private service: SearchService, private tweetService:TweetService) {       
         this.keyword = activatedRoute.snapshot.params['keyword'];
-        this.showProfiles = true;
     }
     
     ngOnInit(): void {
         this.getAndLoadData(this.keyword);       
     }
 
-    getAndLoadData(keyword:string){
-        
+    getAndLoadData(keyword:string){ 
         this.service.searchProfiles(keyword).subscribe(
             profileList => this.userInformationList = profileList,
             error => this.userInformationList = []
         )
         this.service.searchHashtags(keyword).subscribe(
-            hashtagList => this.hashtagList = hashtagList,
-            error => this.hashtagList = []
+            hashtagList => this.trends = hashtagList,
+            error => this.trends = []
         )
-
-        //Show results part!
     }
 
-    setShowProfiles(show){
-        if (show === "tweet"){           
-            this.showProfiles = false;
-            }else{
-              this.showProfiles = true;
-            }
+    showHashtag(event){
+        this.hashtag = event;
+        this.showTweets = true;
     }
 
 }

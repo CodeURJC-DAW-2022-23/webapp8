@@ -1,9 +1,5 @@
-import { Component, OnInit } from "@angular/core";
-import { Router, ActivatedRoute } from '@angular/router'; // To route the page when needed
-import { HashtagService } from "src/app/services/hashtag.service";
-import { hashtagComponent } from "src/app/entities/hashtag/hashtag.component";
-import { of, map } from "rxjs";
-import { TweetService } from "src/app/services/tweet-service";
+import { Component } from "@angular/core";
+import { Router } from '@angular/router'; 
 import { LoginService } from "src/app/services/login.service";
 
 @Component({

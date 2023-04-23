@@ -8,7 +8,9 @@
                     What's happening
                 </h2>
                 
-                <app-hashtagComponent [hashtags]="hashtagList"></app-hashtagComponent>
+                <div *ngFor="let trend of trends; let i = index">
+                    <app-trend [trend]="trend" [index]="i" [routerLink]="['/explore']"></app-trend>
+                </div>
     
                 <!-- SHOW MORE -->
                 <button class="p-4 group" [routerLink]="['/explore']">
