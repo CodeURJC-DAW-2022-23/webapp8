@@ -2,6 +2,11 @@
 
 The objetive is to replicated the Social Media Twitter with some upgrades for the user experience.
 
+## :vhs: Video representation
+
+
+***
+
 ## :scroll:Table of Contents
 * [Phase 0](#hotsprings-phase-0---team-formation-and-features)
     * [Team Members](#hammer-team-members)
@@ -26,6 +31,10 @@ The objetive is to replicated the Social Media Twitter with some upgrades for th
     * [Dockerized application execution instructions](#calling-dockerized-application-execution-instructions)
     * [Documentation for building the docker image](#whale-documentation-for-building-the-docker-image)
     * [Members Participation](#busts_in_silhouette-members-participation---phase-3)
+* [Phase 4](#city_sunset-phase-4---implementation-of-the-web-with-spa-architecture)
+    * [Start-up of the application](#factory-start-up-of-the-application-with-angular)
+    * [Angular Component Diagrams & Templates](#bridge_at_night-angular-component-diagrams-and-templates)
+    * [Members Participation](#busts_in_silhouette-members-participation---phase-4)
 
 
 ***
@@ -513,41 +522,77 @@ cd webapp8/ProjectBackEnd/docker
 
 ### :factory: Start-up of the application with Angular
 
+#### :seedling: Technical Requirements
+
+| Is Needed |
+| :-------: |
+| [Node.js](https://nodejs.org/en) |
+| [Angular](https://angular.io) |
+
+#### :traffic_light: Steps
+
+Before to execute Angular, is needed to execute the API REST. To do that, is necessary to follow the indication of [execution of the backend](#black_nib-start-up-of-the-aplication).
+
+With that configurated, now we can start with Angular:
+
+Zero, you need to download Angular to execute this web application.
+
+```
+npm install -g @angular/cli
+```
+
+First, you need to clone the project and redirect to the ProjectFrontEnd directory.
+
+```
+git clone https://github.com/CodeURJC-DAW-2022-23/webapp8.git
+cd webapp8/ProjectFrontEnd
+```
+
+Second, you need to install all the necessary modules.
+
+```
+npm install
+```
+
+Third, you need to execute angular with the proxy
+
+```
+npm start
+```
+
 ### :bridge_at_night: Angular component diagrams and templates
 
 ![SPA_diagram](./files-to-README/phase4/SPA_diagram.svg)
-
-### :vhs: Video representation
 
 ### :busts_in_silhouette: Members Participation - Phase 4
 
 #### Sergio De Oro Fernández
 
-* One of those in charge of Dockerizar, has standardized and formatted the documents associated with the practice thanks to his temperance, allowing to have a uniform work.
+* Notifier par excellence. His art of notifying different users allows no account to be left without knowing the latest news related to it.
 
 | #   | Commit      |     | #   | File |
 | :-: | :---------: | :-: | :-: | :--: |
-| 1º  | []() | | 1º      | []()        |
-| 2º  | []() | | 2º      | []()        |
-| 3º  | []() | | 3º      | []()        |
-| 4º  | []() | | 4º      | []()        |
-| 5º  |[]() | | 5º      | []()         |
+| 1º  | [Add Right-Bar component fixed](https://discord.com/channels/@me/977352278187048993/1099740368653783180) | | 1º      | [notification.component.ts]()        |
+| 2º  | [Fix notification component](https://discord.com/channels/@me/977352278187048993/1099740368653783180) | | 2º      | [right-bar.component.ts]()        |
+| 3º  | [Add notification service](https://discord.com/channels/@me/977352278187048993/1099740368653783180) | | 3º      | [notification-list.component.ts]()        |
+| 4º  | [Add notification-list component](https://discord.com/channels/@me/977352278187048993/1099740368653783180) | | 4º      | [notifications.component.ts]()        |
+| 5º  | [Add getRecommendedUsers to API REST](https://discord.com/channels/@me/977352278187048993/1099740368653783180) | | 5º      | [searcher.component.ts]()         |
 
 #### Laura María Camino Yuste
 
-* User protector and member of the REST API creation team, her security management has allowed our future clients not to suffer any data leakage.
+* Manager of everything related to login and user creation. It also handles everything related to the emails that are sent to the different registered accounts.
 
 | #   | Commit      |     | #   | File |
 | :-: | :---------: | :-: | :-: | :--: |
-| 1º  | []() | | 1º      | []()        |
-| 2º  | []() | | 2º      | []()        |
-| 3º  | []() | | 3º      | []()        |
-| 4º  | []() | | 4º      | []()        |
-| 5º  |[]() | | 5º      | []()         |
+| 1º  | [Add Login Component and Service](https://discord.com/channels/@me/975860781239398440/1099713128385761371) | | 1º      | [explorer.component.ts](https://discord.com/channels/@me/975860781239398440/1099713128385761371)        |
+| 2º  | [Update search Screen](https://discord.com/channels/@me/975860781239398440/1099713128385761371) | | 2º      | [search.component.ts](https://discord.com/channels/@me/975860781239398440/1099713128385761371)        |
+| 3º  | [Update Explorer Screen](https://discord.com/channels/@me/975860781239398440/1099713128385761371) | | 3º      | [hashtag.component.ts](https://discord.com/channels/@me/975860781239398440/1099713128385761371)        |
+| 4º  | [Add Reset-password Component](https://discord.com/channels/@me/975860781239398440/1099713128385761371) | | 4º      | [ogin.component.ts](https://discord.com/channels/@me/975860781239398440/1099713128385761371)        |
+| 5º  |[Update SignUp component and service](https://discord.com/channels/@me/975860781239398440/1099713128385761371) | | 5º      | [login.service.ts](https://discord.com/channels/@me/975860781239398440/1099713128385761371)         |
 
 #### Antonio José Alanís Bernal
 
-* Member of the application dockerization team, he has refactored the code to adapt it and allow the permanence of our database.
+* Web application routing artist. Her extensive knowledge in this field has allowed a pleasant experience when browsing our website.
 
 | #   | Commit      |     | #   | File |
 | :-: | :---------: | :-: | :-: | :--: |
@@ -559,26 +604,26 @@ cd webapp8/ProjectBackEnd/docker
 
 #### Ikár Vladislav Martínez de Lizarduy Kostornichenko
 
-* Phase leader and documenter, and member of the REST API team. The extensive knowledge of him has allowed a calm phase and without unforeseen events.
+* Illustrator of the profiles, has outlined the User entity and has allowed the connection between all Twitter users. He has also managed user editing.
 
 | #   | Commit      |     | #   | File |
 | :-: | :---------: | :-: | :-: | :--: |
-| 1º  | []() | | 1º      | []()        |
-| 2º  | []() | | 2º      | []()        |
-| 3º  | []() | | 3º      | []()        |
-| 4º  | []() | | 4º      | []()        |
-| 5º  |[]() | | 5º      | []()         |
+| 1º  | [Add Profile Component](https://github.com/CodeURJC-DAW-2022-23/webapp8/commit/a611eedeb769497b434468401729b7d650323bb5) | | 1º      | [dashboard.component.ts]()        |
+| 2º  | [Add statistics to Dashboard Component](https://github.com/CodeURJC-DAW-2022-23/webapp8/commit/293a6bc358bb62f14f5ef33fd7984751d074adf9) | | 2º      | [profile.component.ts]()        |
+| 3º  | [Add Dashboard Component](https://github.com/CodeURJC-DAW-2022-23/webapp8/commit/147a24487502cebd680b9dc3b332dd728681c62e) | | 3º      | [edit-profile.component.ts]()        |
+| 4º  | [Add edit profile component](https://github.com/CodeURJC-DAW-2022-23/webapp8/commit/1babeb8db0268154cea92c92695c8c87268722df) | | 4º      | [theme-switcher.component.ts]()        |
+| 5º  |[Add followers/followed users screen](https://github.com/CodeURJC-DAW-2022-23/webapp8/commit/0a6d9c96ac924218ec30e675b5e717cea5d92795) | | 5º      | [user.component.ts]()         |
 
 #### Miguel Ángel Sánchez Miranda
 
-* Database analyst and one of the creators of the Twitter clone REST API, his extensive knowledge in information management has allowed there to be no problems when creating the files that are sent by the API.
+* A master in everything related to the Tweet entity, he has created the entire Tweet publication system together with the entire Tweet interaction system, from comments to likes and retweets.
 
 | #   | Commit      |     | #   | File |
 | :-: | :---------: | :-: | :-: | :--: |
-| 1º  | [Create write-tweet page](https://github.com/CodeURJC-DAW-2022-23/webapp8/commit/9698ef6d7c5a1fd6ecdc2bedab5c9663bfe17834) | | 1º      | []()        |
-| 2º  | [Update tweet-list component](https://github.com/CodeURJC-DAW-2022-23/webapp8/commit/819b404bae51eb7f720e61f2480570280e0aa196) | | 2º      | []()        |
-| 3º  | [Make interactions work in tweet component](https://github.com/CodeURJC-DAW-2022-23/webapp8/commit/578f8452a5199cb2968f7d84f64973c34595c1d0) | | 3º      | []()        |
-| 4º  | [4 Add show-tweet page](https://github.com/CodeURJC-DAW-2022-23/webapp8/commit/e7664ffb59859188544a002b6ad96047810edcf1) | | 4º      | []()        |
-| 5º  |[Create tweet service](https://github.com/CodeURJC-DAW-2022-23/webapp8/commit/03088b9a017ce7b6eceeec5cdb71ae76abc33a8c) | | 5º      | []()         |
+| 1º  | [Create write-tweet page](https://github.com/CodeURJC-DAW-2022-23/webapp8/commit/9698ef6d7c5a1fd6ecdc2bedab5c9663bfe17834) | | 1º      | [tweet-list.component.ts]()        |
+| 2º  | [Update tweet-list component](https://github.com/CodeURJC-DAW-2022-23/webapp8/commit/819b404bae51eb7f720e61f2480570280e0aa196) | | 2º      | [tweet-service.ts]()        |
+| 3º  | [Make interactions work in tweet component](https://github.com/CodeURJC-DAW-2022-23/webapp8/commit/578f8452a5199cb2968f7d84f64973c34595c1d0) | | 3º      | [tweet.component.ts]()        |
+| 4º  | [4 Add show-tweet page](https://github.com/CodeURJC-DAW-2022-23/webapp8/commit/e7664ffb59859188544a002b6ad96047810edcf1) | | 4º      | [write-tweet.component.ts]()        |
+| 5º  |[Create tweet service](https://github.com/CodeURJC-DAW-2022-23/webapp8/commit/03088b9a017ce7b6eceeec5cdb71ae76abc33a8c) | | 5º      | [show-tweet.component.ts ]()         |
 
 ***
