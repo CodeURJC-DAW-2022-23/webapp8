@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { NavigationEnd, Router } from '@angular/router';
 import { Trend } from 'src/app/entities/hashtag/trend.model';
 import { UserInformation } from 'src/app/entities/user/user.model';
 import { HashtagService } from 'src/app/services/hashtag.service';
@@ -22,16 +22,20 @@ export class RightBarComponent implements OnInit {
   isLogged:boolean;
   showRecommended:boolean;
 
-  constructor(private router:Router, private logService: LoginService, private userService: UserService, private hashtagService:HashtagService) {}
+  constructor(private router:Router, private userService: UserService, private hashtagService:HashtagService) {}
 
   ngOnInit(): void {
-    this.isExplorePage = this.router.url.includes("explorer");
-    this.showRecommended = this.isLogged && this.isExplorePage;
-    this.isLogged = this.logService.isLogged();
+    this.userService.getCurrentUser().subscribe(
+      response => this.isLogged = response !== null
+    );
     this.getTrends();
-    if (this.isLogged) {
-      this.getRecommendedUsers();
-    }
+    this.getRecommendedUsers();
+    this.router.events.subscribe((event) => {
+      if (event instanceof NavigationEnd) {
+        this.isExplorePage = this.router.url.includes("explore");
+        this.showRecommended = this.isLogged && this.isExplorePage;
+      }
+    })
   }
   getTrends() {
     this.hashtagService.getSomeTrends(this.offset, this.size).subscribe(

@@ -26,7 +26,7 @@
             <h2 class="px-5 pb-3 text-2xl font-bold dark:text-gray-3 text-black-0">
                 Recommended Profiles
             </h2>
-            <div *ngFor="let user in recommendedUsers">
+            <div *ngFor="let user of recommendedUsers">
                 <app-user [userInformation]="user"></app-user>
             </div>
         </div>
