@@ -16,6 +16,6 @@ export class AppComponent implements OnInit {
   }
 
   public changePage(){
-      this.show = !(this._router.url.includes("error") || this._router.url.includes("login") || this._router.url.includes("register") || this._router.url === "/" || this._router.url.includes("verification") || this._router.url.includes("reset-password") || this._router.url.includes("forgot-password") || this._router.url.includes("write-tweet"))
+      this.show = !(this._router.url.includes("error") || this._router.url.includes("login") || this._router.url.includes("signup") || this._router.url === "/" || this._router.url.includes("verification") || this._router.url.includes("reset-password") || this._router.url.includes("forgot-password") || this._router.url.includes("write-tweet"))
   }
 }
