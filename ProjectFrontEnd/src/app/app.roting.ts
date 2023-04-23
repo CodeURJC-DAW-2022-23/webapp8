@@ -25,7 +25,7 @@ import { EditProfileComponent } from './screens/profile/edit-profile/edit-profil
 const appRoutes = [
     { path: '', component: IndexComponent }, // provisional path
     { path: 'bookmarks', component: BookmarksComponent },
-    { path: 'explorer', component: explorer },
+    { path: 'explore', component: explorer },
     { path: 'login', component: LoginComponent },
     { path: 'signup', component: SignUpComponent},
     { path: 'verification', component: Verification},
