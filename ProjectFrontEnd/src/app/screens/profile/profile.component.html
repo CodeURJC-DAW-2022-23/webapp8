@@ -152,7 +152,7 @@
       </div>
     </div>
 
-    <div class="relative bottom-9">
+    <div *ngIf="showChild" class="relative bottom-9">
       <app-tweet-list typeElement="Profile" [userId]="userInformation.user.id"></app-tweet-list>
     </div>
   </div>

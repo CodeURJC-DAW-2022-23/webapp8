@@ -4,6 +4,7 @@ import { TweetInformation } from 'src/app/entities/tweet/tweet.model';
 import { UserInformation } from 'src/app/entities/user/user.model';
 import { LoginService } from 'src/app/services/login.service';
 import { UserService } from 'src/app/services/user.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-profile',
@@ -11,6 +12,8 @@ import { UserService } from 'src/app/services/user.service';
   styleUrls: ['./profile.component.css']
 })
 export class ProfileComponent {
+
+  public showChild: boolean = true;
 
   userId: number;
   userInformation: UserInformation;
@@ -44,11 +47,13 @@ export class ProfileComponent {
   viewBox:string;
 
   constructor(private userService: UserService,
-    loginService: LoginService,
-    activatedRoute: ActivatedRoute) {
-
+    private loginService: LoginService,
+    private activatedRoute: ActivatedRoute,
+    private router: Router) {
     activatedRoute.params.subscribe(params => {
       const id = params['id'];
+
+      this.showChild = !this.showChild;
       this.userService.getUser(id).subscribe(
         user => {
           this.userInformation = user;
@@ -77,6 +82,7 @@ export class ProfileComponent {
                   this.isAdmin = currentUser.user.role === "ADMIN";
                   this.isNotBanned = !user.user.enable;
 
+                  this.showChild = !this.showChild;
 
                   this.userService.getFollowedUser(currentUser.user.username, this.username).subscribe(
                     find => this.isFollowed = find,
@@ -90,6 +96,13 @@ export class ProfileComponent {
         }
       );
     });
+  }
+
+  ngOnInit() {
+  }
+
+  ngOnDestroy() {
+    this.tweets = []
   }
 
   banUser() {
