@@ -1,6 +1,0 @@
-<button *ngIf="isInput; else other" [class]="blue_button" (click) = "goTo()">
-    {{text}}
-</button>
-<ng-template #other>
-    <input type="submit" value="Tweet" [class]="blue_button">
-</ng-template>

@@ -2,7 +2,7 @@ import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { UserService } from "./user.service";
 import { Observable, catchError, throwError } from "rxjs";
-import { TweetService } from "./tweet-service";
+import { TweetService } from "./tweet.service";
 import { UserInformation } from "../entities/user/user.model";
 import { Trend } from "../entities/trend/trend.model";
 

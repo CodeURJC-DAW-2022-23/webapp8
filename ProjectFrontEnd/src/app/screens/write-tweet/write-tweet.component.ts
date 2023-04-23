@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Tweet, TweetInformation } from 'src/app/entities/tweet/tweet.model';
-import { TweetService } from 'src/app/services/tweet-service';
+import { TweetService } from 'src/app/services/tweet.service';
 
 @Component({
   selector: 'app-write-tweet',

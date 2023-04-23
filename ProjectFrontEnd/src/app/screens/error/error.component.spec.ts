@@ -1,7 +1,7 @@
-import { Error } from './error.component';
+import { ErrorComponent } from './error.component';
 
 describe('Error', () => {
   it('should create an instance', () => {
-    expect(new Error()).toBeTruthy();
+    expect(new ErrorComponent()).toBeTruthy();
   });
 });

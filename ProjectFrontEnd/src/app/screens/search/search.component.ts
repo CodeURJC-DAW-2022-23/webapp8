@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { Router, ActivatedRoute } from '@angular/router';
-import { TweetService } from "src/app/services/tweet-service";
+import { TweetService } from "src/app/services/tweet.service";
 import { UserInformation } from "src/app/entities/user/user.model";
 import SearchService from "src/app/services/search.service";
 import { Trend } from "src/app/entities/trend/trend.model";
@@ -11,7 +11,7 @@ import { Trend } from "src/app/entities/trend/trend.model";
     styleUrls: ['./search.component.css']
   })
 
-export class Search implements OnInit{
+export class SearchComponent implements OnInit{
 
     trends: Trend[] = [];
     hashtag: string;

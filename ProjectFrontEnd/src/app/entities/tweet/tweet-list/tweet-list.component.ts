@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
-import { TweetService } from 'src/app/services/tweet-service';
+import { TweetService } from 'src/app/services/tweet.service';
 import { Tweet, TweetInformation } from '../tweet.model';
 import { UserService } from 'src/app/services/user.service';
 

@@ -2,7 +2,7 @@ import { Component, EventEmitter, Output } from '@angular/core';
 import { Trend } from '../trend.model';
 import { Router } from '@angular/router';
 import { HashtagService } from 'src/app/services/hashtag.service';
-import { TweetService } from 'src/app/services/tweet-service';
+import { TweetService } from 'src/app/services/tweet.service';
 
 @Component({
   selector: 'app-trend-list',

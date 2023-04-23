@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TweetInformation } from 'src/app/entities/tweet/tweet.model';
 import { LoginService } from 'src/app/services/login.service';
-import { TweetService } from 'src/app/services/tweet-service';
+import { TweetService } from 'src/app/services/tweet.service';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({

@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { TweetInformation } from './tweet.model';
 import { Router } from '@angular/router';
-import { TweetService } from 'src/app/services/tweet-service';
+import { TweetService } from 'src/app/services/tweet.service';
 
 @Component({
   selector: 'app-tweet',

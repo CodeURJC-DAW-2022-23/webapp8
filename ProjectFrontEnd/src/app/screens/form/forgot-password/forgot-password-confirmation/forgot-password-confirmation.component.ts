@@ -5,5 +5,5 @@ import { Component } from "@angular/core";
     templateUrl: './forgot-password-confirmation.component.html',
     styleUrls: ['./forgot-password-confirmation.component.css']
   })
-export class confirmation {
+export class ConfirmationComponent {
 }

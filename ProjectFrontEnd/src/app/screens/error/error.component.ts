@@ -7,7 +7,7 @@ import { LoginService } from "src/app/services/login.service";
     templateUrl: './error.component.html',
     styleUrls: ['./error.component.css']
   })
-export class Error {
+export class ErrorComponent {
 
     constructor(private router:Router, private service: LoginService) {}
     refresh(): void {

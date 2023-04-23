@@ -1,7 +1,7 @@
-import { Verification } from './verification.component';
+import { VerificationComponent } from './verification.component';
 
 describe('Verification', () => {
   it('should create an instance', () => {
-    expect(new Verification()).toBeTruthy();
+    expect(new VerificationComponent()).toBeTruthy();
   });
 });

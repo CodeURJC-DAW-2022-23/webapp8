@@ -7,8 +7,8 @@ import { Signup } from "src/app/services/signup.service";
     templateUrl: './verification.html',
     styleUrls: ['./verification.component.css']
   })
-export class Verification {
-  constructor(private router:Router,activatedRoute: ActivatedRoute, private service: Signup, private verification: Verification) {
+export class VerificationComponent {
+  constructor(private router:Router,activatedRoute: ActivatedRoute, private service: Signup, private verification: VerificationComponent) {
     this.code = activatedRoute.snapshot.params['code'];
 }
 private res: number;

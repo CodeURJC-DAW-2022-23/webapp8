@@ -2,7 +2,7 @@ import { Component, OnInit, Output, EventEmitter } from "@angular/core";
 import { Router, ActivatedRoute } from '@angular/router'; // To route the page when needed
 import { HashtagService } from "src/app/services/hashtag.service";
 import { TrendComponent } from "src/app/entities/trend/trend.component";
-import { TweetService } from "src/app/services/tweet-service";
+import { TweetService } from "src/app/services/tweet.service";
 import { Trend } from "src/app/entities/trend/trend.model";
 
 @Component({
@@ -11,7 +11,7 @@ import { Trend } from "src/app/entities/trend/trend.model";
     styleUrls: ['./explorer.component.css']
   })
 
-export class explorer implements OnInit{
+export class ExplorerComponent implements OnInit{
 
     showTrends: boolean;
     hashtag: string;

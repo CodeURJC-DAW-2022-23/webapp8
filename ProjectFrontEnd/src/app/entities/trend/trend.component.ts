@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 
 import { HashtagService } from "src/app/services/hashtag.service";
 import { TweetInformation } from "../tweet/tweet.model";
-import { TweetService } from "src/app/services/tweet-service";
+import { TweetService } from "src/app/services/tweet.service";
 import { Trend } from "./trend.model";
 
 @Component({
@@ -20,14 +20,14 @@ import { Trend } from "./trend.model";
     trend: Trend;
     @Input()
     index: number;
-    @Output() 
+    @Output()
     showHashtag = new EventEmitter<String>();
-    
+
 
     constructor( private service: HashtagService, private router:Router, private tweetService:TweetService) {}
 
     sendShowHashtag(){
       this.showHashtag.emit(this.trend.hashtag);
-    }    
+    }
 
   }
