@@ -17,19 +17,28 @@ export class LeftBarComponent {
   public nickname: string;
   public username: string;
   public urlToProfilePicture: string;
+  isLogged: boolean;
+  navigation: string = '';
 
   constructor(private _userService: UserService,
     private _loginService: LoginService,
     private router: Router) {
       this._userService.getCurrentUser().subscribe(userInformation => {
-      this.urlToProfilePicture = "/api/" + userInformation.urlToProfilePic
 
-      let user: User;
-      user = userInformation.user;
+        this.isLogged = userInformation !== null;
+        if(!this.isLogged){
+          return
+        }
+        this.navigation = '/home'
 
-      this.nickname = user.nickname;
-      this.username = user.username;
-    });
+        this.urlToProfilePicture = "/api/" + userInformation.urlToProfilePic
+
+        let user: User;
+        user = userInformation.user;
+
+        this.nickname = user.nickname;
+        this.username = user.username;
+      });
   }
 
   logOut() {

@@ -1,7 +1,7 @@
 <aside class="hidden llg:block max-w-72">
     <div class="sticky top-0 left-0 flex flex-col gap-6">
         <!-- BRAND -->
-        <button class="flex justify-center mt-6 transition hover:scale-150" [routerLink]="['/home']">
+        <button class="flex justify-center mt-6 transition hover:scale-150" [routerLink]="[navigation]">
             <h1>
                 <svg class="fill-primary w-11" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
                     aria-hidden="true">
@@ -16,7 +16,7 @@
 
         <!-- NAV BAR -->
         <nav class="flex flex-col items-start gap-3">
-            <button class="w-full group" [routerLink]="['/home']">
+            <button *ngIf="isLogged" class="w-full group" [routerLink]="['/home']">
                 <div [routerLinkActive]="['bg-gray-3', 'dark:bg-gray-13', 'scale-110', 'font-semibold']"
                     class="flex items-center gap-5 px-4 py-3 transition rounded-full w-fit group-hover:scale-110 group-hover:bg-gray-3 dark:group-hover:bg-gray-13">
                     <figure>
@@ -51,7 +51,7 @@
                 </div>
             </button>
 
-            <button class="w-full group" [routerLink]="['/notifications']">
+            <button *ngIf="isLogged" class="w-full group" [routerLink]="['/notifications']">
                 <div [routerLinkActive]="['bg-gray-3', 'dark:bg-gray-13', 'scale-110', 'font-semibold']"
                     class="flex items-center gap-5 px-4 py-3 transition rounded-full w-fit group-hover:scale-110 group-hover:bg-gray-3 dark:group-hover:bg-gray-13">
                     <figure>
@@ -70,7 +70,7 @@
                 </div>
             </button>
 
-            <button class="w-full group" [routerLink]="['/bookmarks']">
+            <button *ngIf="isLogged" class="w-full group" [routerLink]="['/bookmarks']">
                 <div [routerLinkActive]="['bg-gray-3', 'dark:bg-gray-13', 'scale-110', 'font-semibold']"
                     class="flex items-center gap-5 px-4 py-3 transition rounded-full w-fit group-hover:scale-110 group-hover:bg-gray-3 dark:group-hover:bg-gray-13">
                     <figure>
@@ -89,7 +89,7 @@
             </button>
 
             <!-- PROFILE -->
-            <button class="w-full group" [routerLink]="['/profile/' + username]">
+            <button *ngIf="isLogged" class="w-full group" [routerLink]="['/profile/' + username]">
                 <div [routerLinkActive]="['bg-gray-3', 'dark:bg-gray-13', 'scale-110']"
                     class="flex items-center gap-5 px-4 py-3 transition rounded-full w-fit group-hover:scale-110 group-hover:bg-gray-3 dark:group-hover:bg-gray-13">
                     <figure class="w-9">
@@ -112,7 +112,7 @@
             </button>
 
             <!-- LOG OUT -->
-            <a class="w-full group" [routerLink]="['/index']" (click)="logOut()">
+            <a *ngIf="isLogged" class="w-full group" [routerLink]="['/index']" (click)="logOut()">
                 <div
                     class="flex items-center gap-6 px-4 py-3 transition rounded-full w-fit group-hover:scale-110 group-hover:bg-red-3 group-focus-within:bg-red-3">
                     <div class="w-7">
@@ -134,7 +134,17 @@
             </a>
         </nav>
 
-        <a class="py-4 text-xl font-bold text-center transition rounded-full cursor-pointer text-white-0 hover:scale-110 bg-primary"
+        <a *ngIf="!isLogged" class="w-full px-5 py-3 font-bold text-center transition rounded-full cursor-pointer text-white-0 bg-primary hover:scale-110"
+                    [routerLink]="['/signup']">
+                    Sign up
+        </a>
+
+        <a *ngIf="!isLogged" class="w-full px-5 py-3 font-bold text-center transition rounded-full cursor-pointer text-primary bg-white-0 hover:scale-110 border-[1.9px] border-primary"
+                    [routerLink]="['/login']">
+                    Log in
+        </a>
+
+        <a *ngIf="isLogged" class="py-4 text-xl font-bold text-center transition rounded-full cursor-pointer text-white-0 hover:scale-110 bg-primary"
             [routerLink]="['/write-tweet']"> <!-- write tweet in the future -->
             Tweet
         </a>

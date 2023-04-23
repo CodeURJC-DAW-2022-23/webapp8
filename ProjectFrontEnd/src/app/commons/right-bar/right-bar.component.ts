@@ -25,6 +25,8 @@ export class RightBarComponent implements OnInit {
   constructor(private router:Router, private userService: UserService, private hashtagService:HashtagService) {}
 
   ngOnInit(): void {
+    this.isExplorePage = this.router.url.includes("explore");
+    this.showRecommended = this.isLogged && this.isExplorePage;
     this.userService.getCurrentUser().subscribe(
       response => this.isLogged = response !== null
     );
