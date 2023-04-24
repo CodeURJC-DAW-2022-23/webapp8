@@ -1,9 +1,9 @@
-<nav *ngIf="this.isLogged">
-    <div class="p-10"></div>
+<nav *ngIf="isCharged">
+    <div class="p-10 llg:hidden"></div>
 
     <div class="fixed bottom-0 flex flex-col w-full gap-3 llg:hidden">
         <!-- TWEET BUTTON -->
-        <a class="flex items-center justify-center p-4 ml-auto mr-3 transition rounded-full w-fit llg:hidden bg-primary hover:scale-110"
+        <a *ngIf="isLogged" class="flex items-center justify-center p-4 ml-auto mr-3 transition rounded-full w-fit llg:hidden bg-primary hover:scale-110"
             [routerLink]="['/write-tweet']">
             <svg class="w-7 fill-white-0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true">
                 <g>
@@ -17,7 +17,7 @@
         <!-- BAR -->
         <div
             class="grid grid-cols-5 px-1 py-4 border-t justify-items-center border-gray-9 dark:border-black-5 dark:bg-black-0 bg-white-0">
-            <button class="px-5" [routerLink]="['/home']">
+            <button *ngIf="isLogged" class="px-5" [routerLink]="['/home']">
                 <svg class="w-8 dark:fill-white-0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
                     aria-hidden="true">
                     <g>
@@ -39,7 +39,7 @@
                 </svg>
             </button>
 
-            <button class="px-5" [routerLink]="['/notifications']">
+            <button *ngIf="isLogged" class="px-5" [routerLink]="['/notifications']">
                 <svg class="w-8 dark:fill-white-0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
                     aria-hidden="true">
                     <g>
@@ -50,7 +50,7 @@
                 </svg>
             </button>
 
-            <button class="px-5" [routerLink]="['/bookmarks']">
+            <button *ngIf="isLogged" class="px-5" [routerLink]="['/bookmarks']">
                 <svg class="w-8 dark:fill-white-0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
                     aria-hidden="true">
                     <g>
@@ -61,12 +61,25 @@
                 </svg>
             </button>
 
-            <button class="px-5" [routerLink]="['/profile/' + username]">
+            <button *ngIf="isLogged" class="px-5" [routerLink]="['/profile/' + username]">
                 <figure class="w-8">
                     <img class="object-cover w-full h-full rounded-full" src="{{urlToProfilePicture}}"
                         alt="Profile photo" />
                 </figure>
             </button>
+
+            <!-- LOGIN AND SIGNUP (IF NOT IS LOGGED) -->
+            <a *ngIf="!isLogged"
+                class="w-full px-5 py-3 font-bold text-center transition rounded-full cursor-pointer text-white-0 bg-primary hover:scale-110"
+                [routerLink]="['/signup']">
+                Sign up
+            </a>
+
+            <a *ngIf="!isLogged"
+                class="w-full px-5 py-3 font-bold text-center transition rounded-full cursor-pointer text-primary bg-white-0 hover:scale-110 border-[1.9px] border-primary"
+                [routerLink]="['/login']">
+                Log in
+            </a>
         </div>
     </div>
 </nav>

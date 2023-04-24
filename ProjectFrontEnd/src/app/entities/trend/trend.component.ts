@@ -3,7 +3,6 @@ import { Router } from '@angular/router';
 
 
 import { HashtagService } from "src/app/services/hashtag.service";
-import { TweetInformation } from "../tweet/tweet.model";
 import { TweetService } from "src/app/services/tweet.service";
 import { Trend } from "./trend.model";
 

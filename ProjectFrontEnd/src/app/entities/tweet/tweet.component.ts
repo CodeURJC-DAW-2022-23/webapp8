@@ -44,16 +44,16 @@ export class TweetComponent {
   imageClass:string = "max-h-[500px] border bg-gray-4 dark:bg-twitter-dark-gray border-gray-4 rounded-xl overflow-hidden";
 
   ngOnInit(): void{
-    this.tweet.urlToProfilePic = "/api/" + this.tweet.urlToProfilePic
+    this.tweet.urlToProfilePic = "/api" + this.tweet.urlToProfilePic
 
     this.isMedia1 = !(this.tweet.urlToMedia1 === "");
     this.isMedia2 = !(this.tweet.urlToMedia2 === "");
     this.isMedia3 = !(this.tweet.urlToMedia3 === "");
     this.isMedia4 = !(this.tweet.urlToMedia4 === "");
-    this.tweet.urlToMedia1 = "/api/" + this.tweet.urlToMedia1
-    this.tweet.urlToMedia2 = "/api/" + this.tweet.urlToMedia2
-    this.tweet.urlToMedia3 = "/api/" + this.tweet.urlToMedia3
-    this.tweet.urlToMedia4 = "/api/" + this.tweet.urlToMedia4
+    this.tweet.urlToMedia1 = "/api" + this.tweet.urlToMedia1
+    this.tweet.urlToMedia2 = "/api" + this.tweet.urlToMedia2
+    this.tweet.urlToMedia3 = "/api" + this.tweet.urlToMedia3
+    this.tweet.urlToMedia4 = "/api" + this.tweet.urlToMedia4
     this.threeImages = this.isMedia3 && !this.isMedia4;
     if (this.isMedia2){
       this.imageClass += " grid grid-cols-2";

@@ -2,6 +2,7 @@
     <app-left-bar *ngIf="show" class="sticky top-0 right-0 self-start"></app-left-bar>
     <main>
         <router-outlet (activate)="changePage()"></router-outlet>
+        <app-mobile-bar *ngIf="show"></app-mobile-bar>
     </main>
     <app-right-bar *ngIf="show" class="sticky top-0 right-0 self-start"></app-right-bar>
 </div>

@@ -20,7 +20,7 @@ export class WriteTweetComponent {
       this.service.getTweet(this.tweetId).subscribe(
         tweet => {
           this.tweet = tweet.tweet;
-          this.urlToProfilePic = "/api/" + tweet.urlToProfilePic;
+          this.urlToProfilePic = "/api" + tweet.urlToProfilePic;
         },
         error => console.error(error)
       );

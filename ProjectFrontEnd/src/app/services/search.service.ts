@@ -11,14 +11,14 @@ export default class SearchService {
     constructor(private http: HttpClient, private userService: UserService, private tweetService: TweetService) {}
 
     searchProfiles(keyword:string): Observable<UserInformation[]>{
-        let url = "api/users/" + keyword + "/found-users"
+        let url = "/api/users/" + keyword + "/found-users"
         return this.http.get(url).pipe(
             catchError(error => this.handleError(error)
             )) as Observable<UserInformation[]>
     }
 
     searchHashtags(keyword:string):Observable<Trend[]>{
-        let url = "api/hashtags/" + keyword + "/found-hashtags"
+        let url = "/api/hashtags/" + keyword + "/found-hashtags"
         return this.http.get(url).pipe(
             catchError(error => this.handleError(error)
             )) as Observable<Trend[]>

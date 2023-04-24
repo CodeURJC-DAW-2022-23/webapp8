@@ -13,6 +13,7 @@ export class MobileBarComponent {
   public urlToProfilePicture: string;
 
   public isLogged: boolean;
+  public isCharged: boolean;
 
   constructor(private _userService: UserService) { }
 
@@ -23,12 +24,13 @@ export class MobileBarComponent {
   private _loadUserInformation(): void {
     this._userService.getCurrentUser().subscribe(userInformation => {
       this.isLogged = userInformation !== null;
-      if (!this.isLogged) {
-        return;
-      }
-      this.urlToProfilePicture = "/api/" + userInformation.urlToProfilePic;
+      this.urlToProfilePicture = "/api" + userInformation.urlToProfilePic;
       this.username = userInformation.user.username;
+      this.isCharged = true;
     },
-      error => console.log(error));
+      error => {
+        this.isLogged = false
+        this.isCharged = true;
+      });
   }
 }

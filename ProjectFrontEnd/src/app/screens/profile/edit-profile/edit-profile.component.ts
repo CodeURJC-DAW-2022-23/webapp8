@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { User, UserInformation } from 'src/app/entities/user/user.model';
+import { User } from 'src/app/entities/user/user.model';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
@@ -21,8 +21,8 @@ export class EditProfileComponent {
     this.userService.getUser(userId).subscribe(
       user => {
         this.user = user.user;
-        this.urlToBannerPic = '/api/' + user.urlToBannerPic;
-        this.urlToProfilePic = '/api/' + user.urlToProfilePic;
+        this.urlToBannerPic = '/api' + user.urlToBannerPic;
+        this.urlToProfilePic = '/api' + user.urlToProfilePic;
       }
     );
   }

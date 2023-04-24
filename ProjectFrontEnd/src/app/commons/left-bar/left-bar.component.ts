@@ -50,7 +50,7 @@ export class LeftBarComponent {
         return
       }
       this.navigation = '/home'
-      this.urlToProfilePicture = "/api/" + userInformation.urlToProfilePic
+      this.urlToProfilePicture = "/api" + userInformation.urlToProfilePic
       this.nickname = userInformation.user.nickname;
       this.username = userInformation.user.username;
       this.type = userInformation.user.type;

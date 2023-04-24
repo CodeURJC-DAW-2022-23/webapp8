@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { UserComponent } from '../entities/user/user.component';
 import { UserService } from './user.service';
-import { User, UserInformation } from '../entities/user/user.model';
+import { UserInformation } from '../entities/user/user.model';
 
 
 @Injectable({ providedIn: 'root' })
@@ -36,12 +35,12 @@ export class LoginService {
     }
 
     logIn(user: string, pass: string) {
-        let url = "api/login"
+        let url = "/api/login"
         return this.http.post(url, { username: user, password: pass }, { withCredentials: true });
     }
 
     logOut() {
-        let url = "api/logout"
+        let url = "/api/logout"
         return this.http.post(url, { withCredentials: true })
             .subscribe((resp: any) => {
                 console.log("LOGOUT: Successfully");

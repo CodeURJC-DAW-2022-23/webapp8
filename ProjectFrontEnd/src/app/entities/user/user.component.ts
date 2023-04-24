@@ -41,7 +41,7 @@ export class UserComponent {
   constructor(private userService: UserService, private router: Router) { }
 
   ngOnInit() {
-    this.srcImg = "api/" + this.userInformation.urlToProfilePic;
+    this.srcImg = "/api" + this.userInformation.urlToProfilePic;
     this.nickname = this.userInformation.user.nickname;
     this.username = this.userInformation.user.username;
     this.idSVG = this.username + "-SVG";

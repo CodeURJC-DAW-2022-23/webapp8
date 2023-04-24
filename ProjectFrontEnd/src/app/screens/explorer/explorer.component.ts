@@ -1,9 +1,5 @@
-import { Component, OnInit, Output, EventEmitter } from "@angular/core";
-import { Router, ActivatedRoute } from '@angular/router'; // To route the page when needed
-import { HashtagService } from "src/app/services/hashtag.service";
-import { TrendComponent } from "src/app/entities/trend/trend.component";
-import { TweetService } from "src/app/services/tweet.service";
-import { Trend } from "src/app/entities/trend/trend.model";
+import { Component, OnInit } from "@angular/core";
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-explorer',

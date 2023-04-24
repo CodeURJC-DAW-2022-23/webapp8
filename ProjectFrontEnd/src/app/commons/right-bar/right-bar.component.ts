@@ -3,7 +3,6 @@ import { NavigationEnd, Router } from '@angular/router';
 import { Trend } from 'src/app/entities/trend/trend.model';
 import { UserInformation } from 'src/app/entities/user/user.model';
 import { HashtagService } from 'src/app/services/hashtag.service';
-import { LoginService } from 'src/app/services/login.service';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
@@ -54,4 +53,5 @@ export class RightBarComponent implements OnInit {
       error => this.isLogged = false
     );
   }
+
 }

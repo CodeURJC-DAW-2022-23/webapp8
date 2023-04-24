@@ -1,10 +1,6 @@
-import { Component, NgModule } from '@angular/core';
+import { Component } from '@angular/core';
 import { UserInformation } from 'src/app/entities/user/user.model';
 import { UserService } from 'src/app/services/user.service';
-import { BrowserModule } from '@angular/platform-browser';
-import { NgxChartsModule } from '@swimlane/ngx-charts';
-import { LoginService } from 'src/app/services/login.service';
-
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',

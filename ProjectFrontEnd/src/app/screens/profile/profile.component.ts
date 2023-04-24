@@ -25,7 +25,6 @@ export class ProfileComponent {
   followersNumber: number;
   urlToProfilePic: string;
   urlToBannerPic: string;
-  tweets: TweetInformation[];
 
   isLogged: boolean;
   isYourProfile: boolean;
@@ -64,9 +63,8 @@ export class ProfileComponent {
           this.joinDate = this.userInformation.user.joinDate;
           this.followedNumber = this.userInformation.followedNumber;
           this.followersNumber = this.userInformation.followersNumber;
-          this.tweets = this.userInformation.tweets;
-          this.urlToProfilePic = "/api/" + this.userInformation.urlToProfilePic;
-          this.urlToBannerPic = "/api/" + this.userInformation.urlToBannerPic;
+          this.urlToProfilePic = "/api" + this.userInformation.urlToProfilePic;
+          this.urlToBannerPic = "/api" + this.userInformation.urlToBannerPic;
 
           this.svg = this.userTypeSVGMap[this.userInformation.user.type]
           this.viewBox = this.viewBoxMap[this.userInformation.user.type]
@@ -96,13 +94,6 @@ export class ProfileComponent {
         }
       );
     });
-  }
-
-  ngOnInit() {
-  }
-
-  ngOnDestroy() {
-    this.tweets = []
   }
 
   banUser() {
