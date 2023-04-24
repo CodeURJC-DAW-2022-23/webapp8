@@ -16,6 +16,9 @@
             "outputPath": "dist/project-front-end",
             "index": "src/index.html",
             "main": "src/main.ts",
+            "allowedCommonJsDependencies": [
+              "lodash"
+            ],
             "polyfills": [
               "zone.js"
             ],
