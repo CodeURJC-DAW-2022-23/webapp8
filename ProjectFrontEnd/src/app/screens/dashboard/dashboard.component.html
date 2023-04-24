@@ -57,7 +57,7 @@
   </header>
 
   <!-- OPTIONS -->
-  <div>
+  <div *ngIf="isAdmin">
     <div *ngIf="isStadistics; else showUsers">
       <!-- STATS -->
       <div id="stats">

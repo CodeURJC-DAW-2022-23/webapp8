@@ -21,6 +21,7 @@ export class RightBarComponent implements OnInit {
   isExplorePage:boolean;
   isLogged:boolean;
   showRecommended:boolean;
+  finish:boolean=false;
 
   constructor(private router:Router, private userService: UserService, private hashtagService:HashtagService) {}
 
@@ -28,12 +29,14 @@ export class RightBarComponent implements OnInit {
     this.isExplorePage = this.router.url.includes("explore");
     this.showRecommended = this.isLogged && this.isExplorePage;
     this.userService.getCurrentUser().subscribe(
-      response => this.isLogged = response !== null
+      response => this.isLogged = response !== null,
+      error => this.isLogged = false
     );
     this.getTrends();
     this.getRecommendedUsers();
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
+        this.finish = true;
         this.isExplorePage = this.router.url.includes("explore");
         this.showRecommended = this.isLogged && this.isExplorePage;
       }
@@ -48,7 +51,7 @@ export class RightBarComponent implements OnInit {
   getRecommendedUsers() {
     this.userService.getRecommendedUsers().subscribe(
       users => { users.forEach(u => this.recommendedUsers.push(u)) },
-      error => console.log(error)
+      error => this.isLogged = false
     );
   }
 }

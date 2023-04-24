@@ -32,6 +32,8 @@ export class LeftBarComponent {
   public isLogged: boolean;
   public navigation: string = '';
 
+  finish:boolean = false;
+
   constructor(private _userService: UserService,
     private _loginService: LoginService,
     private router: Router) { }
@@ -43,6 +45,7 @@ export class LeftBarComponent {
   private _loadUserInformation(): void {
     this._userService.getCurrentUser().subscribe(userInformation => {
       this.isLogged = userInformation !== null;
+      this.finish = true;
       if(!this.isLogged){
         return
       }
@@ -52,7 +55,8 @@ export class LeftBarComponent {
       this.username = userInformation.user.username;
       this.type = userInformation.user.type;
       this._loadSVG();
-    });
+    },
+    error=>this.finish = true);
   }
 
   private _loadSVG(): void {

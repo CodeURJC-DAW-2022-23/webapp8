@@ -48,6 +48,10 @@ export class EditProfileComponent {
 
     this.userService.putNickname(nickname, this.user.id).subscribe(
       response => {
+        if(biography===""){
+          this.router.navigate(['/profile', this.user.username])
+          return
+        }
         this.userService.putBiography(biography, this.user.id).subscribe(
           response => {
             this.router.navigate(['/profile', this.user.username])

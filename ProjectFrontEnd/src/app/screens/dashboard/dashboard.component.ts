@@ -3,6 +3,7 @@ import { UserInformation } from 'src/app/entities/user/user.model';
 import { UserService } from 'src/app/services/user.service';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
+import { LoginService } from 'src/app/services/login.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -17,6 +18,7 @@ export class DashboardComponent {
   bannedClass: string;
   stadisticsClass: string;
   typeButton: string = "Verify";
+  isAdmin: boolean;
 
   view: any = undefined;
   results: object;
@@ -29,49 +31,56 @@ export class DashboardComponent {
   yAxisLabel = 'Users';
 
   constructor(private userService: UserService){
+    this.userService.getCurrentUser().subscribe(
+      response => this.isAdmin = response.user.role == "ADMIN",
+      error => this.isAdmin = false
+    );
+    
     this.userService.getUsersToVerify().subscribe(
       users => this.users = users
     );
   }
 
   showPage(tabToShow, tabsToHide, isStadistics) {
-    this.isStadistics = isStadistics;
-    let tabSelected = document.getElementById(tabToShow);
-    tabSelected.classList.remove(
-      "dark:text-gray-5",
-      "font-semibold",
-      "border-transparent"
-    );
-    tabSelected.classList.add(
-      "font-bold",
-      "dark:text-white-0",
-      "text-black-0",
-      "border-primary"
-    );
-
-    for (let tabToHide of tabsToHide) {
-      let tabHidden = document.getElementById(tabToHide);
-      tabHidden.classList.remove(
+    if(this.isAdmin){
+      this.isStadistics = isStadistics;
+      let tabSelected = document.getElementById(tabToShow);
+      tabSelected.classList.remove(
+        "dark:text-gray-5",
+        "font-semibold",
+        "border-transparent"
+      );
+      tabSelected.classList.add(
         "font-bold",
         "dark:text-white-0",
         "text-black-0",
         "border-primary"
       );
-      tabHidden.classList.add(
-        "dark:text-gray-5",
-        "font-semibold",
-        "border-transparent"
-      );
-    }
 
-    if (this.isStadistics) {
-      this.userService.getStatistics().subscribe(
-        statistics => this.results = statistics
-      );
-      return;
-    }
+      for (let tabToHide of tabsToHide) {
+        let tabHidden = document.getElementById(tabToHide);
+        tabHidden.classList.remove(
+          "font-bold",
+          "dark:text-white-0",
+          "text-black-0",
+          "border-primary"
+        );
+        tabHidden.classList.add(
+          "dark:text-gray-5",
+          "font-semibold",
+          "border-transparent"
+        );
+      }
 
-    this.loadUsers(tabToShow);
+      if (this.isStadistics) {
+        this.userService.getStatistics().subscribe(
+          statistics => this.results = statistics
+        );
+        return;
+      }
+
+      this.loadUsers(tabToShow);
+    }
   }
 
   private loadUsers(tabToShow: string) {

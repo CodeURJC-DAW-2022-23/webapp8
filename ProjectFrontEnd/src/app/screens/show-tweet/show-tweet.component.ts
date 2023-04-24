@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TweetInformation } from 'src/app/entities/tweet/tweet.model';
-import { LoginService } from 'src/app/services/login.service';
 import { TweetService } from 'src/app/services/tweet.service';
 import { UserService } from 'src/app/services/user.service';
 
@@ -16,6 +15,7 @@ export class ShowTweetComponent {
   tweetId: number;
   tweet: TweetInformation;
   isLogged: boolean;
+  url:string;
 
   constructor(private router: Router, private activatedRoute: ActivatedRoute, private service: TweetService, private userService: UserService){
     this.tweetId = this.activatedRoute.snapshot.params['id'];
@@ -28,11 +28,11 @@ export class ShowTweetComponent {
     );
     this.userService.getCurrentUser().subscribe(
       user => this.isLogged = user !== undefined,
-      error => console.error(error)
+      error => this.isLogged = false
     )
   }
 
   returnHome(){
-    this.router.navigate(['/home']);
+    this.router.navigateByUrl("home");
   }
 }

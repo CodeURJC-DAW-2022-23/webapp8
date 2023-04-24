@@ -33,7 +33,7 @@ export class TweetListComponent {
         this.isLogged = user !== null;
         this.id = user.user.id;
       },
-      error => console.log(error)
+      error => this.isLogged = false
     );
     this.loadElements();
   }

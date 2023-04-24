@@ -1,10 +1,10 @@
-<main class="grid min-h-screen xlsm:place-content-center dark:bg-blue-4 bg-gray-11">
+<main class="grid min-h-screen xlsm:place-content-center dark:bg-blue-4 bg-gray-11" *ngIf="user">
 
   <!-- FRAME -->
   <div
     class="relative flex flex-col justify-center max-w-xl gap-8 px-6 border border-gray-3 dark:border-transparent xlsm:px-20 xlsm:pb-14 pt-7 bg-white-0 dark:bg-black-0 rounded-2xl">
     <!-- GO BACK -->
-    <a class="absolute cursor-pointer group top-[35px] left-8" [routerLink]="['/profile', user.username]">
+    <button class="absolute cursor-pointer group top-[35px] left-8" [routerLink]="['/']">
       <svg
         class="transition rounded-full w-7 dark:fill-white-0 fill-gray-4 group-hover:fill-primary group-hover:bg-blue-1 group-dark:hover:bg-blue-0"
         xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true">
@@ -13,12 +13,12 @@
           </path>
         </g>
       </svg>
-    </a>
+    </button>
 
     <!-- HEADER -->
     <header class="flex items-center justify-center">
       <!-- BRAND -->
-      <a class="transition rounded-full cursor-pointer hover:scale-150" [routerLink]="['/home']">
+      <a class="transition rounded-full cursor-pointer hover:scale-150" [routerLink]="['/']">
         <svg viewBox="0 0 24 24" aria-label="Twitter" role="img" class="w-11 fill-primary">
           <g>
             <path
@@ -30,7 +30,7 @@
     </header>
 
     <!-- THEME SWITCHER -->
-    <app-theme-switcher-button></app-theme-switcher-button>
+    <app-theme-switcher-button class="absolute top-5 right-5"></app-theme-switcher-button>
 
     <!-- MESSAGE -->
     <article class="flex flex-col gap-3">
@@ -119,8 +119,7 @@
 
         <!-- ACTIONS -->
         <div class="flex flex-col gap-3 -mt-4">
-          <input
-          (click)="editProfile($event, banner.files, profile.files, nickname.value, biography.value)"
+          <input (click)="editProfile($event, banner.files, profile.files, nickname.value, biography.value)"
             class="w-full px-5 py-3 font-bold text-center transition rounded-full cursor-pointer dark:bg-white-0 dark:text-black-0 text-white-0 bg-black-0 hover:scale-110"
             type="submit" value="Save">
 
