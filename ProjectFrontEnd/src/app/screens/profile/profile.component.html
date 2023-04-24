@@ -1,4 +1,4 @@
-<main *ngIf="userInformation"
+<div *ngIf="userInformation"
   class="relative w-screen min-h-screen llg:max-w-[700px] border-l border-r border-transparent llg:border-gray-9 llg:dark:border-black-5">
   <!-- HEADER -->
   <header class="sticky top-0 left-0 z-10 border-b backdrop-blur-md border-gray-9 dark:border-black-5">
@@ -16,15 +16,17 @@
           </svg>
         </a>
 
+        <!-- USERNAME AND SVG -->
         <section class="flex items-center gap-2 cursor-pointer">
           <h2 class="text-xl font-semibold dark:text-white-0">{{nickname}}</h2>
 
           <div class="w-6">
             <div *ngIf="!(userInformation.user.type === 'PUBLIC')" class="w-5">
-              <svg attr.viewBox="{{viewBox}}" [ngClass]="{'fill-red-3':userInformation.user.type === 'BANNED','fill-primary':userInformation.user.type === 'VERIFIED'}">
-                  <g>
-                      <path attr.d="{{svg}}"/>
-                  </g>
+              <svg attr.viewBox="{{viewBox}}"
+                [ngClass]="{'fill-red-3':userInformation.user.type === 'BANNED','fill-primary':userInformation.user.type === 'VERIFIED'}">
+                <g>
+                  <path attr.d="{{svg}}" />
+                </g>
               </svg>
             </div>
           </div>
@@ -57,10 +59,11 @@
 
           <div class="w-6">
             <div *ngIf="!(userInformation.user.type === 'PUBLIC')" class="w-5">
-              <svg attr.viewBox="{{viewBox}}" [ngClass]="{'fill-red-3':userInformation.user.type === 'BANNED','fill-primary':userInformation.user.type === 'VERIFIED'}">
-                  <g>
-                      <path attr.d="{{svg}}"/>
-                  </g>
+              <svg attr.viewBox="{{viewBox}}"
+                [ngClass]="{'fill-red-3':userInformation.user.type === 'BANNED','fill-primary':userInformation.user.type === 'VERIFIED'}">
+                <g>
+                  <path attr.d="{{svg}}" />
+                </g>
               </svg>
             </div>
           </div>
@@ -157,4 +160,4 @@
     </div>
   </div>
 
-</main>
+</div>

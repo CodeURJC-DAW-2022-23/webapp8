@@ -1,4 +1,4 @@
-<main
+<div
   class="relative w-screen min-h-screen llg:max-w-[700px] border-l border-r border-transparent llg:border-gray-9 llg:dark:border-black-5">
   <!-- HEADER -->
   <header class="sticky top-0 left-0 border-b backdrop-blur-md border-gray-9 dark:border-black-5">
@@ -28,14 +28,12 @@
 
     <!-- NAVBAR -->
     <nav id="navBar" class="grid items-center justify-center grid-cols-2 text-center dark:text-gray-5 text-gray-4">
-      <button id="following-tab"
-        (click)="goToFollowed()"
+      <button id="following-tab" (click)="goToFollowed()"
         class="py-4 font-bold border-b-4 cursor-pointer border-primary dark:text-white-0 text-black-0 dark:hover:bg-gray-1 hover:bg-gray-3">
         Following
       </button>
 
-      <button id="followers-tab"
-        (click)="goToFollowers()"
+      <button id="followers-tab" (click)="goToFollowers()"
         class="py-4 font-semibold border-b-4 border-transparent cursor-pointer border-p-2 dark:hover:bg-gray-1 hover:bg-gray-3 dark:text-gray-5">
         Followers
       </button>
@@ -49,5 +47,4 @@
       <app-user [userInformation]="user"></app-user>
     </div>
   </div>
-
-</main>
+</div>

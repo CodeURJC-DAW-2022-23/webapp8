@@ -1,30 +1,15 @@
-<!--{{> left-bar}}-->
+<div
+    class="w-screen min-h-screen llg:max-w-[700px] border-l border-r border-transparent llg:border-gray-9 llg:dark:border-black-5">
+    <header class="sticky top-0 left-0 border-b backdrop-blur-md border-gray-9 dark:border-black-5">
+        <div class="flex items-center justify-between py-2 pl-6 pr-3">
+            <h1 class="text-xl font-bold dark:text-gray-3 text-black-1">
+                Home
+            </h1>
 
-    <!-- CONTENT - FRAME -->
-    <main
-        class="relative w-screen min-h-screen llg:max-w-[700px] border-l border-r border-transparent llg:border-gray-9 llg:dark:border-black-5">
-        <!-- HEADER -->
-        <header class="sticky top-0 left-0 border-b backdrop-blur-md border-gray-9 dark:border-black-5">
-            <div class="flex items-center justify-between py-2 pl-6 pr-3">
-                <div class="flex gap-4">
-                    <!-- TITLE -->
-                    <h1 id="screenTitle" class="text-xl font-bold dark:text-gray-3 text-black-1">
-                        Home
-                    </h1>
-                </div>
-
-                <!-- THEME SWITCHER -->
-                <app-theme-switcher-button></app-theme-switcher-button>
-            </div>
-        </header>
-
-        <app-tweet-list typeElement="Home"></app-tweet-list>
-
-        <!-- SPACE -->
-        <div class="p-10 bg-transparent">
+            <app-theme-switcher-button></app-theme-switcher-button>
         </div>
+    </header>
 
-        <!--{{> mobile-bar}}-->
-    </main>
+    <app-tweet-list typeElement="Home"></app-tweet-list>
 
-<!--{{> right-bar}}-->
+</div>
