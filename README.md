@@ -596,11 +596,11 @@ npm start
 
 | #   | Commit      |     | #   | File |
 | :-: | :---------: | :-: | :-: | :--: |
-| 1º  | []() | | 1º      | []()        |
-| 2º  | []() | | 2º      | []()        |
-| 3º  | []() | | 3º      | []()        |
-| 4º  | []() | | 4º      | []()        |
-| 5º  |[]() | | 5º      | []()         |
+| 1º  | [Fix Tweet list component error](https://github.com/CodeURJC-DAW-2022-23/webapp8/commit/4948e446da476b4fb960405d6d78fdc74de891cb#diff-6d7bebb77a4f909fc28b7aa3567bd5626f38b5a1ee4b0d7d876ac451d122e033) | | 1º      | [left-bar.component.ts ]()        |
+| 2º  | [Refactor](https://github.com/CodeURJC-DAW-2022-23/webapp8/commit/b69af2abb6682034c658f75bbeb69d88b29f81c1) | | 2º      | [bookmarks.component.ts]()        |
+| 3º  | [Refactor some components](https://github.com/CodeURJC-DAW-2022-23/webapp8/commit/fe0024d6aa4f702d4b4f00ca8b0ea67a9f2c6ea3) | | 3º      | [router.ts](https://github.com/CodeURJC-DAW-2022-23/webapp8/blob/main/ProjectFrontEnd/src/app/app.routing.ts)        |
+| 4º  | [Upgrade Left bar component](https://github.com/CodeURJC-DAW-2022-23/webapp8/commit/4558d7055b684f06dce26b7bf1ca6d931dfbcd83) | | 4º      | [app.component.ts](https://github.com/CodeURJC-DAW-2022-23/webapp8/blob/main/ProjectFrontEnd/src/app/app.component.html)        |
+| 5º  |[Fix bars components](https://github.com/CodeURJC-DAW-2022-23/webapp8/commit/7a20b8e1446724b001cf698797d0bd58c7bb634e) | | 5º      | [ index.component.ts](https://github.com/CodeURJC-DAW-2022-23/webapp8/tree/main/ProjectFrontEnd/src)         |
 
 #### Ikár Vladislav Martínez de Lizarduy Kostornichenko
 
