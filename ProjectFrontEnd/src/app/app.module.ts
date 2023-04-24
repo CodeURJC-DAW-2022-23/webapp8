@@ -39,6 +39,7 @@ import { FollowersComponent } from './screens/followers/followers.component';
 import { EditProfileComponent } from './screens/profile/edit-profile/edit-profile.component';
 import { RightBarComponent } from './commons/right-bar/right-bar.component';
 import { TrendListComponent } from './entities/trend/trend-list/trend-list.component';
+import { MobileBarComponent } from './commons/mobile-bar/mobile-bar.component';
 
 @NgModule({
   declarations: [
@@ -74,6 +75,7 @@ import { TrendListComponent } from './entities/trend/trend-list/trend-list.compo
     EditProfileComponent,
     RightBarComponent,
     TrendListComponent,
+    MobileBarComponent,
   ],
   imports: [
     FormsModule,
