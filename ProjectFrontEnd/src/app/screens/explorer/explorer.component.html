@@ -1,5 +1,5 @@
 <div
-    class="relative w-screen min-h-screen llg:max-w-[700px] border-l border-r border-transparent llg:border-gray-9 llg:dark:border-black-5">
+    class="w-screen min-h-screen llg:max-w-[700px] border-l border-r border-transparent llg:border-gray-9 llg:dark:border-black-5">
     <header class="sticky top-0 left-0 border-b backdrop-blur-md border-gray-9 dark:border-black-5">
         <div class="flex items-center justify-between py-2 pl-6 pr-3">
             <h1 id="screenTitle" class="hidden text-xl font-bold xlsm:block dark:text-gray-3 text-black-1">
@@ -17,4 +17,5 @@
         <app-tweet-list *ngIf="!showTrends" [typeElement]="'Hashtag'" [hashtag]="hashtag"></app-tweet-list>
     </div>
 
+    <app-mobile-bar></app-mobile-bar>
 </div>

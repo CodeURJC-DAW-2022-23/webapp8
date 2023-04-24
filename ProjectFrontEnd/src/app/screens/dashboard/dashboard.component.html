@@ -1,6 +1,6 @@
 <!-- CONTENT - FRAME -->
-<main
-  class="relative w-screen min-h-screen llg:max-w-[700px] border-l border-r border-transparent llg:border-gray-9 llg:dark:border-black-5">
+<div
+  class="w-screen min-h-screen llg:max-w-[700px] border-l border-r border-transparent llg:border-gray-9 llg:dark:border-black-5">
   <!-- HEADER -->
   <header class="sticky top-0 left-0 border-b backdrop-blur-md border-gray-9 dark:border-black-5">
     <div class="flex items-center justify-between py-2 pl-6 pr-3">
@@ -37,19 +37,17 @@
       </button>
       <!-- VERIFIED USERS -->
       <button id="verificated-tab"
-      (click)="showPage('verificated-tab', ['requests-tab', 'banned-tab', 'stats-tab'], false)"
+        (click)="showPage('verificated-tab', ['requests-tab', 'banned-tab', 'stats-tab'], false)"
         class="py-4 font-semibold border-b-4 border-transparent cursor-pointer border-p-2 dark:hover:bg-gray-1 hover:bg-gray-3 dark:text-gray-5">
         Verificated users
       </button>
       <!-- BANNED USERS -->
-      <button id="banned-tab"
-      (click)="showPage('banned-tab', ['verificated-tab', 'requests-tab', 'stats-tab'], false)"
+      <button id="banned-tab" (click)="showPage('banned-tab', ['verificated-tab', 'requests-tab', 'stats-tab'], false)"
         class="py-4 font-semibold border-b-4 border-transparent cursor-pointer border-p-2 dark:hover:bg-gray-1 hover:bg-gray-3 dark:text-gray-5">
         Banned users
       </button>
       <!-- STATS -->
-      <button id="stats-tab"
-      (click)="showPage('stats-tab', ['verificated-tab', 'banned-tab', 'requests-tab'], true)"
+      <button id="stats-tab" (click)="showPage('stats-tab', ['verificated-tab', 'banned-tab', 'requests-tab'], true)"
         class="py-4 font-semibold border-b-4 border-transparent cursor-pointer border-p-2 dark:hover:bg-gray-1 hover:bg-gray-3 dark:text-gray-5">
         Stats
       </button>
@@ -61,18 +59,10 @@
     <div *ngIf="isStadistics; else showUsers">
       <!-- STATS -->
       <div id="stats">
-        <ngx-charts-bar-vertical
-          [view]="view"
-          [results]="results"
-          [gradient]="gradient"
-          [xAxis]="showXAxis"
-          [yAxis]="showYAxis"
-          [showXAxisLabel]="showXAxisLabel"
-          [xAxisLabel]="xAxisLabel"
-          [showYAxisLabel]="showYAxisLabel"
-          [yAxisLabel]="yAxisLabel"
-          class="fill-black dark:fill-white"
-        ></ngx-charts-bar-vertical>
+        <ngx-charts-bar-vertical [view]="view" [results]="results" [gradient]="gradient" [xAxis]="showXAxis"
+          [yAxis]="showYAxis" [showXAxisLabel]="showXAxisLabel" [xAxisLabel]="xAxisLabel"
+          [showYAxisLabel]="showYAxisLabel" [yAxisLabel]="yAxisLabel"
+          class="fill-black dark:fill-white"></ngx-charts-bar-vertical>
 
       </div>
 
@@ -86,8 +76,5 @@
 
   </div>
 
-  <!-- SPACE -->
-  <div class="p-10 bg-transparent">
-  </div>
-
-</main>
+  <app-mobile-bar></app-mobile-bar>
+</div>
