@@ -391,10 +391,6 @@ public class TweetRestController {
                                                                      HttpServletRequest request) {
         User user = this.informationManager.getCurrentUser(request);
 
-        if(user == null){
-            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
-        }
-
         List<Tweet> tweets = this.tweetService.getComments(id, from, size);
         List<TweetInformation> tweetsInformation = this.informationManager.calculateDataOfTweet(tweets, user);
 
