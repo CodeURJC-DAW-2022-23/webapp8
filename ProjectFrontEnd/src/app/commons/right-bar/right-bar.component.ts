@@ -44,13 +44,13 @@ export class RightBarComponent implements OnInit {
   }
   getTrends() {
     this.hashtagService.getSomeTrends(this.offset, this.size).subscribe(
-      response => response.forEach(h => this.trends.push(h)),
+      response => {response.forEach(h => this.trends.push(h)); this.finish = true;},
       error => this.trends = []
     );
   }
   getRecommendedUsers() {
     this.userService.getRecommendedUsers().subscribe(
-      users => { users.forEach(u => this.recommendedUsers.push(u)) },
+      users => { users.forEach(u => this.recommendedUsers.push(u)); this.finish = true; },
       error => this.isLogged = false
     );
   }
