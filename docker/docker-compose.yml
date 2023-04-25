@@ -1,7 +1,7 @@
 version: "3.9"
 services: 
   web:
-    image: antonioalanxs/twitterclone:v1.0
+    image: keyland71/twitter-clone
     ports:
       - 8443:8443
     environment:
