@@ -5,7 +5,7 @@ export interface User {
   username: string;
   nickname: string;
   type: string;
-  enable: boolean;
+  enabled: boolean;
   biography: string;
   joinDate: string;
   role: string;

@@ -1,6 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { TweetInformation } from 'src/app/entities/tweet/tweet.model';
 import { UserInformation } from 'src/app/entities/user/user.model';
 import { LoginService } from 'src/app/services/login.service';
 import { UserService } from 'src/app/services/user.service';
@@ -11,7 +10,7 @@ import { Router } from '@angular/router';
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.css']
 })
-export class ProfileComponent {
+export class ProfileComponent implements OnInit{
 
   public showChild: boolean = true;
 
@@ -49,7 +48,10 @@ export class ProfileComponent {
     private loginService: LoginService,
     private activatedRoute: ActivatedRoute,
     private router: Router) {
-    activatedRoute.params.subscribe(params => {
+  }
+
+  ngOnInit(): void {
+    this.activatedRoute.params.subscribe(params => {
       const id = params['id'];
 
       this.showChild = !this.showChild;
@@ -69,19 +71,19 @@ export class ProfileComponent {
           this.svg = this.userTypeSVGMap[this.userInformation.user.type]
           this.viewBox = this.viewBoxMap[this.userInformation.user.type]
 
-          userService.getCurrentUser().subscribe(
+          this.userService.getCurrentUser().subscribe(
             user => {
               this.isLogged = user != null;
               let currentUser = user;
-
+      
               this.userService.getUser(this.username).subscribe(
                 user => {
                   this.isYourProfile = currentUser.user.id === user.user.id;
                   this.isAdmin = currentUser.user.role === "ADMIN";
-                  this.isNotBanned = !user.user.enable;
-
+                  this.isNotBanned = user.user.enabled;
+      
                   this.showChild = !this.showChild;
-
+      
                   this.userService.getFollowedUser(currentUser.user.username, this.username).subscribe(
                     find => this.isFollowed = find,
                     error => console.log(error)
@@ -100,6 +102,7 @@ export class ProfileComponent {
     this.userService.banUser(this.userId).subscribe(
       error => console.log(error)
     )
+    this.isNotBanned = false
   };
 
   toggleFollowUser() {
