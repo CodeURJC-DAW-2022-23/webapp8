@@ -30,30 +30,44 @@ export class EditProfileComponent {
   editProfile(event: any, banner: any, profile: any, nickname: string, biography: string) {
     event.preventDefault();
 
-    if (banner.length !== 0) {
-      let file = banner[0];
-
-      if (this.isValidFile(file)) {
-        this.userService.putBannerPic(file, this.user.id).subscribe();
-      }
-    }
-
-    if (profile.length !== 0) {
-      let file = profile[0];
-
-      if (this.isValidFile(file)) {
-        this.userService.putProfilePic(file, this.user.id).subscribe();
-      }
-    }
-
     this.userService.putNickname(nickname, this.user.id).subscribe(
       response => {
-        if(biography===""){
-          this.router.navigate(['/profile', this.user.username])
-          return
-        }
         this.userService.putBiography(biography, this.user.id).subscribe(
           response => {
+            if(banner.length !== 0 && profile.length !== 0){
+              let bannerFile = banner[0]
+              let profileFile = profile[0]
+              if (this.isValidFile(bannerFile) && this.isValidFile(profileFile)) {
+                this.userService.putBannerPic(bannerFile, this.user.id).subscribe(
+                  response => this.userService.putProfilePic(profileFile, this.user.id).subscribe()
+                );
+              }
+
+              if (this.isValidFile(bannerFile) && !this.isValidFile(profileFile)) {
+                this.userService.putBannerPic(bannerFile, this.user.id).subscribe();
+              }
+
+              if (!this.isValidFile(bannerFile) && this.isValidFile(profileFile)) {
+                this.userService.putProfilePic(profileFile, this.user.id).subscribe();
+              }
+            }
+
+            if(banner.length === 0 && profile.length !== 0){
+              let profileFile = profile[0]
+
+              if (this.isValidFile(profileFile)) {
+                this.userService.putProfilePic(profileFile, this.user.id).subscribe();
+              }
+            }
+
+            if(banner.length !== 0 && profile.length === 0){
+              let bannerFile = banner[0]
+
+              if (this.isValidFile(bannerFile)) {
+                this.userService.putBannerPic(bannerFile, this.user.id).subscribe();
+              }
+            }
+
             this.router.navigate(['/profile', this.user.username])
           }
         )
