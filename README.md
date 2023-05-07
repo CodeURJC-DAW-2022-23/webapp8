@@ -4,6 +4,7 @@ The objetive is to replicated the Social Media Twitter with some upgrades for th
 
 ## :vhs: Video representation
 
+https://youtu.be/XtbYs_zk1vY
 
 ***
 
