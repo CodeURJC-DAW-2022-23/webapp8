@@ -564,6 +564,31 @@ npm start
 
 ![SPA_diagram](./files-to-README/phase4/SPA_diagram.svg)
 
+#### :feet: Deployment Steps
+
+1. Connect to the virtual machine using the command:
+```
+ssh -i appWeb-08 vmuser@10.100.139.97
+```
+2. Clone the repository in the virtual machine with the following command:
+```
+git clone https://github.com/CodeURJC-DAW-2022-23/webapp8.git
+```
+3. Go to the docker folder inside the repository tha you just clone:
+```
+cd webapp8/docker/
+```
+4. Execute the following command to run the docker-compose file:
+```
+docker-compose up -d
+```
+5. The application will be accesible in the following URLs: https://10.100.139.97:8443/new (SPA) https://10.100.139.97:8443 (Mustache)
+
+6. To stop the deployment, run the following command:
+```
+docker-compose down
+```
+
 ### :busts_in_silhouette: Members Participation - Phase 4
 
 #### Sergio De Oro Fernández
