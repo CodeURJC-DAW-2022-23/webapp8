@@ -4,11 +4,7 @@ The objetive is to replicated the Social Media Twitter with some upgrades for th
 
 ## :vhs: Video representation
 
-https://user-images.githubusercontent.com/79718376/236916874-2e7198c3-ac06-4f40-9ce3-ba84a9ab6988.mp4
-
-> Watch it on <a href="https://www.youtube.com/watch?v=XtbYs_zk1vY&ab_channel=FakeUser">YouTube</a>
-
-***
+[![Twitter Clone Demonstration](https://img.youtube.com/vi/R_9iDCZJHPM/maxresdefault.jpg)](https://youtu.be/R_9iDCZJHPM)
 
 ## :scroll:Table of Contents
 * [Phase 0](#hotsprings-phase-0---team-formation-and-features)
